@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="../../assets/codemirror/lib/codemirror.css" />
+	<link rel="stylesheet" href="../../assets/codemirror/theme/eclipse.css" />
+	<link rel="stylesheet" href="../../assets/codemirror/addon/hint/show-hint.css">
+
+	<script src="../../assets/codemirror/lib/codemirror.js"></script>
+	<script src="../../assets/codemirror/mode/css/css.js"></script>
+	<script src="../../assets/codemirror/addon/selection/active-line.js"></script>
+	<script src="../../assets/codemirror/addon/edit/matchbrackets.js"></script>
+	<script src="../../assets/codemirror/addon/edit/closebrackets.js"></script>
+	<script src="../../assets/codemirror/addon/comment/continuecomment.js"></script>
+	<script src="../../assets/codemirror/addon/comment/comment.js"></script>
+	<script src="../../assets/codemirror/addon/hint/show-hint.js"></script>
+	<script src="../../assets/codemirror/addon/hint/css-hint.js"></script>
+	<script src="./sandbox_css_editor.js"></script>
+
+	<title>CSSエディタ</title>
+
+</head>
+<body onload="_onload()">
+	「CTRL+SPACE」でオートコンプリート
+	<div style="border:1px solid blue">
+		<textarea id="editor" rows="30" cols="50">
+/* Some example CSS */
+
+@import url("something.css");
+
+body {
+  margin: 0;
+  padding: 3em 6em;
+  font-family: tahoma, arial, sans-serif;
+  color: #000;
+}
+
+#navigation a {
+  font-weight: bold;
+  text-decoration: none !important;
+}
+
+h1 {
+  font-size: 2.5em;
+}
+
+h2 {
+  font-size: 1.7em;
+}
+
+h1:before, h2:before {
+  content: "::";
+}
+
+code {
+  font-family: courier, monospace;
+  font-size: 80%;
+  color: #418A8A;
+}
+		</textarea>
+	</div>
+</body>
+</html>

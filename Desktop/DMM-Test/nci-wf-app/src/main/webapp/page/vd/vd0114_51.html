@@ -1,0 +1,31 @@
+<!-- 独立画面パーツのプロパティ -->
+<script type="text/javascript" src="vd0114_51.js"></script>
+<div id="vd0114_51">
+	<label class="sub-title" data-i18n="repeater">Repeater</label>
+
+	<input id='pageSize' type="hidden" />
+	<input id='initRowCount' type='hidden' />
+	<input id='minRowCount' type='hidden' />
+
+	<div class='form-group col-sm-4'>
+		<span data-i18n='buttonLabel' class='form-control-static'>#{ボタンラベル}</span>
+		<input id='buttonLabel' class='form-control' maxlength='100' />
+	</div>
+
+	<div class='form-group col-sm-4'>
+		<span data-i18n='iconCssClass' class='form-control-static'>#{アイコン用CSSクラス}</span>
+		<input id='iconCssClass' class='form-control' maxlength='90'
+				data-validate='{"pattern" : "alphaSymbolNumber" }' />
+	</div>
+
+	<div class='form-group col-sm-4'>
+		<span data-i18n='buttonSize' class='form-control-static required'>#{ボタンサイズ}</span>
+		<select id='buttonSize' class='form-control buttonSize required'></select>
+	</div>
+
+	<div class='col-sm-5'>
+		<span data-i18n='childContainer' class='required'>子コンテナ</span>
+		<select id='childContainerId' class='form-control required'></select>
+	</div>
+
+</div>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./vd0130.js"></script>
+	<title>#{VD0130 コンテナ設定}</title>
+</head>
+<body>
+	<header></header>
+
+	<section class="container">
+		<div class="row" id="inputed">
+			<span class="screen-name">#{VD0130}</span>
+
+			<label class="sub-title" data-i18n="screenProperty"></label>
+
+			<div class='col-xs-3 form-group'>
+				<span class='required' data-i18n='containerCode'>コンテナコード</span>
+				<input type='text' id='containerCode' class='required form-control' maxlength='10'
+						data-validate='{"pattern" : "alphaNumberSymbol"}' />
+			</div>
+			<div class='col-xs-4 form-group'>
+				<span class='required' data-i18n='containerName'>コンテナ名</span>
+				<input type='text' id='containerName' class='required form-control' maxlength='30' />
+			</div>
+			<div class='col-xs-5 form-group'>
+				<span class='required' data-i18n='tableName'>DBテーブル名</span>
+				<div class='input-group'>
+					<input type='text' id='tableName' class='required form-control' maxlength='30'
+							data-validate='{"pattern" : "alphaNumberUnderscore" }' />
+					<span class="input-group-btn">
+						<button id='btnDbColumnDef' class='btn btn-success'>
+							<i class='glyphicon glyphicon-cog'></i>
+							<span data-i18='btnDbColumnDef'>DBカラム定義</span>
+						</button>
+					</span>
+				</div>
+			</div>
+			<div class='col-xs-3 form-group'>
+				<span class='required' data-i18n='partsCodeSeq'>次のパーツコード連番</span>
+				<input type='text' id='partsCodeSeq' class='required form-control text-right' maxlength='5'
+						 data-validate='{"pattern" : "integer", "min": 0, "max" : 9999 }' />
+			</div>
+			<div class='col-xs-3 form-group'>
+				<span class='' data-i18n='fontSize'>フォントサイズ</span>
+				<select id="fontSize" class="form-control"></select>
+			</div>
+			<div class='col-xs-6 form-group'>
+				<input type="checkbox" id="notDropTableFlag" value="true" />
+				<label class="control-label" for="notDropTableFlag" data-i18n="notDropTableWhenDbSync">DB同期時にテーブルを削除しない</label>
+			</div>
+
+			<fieldset class="fieldset">
+				<legend data-i18n="event">イベント</legend>
+
+				<div class='col-xs-5 form-group'>
+					<span data-i18n='submitFuncName'>Submit時の関数名</span>
+					<input type='text' id='submitFuncName' class='form-control' maxlength='90'
+							data-validate='{ "pattern" : "alphaSymbolNumber" }' />
+				</div>
+
+				<div class='col-xs-7 form-group'>
+					<span data-i18n='submitFuncParam'>Submit時のパラメータ</span>
+					<input type='text' id='submitFuncParam' class='form-control' maxlength='100' />
+				</div>
+
+				<div class='col-xs-5 form-group'>
+					<span data-i18n='loadFuncName'>ロード時の関数名</span>
+					<input type='text' id='loadFuncName' class='form-control' maxlength='90'
+							data-validate='{ "pattern" : "alphaSymbolNumber" }' />
+				</div>
+				<div class='col-xs-7 form-group'>
+					<span data-i18n='loadFuncParam'>ロード時のパラメータ</span>
+					<input type='text' id='loadFuncParam' class='form-control' maxlength='100' />
+				</div>
+
+				<div class='col-xs-5 form-group'>
+					<span data-i18n='changeStartUserFuncName'>起案担当者変更時の関数名</span>
+					<input type='text' id='changeStartUserFuncName' class='form-control' maxlength='90'
+							data-validate='{ "pattern" : "alphaSymbolNumber" }' />
+				</div>
+				<div class='col-xs-7 form-group'>
+					<span data-i18n='changeStartUserFuncParam'>起案担当者変更時のパラメータ</span>
+					<input type='text' id='changeStartUserFuncParam' class='form-control' maxlength='100' />
+				</div>
+			</fieldset>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="text-center">
+			<button id='btnOK' class='btn btn-primary' disabled>
+				<i class='glyphicon glyphicon-ok-sign'></i>
+				<span data-i18n='btnOK'>#{更新}</span>
+			</button>
+			<button id='btnClose' class='btn btn-default'>
+				<i class='glyphicon glyphicon-share-alt'></i>
+				<span data-i18n='btnClose'>#{閉じる}</span>
+			</button>
+		</div>
+	</section>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<style type="text/css">
+	#seach-result {
+		min-height: 480px;
+	}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src="./cm0040.js"></script>
+	<title>CM0040 ユーザ選択</title>
+</head>
+<body>
+	<header class="container-fluid"></header>
+
+	<section class="col-xs-12">
+		<article class="row">
+			<h1 class="page-header">企業選択</h1>
+		</article><!--/.row-->
+
+		<article class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#condition-contents"><i class="fa fa-chevron-up"></i><span data-i18n="searchCondition">検索条件</span></div>
+				<div id="condition-contents" class="panel-collapse collapse in">
+					<form id="formCondition" class="panel-body">
+						<input type="hidden" id="organizationCode" />
+						<div class="tableBox">
+							<div class="tr">
+								<div class="th col-sm-4 col-md-2" data-i18n="corporationCode">#{corporationCode}</div>
+								<div class="td col-sm-8 col-md-4"><select id="corporationCode" class="form-control"></select></div>
+								<div class="th col-sm-4 col-md-2" data-i18n="userAddedInfo">#{userAddedInfo}</div>
+								<div class="td col-sm-8 col-md-4"><input type="text" id="userAddedInfo" class="form-control" maxlength="255"/></div>
+							</div>
+							<div class="tr">
+								<div class="th col-sm-4 col-md-2"><span data-i18n="userName">#{userName}</span></div>
+								<div class="td col-sm-8 col-md-4"><input type="text" id="userName" class="form-control" maxlength="100" /></div>
+								<div class="th col-sm-4 col-md-2" data-i18n="validTerm">#{有効期限}</div>
+								<div class="td col-sm-8 col-md-4">
+									<div class="input-group">
+										<div class="has-feedback">
+											<input type="text" class="form-control ymdPicker" id="validStartDate" data-validate='{"to" : "#validEndDate", "pattern" : "date" }'/>
+											<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+										</div>
+										<div class="input-group-addon">
+										～
+										</div>
+										<div class="has-feedback">
+											<input type="text" class="form-control ymdPicker" id="validEndDate" data-validate='{"from" : "#validStartDate" , "pattern" : "date"}'/>
+											<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="form-group text-center">
+				<button id="btnSearch" class="btn btn-primary">
+					<i class="fa fa-search"></i>
+					<span data-i18n="btnFilter">#{btnFilter}</span>
+				</button>
+				<button class="btn btn-default btnClose" data-close>
+					<i class="fa fa-times"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+		</article>
+
+		<article id="seach-result" class="row invisible">
+			<!-- 検索結果サブタイトル -->
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#result-contents"><i class="fa fa-chevron-up"></i><span data-i18n="searchResult">検索結果</span></div>
+				<div id="result-contents" class="panel-body panel-collapse collapse in">
+
+					<!-- ページ制御 -->
+					<div class="fixed-table-pagination row">
+						<div class="pull-left col-sm-4 col-md-3">
+							<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+						</div>
+						<div class="pull-left col-sm-8 col-md-6 text-center">
+							<ul class="pagination"></ul>
+						</div>
+						<div class="pull-right pagination-detail col-sm-12 col-md-3">
+							<span data-i18n="rowCountPerPage">1ページの行数</span>
+							<select class="pageSize"></select>
+						</div>
+					</div>
+
+					<!-- 検索結果本体 -->
+					<div class="table-responsive">
+						<table class="table table-bordered table-hover table-striped responsive" style="min-width:450px">
+							<colgroup>
+								<col style="width:35px" />
+								<col class="col-sm-4 col-xs-6" />
+								<col class="col-sm-4 col-xs-6" />
+								<col class="col-sm-4 hidden-xs" />
+							</colgroup>
+							<thead>
+							<tr>
+								<th></th>
+								<th><a href="#" data-i18n="userAddedInfo" data-sort="USER_ADDED_INFO, ID">#{ユーザCD}</a>
+								<th><a href="#" data-i18n="userName" data-sort="USER_NAME, ID">#{ユーザ名}</a>
+								<th class="hidden-xs"><a href="#" data-i18n="validTerm" data-sort="VALID_START_DATE, VALID_END_DATE, ID">#{validTerm}</a>
+							</thead>
+
+							<tbody></tbody>
+
+							<tfoot class="template hide">
+							<tr>
+								<td class="text-center">
+									<input type="radio" name="rdoSelect" disabled="disabled" />
+								<td class="text-left">
+									<span data-field="userAddedInfo">#{userAddedInfo}</span>
+								</td>
+								<td class="text-left" data-field="userName">#{userName}</td>
+								<td class="text-left hidden-xs"><span data-field="validStartDate"></span>～<span data-field="validEndDate"></span></td>
+								<td class="hide">
+									<span data-field="corporationCode"></span>
+									<span data-field="userCode"></span>
+									<span data-field="userNameAbbr"></span>
+									<span data-field="telNum"></span>
+									<span data-field="telNumCel"></span>
+									<span data-field="mailAddress"></span>
+								</td>
+							</tfoot>
+						</table>
+					</div>
+
+					<!-- ページ制御 -->
+					<div class="fixed-table-pagination row">
+						<div class="pull-left col-sm-4 col-lg-3">
+							<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+						</div>
+						<div class="pull-left col-sm-8 col-lg-6 text-center">
+							<ul class="pagination"></ul>
+						</div>
+						<div class="pull-right pagination-detail col-sm-12 col-lg-3">
+							<span data-i18n="rowCountPerPage">1ページの行数</span>
+							<select class="pageSize"></select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group text-center">
+				<button id="btnSelect" class="btn btn-primary" disabled>
+					<i class="fa fa-check"></i>
+					<span data-i18n="btnSelect">#{選択}</span>
+				</button>
+				<button class="btn btn-default btnClose" data-close>
+					<i class="fa fa-times"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+		</article>
+	</section>
+</body>
+</html>

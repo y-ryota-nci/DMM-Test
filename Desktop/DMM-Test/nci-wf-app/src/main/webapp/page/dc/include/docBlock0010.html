@@ -1,0 +1,64 @@
+<!-- 添付ファイルブロック -->
+<article id="docBlock0010">
+	<div class="panel panel-default">
+		<div id="a1" class="panel-heading clearfix">
+			<span id="docBlock0010_expansion" class="collapse_btn collapsed" role="button" data-toggle="collapse" data-target="#docBlock0010_contents">
+				<i class="fa fa-chevron-down"></i><span data-field="blockName">#{添付ファイル}</span>
+			</span>
+			<div class="topend_btn">
+				<a href="#pageend" class="pageend">END</a>
+			</div>
+			<div class="topend_btn">
+				<a href="#pagetop" class="pagetop">TOP</a>
+			</div>
+		</div>
+
+		<div id="docBlock0010_contents" class="panel-body panel-collapse collapse">
+			<div class="form-horizontal col-lg-12 col-md-12 col-sm-12">
+				<div class="col-md-3 mB10 mB10_sp">
+					<button id="btnUploadAttachFile" class="btn btn-default btn-sm"><i class="fa fa-file"></i><span data-i18n="btnFileUpload">#{ファイルを選択...}</span></button>
+					<input type="file" id="attachFileUpload" class="hide" multiple />
+					<button id="btnDeleteAttachFile" class="btn btn-default btn-sm"><i class="fa fa-trash"></i><span data-i18n="btnDelete">#{削除}</span></button>
+				</div>
+			</div>
+			<div id="divAttachFiles" class="table-responsive">
+				<table id="attachFiles" class="table table-bordered table-hover table-striped responsive">
+					<colgroup>
+						<col style="width:40px;">
+						<col class="col-xs-4">
+						<col class="col-xs-8">
+					</colgroup>
+					<thead>
+						<tr>
+							<th data-i18n=""></th>
+							<th data-i18n="fileName">#{ファイル名}</th>
+							<th data-i18n="comment">#{コメント}</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+					<tfoot class="hide template">
+						<tr>
+							<td>
+								<input type="checkbox" class="selectable" >
+								<span class="hide" data-field="attachFileDocId">#{attachFileDocId}</span>
+								<span class="hide" data-field="version">#{version}</span>
+								<span class="hide" data-field="docFileDataId">#{docFileDataId}</span>
+							</td>
+							<td>
+								<a href="javascript:void(0)" data-field="fileName" class="lnkDownloadAttachFile">#{fileName}</a>
+								<!--<span class="dispFileName" data-field="fileName">#{fileName}</span>-->
+							</td>
+							<td>
+								<span id="dispComments" data-field="comments"></span>
+								<input type="text" class="form-control" data-field="comments" data-validate='{"maxByteUtf8" : 4000}'></input>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+				<div id="attachFileDragableArea">
+					<div class="form-group col-sm-12 hidden-xs dragZone" data-i18n="dragAndDrop">#{ここにドラッグドロップすることでファイルアップロードが行われます}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</article>

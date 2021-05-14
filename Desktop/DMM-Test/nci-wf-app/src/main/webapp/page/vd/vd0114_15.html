@@ -1,0 +1,128 @@
+<!-- Gridパーツのプロパティ -->
+<script type="text/javascript" src="vd0114_15.js"></script>
+<div id="vd0114_15">
+	<label class="sub-title" data-i18n="grid">グリッド</label>
+
+	<div id="divExtProperties">
+		<div class='col-sm-3'>
+			<span data-i18n='pagingFlag'>ページ制御</span>(<span data-i18n='pageSize'>ページサイズ</span>)
+			<div class="inline-group">
+				<select id='pageSize' class='form-control pageSize'></select>
+			</div>
+		</div>
+
+		<div class='col-sm-2'>
+			<span data-i18n='initRowCount' class='required'>初期行数</span>
+			<input id='initRowCount' type='text' class='form-control required' maxlength='3'
+					data-validate='{"pattern" : "integer", "min": 0, "max" : 999 }' />
+		</div>
+
+		<div class='col-sm-2'>
+			<span data-i18n='minRowCount' class='required'>最少行数</span>
+			<input id='minRowCount' type='text' class='form-control required' maxlength='3'
+					data-validate='{"pattern" : "integer", "min": 0, "max" : 999 }' />
+		</div>
+
+		<div class='col-sm-5'>
+			<span data-i18n='childContainer' class='required'>子コンテナ</span>
+			<select id='childContainerId' class='form-control required'></select>
+		</div>
+
+		<div class='form-group col-sm-4'>
+			<label>
+				<input id='hideTableHeader' type="checkbox" value="true" />
+				<span data-i18n='hideTableHeader' class='form-control-static'>#{クリアボタンを非表示}</span>
+			</label>
+		</div>
+
+		<div class='col-sm-12'>
+			<div class="col-sm-2 row">
+				<span data-i18n='minWidth' class='required'>最小幅</span>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input id='minWidth' type='text' class='form-control required' maxlength='4'
+						data-validate='{"pattern" : "integer", "min": 320, "max" : 9999, "notAddComma": true }' /><!-- 最小値は iPhone5準拠 -->
+			</div>
+			<div class="col-sm-10">
+				<div>&nbsp;</div>
+				<small data-i18n="MSG0259">各デバイスでスクロールバーが出ない最小幅：PC=1120 iPad横=960、iPadPro横=1280、iPhone8横=580</small>
+			</div>
+		</div>
+
+		<fieldset class='form-group fieldset'>
+			<legend data-i18n='buttonDisplaySettins'>ボタン表示設定</legend>
+			<ul class="list-inline">
+				<li>
+					<input id='showButtonTopFlag' type='checkbox' value='true' />
+					<label for='showButtonTopFlag' data-i18n='showButtonOnTop'>ボタンを上部に配置</label>
+				</li>
+				<li>
+					<input id='showAddEmptyButtonFlag' type='checkbox' value='true' />
+					<label for='showAddEmptyButtonFlag' data-i18n='btnAddEmpty'>空行追加</label>
+				</li>
+				<li>
+					<input id='showDeleteButtonFlag' type='checkbox' value='true' />
+					<label for='showDeleteButtonFlag' data-i18n='btnDelete'>削除</label>
+				</li>
+				<li>
+					<input id='showCopyButtonFlag' type='checkbox' value='true' />
+					<label for='showCopyButtonFlag' data-i18n='btnCopy'>コピー</label>
+				</li>
+				<li>
+					<input id='showLineCountButtonFlag' type='checkbox' value='true' />
+					<label for='showLineCountButtonFlag' data-i18n='btnChangeLineCount'>行数変更</label>
+				</li>
+			</ul>
+		</fieldset>
+	</div>
+
+	<fieldset id='fsRelation' class='fieldset'>
+		<legend data-i18n="columnDefinition">#{列定義}</legend>
+
+		<div class="col-sm-12">
+			<button id="btnAdd" class="btn btn-primary" disabled>
+				<i class="glyphicon glyphicon-plus-sign"></i>
+				<span data-i18n="btnAdd">#{追加}</span>
+			</button>
+			<button id="btnDelete" class="btn btn-default" disabled>
+				<i class="glyphicon glyphicon-minus-sign"></i>
+				<span data-i18n="btnDelete">#{削除}</span>
+			</button>
+		</div>
+
+		<div class="text-muted" data-i18n="MSG0257">{列名を同じにすれば、単一セルに複数パーツを配置できます（子パーツのレンダリング方法をインラインにして、かつ幅を指定することで、きれいにレイアウトできます）}</div>
+		<table id='tblRelation' class='table-striped table-condensed responsive col-sm-12 mB20'>
+			<colgroup>
+				<col style="width:50px" />
+				<col class='col-xs-4' />
+				<col class='col-xs-4' />
+				<col class='col-xs-2' />
+				<col class='col-xs-2' />
+			</colgroup>
+
+			<thead>
+				<tr>
+					<th></th>
+					<th><span data-i18n="parts" class="text-center required">パーツ</span>
+					<th><span data-i18n="columnName" class="text-center">列名</span>
+					<th><span data-i18n="width" class="text-center required">幅</span>
+					<th class="text-center"><span data-i18n=inputedJudgement class="text-center">入力済み判定</span>
+					<th class="hide"><span data-i18n="sortOrder" class="text-center">並び順</span>
+				</tr>
+			</thead>
+
+			<tbody></tbody>
+
+			<tfoot class="template hide">
+				<tr>
+					<th>
+						<i class='glyphicon glyphicon-align-justify clickable'></i>
+						<input type="checkbox" class="selectable" />
+					<td><select data-field="targetPartsId" class="form-control required"></select>
+					<td><input data-field="columnName" class="form-control" type="text" maxlength="30" />
+					<td><select data-field="width" class="form-control required"></select></td>
+					<td class="text-center"><input type="checkbox" class="inputedJudgePartsIds" /></td>
+					<td class="hide"><span data-field="sortOrder" class="form-control-static"></span>
+				</tr>
+			</tfoot>
+		</table>
+	</fieldset>
+</div>

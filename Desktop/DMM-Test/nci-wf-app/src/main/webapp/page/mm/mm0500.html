@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	.table-responsive {
+		width:100%;
+	}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./mm0500.js"></script>
+	<title>#{MM0500マスター初期値設定}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="container">
+		<div class="row" id="inputed">
+			<span class="screen-name">#{MM0500}</span>
+
+			<label class="sub-title">
+				<span data-i18n="copySourceCorporation">#{コピー元企業}</span>
+			</label>
+			<div>
+				<select id="srcCorporationCode" class="form-control required"></select>
+			</div>
+			<br />
+
+			<label class="sub-title">
+				<span  data-i18n="copyDestinationCorporation"></span>
+			</label>
+
+			<div class="table-responsive">
+				<div>
+					<button id="btnSelectAll" class="btn btn-default btn-sm" data-i18n="btnSelectAll"></button>
+					<button id="btnUnselectAll" class="btn btn-default btn-sm" data-i18n="btnCancelAll"></button>
+				</div>
+				<table class="table table-hover table-striped table-condensed responsive resultTable" style="width:2000px">
+					<colgroup>
+						<col style="width:250px;" />
+						<col style="width:150px;" />
+						<col style="width:150px;" />
+						<col style="width:150px;" />
+						<col style="width:150px;" />
+						<col style="width:150px;" />
+						<col style="width:150px;" />
+						<col style="width:150px;" />
+						<col style="width:150px;" />
+						<col style="width:150px;" />
+						<col style="width:150px;" />
+						<col style="width:150px;" />
+					</colgroup>
+
+					<thead>
+						<tr>
+							<th data-i18n="corporation">
+							<th data-i18n="wfmLookup">
+							<th data-i18n="function">
+							<th data-i18n="action">
+							<th data-i18n="mwmLookup">
+							<th data-i18n="businessInfo">
+							<th data-i18n="docBusinessInfo">
+							<th data-i18n="trayConfig">
+							<th data-i18n="docTrayConfig">
+							<th data-i18n="mailVariable">
+							<th data-i18n="optionSetting">
+							<th data-i18n="optionItem">
+					</thead>
+
+					<tbody></tbody>
+
+					<tfoot class="template hide">
+						<tr>
+							<th>
+								<label>
+									<input type="checkbox" class="selectable" />
+									<span data-field="corporationCode"></span>
+									<span data-field="corporationName"></span>
+								</label>
+							<td data-field="wfmLookup">
+							<td data-field="wfmFunction">
+							<td data-field="wfmAction">
+							<td data-field="mwmLookup">
+							<td data-field="businessInfo">
+							<td data-field="docBusinessInfo">
+							<td data-field="trayConfig">
+							<td data-field="docTrayConfig">
+							<td data-field="mailVaribale">
+							<td data-field="optionSetting">
+							<td data-field="optionItemSetting">
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<div class="text-center">
+				<button id="btnUpdate" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnUpdate">#{更新}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

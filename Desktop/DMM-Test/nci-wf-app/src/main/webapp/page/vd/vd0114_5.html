@@ -1,0 +1,31 @@
+<!-- Radioパーツのプロパティ -->
+<script type="text/javascript" src="vd0114_5.js"></script>
+<div id="vd0114_5">
+	<label class="sub-title" data-i18n="radio">Radio</label>
+
+	<div class="form-group col-xs-4">
+		<span class="required" data-i18n="displayDirection">#{表示方向}</span>
+		<div>
+			<label class="radio-inline">
+				<input type="radio" name="displayMethod" value="0">
+				<span data-i18n="horizontal">#{横}</span>
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="displayMethod" value="1">
+				<span data-i18n="vertical">#{縦}</span>
+			</label>
+		</div>
+	</div>
+	<div class="form-group col-xs-4">
+		<span class="required" data-i18n="optionSetting">#{選択肢}</span>
+		<select id="optionId" class="form-control required"></select>
+	</div>
+	<div class="form-group col-xs-4">
+		<span class="" data-i18n="defaultValue">#{デフォルト値}</span>
+		<select id="defaultValue" class="form-control"></select>
+	</div>
+	<div class='form-group col-sm-2'>
+		<input id='readonly' type='checkbox' class='' value='true' />
+		<label for='readonly' data-i18n='readonly'>読取専用</label>
+	</div>
+</div>

@@ -1,0 +1,115 @@
+<!-- 文書属性(拡張)ブロック -->
+<article id="docBlock0005">
+	<div class="panel panel-default">
+		<div id="a1" class="panel-heading clearfix">
+			<span id="docBlock0005_expansion" class="collapse_btn collapsed" role="button" data-toggle="collapse" data-target="#docBlock0005_contents">
+				<i class="fa fa-chevron-down"></i><span data-field="blockName">#{関連元文書}</span>
+			</span>
+			<div class="topend_btn">
+				<a href="#pageend" class="pageend">END</a>
+			</div>
+			<div class="topend_btn">
+				<a href="#pagetop" class="pagetop">TOP</a>
+			</div>
+		</div>
+
+		<div id=docBlock0005_contents class="panel-body panel-collapse collapse">
+			<div class="form-horizontal col-lg-12 col-md-12 col-sm-12">
+				<div id="attributeExInfo" class="form-group tr hide">
+					<div class="col-lg-6 col-md-6 col-sm-6 td">
+						<select id=metaTemplateId class="form-control"></select>
+					</div>
+				</div>
+				<div id="attributeExs" class="form-group">
+					<table class="table table-bordered table-hover table-striped responsive">
+						<colgroup>
+							<col class="col-sm-2 col-xs-4" /><!-- メタ名称 -->
+							<col class="col-sm-10 col-xs-8" /><!-- 入力値 -->
+						</colgroup>
+						<thead>
+							<tr>
+								<th>
+									<span data-i18n="metaName">#{メタ名称}</span>
+								</th>
+								<th>
+									<span data-i18n="inputValue">#{入力値}</span>
+								</th>
+							</tr>
+						</thead>
+
+						<tbody></tbody>
+
+						<tfoot class="template hide">
+							<tr>
+								<td>
+									<span data-field="metaName" class=""></span>
+									<span class="hide" data-field="docMetaId"></span>
+									<span class="hide" data-field="metaTemplateId"></span>
+									<span class="hide" data-field="metaTemplateDetailId"></span>
+								</td>
+								<td class="metaValues">
+									<div class="refer">
+										<input type="checkbox" data-field="metaValue1" value="1" disabled/>
+										<span data-field="metaValue1" class="html-escaped" data-html-escaped="true"></span>
+										<span data-field="metaValue2" class="hide"></span>
+										<span data-field="metaValue3" class="hide"></span>
+										<span data-field="metaValue4" class="hide"></span>
+										<span data-field="metaValue5" class="hide"></span>
+									</div>
+									<div class="inputable">
+										<div class="input-group col-md-6 hide">
+											<input type="text" class="form-control txtMetaValue" data-field="metaValue1"/>
+										</div>
+										<div class="input-group col-md-3 hide">
+											<input type="text" class="form-control text-right numMetaValue" data-field="metaValue1"/>
+										</div>
+										<div class="input-group col-md-2 hide">
+											<input type="text" class="form-control ymdPicker dateMetaValue" data-field="metaValue1" data-validate='{"pattern":"date"}'/>
+											<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+										</div>
+										<div class="input-group col-lg-12 hide">
+											<textarea class="form-control txtareaMetaValue" rows="3" cols="200" maxlength="300" data-field="metaValue1"></textarea>
+										</div>
+										<div class="input-group col-lg-12 hide">
+											<input type="checkbox" class="chkMetaValue" value="1" data-field="metaValue1"/>
+										</div>
+										<div class="input-group col-lg-12 hide">
+											<span class="radioTarget"></span>
+											<input type="hidden" data-field="metaValue1"/>
+										</div>
+										<div class="input-group col-lg-12 hide">
+											<select class="ddlMetaValue" data-field="metaValue2"></select>
+											<input type="hidden" data-field="metaValue1"/>
+										</div>
+										<div class="input-group col-md-6 col-xs-12 hide">
+											<input type="text" class="form-control col-md-5 col-xs-9 orgMetaValue" readonly="readonly" data-field="metaValue1"/>
+											<span class="input-group-btn">
+												<button id="btnSelectOrg" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-info-sign"></i></button>
+											</span>
+											<span class="input-group-btn">
+												<button id="btnClearOrg" class="btn btn-default btn-sm clear-input-group"><i class="glyphicon glyphicon-remove-circle"></i></button>
+											</span>
+										</div>
+										<div class="input-group col-md-6 col-xs-12 hide">
+											<input type="text" class="form-control col-md-5 col-xs-9 usrMetaValue" readonly="readonly" data-field="metaValue1"/>
+											<span class="input-group-btn">
+												<button id="btnSelectUser" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-info-sign"></i></button>
+											</span>
+											<span class="input-group-btn">
+												<button id="btnClearUser" class="btn btn-default btn-sm clear-input-group"><i class="glyphicon glyphicon-remove-circle"></i></button>
+											</span>
+										</div>
+										<input type="hidden" data-field="metaValue2"/>
+										<input type="hidden" data-field="metaValue3"/>
+										<input type="hidden" data-field="metaValue4"/>
+										<input type="hidden" data-field="metaValue5"/>
+									</div>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</article>

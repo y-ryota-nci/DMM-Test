@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<style type="text/css">
+		html { box-sizing: border-box; } *, *:before, *:after { box-sizing: inherit; }
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./cm0090.js"></script>
+	<title>#{CM0090 参加者ロール選択}</title>
+</head>
+<body>
+	<header class="container-fluid"></header>
+
+	<section class="col-xs-12">
+		<article class="row">
+			<h1 class="page-header">参加者ロール選択</h1>
+		</article><!--/.row-->
+
+		<article class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#condition-contents"><i class="fa fa-chevron-up"></i><span data-i18n="searchCondition">検索条件</span></div>
+				<div id="condition-contents" class="panel-collapse collapse in">
+					<form id="formCondition" class="panel-body">
+						<input type="hidden" id="corporationCode" />
+						<input type="hidden" id="docFlag" />
+						<div class="tableBox">
+							<div class="tr">
+								<div class="col-lg-2 col-md-2 col-sm-2 th">
+									<label data-i18n="assignRoleCode">#{参加者ロールコード}</label>
+								</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 td">
+									<input type="text" id="assignRoleCode" class="form-control" maxlength="25"/>
+								</div>
+								<div class="col-lg-2 col-md-2 col-sm-2 th">
+									<label data-i18n="assignRoleName">#{参加者ロール名称}</label>
+								</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 td">
+									<input type="text" id="assignRoleName" class="form-control" maxlength="100"/>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="form-group text-center">
+				<button id="btnSearch" class="btn btn-primary">
+					<i class="fa fa-search"></i>
+					<span data-i18n="btnFilter">#{絞り込む}</span>
+				</button>
+				<button class="btn btn-default btnClose" data-close>
+					<i class="fa fa-times"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+		</article><!--/.row-->
+
+		<article id="seach-result" class="row invisible">
+			<!-- 検索結果サブタイトル -->
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#result-contents"><i class="fa fa-chevron-up"></i><span data-i18n="searchResult">検索結果</span></div>
+				<div id="result-contents" class="panel-body panel-collapse collapse in">
+
+					<!-- ページ制御 -->
+					<div class="fixed-table-pagination row">
+						<div class="pull-left col-sm-4 col-md-3">
+							<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+						</div>
+						<div class="pull-left col-sm-8 col-md-6 text-center">
+							<ul class="pagination"></ul>
+						</div>
+						<div class="pull-right pagination-detail col-sm-12 col-md-3">
+							<span data-i18n="rowCountPerPage">1ページの行数</span>
+							<select class="pageSize"></select>
+						</div>
+					</div>
+
+					<!-- 検索結果本体 -->
+					<div class="table-responsive">
+						<table class="table table-bordered table-hover table-striped responsive">
+							<colgroup>
+								<col style="width:35px" />
+								<col class="col-sm-3 col-xs-6" />
+								<col class="col-sm-6 col-xs-6" />
+								<col class="col-sm-3 hidden-xs" />
+							</colgroup>
+							<thead>
+							<tr>
+								<th></th>
+								<th><a href="#" data-i18n="assignRoleCode" data-sort="ASSIGN_ROLE_CODE">#{assignRoleCode}</a></th>
+								<th><a href="#" data-i18n="assignRoleName" data-sort="ASSIGN_ROLE_NAME, ASSIGN_ROLE_CODE">#{assignRoleName}</a></th>
+								<th class="hidden-xs"><a href="#" data-i18n="validTerm" data-sort="VALID_START_DATE, VALID_END_DATE, ASSIGN_ROLE_CODE">#{validTerm}</a></th>
+							</thead>
+
+							<tbody></tbody>
+
+							<tfoot class="template hide">
+							<tr>
+								<td class="text-center">
+									<input type="radio" name="rdoSelect" disabled/>
+								</td>
+								<td>
+									<a href="#" data-field="assignRoleCode">#{参加者ロールコード}</a>
+								</td>
+								<td>
+									<span data-field="assignRoleName">#{参加者ロール名称}</span>
+								</td>
+								<td class="hidden-xs">
+									<span data-field="validStartDate">#{有効開始日}</span>～<span data-field="validEndDate">#{有効終了日}</span>
+								</td>
+								<td class="hide">
+									<span data-field="corporationCode"></span>
+								</td>
+							</tr>
+							</tfoot>
+						</table>
+					</div>
+
+					<!-- ページ制御 -->
+					<div class="fixed-table-pagination row">
+						<div class="pull-left col-sm-4 col-lg-3">
+							<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+						</div>
+						<div class="pull-left col-sm-8 col-lg-6 text-center">
+							<ul class="pagination"></ul>
+						</div>
+						<div class="pull-right pagination-detail col-sm-12 col-lg-3">
+							<span data-i18n="rowCountPerPage">1ページの行数</span>
+							<select class="pageSize"></select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group text-center">
+				<button id="btnSelect" class="btn btn-primary" disabled>
+					<i class="fa fa-check"></i>
+					<span data-i18n="btnSelect">#{選択}</span>
+				</button>
+				<button class="btn btn-default btnClose" data-close>
+					<i class="fa fa-times"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+		</article>
+	</section>
+</body>
+</html>

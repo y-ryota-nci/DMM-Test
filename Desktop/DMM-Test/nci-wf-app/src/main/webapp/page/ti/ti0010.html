@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	#tblCategory>tbody label.category {
+		display: block;
+		width:100%;
+	}
+	input[name=categoryId]:checked~span {
+		font-weight : bold;
+		background-color : lavender;
+	}
+	i.glyphicon.glyphicon-folder-open,
+	i.glyphicon.glyphicon-folder-close {
+		display : none;
+	}
+	input[name=categoryId]:checked~i.glyphicon.glyphicon-folder-open {
+		display : inline;
+		color : orange;
+	}
+	input[name=categoryId]:not(:checked)~i.glyphicon.glyphicon-folder-close {
+		display : inline;
+		color : darkgray;
+	}
+	input[data-field=tableName]:checked+span {
+		font-weight : bold;
+	}
+	#btnDummy {
+		visibility : hidden;
+	}
+	.bold {
+		font-weight : bold;
+	}
+	span[data-field=comment] {
+		font-size : smaller;
+	}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./ti0010.js"></script>
+	<title>#{TI0010 マスタ取込設定}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<article id="TI0010" class="container">
+		<section class="row">
+			<span id="header" class="screen-name">#{TI0010}</span>
+			<div class="sub-title" data-i18n="TI0010">#{マスタ取込設定}</div>
+		</section>
+
+		<section class="container">
+			<div class="row">
+				<div class="col-xs-4 text-left">
+					<button id="btnEditCategory" class="btn btn-default" disabled>
+						<i class="glyphicon glyphicon-folder-open"></i>
+						<span data-i18n="btnEditCategory">#{カテゴリ編集}</span>
+					</button>
+				</div>
+				<div class="col-xs-4 text-center">
+					<button class="btn btn-primary btnUpdate" disabled>
+						<i class="glyphicon glyphicon-ok-sign"></i>
+						<span data-i18n="btnUpdate">#{更新}</span>
+					</button>
+				</div>
+			</div>
+		</section>
+		<section class="row">
+			<div id="divCategory" class="col-xs-3">
+				<h5 class="bold" data-i18n="selectCategory">#{カテゴリ選択}</h5>
+				<table id="tblCategory" class="table table-hover table-striped table-condensed responsive">
+					<tbody></tbody>
+					<tfoot class="template hide">
+						<tr>
+							<td>
+								<label class="category clickable">
+									<input name="categoryId" data-field="categoryId" type="radio" class="hide" />
+									<i class="glyphicon glyphicon-folder-open"></i>
+									<i class="glyphicon glyphicon-folder-close"></i>
+									<span data-field="categoryName">#{カテゴリ名}</span>
+									<span data-field="corporationCode" class="hide">#{企業コード}</span>
+								</label>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+
+			<div id="divAll" class="col-xs-9">
+				<button id="btnDummy" class="btn btn-default" disabled>
+					<span>#{カテゴリ編集ボタンとY座標の位置が合わないので、空白が出来ないようにするためのダミーボタン}</span>
+				</button>
+				<table id="tblAll" class="table table-hover table-striped table-condensed responsive">
+					<colgroup>
+						<col style="width:50%;" />
+						<col style="width:50%;" />
+					</colgroup>
+					<thead>
+						<tr>
+							<th data-i18n="phigicalTableName"></th>
+							<th data-i18n="logicalTableName"></th>
+					</thead>
+					<tbody></tbody>
+					<tfoot class="template hide">
+						<tr>
+							<td>
+								<label>
+									<input data-field="tableName" type="checkbox" />
+									<span data-field="tableName" class="form-control-static">#{テーブル名}</span>
+								</label>
+							</td>
+							<td>
+								<input data-field="comment" maxlength="30" class="form-control" />
+							</td>
+							<td data-field="tableyId" class="hide">#{テーブルID}</td>
+							<td data-field="entityType" class="hide">#{エンティティタイプ}</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</section>
+
+		<section class="container">
+			<div class="row">
+				<div class="text-center">
+					<button class="btn btn-primary btnUpdate" disabled>
+						<i class="glyphicon glyphicon-ok-sign"></i>
+						<span data-i18n="btnUpdate">#{更新}</span>
+					</button>
+				</div>
+			</div>
+		</section>
+
+	</article>
+</body>
+</html>

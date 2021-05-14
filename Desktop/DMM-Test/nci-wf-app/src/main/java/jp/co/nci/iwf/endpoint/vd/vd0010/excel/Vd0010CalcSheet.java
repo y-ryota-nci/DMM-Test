@@ -1,0 +1,23 @@
+package jp.co.nci.iwf.endpoint.vd.vd0010.excel;
+
+import java.util.List;
+
+/**
+ * コンテナ一覧のEXCELダウンロード用計算式シートBean
+ */
+public class Vd0010CalcSheet {
+	/** シート名 */
+	public String sheetName;
+
+	/** コンテナコード */
+	public String containerCode;
+
+	/** コンテナ名 */
+	public String containerName;
+
+	/** 出力日時 */
+	public java.util.Date outputDate;
+
+	/** パーツリスト */
+	public List<Vd0010CalcParts> partsList;
+}

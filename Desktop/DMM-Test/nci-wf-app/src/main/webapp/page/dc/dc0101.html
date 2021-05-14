@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<style type="text/css">
+		h4 {
+			font-weight: bold;
+		}
+		.dragZone {
+			border: 2px dotted #0B85A1;
+			color: #92AAB0;
+			text-align: left;
+			vertical-align: middle;
+			padding: 10px;
+			margin-bottom: 10px;
+			font-size: 200%;
+		}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src="./dc0101.js"></script>
+	<title>#{DC0101 文書ファイル管理}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+	<section class="col-xs-12">
+		<article class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header"></h1>
+			</div>
+		</article>
+		<article class="row mB20 mB20_sp">
+			<div class="col-lg-12">
+				<div class="submit_btn_area mB10 mB10_sp clearfix">
+					<div class="row col-sm-4 text-left clearfix">
+						<!-- 非ポップアップで起動した際は戻るボタン -->
+						<button id="btnBack" class="btn btn-default hide">
+							<i class="fa fa-reply"></i>
+							<span data-i18n="btnBack">#{戻る}</span>
+						</button>
+						<!-- ポップアップで起動した際は閉じるボタン -->
+						<button id="btnClose" class="btn btn-default hide">
+							<i class="fa fa-times"></i>
+							<span data-i18n="btnClose">#{閉じる}</span>
+						</button>
+					</div>
+					<div class="row col-sm-4 text-center clearfix">
+						<button id="btnUpdate" class="btn btn-success hide">
+							<i class="fa fa-copy"></i>
+							<span data-i18n="btnUpdate">#{更新}</span>
+						</button>
+						<button id="btnDelete" class="btn btn-success hide">
+							<i class="fa fa-copy"></i>
+							<span data-i18n="btnDelete">#{削除}</span>
+						</button>
+					</div>
+					<div class="row col-sm-4 pull-right text-right clearfix">
+						<button id="btnLock" class="btn btn-success hide">
+							<i class="fa fa-copy"></i>
+							<span data-i18n="btnLockAndEdit">#{ロックして編集する}</span>
+						</button>
+						<button id="btnUnlock" class="btn btn-success hide">
+							<i class="fa fa-copy"></i>
+							<span data-i18n="btnUnlock">#{ロック解除}</span>
+						</button>
+					</div>
+				</div>
+				<div id="lockInfo" class="clearfix form-inline text-left hide">
+					<i class="fa fa-lg fa-lock">:
+						<span data-i18n="editing">#{編集中}</span>
+						<span id="lockUserName"></span>
+						<span id="lockTimestamp"></span>
+					</i>
+				</div>
+			</div>
+		</article>
+
+		<article id="fileInfo" class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix">
+					<span id="fileInfo_expansion" class="heading_inner collapse_btn collapsed" role="button" data-toggle="collapse" data-target="#fileInfo-contents">
+						<i class="fa fa-chevron-down"></i><span data-i18n="fileInfo">#{ファイル情報}</span>
+					</span>
+				</div>
+				<div id="fileInfo-contents" class="panel-body panel-collapse collapse">
+					<table class="table table-bordered table-hover table-striped">
+						<colgroup>
+							<col class="col-lg-2 col-xs-4" />
+							<col class="col-lg-10 col-xs-8" />
+						</colgroup>
+						<tbody>
+							<tr>
+								<th data-i18n="fileName">#{ファイル名}</th>
+								<td>
+									<a href="javascript:void(0)" id="fileName" data-field="fileName" class="lnkDownloadDocFile">#{fileName}</a>
+									<span class="dispFileName" data-field="fileName">#{fileName}</span>
+									<span id="docId" class="hide"></span>
+									<span id="docFileId" class="hide"></span>
+									<span id="docFileDataId" class="hide" data-field="docFileDataId"></span>
+									<span id="version" class="hide"></span>
+								</td>
+							</tr>
+							<tr>
+								<th data-i18n="version">#{バージョン}</th>
+								<td>
+									<span data-field="majorVersion"></span>
+									<span>.</span>
+									<span data-field="minorVersion"></span>
+									<select id="updateVersionType" class="hide required"></select>
+								</td>
+							</tr>
+							<tr>
+								<th data-i18n="comment">#{コメント}</th>
+								<td>
+									<span id="dispComments" class="" data-field="comments"></span>
+									<input type="text" id="comments" class="form-control hide" data-validate='{"maxByteUtf8" : 4000}'></input>
+								</td>
+							</tr>
+							<tr>
+								<th data-i18n="registTimestamp">#{登録日時}</th>
+								<td>
+									<span data-field="timestampCreated" class="form-control-static"></span>
+								</td>
+							</tr>
+							<tr>
+								<th data-i18n="register">#{登録者}</th>
+								<td>
+									<span data-field="userNameCreated" class="form-control-static"></span>
+								</td>
+							</tr>
+							<tr>
+								<th data-i18n="updateTimestamp">#{更新日時}</th>
+								<td>
+									<span data-field="timestampUpdated" class="form-control-static"></span>
+								</td>
+							</tr>
+							<tr>
+								<th data-i18n="updater">#{更新者}</th>
+								<td>
+									<span data-field="userNameUpdated" class="form-control-static"></span>
+								</td>
+							</tr>
+							<tr id="uploadArea" class="hide">
+								<td colspan="2">
+									<div class="col-lg-12 mB10 mB10_sp">
+										<button id="btnUploadFile" class="btn btn-default btn-sm"><i class="fa fa-file"></i><span data-i18n="btnFileUpload">#{ファイルを選択...}</span></button>
+										<input type="file" id="fileUpload" class="hide" />
+									</div>
+									<div id="docFileDragableArea">
+										<div class="form-group col-sm-12 hidden-xs dragZone" data-i18n="dragAndDrop">#{ここにドラッグドロップすることでファイルアップロードが行われます}</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</article><!--/.row-->
+
+		<article id="fileHistoryInfo" class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix">
+					<span id="history_expansion" class="heading_inner collapse_btn collapsed" role="button" data-toggle="collapse" data-target="#history-contents">
+						<i class="fa fa-chevron-up"></i><span data-i18n="versionHistory">#{バージョン履歴}</span>
+					</span>
+				</div>
+				<div id="history-contents" class="panel-body panel-collapse collapse">
+					<table id="docFiles" class="table table-bordered table-hover table-striped responsive">
+						<colgroup>
+							<col style="width:40px;">
+							<col class="col-xs-4">
+							<col class="col-xs-2">
+							<col class="col-xs-6">
+						</colgroup>
+						<thead>
+							<tr>
+								<th data-i18n=""></th>
+								<th data-i18n="fileName">#{ファイル名}</th>
+								<th data-i18n="version">#{バージョン}</th>
+								<th data-i18n="comment">#{コメント}</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+						<tfoot class="hide template">
+							<tr>
+								<td>
+									<a href="javascript:void(0);"><i class="fa fa-fw fa-lg hide fa-download"></i></a>
+									<span class="hide" data-field="docFileId">#{docFileId}</span>
+									<span class="hide" data-field="version">#{version}</span>
+									<span class="hide" data-field="docFileDataId">#{docFileDataId}</span>
+								</td>
+								<td>
+									<!--<a href="javascript:void(0)" data-field="fileName" class="lnkDownloadDocFile">#{fileName}</a>-->
+									<span class="" data-field="fileName">#{fileName}</span>
+								</td>
+								<td>
+									<span class="" data-field="majorVersion"></span>
+									<span>.</span>
+									<span class="" data-field="minorVersion"></span>
+								</td>
+								<td>
+									<span id="dispComments" class="" data-field="comments"></span>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+		</article><!--/.row-->
+	</section>	<!--/.main-->
+
+	<!-- Informationダイアログ -->
+	<div id="informDlg" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+					<i class="fa fa-info-circle"></i>
+					<span id="infomsg"></span>
+				</div>
+				<div class="modal-footer text-center">
+					<button id="btnInformDlgOK" class="btn btn-primary" data-dismiss="modal">
+						<i class="fa fa-check-square"></i>
+						<span data-i18n="btnOK">#{OK}</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

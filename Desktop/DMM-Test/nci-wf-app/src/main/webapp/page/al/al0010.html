@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+		.blue {
+			color : blue !important;
+			font-weight : bold;
+		}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./al0010.js"></script>
+	<title>{AL0010 アクセスログ検索}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="container">
+		<div class="row">
+			<span class="screen-name">#{AL0010}</span>
+
+			<!-- javascript不要なアコーディオン -->
+			<article class="ac-container">
+				<input id="ac-1" type="checkbox" class="ac-trigger"/>
+				<label for="ac-1" class="ac-label sub-title">
+					<i class="glyphicon glyphicon-plus-sign"></i>
+					<span data-i18n="filterCondition">#{絞り込み条件を設定する}</span>
+					<i class="glyphicon glyphicon-chevron-up arrow-up"></i>
+					<i class="glyphicon glyphicon-chevron-down arrow-down"></i>
+				</label>
+				<form id="formCondition" class="ac-contents">
+					<div class="form-group col-sm-4 col-md-3">
+						<span data-i18n="corporation">#{企業}</span>
+						<select id="opeCorporationCode" class="form-control"></select>
+					</div>
+					<div class="form-group col-sm-4 col-md-3">
+						<span data-i18n="accessDate" class="required">#{アクセス日付</span>
+						<div class="has-feedback">
+							<input id="accessDate" class="ymdPicker form-control required" data-validate='{ "pattern" : "date" }' maxlength="10" />
+							<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+						</div>
+					</div>
+					<div class="form-group col-sm-4 col-md-3">
+						<span data-i18n="accessTime" class="required">#{時刻}</span>
+						<div class="input-group">
+							<input id="accessTmFrom" class="form-control required" data-validate='{ "pattern" : "time", "to" : "#accessTmTo" }' maxlength="5" />
+							<span class="input-group-addon">～</span>
+							<input id="accessTmTo" class="form-control" data-validate='{ "pattern" : "time", "from" : "#accessTmFrom" }' maxlength="5" />
+						</div>
+					</div>
+					<div class="form-group col-sm-4 col-md-3">
+						<span data-i18n="accessLogResultType">#{結果種別}</span>
+						<select id="accessLogResultType" class="form-control"></select>
+					</div>
+					<div class="form-group col-sm-4 col-md-3">
+						<span>ID</span>
+						<input type="text" id="accessLogId" class="form-control text-right" maxlength="24"
+								data-validate='{ "pattern": "integer", "max" : 9999999999999999999, "min" : -9999999999999999999, "notAddComma": true }' />
+					</div>
+					<div class="form-group col-sm-4 col-md-3">
+						<span data-i18n="operatorLoginId">#{操作者ログインID}</span>
+						<input type="text" id="opeUserAddedInfo" class="form-control" maxlength="100" />
+					</div>
+					<div class="form-group col-sm-4 col-md-3">
+						<span data-i18n="operatorLoginName">#{操作者氏名}</span>
+						<input type="text" id="opeUserName" class="form-control" maxlength="100" />
+					</div>
+					<div class="form-group col-sm-6">
+						<span data-i18n="operatorSessionId">#{操作者セッションID}</span>
+						<input type="text" id="sessionId" class="form-control" maxlength="90" />
+					</div>
+					<div class="form-group col-sm-6">
+						<span data-i18n="opeBrowswer">#{操作者ブラウザ}</span>
+						<input type="text" id="userAgent" class="form-control" maxlength="512" />
+					</div>
+					<div class="form-group col-sm-4 col-md-3">
+						<span data-i18n="operatorIpAddress">#{操作者IPアドレス}</span>
+						<input type="text" id="opeIpAddress" class="form-control" maxlength="40" />
+					</div>
+					<div class="form-group col-sm-4 col-md-3">
+						<span data-i18n="screenId">#{画面ID}</span>
+						<input type="text" id="screenId" class="form-control" maxlength="90" />
+					</div>
+					<div class="form-group col-sm-4 col-md-3">
+						<span data-i18n="screenName">画面名</span>
+						<input type="text" id="screenName" class="form-control" maxlength="100" />
+					</div>
+					<div class="form-group col-sm-4 col-md-3">
+						<span data-i18n="operation">#{操作}</span>
+						<input type="text" id="actionName" class="form-control" maxlength="90" />
+					</div>
+					<div class="form-group col-sm-4 col-md-3">
+						<span data-i18n="appVersion">#{APPバージョン}</span>
+						<input type="text" id="appVersion" class="form-control" maxlength="90" />
+					</div>
+					<div class="form-group col-sm-4 col-md-3">
+						<span data-i18n="dbDestination">#{DB接続先}</span>
+						<input type="text" id="dbConnectString" class="form-control" maxlength="90" />
+					</div>
+					<div class="form-group col-sm-4 col-md-3">
+						<span data-i18n="hostIpAddr">#{ホストIPアドレス}</span>
+						<input type="text" id="hostIpAddress" class="form-control" maxlength="40" />
+					</div>
+					<div class="form-group col-sm-4 col-md-3">
+						<span data-i18n="hostPort">#{ホストポート番号}</span>
+						<input type="text" id="hostPort" class="form-control" maxlength="5" data-validate='{"pattern":"integer", "min":1, "max":65536}' />
+					</div>
+					<div class="form-group col-sm-4 col-md-3">
+						<span data-i18n="threadName">#{スレッド名}</span>
+						<input type="text" id="threadName" class="form-control" maxlength="90" />
+					</div>
+					<div class="form-group col-sm-4 col-md-3">
+						<span data-i18n="spoofingUserAddedInfo">#{なりすまししたユーザのログインID}</span>
+						<input type="text" id="spoofingUserAddedInfo" class="form-control" maxlength="50" />
+					</div>
+					<div class="form-group col-sm-4 col-md-3">
+						<span data-i18n="spoofingUserName">#{なりすまししたユーザの氏名}</span>
+						<input type="text" id="spoofingUserName" class="form-control" maxlength="100" />
+					</div>
+					<div class="form-group col-sm-12">
+						<span data-i18n="accessLogDetailEtc">#{アクセスログ詳細　(スタックトレースの一部など) }</span>
+						<input type="text" id="accessLogDetail" class="form-control" maxlength="100" />
+					</div>
+				</form>
+			</article>
+			<div class="form-group text-center">
+				<button id="btnSearch" class="btn btn-primary">
+					<i class="glyphicon glyphicon-search"></i>
+					<span data-i18n="btnFilter">#{btnFilter}</span>
+				</button>
+				<button id="btnReset" class="btn btn-default">
+					<i class="glyphicon glyphicon-refresh"></i>
+					<span data-i18n="btnReset">#{btnReset}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+
+	<section id="seach-result" class="container hide">
+		<div class="row" >
+			<!-- 検索結果サブタイトル -->
+			<div class="inline-group sub-title">
+				<div class="col-xs-3 text-left">
+					<i class="glyphicon glyphicon-info-sign"></i>
+					<span class="hidden-xs" data-i18n="searchResult">#{検索結果}</span>
+				</div>
+
+				<div class="col-xs-7 text-center">
+					<span>
+						<span data-i18n="pageCount">PAGE</span>:
+						<span class="page-no">#{page-no}</span>
+						 /
+						 <span class="page-count">#{page-count}</span>
+					</span>
+					<span class="hidden-xs">
+						&nbsp;&nbsp;
+						<span data-i18n="totalCount">#{総件数}</span>:
+						<span class="all-count">#{all-count}</span>
+					</span>
+				</div>
+
+				<!-- 設定アイコン -->
+				<div class="col-xs-2 pull-right text-right dropdown">
+					<i class="glyphicon glyphicon-cog dropdown-toggle clickable" data-toggle="dropdown"></i>
+
+					<!-- 設定アイコン押下時のエリア -->
+					<div class="dropdown-menu pageSizeConfig">
+			 			<label data-i18n="rowCountPerPage">{１ページの行数}</label>
+						<select class="pageSize" class="form-control"></select>
+					</div>
+				</div>
+			</div>
+
+			<div class="text-center">
+				<ul class="pagination"></ul>
+			</div>
+
+			<table class="table table-hover table-striped table-condensed responsive">
+				<colgroup>
+					<col class="col-md-1" />
+					<col class="col-md-1" />
+					<col class="col-md-3" />
+					<col class="col-md-4" />
+					<col class="col-md-2" />
+					<col class="col-md-1" />
+				</colgroup>
+				<thead>
+				<tr>
+					<th><a href="#" data-sort="AL.ACCESS_LOG_ID">ID</a>
+					<th><a href="#" data-i18n="accessTime" data-sort="AL.ACCESS_TIME, AL.ACCESS_LOG_ID">#{アクセス日時}</a>
+					<th><a href="#" data-i18n="operatedUser" data-sort="AL.OPE_CORPORATION_CODE, AL.OPE_USER_CODE, AL.ACCESS_LOG_ID">#{操作者}</a>
+					<th><a href="#" data-i18n="screen" data-sort="AL.SCREEN_NAME, AL.ACCESS_LOG_ID">#{画面}</a>
+					<th><a href="#" data-i18n="operation" data-sort="AL.ACTION_NAME, AL.ACCESS_LOG_ID">#{操作}</a>
+					<th><a href="#" data-i18n="accessLogResultType" data-sort="AL.ACCESS_LOG_RESULT_TYPE, AL.ACCESS_LOG_ID">#{結果種別}</a>
+				</thead>
+
+				<tbody id="screens"></tbody>
+
+				<tfoot class="template hide">
+				<tr>
+					<td class="text-left"><a href="#" data-field="accessLogId">#{accessLogId}</a></td>
+					<td class="text-left"><span data-field="accessTm">#{accessTm}</span></td>
+					<td class="text-left">
+						<span data-field="spoofingSign" class="blue"></span>
+						<span data-field="opeUserAddedInfo">#{opeUserAddedInfo}</span>
+						<span data-field="opeUserName">#{opeUserName}</span></td>
+					<td class="text-left"><span data-field="screenId">#{screenId}</span>&nbsp;<span data-field=screenName>#{screenName}</span>
+					<td class="text-left"><span data-field="actionName">#{actionName}</span>
+					<td class="text-left"><span data-field="accessLogResultTypeName">#{accessLogResultTypeName}</span></td>
+				</tfoot>
+			</table>
+
+			<div class="text-center">
+				<ul class="pagination"></ul>
+			</div>
+
+			<label data-i18n="MSG0168" class="text-muted">{※[**] は「なりすまし」された操作です。}</label>
+		</div>
+	</section>
+</body>
+</html>

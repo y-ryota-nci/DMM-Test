@@ -1,0 +1,306 @@
+﻿# A5:ER FORMAT:12
+# A5:ER ENCODING:UTF8
+# A5:ER Mk-1 Copyright (C)2007 m.matsubara
+# A5:SQL Mk-2 Copyright (C)1997 m.matsubara
+#  http://www.wind.sannet.ne.jp/m_matsu/developer/a5m2/
+
+[Manager]
+ProjectName=Wish_ER(IWFパッケージ)
+Author=
+MaxEntityRowShow=1000
+ReadOnlyRecommend=0
+Page=カタログ
+PageInfo="カタログ",2,"A3Landscape",$FFFFFF
+Domain=ID=NUMBER(18,0)
+DomainInfo="ID","NUMBER(18,0)",""
+Domain=企業コード=VARCHAR2(10)
+DomainInfo="企業コード","VARCHAR2(10)",""
+Domain=発注No=VARCHAR2(25)
+DomainInfo="発注No","VARCHAR2(25)",""
+Domain=数量=NUMBER(10,2)
+DomainInfo="数量","NUMBER(10,2)",""
+Domain=金額=NUMBER(15, 5)
+DomainInfo="金額","NUMBER(15, 5)",""
+Domain=ユーザコード=VARCHAR2(25)
+DomainInfo="ユーザコード","VARCHAR2(25)",""
+Domain=ユーザ付加情報=VARCHAR2(50)
+DomainInfo="ユーザ付加情報","VARCHAR2(50)",""
+Domain=組織コード=VARCHAR2(10)
+DomainInfo="組織コード","VARCHAR2(10)",""
+Domain=役職コード=VARCHAR2(10)
+DomainInfo="役職コード","VARCHAR2(10)",""
+Domain=文字列キー=VARCHAR2(10)
+DomainInfo="文字列キー","VARCHAR2(10)",""
+Domain=名称(短)=VARCHAR2(90)
+DomainInfo="名称(短)","VARCHAR2(90)",""
+Domain=名称(中)=VARCHAR2(300)
+DomainInfo="名称(中)","VARCHAR2(300)",""
+Domain=名称(長)=VARCHAR2(900)
+DomainInfo="名称(長)","VARCHAR2(900)",""
+Domain=説明=VARCHAR(4000)
+DomainInfo="説明","VARCHAR(4000)",""
+Domain=整数型(短)=NUMBER(4,0)
+DomainInfo="整数型(短)","NUMBER(4,0)",""
+Domain=フラグ=CHAR(1)
+DomainInfo="フラグ","CHAR(1)",""
+Domain=色(HTML)=VARCHAR2(7)
+DomainInfo="色(HTML)","VARCHAR2(7)",""
+Domain=タイムスタンプ=TIMESTAMP(3)
+DomainInfo="タイムスタンプ","TIMESTAMP(3)",""
+LogicalView=1
+DecodeDomain=0
+ViewModePageIndividually=1
+ViewMode=2
+ViewFormat=0
+UseNondependenceDashLine=0
+FontName=Tahoma
+FontSize=6
+PaperSize=A4Landscape
+HeaderLeft=
+HeaderCenter=
+HeaderRight=
+FooterLeft=
+FooterCenter=
+FooterRight=
+ShowPageoutRelation=1
+RDBMSTypeName=Oracle Database
+GenerateDropTableStatement=1
+DropTableIfExists=0
+CommonField="バージョン","VERSION","*ID","NOT NULL",,"1","",$FFFFFFFF
+CommonField="削除フラグ","DELETE_FLAG","*フラグ","NOT NULL",,"\q0\q","1:削除、0:有効",$FFFFFFFF
+CommonField="登録会社CD","CORPORATION_CODE_CREATED","*企業コード","NOT NULL",,"\q-\q","",$FFFFFFFF
+CommonField="登録者","USER_CODE_CREATED","*ユーザコード","NOT NULL",,"\q-\q","",$FFFFFFFF
+CommonField="登録日時","TIMESTAMP_CREATED","*タイムスタンプ","NOT NULL",,"systimestamp","",$FFFFFFFF
+CommonField="更新会社CD","CORPORATION_CODE_UPDATED","*企業コード","NOT NULL",,"\q-\q","",$FFFFFFFF
+CommonField="更新者","USER_CODE_UPDATED","*ユーザコード","NOT NULL",,"\q-\q","",$FFFFFFFF
+CommonField="更新日時","TIMESTAMP_UPDATED","*タイムスタンプ","NOT NULL",,"systimestamp","",$FFFFFFFF
+DefaultPkName=PK_%0:s
+DefaultPkIndexName=PKI_%0:s
+DefaultIndexName=IDX_%0:s_%1:d
+DefaultFkName=FK_%0:s_%1:d
+SqlSeparator=1
+ShowTag=1
+ShowCommonAttributes=0
+
+[Relation]
+Entity1=MWM_CATALOG
+Entity2=MWM_CATALOG_USED_DEPARTMENT
+RelationType1=2
+RelationType2=3
+Fields1=CATALOG_ID
+Fields2=CATALOG_ID
+Cardinarity1=
+Cardinarity2=
+Position="カタログ",0,2073,7927,866,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20180510153020
+LineMode=0
+Bar1=207
+Bar2=793
+Bar3=87
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_CATALOG_USED_DEPARTMENT
+LName=カタログ利用部門定義
+Comment=カタログ利用部門定義
+TableOption=
+Page=カタログ
+Left=500
+Top=1050
+Field="カタログ利用部門ID","CATALOG_USED_DEPARTMENT_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="カタログID","CATALOG_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="組織コード","ORGANIZATION_CODE","*組織コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="担当部門フラグ","IN_CHARGE_FLAG","*フラグ","NOT NULL",,"0","",$FFFFFFFF,""
+Index==1,CATALOG_ID,CORPORATION_CODE,ORGANIZATION_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180510180838
+Position="カタログ",500,1050
+
+[Relation]
+Entity1=MWM_CATALOG
+Entity2=MWM_CATALOG_CATEGORY
+RelationType1=2
+RelationType2=4
+Fields1=CATALOG_CATEGORY_ID
+Fields2=CATALOG_CATEGORY_ID
+Cardinarity1=
+Cardinarity2=
+Position="カタログ",0,3515,8439,1367,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20180426113844
+LineMode=0
+Bar1=352
+Bar2=844
+Bar3=137
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=MWM_CATALOG
+Entity2=MWM_CATALOG_UNIT
+RelationType1=2
+RelationType2=4
+Fields1=CATALOG_UNIT_ID
+Fields2=CATALOG_UNIT_ID
+Cardinarity1=
+Cardinarity2=
+Position="カタログ",0,5896,8439,1125,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20180426113610
+LineMode=0
+Bar1=590
+Bar2=844
+Bar3=112
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=MWM_CATALOG
+Entity2=MWM_CATALOG_IMAGE
+RelationType1=2
+RelationType2=2
+Fields1=CATALOG_ID
+Fields2=CATALOG_ID
+Cardinarity1=
+Cardinarity2=
+Position="カタログ",0,862,9138,762,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20180426112349
+LineMode=0
+Bar1=86
+Bar2=914
+Bar3=76
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_CATALOG_CATEGORY
+LName=カタログカテゴリ定義
+Comment=カタログカテゴリ定義
+TableOption=
+Page=カタログ
+Left=950
+Top=200
+Field="カタログカテゴリID","CATALOG_CATEGORY_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="カタログカテゴリコード","CATALOG_CATEGORY_CODE","*文字列キー","NOT NULL",,"","",$FFFFFFFF,""
+Field="カタログカテゴリ名","CATALOG_CATEGORY_NAME","*名称(短)","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,CORPORATION_CODE,CATALOG_CATEGORY_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180426174749
+Position="カタログ",950,200
+
+[Line]
+Page=カタログ
+Left=798
+Top=2820
+Width=0
+Height=0
+
+[Entity]
+PName=MWM_CATALOG_IMAGE
+LName=カタログ画像定義
+Comment=カタログ画像定義
+TableOption=
+Page=カタログ
+Left=650
+Top=100
+Field="カタログ画像ID","CATALOG_IMAGE_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="カタログID","CATALOG_ID","*ID","NOT NULL",,"-1","",$FFFFFFFF,""
+Field="ファイル名称","FILE_NAME","*名称(長)","NOT NULL",,"","",$FFFFFFFF,""
+Field="ファイルデータ","FILE_DATA","BLOB","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180426112308
+Position="カタログ",650,100
+
+[Line]
+Page=カタログ
+Left=197
+Top=2159
+Width=0
+Height=0
+
+[Entity]
+PName=MWM_CATALOG_UNIT
+LName=カタログ単位定義
+Comment=カタログ単位定義
+TableOption=
+Page=カタログ
+Left=700
+Top=700
+Field="カタログ単位ID","CATALOG_UNIT_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="カタログ単位コード","CATALOG_UNIT_CODE","*文字列キー","NOT NULL",,"","",$FFFFFFFF,""
+Field="カタログ単位名","CATALOG_UNIT_NAME","*名称(短)","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,CORPORATION_CODE,CATALOG_UNIT_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180426174819
+Position="カタログ",700,700
+
+[Entity]
+PName=MWM_CATALOG
+LName=カタログ定義
+Comment=カタログ定義
+TableOption=
+Page=カタログ
+Left=150
+Top=100
+Field="カタログID","CATALOG_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="カタログコード","CATALOG_CODE","*文字列キー","NOT NULL",,"","",$FFFFFFFF,""
+Field="カタログ名","CATALOG_NAME","*名称(短)","NOT NULL",,"","",$00FF4100,""
+Field="カタログカテゴリID","CATALOG_CATEGORY_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="在庫区分","STOCK_TYPE","*フラグ","NOT NULL",,"0","",$FFFFFFFF,""
+Field="発注先","VENDOR_NAME","*名称(短)","NOT NULL",,"","",$FFFFFFFF,""
+Field="カタログ単位ID","CATALOG_UNIT_ID","*名称(短)","NOT NULL",,"","",$FFFFFFFF,""
+Field="金額","UNIT_PRICE","NUMBER","NOT NULL",,"","",$FFFFFFFF,""
+Field="消費税区分","SALES_TAX_TYPE","*フラグ","NOT NULL",,"","",$FFFFFFFF,""
+Field="メーカー","MAKER_NAME","*名称(短)",,,"","",$FFFFFFFF,""
+Field="メーカー型式","MAKER_MODEL_NUMBER","*名称(短)",,,"","",$FFFFFFFF,""
+Field="備考","REMARKS","*説明",,,"","",$FFFFFFFF,""
+Index==1,CATALOG_CODE,CORPORATION_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180426161122
+Position="カタログ",150,100,203,324
+
+[Shape]
+Page=カタログ
+Left=60
+Top=32
+Width=1365
+Height=2813
+ShapeType=Rectangle
+Text=カタログ関連
+FontName=Tahoma
+FontSize=10
+FontColor=$000000
+TextAlign=$0
+ImageFileName=
+
+[Line]
+Page=カタログ
+Left=3242
+Top=1649
+Width=0
+Height=0

@@ -1,0 +1,2078 @@
+#文書フォルダ情報取得
+DC0001: |+
+ select /* DC0001 */
+     DF.*
+ from MWV_DOC_FOLDER DF
+ where DF.LOCALE_CODE = ?
+   and DF.DELETE_FLAG = '0'
+   ###REPLACE_DC0001_01###
+
+#アクセス可能な文書フォルダの絞込み条件(一般ユーザ用)
+DC0001_01: |+
+ and trunc(SYSDATE) between DF.VALID_START_DATE and DF.VALID_END_DATE
+ and exists (select /* DC0001_01 */ * from MWM_DOC_FOLDER_ACCESSIBLE_INFO DFA where DFA.DOC_FOLDER_ID = DF.DOC_FOLDER_ID and HASH_VALUE in (###REPLACE###) and DFA.AUTH_REFER = '1' and DFA.DELETE_FLAG = '0')
+
+#文書フォルダ情報件数取得
+DC0001_02: |+
+ select /* DC0001_02 */ count(*)
+ from (
+   ###REPLACE###
+ ) X
+
+#文書フォルダ情報一覧取得
+DC0001_03: |+
+ select /* DC0001_03 */
+   X.*
+ from (
+   ###REPLACE###
+ ) X
+
+#文書ファイル一覧取得
+DC0002: |+
+ select /* DC0002 */
+   *
+ from MWT_DOC_FILE_INFO
+ where
+   DELETE_FLAG = '0'
+   and
+
+#文書情報のロック/ロック解除処理
+DC0003: |+
+ update /* DC0003 */ MWT_DOC_INFO
+ set
+    LOCK_FLAG = ?
+  , LOCK_TIMESTAMP = ?
+  , LOCK_CORPORATION_CODE = ?
+  , LOCK_CORPORATION_NAME = ?
+  , LOCK_USER_CODE = ?
+  , LOCK_USER_NAME = ?
+  , CORPORATION_CODE_UPDATED = ?
+  , USER_CODE_UPDATED = ?
+  , TIMESTAMP_UPDATED = ?
+  , VERSION = VERSION + 1
+ where
+  DOC_ID = ?
+  and DELETE_FLAG = '0'
+
+#文書ファイル情報のロック/ロック解除処理
+DC0004: |+
+ update /* DC0004 */ MWT_DOC_FILE_INFO
+ set
+    LOCK_FLAG = ?
+  , LOCK_TIMESTAMP = ?
+  , LOCK_CORPORATION_CODE = ?
+  , LOCK_CORPORATION_NAME = ?
+  , LOCK_USER_CODE = ?
+  , LOCK_USER_NAME = ?
+  , CORPORATION_CODE_UPDATED = ?
+  , USER_CODE_UPDATED = ?
+  , TIMESTAMP_UPDATED = ?
+  , VERSION = VERSION + 1
+ where
+  DELETE_FLAG = '0'
+
+#文書情報Entity取得
+DC0005: |+
+ select /* DC0005 */
+   rownum ID
+   , MDI.*
+   , MDFRI.DOC_FOLDER_RELATION_ID
+   , MDFRI.DOC_FOLDER_ID
+   , ACC.AUTH_REFER
+   , ACC.AUTH_DOWNLOAD
+   , ACC.AUTH_EDIT
+   , ACC.AUTH_DELETE
+   , ACC.AUTH_COPY
+   , ACC.AUTH_MOVE
+   , ACC.AUTH_PRINT
+   , nvl(L1.LOOKUP_NAME, MDI.PUBLISH_FLAG) AS PUBLISH_FLAG_NAME
+   , DF.FOLDER_PATH
+ from
+   MWT_DOC_INFO MDI
+     inner join WFM_LOCALE L
+       on L.LOCALE_CODE = ?
+     inner join MWT_DOC_FOLDER_RELATION_INFO MDFRI
+       on MDFRI.DOC_ID = MDI.DOC_ID
+       and MDFRI.DELETE_FLAG = '0'
+     inner join MWV_DOC_FOLDER DF
+       on DF.DOC_FOLDER_ID = MDFRI.DOC_FOLDER_ID
+     inner join (###JOIN_TABLE###) ACC
+       on ACC.DOC_ID = MDI.DOC_ID
+     left join MWM_LOOKUP L1
+       on L1.CORPORATION_CODE = MDI.CORPORATION_CODE
+       and L1.LOOKUP_GROUP_ID = 'PUBLISH_FLAG'
+       and L1.LOCALE_CODE = L.LOCALE_CODE
+       and L1.LOOKUP_ID = MDI.PUBLISH_FLAG
+       and L1.DELETE_FLAG = '0'
+ where
+   MDI.DOC_ID = ?
+   and MDI.DELETE_FLAG = '0'
+
+#権限情報取得（企業管理者の場合）
+DC0005_01: |+
+ select /* DC0005_01 */
+     ? AS DOC_ID
+   , '1' AS AUTH_REFER
+   , '1' AS AUTH_DOWNLOAD
+   , '1' AS AUTH_EDIT
+   , '1' AS AUTH_DELETE
+   , '1' AS AUTH_COPY
+   , '1' AS AUTH_MOVE
+   , '0' AS AUTH_PRINT
+ from
+   dual
+
+#権限情報取得（一般ユーザの場合）
+DC0005_02: |+
+ select /* DC0005_02 */
+     DOC_ID
+   , max(AUTH_REFER) AS AUTH_REFER
+   , max(AUTH_DOWNLOAD) AS AUTH_DOWNLOAD
+   , max(AUTH_EDIT) AS AUTH_EDIT
+   , max(AUTH_DELETE) AS AUTH_DELETE
+   , max(AUTH_COPY) AS AUTH_COPY
+   , max(AUTH_MOVE) AS AUTH_MOVE
+   , max(AUTH_PRINT) AS AUTH_PRINT
+ from
+   MWV_DOC_ACCESSIBLE_INFO
+ where
+   AUTH_REFER = '1'
+   and HASH_VALUE in (###REPLACE###)
+ group by
+   DOC_ID
+
+#文書ファイルEntity取得
+DC0006: |+
+ select /* DC0006 */
+   MDFI.DOC_FILE_ID
+   , MDFI.CORPORATION_CODE
+   , MDFI.DOC_FILE_NUM
+   , MDFI.DOC_ID
+   , MDFI.MAJOR_VERSION
+   , MDFI.MINOR_VERSION
+   , MDFI.COMMENTS
+   , MDFI.DOC_FILE_DATA_ID
+   , MDFI.LOCK_FLAG
+   , MDFI.LOCK_TIMESTAMP
+   , MDFI.LOCK_CORPORATION_CODE
+   , MDFI.LOCK_CORPORATION_NAME
+   , MDFI.LOCK_USER_CODE
+   , MDFI.LOCK_USER_NAME
+   , MDFI.USER_NAME_CREATED
+   , MDFI.USER_NAME_UPDATED
+   , MDFI.VERSION
+   , MDFI.DELETE_FLAG
+   , MDFI.TIMESTAMP_CREATED
+   , MDFI.TIMESTAMP_UPDATED
+   , MDFI.DOC_FILE_WF_ID
+   , MDFD.FILE_NAME
+   , MDFD.FILE_SIZE
+   , MDI.TITLE
+   , ACC.AUTH_REFER
+   , ACC.AUTH_DOWNLOAD
+   , case
+       when MDI.PROCESS_ID IS NOT NULL then '0'
+       else ACC.AUTH_EDIT
+     end as AUTH_EDIT
+   , case
+       when MDI.PROCESS_ID IS NOT NULL then '0'
+       else ACC.AUTH_DELETE
+     end as AUTH_DELETE
+   , case
+       when MDI.PROCESS_ID IS NOT NULL then '0'
+       else ACC.AUTH_COPY
+     end as AUTH_COPY
+   , case
+       when MDI.PROCESS_ID IS NOT NULL then '0'
+       else ACC.AUTH_MOVE
+     end as AUTH_MOVE
+   , case
+       when MDI.PROCESS_ID IS NOT NULL then '0'
+       else ACC.AUTH_PRINT
+     end as AUTH_PRINT
+   , case
+       when DWR.DOC_ID IS NOT NULL then '1'
+       else '0'
+     end WF_APPLYING
+ from
+   MWT_DOC_FILE_INFO MDFI
+     inner join MWT_DOC_FILE_DATA MDFD
+       on MDFD.DOC_FILE_DATA_ID = MDFI.DOC_FILE_DATA_ID
+       and MDFD.DELETE_FLAG = '0'
+     inner join MWT_DOC_INFO MDI
+       on MDI.DOC_ID = MDFI.DOC_ID
+       and MDI.DELETE_FLAG = '0'
+     inner join MWT_DOC_FOLDER_RELATION_INFO MDFRI
+       on MDFRI.DOC_ID = MDI.DOC_ID
+       and MDFRI.DELETE_FLAG = '0'
+     inner join (###JOIN_TABLE###) ACC
+       on ACC.DOC_ID = MDI.DOC_ID
+     left join (
+       select
+         A.DOC_ID
+       from
+         MWT_DOC_WF_RELATION A
+       where
+         exists (
+           select
+             B.*
+           from
+             WFT_PROCESS B
+           where
+             B.CORPORATION_CODE = A.CORPORATION_CODE
+             and B.PROCESS_ID = A.PROCESS_ID
+             and B.PROCESS_STATUS in ('start', 'wait', 'run')
+             and B.APPROVAL_STATUS = '1'
+         )
+       group by
+         A.DOC_ID
+     ) DWR
+       on DWR.DOC_ID = MDI.DOC_ID
+ where
+   MDFI.DELETE_FLAG = '0'
+
+#文書ファイルの一括削除処理(論理削除)
+DC0007: |+
+ update /* DC0007 */ MWT_DOC_FILE_INFO
+ set
+    LOCK_FLAG = '0'
+  , LOCK_TIMESTAMP = NULL
+  , LOCK_CORPORATION_CODE = NULL
+  , LOCK_CORPORATION_NAME = NULL
+  , LOCK_USER_CODE = NULL
+  , LOCK_USER_NAME = NULL
+  , CORPORATION_CODE_UPDATED = ?
+  , USER_CODE_UPDATED = ?
+  , TIMESTAMP_UPDATED = ?
+  , VERSION = VERSION + 1
+  , DELETE_FLAG = '1'
+ where
+
+#文書ファイルデータの一括削除処理(物理削除)
+DC0008: |+
+ delete /* DC0008 */ MWT_DOC_FILE_DATA where DELETE_FLAG = '1' and
+
+#文書ファイル履歴Entity取得
+DC0009: |+
+ select /* DC0009 */
+     MDFIH.*
+   , MDFD.FILE_NAME
+   , MDFD.FILE_SIZE
+   , MDI.TITLE
+ from
+   MWT_DOC_FILE_INFO_HISTORY MDFIH
+     inner join MWT_DOC_FILE_DATA MDFD
+       on MDFD.DOC_FILE_DATA_ID = MDFIH.DOC_FILE_DATA_ID
+       and MDFD.DELETE_FLAG = '0'
+     inner join MWT_DOC_INFO MDI
+       on MDI.DOC_ID = MDFIH.DOC_ID
+       and MDI.DELETE_FLAG = '0'
+ where
+   MDFIH.DOC_FILE_ID = ?
+   and MDFIH.DELETE_FLAG = '0'
+ order by
+   MDFIH.HISTORY_SEQ_NO desc
+
+#文書フォルダパス取得
+DC0010: |+
+ select /* DC0010 */
+   DF.DOC_FOLDER_ID
+   , DF.FOLDER_PATH
+ from
+   MWV_DOC_FOLDER DF
+ where
+   DF.CORPORATION_CODE = ?
+   and DF.DELETE_FLAG = '0'
+   and DF.LOCALE_CODE = ?
+   ###REPLACE_DC0001_01###
+
+#業務文書情報取得(新規登録時)
+DC0011: |+
+ select /* DC0011 */
+   rownum ID
+   , NULL AS BIZ_DOC_ID
+   , NULL AS DOC_ID
+   , MSDF.SCREEN_DOC_ID
+   , NULL AS TRAN_ID
+   , MSDF.CORPORATION_CODE
+   , MSDF.SCREEN_DOC_NAME
+   , MSDF.SCREEN_ID
+   , MSDF.SCREEN_NAME
+   , MSDF.SCREEN_PROCESS_CODE
+ from
+    MWV_SCREEN_DOC_DEF MSDF
+ where
+   trunc(sysdate) between MSDF.VALID_START_DATE and MSDF.VALID_END_DATE
+   and MSDF.DELETE_FLAG = '0'
+   and MSDF.SCREEN_DOC_ID = ?
+   and MSDF.LOCALE_CODE = ?
+
+#業務文書情報取得
+DC0012: |+
+ select /* DC0012 */
+   rownum ID
+   , MBDI.BIZ_DOC_ID
+   , MBDI.DOC_ID
+   , MSDF.SCREEN_DOC_ID
+   , MBDI.TRAN_ID
+   , MSDF.CORPORATION_CODE
+   , MSDF.SCREEN_DOC_NAME
+   , MSDF.SCREEN_ID
+   , MSDF.SCREEN_NAME
+   , MSDF.SCREEN_PROCESS_CODE
+ from
+   MWT_BIZ_DOC_INFO MBDI
+     inner join MWV_SCREEN_DOC_DEF MSDF
+       on MSDF.SCREEN_DOC_ID = MBDI.SCREEN_DOC_ID
+       and MSDF.LOCALE_CODE = ?
+ where
+   MBDI.DOC_ID = ?
+   and MBDI.DELETE_FLAG = '0'
+
+#文書コンテンツ情報取得
+DC0013: |+
+ select /* DC0013 */
+   *
+ from
+   MWT_DOC_CONTENTS_INFO
+ where
+   DOC_ID = ? and DELETE_FLAG = '0'
+
+#文書情報一覧件数取得
+DC0014: |+
+ select /* DC0014 */ count(*)
+ from (
+   ###REPLACE###
+ ) X
+ where
+   X.ACCESSIBLE_FLAG = '1'
+
+#文書情報一覧取得
+DC0015: |+
+ select /* DC0015 */
+   rownum ID
+   , X.*
+ from (
+   ###REPLACE###
+ ) X
+ where
+   X.ACCESSIBLE_FLAG = '1'
+
+#文書情報取得(一般ユーザ用)
+DC0016: |+
+ select /* DC0016 */
+   MDI.*
+   , MDFRI.DOC_FOLDER_ID
+   , MDF.FOLDER_PATH
+   , case
+       when MDI.ACCESSIBLE_USER_FLAG = '1' then '1'
+       when ACC.AUTH_REFER = '1' and MDI.PUBLISH_FLAG = '1' and trunc(SYSDATE) between MDI.PUBLISH_START_DATE and MDI.PUBLISH_END_DATE then '1'
+       else '0'
+     end ACCESSIBLE_FLAG
+   , case
+       when MDI.LOCK_FLAG = '1' and MDI.LOCK_CORPORATION_CODE = ? and MDI.LOCK_USER_CODE = ? then '1'
+       else '0'
+     end OWN_LOCK_FLAG
+   , case
+       when MDI.ACCESSIBLE_USER_FLAG = '1' then '1'
+       else nvl(ACC.AUTH_REFER, '0')
+     end AUTH_REFER
+   , case
+       when MDI.ACCESSIBLE_USER_FLAG = '1' then '1'
+       else nvl(ACC.AUTH_DOWNLOAD, '0')
+     end AUTH_DOWNLOAD
+   , case
+       when MDI.PROCESS_ID IS NOT NULL then '0'
+       else
+         case
+           when MDI.ACCESSIBLE_USER_FLAG = '1' then '1'
+           else nvl(ACC.AUTH_EDIT, '0')
+         end
+     end AUTH_EDIT
+   , case
+       when MDI.PROCESS_ID IS NOT NULL then '0'
+       else
+         case
+           when MDI.ACCESSIBLE_USER_FLAG = '1' then '1'
+           else nvl(ACC.AUTH_DELETE, '0')
+         end
+     end AUTH_DELETE
+   , case
+       when MDI.PROCESS_ID IS NOT NULL then '0'
+       else
+         case
+           when MDI.ACCESSIBLE_USER_FLAG = '1' then '1'
+           else nvl(ACC.AUTH_COPY, '0')
+         end
+     end AUTH_COPY
+   , case
+       when MDI.PROCESS_ID IS NOT NULL then '0'
+       else
+         case
+           when MDI.ACCESSIBLE_USER_FLAG = '1' then '1'
+           else nvl(ACC.AUTH_MOVE, '0')
+         end
+     end AUTH_MOVE
+   , case
+       when MDI.PROCESS_ID IS NOT NULL then '0'
+       else
+         case
+           when MDI.ACCESSIBLE_USER_FLAG = '1' then '1'
+           else nvl(ACC.AUTH_PRINT, '0')
+         end
+     end AUTH_PRINT
+   , nvl(L1.LOOKUP_NAME, MDI.PUBLISH_FLAG) AS PUBLISH_FLAG_NAME
+   , nvl(L2.LOOKUP_NAME, MDI.RETENTION_TERM_TYPE) AS RETENTION_TERM_TYPE_NAME
+   , nvl(L3.LOOKUP_NAME, MDI.CONTENTS_TYPE) AS CONTENTS_TYPE_NAME
+ from (
+   select
+     A.*
+     , case
+         when (?, ?) in ((A.PUBLISH_CORPORATION_CODE, A.PUBLISH_USER_CODE), (A.OWNER_CORPORATION_CODE, A.OWNER_USER_CODE)) then '1' /* 公開ユーザ又は所有ユーザか */
+         else '0'
+       end ACCESSIBLE_USER_FLAG
+     , case
+         when DWR.DOC_ID IS NOT NULL then '1'
+         else '0'
+       end WF_APPLYING
+   from
+     MWT_DOC_INFO A
+       left join
+       (
+        select
+          B.DOC_ID
+        from
+          MWT_DOC_WF_RELATION B
+        where
+          exists (
+            select
+              C.*
+            from
+              WFT_PROCESS C
+            where
+              C.CORPORATION_CODE = B.CORPORATION_CODE
+              and C.PROCESS_ID = B.PROCESS_ID
+              and C.PROCESS_STATUS in ('start', 'wait', 'run')
+              and C.APPROVAL_STATUS = '1'
+          )
+        group by
+          B.DOC_ID
+       ) DWR
+         on (DWR.DOC_ID = A.DOC_ID)
+ ) MDI
+   cross join WFM_LOCALE L
+   inner join MWT_DOC_FOLDER_RELATION_INFO MDFRI
+     on MDFRI.DOC_ID = MDI.DOC_ID
+     and MDFRI.DELETE_FLAG = '0'
+   inner join MWV_DOC_FOLDER MDF
+     on MDF.DOC_FOLDER_ID = MDFRI.DOC_FOLDER_ID
+     and MDF.LOCALE_CODE = L.LOCALE_CODE
+   left join (
+     select
+         DOC_ID
+       , max(AUTH_REFER) AS AUTH_REFER
+       , max(AUTH_DOWNLOAD) AS AUTH_DOWNLOAD
+       , max(AUTH_EDIT) AS AUTH_EDIT
+       , max(AUTH_DELETE) AS AUTH_DELETE
+       , max(AUTH_COPY) AS AUTH_COPY
+       , max(AUTH_MOVE) AS AUTH_MOVE
+       , max(AUTH_PRINT) AS AUTH_PRINT
+     from MWT_DOC_ACCESSIBLE_INFO
+     where
+       AUTH_REFER = '1'
+       and HASH_VALUE in (###REPLACE###)
+     group by DOC_ID
+   ) ACC
+     on (ACC.DOC_ID = MDI.DOC_ID)
+   left join MWM_LOOKUP L1
+     on L1.CORPORATION_CODE = MDI.CORPORATION_CODE
+     and L1.LOOKUP_GROUP_ID = 'PUBLISH_FLAG'
+     and L1.LOCALE_CODE = L.LOCALE_CODE
+     and L1.LOOKUP_ID = MDI.PUBLISH_FLAG
+     and L1.DELETE_FLAG = '0'
+   left join MWM_LOOKUP L2
+     on L2.CORPORATION_CODE = MDI.CORPORATION_CODE
+     and L2.LOOKUP_GROUP_ID = 'RETENTION_TERM_TYPE'
+     and L2.LOCALE_CODE = L.LOCALE_CODE
+     and L2.LOOKUP_ID = MDI.RETENTION_TERM_TYPE
+     and L2.DELETE_FLAG = '0'
+   left join MWM_LOOKUP L3
+     on L3.CORPORATION_CODE = MDI.CORPORATION_CODE
+     and L3.LOOKUP_GROUP_ID = 'CONTENTS_TYPE'
+     and L3.LOCALE_CODE = L.LOCALE_CODE
+     and L3.LOOKUP_ID = MDI.CONTENTS_TYPE
+     and L3.DELETE_FLAG = '0'
+ where
+   L.LOCALE_CODE = ?
+
+#文書情報取得(管理者用)
+DC0017: |+
+ select /* DC0017 */
+   MDI.*
+   , MDFRI.DOC_FOLDER_ID
+   , MDF.FOLDER_PATH
+   , '1' as ACCESSIBLE_FLAG
+   , case
+       when MDI.LOCK_FLAG = '1' and MDI.LOCK_CORPORATION_CODE = ? and MDI.LOCK_USER_CODE = ? then '1'
+       else '0'
+     end OWN_LOCK_FLAG
+   , '1' as AUTH_REFER
+   , '1' as AUTH_DOWNLOAD
+   , case
+       when MDI.PROCESS_ID IS NOT NULL then '0'
+       else '1'
+     end AUTH_EDIT
+   , case
+       when MDI.PROCESS_ID IS NOT NULL then '0'
+       else '1'
+     end AUTH_DELETE
+   , case
+       when MDI.PROCESS_ID IS NOT NULL then '0'
+       else '1'
+     end AUTH_COPY
+   , case
+       when MDI.PROCESS_ID IS NOT NULL then '0'
+       else '1'
+     end AUTH_MOVE
+   , case
+       when MDI.PROCESS_ID IS NOT NULL then '0'
+       else '1'
+     end AUTH_PRINT
+   , nvl(L1.LOOKUP_NAME, MDI.PUBLISH_FLAG) AS PUBLISH_FLAG_NAME
+   , nvl(L2.LOOKUP_NAME, MDI.RETENTION_TERM_TYPE) AS RETENTION_TERM_TYPE_NAME
+   , nvl(L3.LOOKUP_NAME, MDI.CONTENTS_TYPE) AS CONTENTS_TYPE_NAME
+ from (
+   select
+     A.*
+     , case
+         when (?, ?) in ((A.PUBLISH_CORPORATION_CODE, A.PUBLISH_USER_CODE), (A.OWNER_CORPORATION_CODE, A.OWNER_USER_CODE)) then '1' /* 公開ユーザ又は所有ユーザか */
+         else '0'
+       end ACCESSIBLE_USER_FLAG
+     , case
+         when DWR.DOC_ID IS NOT NULL then '1'
+         else '0'
+       end WF_APPLYING
+   from
+     MWT_DOC_INFO A
+       left join
+       (
+        select
+          B.DOC_ID
+        from
+          MWT_DOC_WF_RELATION B
+        where
+          exists (
+            select
+              C.*
+            from
+              WFT_PROCESS C
+            where
+              C.CORPORATION_CODE = B.CORPORATION_CODE
+              and C.PROCESS_ID = B.PROCESS_ID
+              and C.PROCESS_STATUS in ('start', 'wait', 'run')
+              and C.APPROVAL_STATUS = '1'
+          )
+        group by
+          B.DOC_ID
+       ) DWR
+         on (DWR.DOC_ID = A.DOC_ID)
+ ) MDI
+   cross join WFM_LOCALE L
+   inner join MWT_DOC_FOLDER_RELATION_INFO MDFRI
+     on MDFRI.DOC_ID = MDI.DOC_ID
+     and MDFRI.DELETE_FLAG = '0'
+   inner join MWV_DOC_FOLDER MDF
+     on MDF.DOC_FOLDER_ID = MDFRI.DOC_FOLDER_ID
+     and MDF.LOCALE_CODE = L.LOCALE_CODE
+   left join MWM_LOOKUP L1
+     on L1.CORPORATION_CODE = MDI.CORPORATION_CODE
+     and L1.LOOKUP_GROUP_ID = 'PUBLISH_FLAG'
+     and L1.LOCALE_CODE = L.LOCALE_CODE
+     and L1.LOOKUP_ID = MDI.PUBLISH_FLAG
+     and L1.DELETE_FLAG = '0'
+   left join MWM_LOOKUP L2
+     on L2.CORPORATION_CODE = MDI.CORPORATION_CODE
+     and L2.LOOKUP_GROUP_ID = 'RETENTION_TERM_TYPE'
+     and L2.LOCALE_CODE = L.LOCALE_CODE
+     and L2.LOOKUP_ID = MDI.RETENTION_TERM_TYPE
+     and L2.DELETE_FLAG = '0'
+   left join MWM_LOOKUP L3
+     on L3.CORPORATION_CODE = MDI.CORPORATION_CODE
+     and L3.LOOKUP_GROUP_ID = 'CONTENTS_TYPE'
+     and L3.LOCALE_CODE = L.LOCALE_CODE
+     and L3.LOOKUP_ID = MDI.CONTENTS_TYPE
+     and L3.DELETE_FLAG = '0'
+ where
+   L.LOCALE_CODE = ?
+
+#文書添付ファイル一覧取得
+DC0018: |+
+ select /* DC0018 */
+   A.ATTACH_FILE_DOC_ID
+   , A.DOC_ID
+   , A.COMMENTS
+   , A.DOC_FILE_DATA_ID
+   , B.FILE_NAME
+   , B.FILE_SIZE
+ from
+   MWT_ATTACH_FILE_DOC A
+     inner join MWT_DOC_FILE_DATA B
+       on B.DOC_FILE_DATA_ID = A.DOC_FILE_DATA_ID
+ where
+   A.DELETE_FLAG = '0'
+   and
+
+#文書添付ファイルの一括削除処理(論理削除)
+DC0019: |+
+ update /* DC0019 */ MWT_ATTACH_FILE_DOC
+ set
+    CORPORATION_CODE_UPDATED = ?
+  , USER_CODE_UPDATED = ?
+  , TIMESTAMP_UPDATED = ?
+  , VERSION = VERSION + 1
+  , DELETE_FLAG = '1'
+ where
+
+#文書ファイルデータ更新処理(削除フラグを"0"へ更新)
+DC0020: |+
+ update /* DC0020 */ MWT_DOC_FILE_DATA
+ set
+    DELETE_FLAG = '0'
+  , CORPORATION_CODE_UPDATED = ?
+  , USER_CODE_UPDATED = ?
+  , TIMESTAMP_UPDATED = ?
+  , VERSION = VERSION + 1
+ where DELETE_FLAG = '1' and
+
+#バインダー情報取得
+DC0021: |+
+ select /* DC0021 */
+   *
+ from
+   MWT_BINDER_INFO
+ where
+   DOC_ID = ?
+   and DELETE_FLAG = '0'
+
+#文書フォルダ権限情報取得
+DC0022: |+
+ select /* DC0022 */
+     A.*
+   , B.ASSIGN_ROLE_NAME
+   , C.USER_NAME
+ from
+   MWM_DOC_FOLDER_ACCESSIBLE_INFO A
+   cross join WFM_LOCALE L
+   left join WFM_ASSIGN_ROLE_V B
+      on B.CORPORATION_CODE = A.CORPORATION_CODE
+     and B.ASSIGN_ROLE_CODE = A.ASSIGN_ROLE_CODE
+     and trunc(SYSDATE) between B.VALID_START_DATE and B.VALID_END_DATE
+     and B.DELETE_FLAG = '0'
+     and B.LOCALE_CODE = L.LOCALE_CODE
+   left join WFM_USER_V C
+      on C.CORPORATION_CODE = A.CORPORATION_CODE
+     and C.USER_CODE = A.USER_CODE
+     and trunc(SYSDATE) between C.VALID_START_DATE and C.VALID_END_DATE
+     and C.DELETE_FLAG = '0'
+     and C.LOCALE_CODE = L.LOCALE_CODE
+ where
+   L.LOCALE_CODE = ?
+   and A.DOC_FOLDER_ID = ?
+   and A.DELETE_FLAG = '0'
+ order by
+   A.SEQ_NO
+
+#文書フォルダ権限情報の一括削除
+DC0023: |+
+ delete /* DC0023 */ from MWM_DOC_FOLDER_ACCESSIBLE_INFO where
+
+#文書権限情報取得
+DC0024: |+
+ select /* DC0024 */
+     A.*
+   , B.ASSIGN_ROLE_NAME
+   , C.USER_NAME
+ from
+   MWT_DOC_ACCESSIBLE_INFO A
+   cross join WFM_LOCALE L
+   left join WFM_ASSIGN_ROLE_V B
+      on B.CORPORATION_CODE = A.CORPORATION_CODE
+     and B.ASSIGN_ROLE_CODE = A.ASSIGN_ROLE_CODE
+     and trunc(SYSDATE) between B.VALID_START_DATE and B.VALID_END_DATE
+     and B.DELETE_FLAG = '0'
+     and B.LOCALE_CODE = L.LOCALE_CODE
+   left join WFM_USER_V C
+      on C.CORPORATION_CODE = A.CORPORATION_CODE
+     and C.USER_CODE = A.USER_CODE
+     and trunc(SYSDATE) between C.VALID_START_DATE and C.VALID_END_DATE
+     and C.DELETE_FLAG = '0'
+     and C.LOCALE_CODE = L.LOCALE_CODE
+ where
+   L.LOCALE_CODE = ?
+   and A.DOC_ID = ?
+   and A.DELETE_FLAG = '0'
+ order by
+   A.SEQ_NO
+
+#文書権限情報の一括削除
+DC0025: |+
+ delete /* DC0025 */ from MWT_DOC_ACCESSIBLE_INFO where
+
+#ワークフローから文書管理側への文書ファイルデータのコピー
+DC0026: |+
+ insert into /* DC0026 */ MWT_DOC_FILE_DATA
+ (DOC_FILE_DATA_ID, FILE_NAME, FILE_DATA, FILE_SIZE, FMT, CSET, DELETE_FLAG
+ , CORPORATION_CODE_CREATED, USER_CODE_CREATED, TIMESTAMP_CREATED, CORPORATION_CODE_UPDATED, USER_CODE_UPDATED, TIMESTAMP_UPDATED)
+ select ?, FILE_NAME, FILE_DATA, FILE_SIZE, FMT, CSET, '0'
+ , CORPORATION_CODE_CREATED, USER_CODE_CREATED, TIMESTAMP_CREATED, CORPORATION_CODE_UPDATED, USER_CODE_UPDATED, TIMESTAMP_UPDATED
+ from MWT_DOC_FILE_WF
+ where DOC_FILE_WF_ID = ?
+
+#ワークフローから文書管理側への添付ファイルデータのコピー
+DC0027: |+
+ insert into /* DC0027 */ MWT_DOC_FILE_DATA
+ (DOC_FILE_DATA_ID, FILE_NAME, FILE_DATA, FILE_SIZE, FMT, CSET, DELETE_FLAG
+ , CORPORATION_CODE_CREATED, USER_CODE_CREATED, TIMESTAMP_CREATED, CORPORATION_CODE_UPDATED, USER_CODE_UPDATED, TIMESTAMP_UPDATED)
+ select ?, FILE_NAME, FILE_DATA, FILE_SIZE, 'IGNORE', NULL, '0'
+ , CORPORATION_CODE_CREATED, USER_CODE_CREATED, TIMESTAMP_CREATED, CORPORATION_CODE_UPDATED, USER_CODE_UPDATED, TIMESTAMP_UPDATED
+ from MWT_ATTACH_FILE_WF
+ where ATTACH_FILE_WF_ID = ?
+
+#ワークフローから文書管理側へ連携された文書ファイル／添付ファイルのデータ取得
+DC0032: |+
+ select /* DC0032 */
+   A.DOC_FILE_DATA_ID, A.FILE_NAME, A.CORPORATION_CODE_CREATED, A.USER_CODE_CREATED, A.TIMESTAMP_CREATED, A.CORPORATION_CODE_UPDATED, A.USER_CODE_UPDATED, A.TIMESTAMP_UPDATED
+   , U1.USER_NAME AS USER_NAME_CREATED, U2.USER_NAME AS USER_NAME_UPDATED
+ from
+   MWT_DOC_FILE_DATA A
+   left join WFM_USER_V U1
+     on U1.CORPORATION_CODE = A.CORPORATION_CODE_CREATED
+     and U1.USER_CODE = A.USER_CODE_CREATED
+     and U1.DELETE_FLAG = '0'
+     and U1.DEFAULT_LOCALE_CODE = U1.LOCALE_CODE
+   left join WFM_USER_V U2
+     on U2.CORPORATION_CODE = A.CORPORATION_CODE_CREATED
+     and U2.USER_CODE = A.USER_CODE_CREATED
+     and U2.DELETE_FLAG = '0'
+     and U2.DEFAULT_LOCALE_CODE = U2.LOCALE_CODE
+ where
+   A.DOC_FILE_DATA_ID = ?
+
+#ワークフローから文書管理側へ連携された文書ファイルの作成者、作成日時等の更新
+DC0033: |+
+ update /* DC0033 */
+   (select
+        A.CORPORATION_CODE_CREATED as DST_CORPORATION_CODE_CREATED, A.USER_CODE_CREATED as DST_USER_CODE_CREATED, A.TIMESTAMP_CREATED as DST_TIMESTAMP_CREATED
+      , A.CORPORATION_CODE_UPDATED as DST_CORPORATION_CODE_UPDATED, A.USER_CODE_UPDATED as DST_USER_CODE_UPDATED, A.TIMESTAMP_UPDATED as DST_TIMESTAMP_UPDATED
+      , B.CORPORATION_CODE_CREATED as SRC_CORPORATION_CODE_CREATED, B.USER_CODE_CREATED as SRC_USER_CODE_CREATED, B.TIMESTAMP_CREATED as SRC_TIMESTAMP_CREATED
+      , B.CORPORATION_CODE_UPDATED as SRC_CORPORATION_CODE_UPDATED, B.USER_CODE_UPDATED as SRC_USER_CODE_UPDATED, B.TIMESTAMP_UPDATED as SRC_TIMESTAMP_UPDATED
+    from
+      MWT_DOC_FILE_INFO A
+      inner join MWT_DOC_FILE_DATA B
+        on B.DOC_FILE_DATA_ID = A.DOC_FILE_DATA_ID
+    where
+      A.DOC_FILE_ID = ?
+   )
+ set
+    DST_CORPORATION_CODE_CREATED = SRC_CORPORATION_CODE_CREATED
+  , DST_USER_CODE_CREATED        = SRC_USER_CODE_CREATED
+  , DST_TIMESTAMP_CREATED        = SRC_TIMESTAMP_CREATED
+  , DST_CORPORATION_CODE_UPDATED = SRC_CORPORATION_CODE_UPDATED
+  , DST_USER_CODE_UPDATED        = SRC_USER_CODE_UPDATED
+  , DST_TIMESTAMP_UPDATED        = SRC_TIMESTAMP_UPDATED
+
+#ワークフローから文書管理側へ連携された添付ファイルの作成者、作成日時等の更新
+DC0034: |+
+ update /* DC0034 */
+   (select
+        A.CORPORATION_CODE_CREATED as DST_CORPORATION_CODE_CREATED, A.USER_CODE_CREATED as DST_USER_CODE_CREATED, A.TIMESTAMP_CREATED as DST_TIMESTAMP_CREATED
+      , A.CORPORATION_CODE_UPDATED as DST_CORPORATION_CODE_UPDATED, A.USER_CODE_UPDATED as DST_USER_CODE_UPDATED, A.TIMESTAMP_UPDATED as DST_TIMESTAMP_UPDATED
+      , B.CORPORATION_CODE_CREATED as SRC_CORPORATION_CODE_CREATED, B.USER_CODE_CREATED as SRC_USER_CODE_CREATED, B.TIMESTAMP_CREATED as SRC_TIMESTAMP_CREATED
+      , B.CORPORATION_CODE_UPDATED as SRC_CORPORATION_CODE_UPDATED, B.USER_CODE_UPDATED as SRC_USER_CODE_UPDATED, B.TIMESTAMP_UPDATED as SRC_TIMESTAMP_UPDATED
+    from
+      MWT_ATTACH_FILE_DOC A
+      inner join MWT_DOC_FILE_DATA B
+        on B.DOC_FILE_DATA_ID = A.DOC_FILE_DATA_ID
+    where
+      A.ATTACH_FILE_DOC_ID = ?
+   )
+ set
+    DST_CORPORATION_CODE_CREATED = SRC_CORPORATION_CODE_CREATED
+  , DST_USER_CODE_CREATED        = SRC_USER_CODE_CREATED
+  , DST_TIMESTAMP_CREATED        = SRC_TIMESTAMP_CREATED
+  , DST_CORPORATION_CODE_UPDATED = SRC_CORPORATION_CODE_UPDATED
+  , DST_USER_CODE_UPDATED        = SRC_USER_CODE_UPDATED
+  , DST_TIMESTAMP_UPDATED        = SRC_TIMESTAMP_UPDATED
+
+#書類一覧（件数）
+DC0020_01: |+
+ select /* DC0020_01 */ count(*)
+ from (
+   ###REPLACE_DC0020_03###
+   ###REPLACE_DC0020_04###
+ ) D
+ where D.CORPORATION_CODE = ?
+   and D.DELETE_FLAG = '0'
+   and D.ACCESSIBLE_FLAG = '1'
+
+#書類一覧
+DC0020_02: |+
+ select /* DC0020_02 */
+     rownum ROW_ID
+   , D.ID
+   , D.VERSION
+   , D.CORPORATION_CODE
+   , D.CONTENTS_TYPE
+   , D.TITLE
+   , D.DOC_FOLDER_ID
+   , D.LOCK_FLAG
+   , to_char(D.LOCK_TIMESTAMP, 'YYYY/MM/DD HH24:MI:SS') as LOCK_TIMESTAMP
+   , D.LOCK_USER_NAME
+   , to_char(D.PUBLISH_TIMESTAMP, 'YYYY/MM/DD HH24:MI:SS') as PUBLISH_TIMESTAMP
+   , D.PUBLISH_USER_NAME
+   , D.LOCK_USER_FLAG
+   , D.AUTH_REFER
+   , D.AUTH_DOWNLOAD
+   , D.AUTH_EDIT
+   , D.AUTH_DELETE
+   , D.AUTH_COPY
+   , D.AUTH_MOVE
+   , D.AUTH_PRINT
+   , D.WF_APPLYING
+   , D.DOC_FILES
+ from (
+   ###REPLACE_DC0020_03###
+   ###REPLACE_DC0020_04###
+ ) D
+ where D.CORPORATION_CODE = ?
+   and D.DELETE_FLAG = '0'
+   and D.ACCESSIBLE_FLAG = '1'
+
+#書類一覧(文書フォルダ)
+DC0020_03: |+
+ select /* DC0020_03 */
+   rownum ROW_ID
+   , DF.DOC_FOLDER_ID ID
+   , DF.VERSION
+   , DF.CORPORATION_CODE
+   , '0' as CONTENTS_TYPE /* 文書フォルダの場合、0固定 */
+   , NULL as MAJOR_VERSION
+   , NULL as MINOR_VERSION
+   , DF.FOLDER_NAME as TITLE
+   , DF.PARENT_DOC_FOLDER_ID as DOC_FOLDER_ID
+   , NULL as LOCK_FLAG
+   , NULL as LOCK_TIMESTAMP
+   , NULL as LOCK_USER_NAME
+   , NULL as PUBLISH_TIMESTAMP
+   , NULL as PUBLISH_USER_NAME
+   , DF.DELETE_FLAG
+   , case
+       when '1' = ? then '1'
+       when SYSDATE between DF.VALID_START_DATE and DF.VALID_END_DATE then '1'
+       else '0'
+     end ACCESSIBLE_FLAG
+   , NULL as LOCK_USER_FLAG
+   , NULL as AUTH_REFER
+   , NULL as AUTH_DOWNLOAD
+   , NULL as AUTH_EDIT
+   , NULL as AUTH_DELETE
+   , NULL as AUTH_COPY
+   , NULL as AUTH_MOVE
+   , NULL as AUTH_PRINT
+   , NULL as WF_APPLYING
+   , NULL as DOC_FILES
+ from
+   MWV_DOC_FOLDER DF
+ where
+   LOCALE_CODE = ?
+
+#書類一覧(文書情報)
+DC0020_04: |+
+ select /* DC0020_04 */
+   rownum ROW_ID
+   , MDI.DOC_ID ID
+   , MDI.VERSION
+   , MDI.CORPORATION_CODE
+   , MDI.CONTENTS_TYPE
+   , MDI.MAJOR_VERSION
+   , MDI.MINOR_VERSION
+   , MDI.TITLE
+   , DF.DOC_FOLDER_ID
+   , MDI.LOCK_FLAG
+   , MDI.LOCK_TIMESTAMP
+   , MDI.LOCK_USER_NAME
+   , MDI.PUBLISH_TIMESTAMP
+   , MDI.PUBLISH_USER_NAME
+   , MDI.DELETE_FLAG
+   , case
+       when MDI.ACCESSIBLE_USER_FLAG = '1' then '1'
+       when ACC.AUTH_REFER = '1' and MDI.PUBLISH_FLAG = '1' and trunc(SYSDATE) between MDI.PUBLISH_START_DATE and MDI.PUBLISH_END_DATE then '1'
+       else '0'
+     end ACCESSIBLE_FLAG
+   , case
+       when MDI.LOCK_FLAG = '1' and MDI.LOCK_CORPORATION_CODE = ? and MDI.LOCK_USER_CODE = ? then '1'
+       else '0'
+     end LOCK_USER_FLAG
+   , case
+       when MDI.ACCESSIBLE_USER_FLAG = '1' then '1'
+       else nvl(ACC.AUTH_REFER, '0')
+     end AUTH_REFER
+   , case
+       when MDI.ACCESSIBLE_USER_FLAG = '1' then '1'
+       else nvl(ACC.AUTH_DOWNLOAD, '0')
+     end AUTH_DOWNLOAD
+   , case
+       when MDI.PROCESS_ID IS NOT NULL then '0'
+       else
+         case
+           when MDI.ACCESSIBLE_USER_FLAG = '1' then '1'
+           else nvl(ACC.AUTH_EDIT, '0')
+         end
+     end AUTH_EDIT
+   , case
+       when MDI.PROCESS_ID IS NOT NULL then '0'
+       else
+         case
+           when MDI.ACCESSIBLE_USER_FLAG = '1' then '1'
+           else nvl(ACC.AUTH_DELETE, '0')
+         end
+     end AUTH_DELETE
+   , case
+       when MDI.PROCESS_ID IS NOT NULL then '0'
+       else
+         case
+           when MDI.ACCESSIBLE_USER_FLAG = '1' then '1'
+           else nvl(ACC.AUTH_COPY, '0')
+         end
+     end AUTH_COPY
+   , case
+       when MDI.PROCESS_ID IS NOT NULL then '0'
+       else
+         case
+           when MDI.ACCESSIBLE_USER_FLAG = '1' then '1'
+           else nvl(ACC.AUTH_MOVE, '0')
+         end
+     end AUTH_MOVE
+   , case
+       when MDI.PROCESS_ID IS NOT NULL then '0'
+       else
+         case
+           when MDI.ACCESSIBLE_USER_FLAG = '1' then '1'
+           else nvl(ACC.AUTH_PRINT, '0')
+         end
+     end AUTH_PRINT
+   , case
+       when DWR.CNT_WF_RELATION > 0 then '1'
+       else '0'
+     end WF_APPLYING
+   , DFI.DOC_FILES
+ from
+   (
+     select
+         A.*
+       , case
+           when '1' = ? then '1' /* Adminユーザか */
+           when (?, ?) in ((A.PUBLISH_CORPORATION_CODE, A.PUBLISH_USER_CODE), (A.OWNER_CORPORATION_CODE, A.OWNER_USER_CODE)) then '1' /* 公開ユーザ又は所有ユーザか */
+           else '0'
+         end ACCESSIBLE_USER_FLAG
+     from
+       MWT_DOC_INFO A
+   ) MDI
+   inner join MWT_DOC_FOLDER_RELATION_INFO DF
+     on (DF.DOC_ID = MDI.DOC_ID)
+   left join
+   (
+     select
+         DOC_ID
+       , max(AUTH_REFER) AS AUTH_REFER
+       , max(AUTH_DOWNLOAD) AS AUTH_DOWNLOAD
+       , max(AUTH_EDIT) AS AUTH_EDIT
+       , max(AUTH_DELETE) AS AUTH_DELETE
+       , max(AUTH_COPY) AS AUTH_COPY
+       , max(AUTH_MOVE) AS AUTH_MOVE
+       , max(AUTH_PRINT) AS AUTH_PRINT
+     from
+       MWT_DOC_ACCESSIBLE_INFO
+     where
+       HASH_VALUE in (###REPLACE###)
+     group by
+       DOC_ID
+   ) ACC
+     on (ACC.DOC_ID = MDI.DOC_ID)
+   left join
+   (
+     select
+         A.DOC_ID
+       , count(A.DOC_WF_RELATION_ID) AS CNT_WF_RELATION
+     from
+       MWT_DOC_WF_RELATION A
+     where
+       exists (
+         select
+           B.*
+         from
+           WFT_PROCESS B
+         where
+           B.CORPORATION_CODE = A.CORPORATION_CODE
+           and B.PROCESS_ID = A.PROCESS_ID
+           and B.PROCESS_STATUS in ('start', 'wait', 'run')
+           and B.APPROVAL_STATUS = '1'
+       )
+     group by
+       A.DOC_ID
+   ) DWR
+     on (DWR.DOC_ID = MDI.DOC_ID)
+   left join
+   (
+     select
+       B.DOC_ID
+       , listagg(C.FILE_NAME || '@' || C.DOC_FILE_DATA_ID,',') within group (order by C.DOC_FILE_DATA_ID asc) DOC_FILES
+     from
+       MWT_DOC_FILE_INFO B
+       inner join MWT_DOC_FILE_DATA C on C.DOC_FILE_DATA_ID = B.DOC_FILE_DATA_ID and C.DELETE_FLAG = '0'
+       left join MWT_DOC_OCR_DATA D  on D.DOC_FILE_DATA_ID = C.DOC_FILE_DATA_ID and D.DELETE_FLAG = '0'
+     where
+       ###REPLACE2###
+     group by
+       B.DOC_ID
+   ) DFI
+     on (DFI.DOC_ID = MDI.DOC_ID)
+ where
+   1 = 1
+
+#簡易検索用キーワードの絞込み条件
+DC0020_05: |+
+ exists (
+   select /* DC0020_05 */ 'X'
+   from MWT_DOC_CONTENTS_INFO DCI
+   where DCI.DOC_ID = MDI.DOC_ID
+     and CONTAINS(DCI.DOC_CONTENTS, ?) > 0
+ )
+
+#文書ファイルのファイルデータに対する簡易検索用キーワードの絞込み条件
+DC0020_06: |+
+ select /* DC0020_06 */ 'X'
+ from
+   MWT_DOC_FILE_DATA DFD
+   inner join MWT_DOC_FILE_INFO DFI
+     on DFD.DOC_FILE_DATA_ID = DFI.DOC_FILE_DATA_ID
+ where
+   DFI.DOC_ID = MDI.DOC_ID and (###REPLACE###)
+
+#文書一覧(階層取得)
+DC0030_01: |+
+ select /* DC0030_01 */
+   SDL.SCREEN_DOC_LEVEL_ID
+   , SDL.PARENT_LEVEL_CODE
+   , SDL.LEVEL_CODE
+   , nvl(M.VAL, SDL.LEVEL_NAME) LEVEL_NAME
+   , SDL.EXPANSION_FLAG
+   , SDL.SORT_ORDER
+ from
+   (
+     select T.*, LEVEL LEVEL_DEPTH from MWM_SCREEN_DOC_LEVEL T
+     start with T.LEVEL_CODE = T.PARENT_LEVEL_CODE
+     connect BY NOCYCLE
+       prior T.CORPORATION_CODE = T.CORPORATION_CODE
+       and prior T.LEVEL_CODE = T.PARENT_LEVEL_CODE
+       and T.DELETE_FLAG = '0'
+   ) SDL
+   left join (select * from MWM_MULTILINGUAL where TABLE_NAME = 'MWM_SCREEN_DOC_LEVEL' and COLUMN_NAME = 'LEVEL_NAME' and DELETE_FLAG = '0' and LOCALE_CODE = ?) M
+     on (M.ID = SDL.SCREEN_DOC_LEVEL_ID)
+ where SDL.CORPORATION_CODE = ?
+ order by
+   SDL.LEVEL_DEPTH
+   , SDL.SORT_ORDER
+   , SDL.LEVEL_CODE
+
+#操作者の文書トレイ設定：union all で抽出するので、優先順位の一番高い一件を使う
+DC0022_01: |+
+ select /* WL0000_01 */
+  X.PRIORITY, TC.DOC_TRAY_CONFIG_ID as TRAY_CONFIG_ID, TC.CORPORATION_CODE
+  , TC.DOC_TRAY_CONFIG_CODE as TRAY_CONFIG_CODE, TC.DOC_TRAY_CONFIG_NAME as TRAY_CONFIG_NAME
+  , TC.SYSTEM_FLAG, TC.SORT_ORDER, TC.SYSTEM_FLAG_NAME, TC.PERSONAL_USE_FLAG, TC.PAGE_SIZE
+  , TC.VERSION, TC.USER_CODE_CREATED, TC.DELETE_FLAG, TC.LOCALE_CODE
+ from (
+  (
+   select 1 as PRIORITY, TCP.DOC_TRAY_CONFIG_ID
+   from MWM_DOC_TRAY_CONFIG_PERSON TCP
+   where TCP.CORPORATION_CODE = ? and TCP.USER_CODE = ? and TCP.DOC_TRAY_TYPE = ? and TCP.DELETE_FLAG = '0'
+  ) union all (
+   select 2 as PRIORITY, TCP.DOC_TRAY_CONFIG_ID
+   from MWM_DOC_TRAY_CONFIG_PERSON TCP
+   where TCP.CORPORATION_CODE = ? and TCP.USER_CODE = ? and TCP.DOC_TRAY_TYPE = ? and TCP.DELETE_FLAG = '0'
+  ) union all (
+   select 3 as PRIORITY, TC.DOC_TRAY_CONFIG_ID
+   from MWM_DOC_TRAY_CONFIG TC
+   where TC.CORPORATION_CODE = ? and TC.SYSTEM_FLAG = '1' and TC.DELETE_FLAG = '0'
+  )
+ ) X
+  inner join MWV_DOC_TRAY_CONFIG TC
+   on TC.DOC_TRAY_CONFIG_ID = X.DOC_TRAY_CONFIG_ID
+   and TC.LOCALE_CODE = ?
+ order by
+  X.PRIORITY, TC.SORT_ORDER, TC.DOC_TRAY_CONFIG_ID
+
+#文書トレイ設定検索条件
+DC0022_02: |+
+ select /* DC0022_02 */
+  TCC.DOC_TRAY_CONFIG_CONDITION_ID as TRAY_CONFIG_CONDITION_ID
+  , TCC.CORPORATION_CODE
+  , TCC.DOC_BUSINESS_INFO_CODE as BUSINESS_INFO_CODE
+  , nvl(M.VAL, B.DOC_BUSINESS_INFO_NAME) as BUSINESS_INFO_NAME
+  , TCC.CONDITION_MATCH_TYPE
+  , TCC.TRAY_INIT_VALUE1, TCC.TRAY_INIT_VALUE2, TCC.TRAY_INIT_VALUE3, TCC.TRAY_INIT_VALUE4
+  , TCC.SORT_ORDER, B.DATA_TYPE
+ from
+  MWM_DOC_TRAY_CONFIG TC
+  inner join MWM_DOC_TRAY_CONFIG_CONDITION TCC
+   on TCC.DOC_TRAY_CONFIG_ID = TC.DOC_TRAY_CONFIG_ID
+   and TCC.DELETE_FLAG = '0'
+  inner join MWM_DOC_BUSINESS_INFO_NAME B
+   on B.CORPORATION_CODE = TCC.CORPORATION_CODE
+   and B.DOC_BUSINESS_INFO_CODE = TCC.DOC_BUSINESS_INFO_CODE
+   and B.VALID_FLAG = '1'
+   and B.DELETE_FLAG = '0'
+  left join MWM_MULTILINGUAL M
+   on M.TABLE_NAME = 'MWM_DOC_BUSINESS_INFO_NAME'
+   and M.ID = B.DOC_BUSINESS_INFO_NAME_ID
+   and M.COLUMN_NAME = 'DOC_BUSINESS_INFO_NAME'
+   and M.LOCALE_CODE = ?
+   and M.LOCALE_CODE = '0'
+ where
+  TC.DOC_TRAY_CONFIG_ID = ?
+ order by
+  TCC.SORT_ORDER, TCC.DOC_TRAY_CONFIG_CONDITION_ID
+
+#文書トレイ設定検索結果
+DC0022_03: |+
+ select /* DC0022_03 */
+  TCR.DOC_TRAY_CONFIG_RESULT_ID as TRAY_CONFIG_RESULT_ID
+  , TCR.CORPORATION_CODE
+  , TCR.DOC_BUSINESS_INFO_CODE as BUSINESS_INFO_CODE
+  , nvl(M.VAL, B.DOC_BUSINESS_INFO_NAME) as BUSINESS_INFO_NAME
+  , TCR.COL_WIDTH, TCR.ALIGN_TYPE, TCR.LINK_FLAG
+  , TCR.INITIAL_SORT_FLAG, TCR.INITIAL_SORT_DESC_FLAG
+  , TCR.SORT_ORDER, B.DATA_TYPE
+ from
+  MWM_DOC_TRAY_CONFIG TC
+  inner join MWM_DOC_TRAY_CONFIG_RESULT TCR
+   on TCR.DOC_TRAY_CONFIG_ID = TC.DOC_TRAY_CONFIG_ID
+   and TCR.DELETE_FLAG = '0'
+  inner join MWM_DOC_BUSINESS_INFO_NAME B
+   on B.CORPORATION_CODE = TCR.CORPORATION_CODE
+   and B.DOC_BUSINESS_INFO_CODE = TCR.DOC_BUSINESS_INFO_CODE
+   and B.VALID_FLAG = '1'
+   and B.DELETE_FLAG = '0'
+  left join MWM_MULTILINGUAL M
+   on M.TABLE_NAME = 'MWM_DOC_BUSINESS_INFO_NAME'
+   and M.ID = B.DOC_BUSINESS_INFO_NAME_ID
+   and M.COLUMN_NAME = 'DOC_BUSINESS_INFO_NAME'
+   and M.LOCALE_CODE = ?
+   and M.LOCALE_CODE = '0'
+ where
+  TC.DOC_TRAY_CONFIG_ID = ?
+ order by
+  TCR.SORT_ORDER, TCR.DOC_TRAY_CONFIG_RESULT_ID
+
+#申請一覧
+DC0030_02: |+
+ select /* DC0030_02 */
+   SDD.SCREEN_DOC_ID
+   , SDD.SCREEN_DOC_CODE
+   , nvl(M1.VAL, SDD.SCREEN_DOC_NAME) SCREEN_DOC_NAME
+   , SDD.SCREEN_DOC_LEVEL_ID
+   , SDD.DESCRIPTION
+   , SDD.SORT_ORDER
+ from
+   MWM_SCREEN_DOC_DEF SDD
+   left join (select * from MWM_MULTILINGUAL where TABLE_NAME = 'MWM_SCREEN_DOC_DEF' and COLUMN_NAME = 'SCREEN_DOC_NAME' and DELETE_FLAG = '0' and LOCALE_CODE = ?) M1
+     on (M1.ID = SDD.SCREEN_DOC_ID)
+ where
+   exists (
+     select
+       'x'
+     from
+       MWM_ACCESSIBLE_DOC A
+     where
+       A.SCREEN_DOC_ID = SDD.SCREEN_DOC_ID
+       and A.CORPORATION_CODE = SDD.CORPORATION_CODE
+       and trunc(sysdate) between A.VALID_START_DATE and A.VALID_END_DATE
+       and A.MENU_ROLE_CODE in (###REPLACE###)
+       and A.DELETE_FLAG = '0'
+   )
+   and trunc(sysdate) between SDD.VALID_START_DATE and SDD.VALID_END_DATE
+   and SDD.DELETE_FLAG = '0'
+   and SDD.CORPORATION_CODE = ?
+
+#申請一覧(階層の深さを取得)
+DC0030_03: |+
+ select /* DC0030_03 */
+   max(SDL.LEVEL_DEPTH)
+ from
+   (
+     select T.*, LEVEL LEVEL_DEPTH from MWM_SCREEN_DOC_LEVEL T
+     start with T.LEVEL_CODE = T.PARENT_LEVEL_CODE
+     connect BY NOCYCLE
+       prior T.CORPORATION_CODE = T.CORPORATION_CODE
+       and prior T.LEVEL_CODE = T.PARENT_LEVEL_CODE
+       and T.DELETE_FLAG = '0'
+   ) SDL
+   left join (select * from MWM_MULTILINGUAL where TABLE_NAME = 'MWM_SCREEN_DOC_LEVEL' and COLUMN_NAME = 'LEVEL_NAME' and DELETE_FLAG = '0' and LOCALE_CODE = ?) M
+     on (M.ID = SDL.SCREEN_DOC_LEVEL_ID)
+ where SDL.CORPORATION_CODE = ?
+
+#文書フォルダ階層取得
+DC0050_01: |+
+ select /* DC0050_01 */
+     D.*
+ from
+   (
+    select C.*
+    from MWV_DOC_FOLDER C
+    where C.LOCALE_CODE = ?
+    start with C.PARENT_DOC_FOLDER_ID = ?
+    connect BY NOCYCLE
+    prior C.DOC_FOLDER_ID = C.PARENT_DOC_FOLDER_ID
+    and prior C.LOCALE_CODE = C.LOCALE_CODE
+   ) D
+ where
+   D.CORPORATION_CODE = ?
+
+#ある文書フォルダ内に文書フォルダないし文書情報が存在するか
+DC0050_02: |+
+ select /* DC0050_02 */
+   count(*)
+ from
+   MWM_DOC_FOLDER A
+ where
+   A.DOC_FOLDER_ID = ?
+   and (
+     exists(select * from MWT_DOC_FOLDER_RELATION_INFO B where B.DOC_FOLDER_ID = A.DOC_FOLDER_ID)
+     or
+     exists(select * from MWM_DOC_FOLDER_HIERARCHY_INFO C where C.DOC_FOLDER_ID = A.DOC_FOLDER_ID
+   )
+
+#ある文書フォルダにおける並び順の最大値を取得
+DC0050_03: |+
+ select /* DC0050_03 */
+   max(SORT_ORDER)
+ from
+   MWV_DOC_FOLDER DF
+ where DF.LOCALE_CODE = ?
+   and DF.DELETE_FLAG = '0'
+   and DF.PARENT_DOC_FOLDER_ID = ?
+
+#拡張項目一覧検索（件数）
+DC0060_01: |+
+ select /* DC0060_01 */ count(*)
+ from (
+   ###DC0060_02###
+ )
+
+#拡張項目一覧検索
+DC0060_02: |+
+ select /* DC0060_02 */
+   A.META_ID
+   , A.CORPORATION_CODE
+   , A.META_CODE
+   , nvl(m1.VAL, A.META_NAME) as META_NAME
+   , A.INPUT_TYPE
+   , lu2.LOOKUP_NAME as INPUT_TYPE_NAME
+   , A.REQUIRED_FLAG
+   , case A.REQUIRED_FLAG
+       when '1' then lu3.LOOKUP_NAME
+       else ''
+     end as REQUIRED_FLAG_NAME
+   , A.MAX_LENGTHS
+   , A.OPTION_ID
+   , m2.VAL as OPTION_NAME
+   , A.INITIAL_VALUE1
+   , A.INITIAL_VALUE2
+   , A.INITIAL_VALUE3
+   , A.INITIAL_VALUE4
+   , A.INITIAL_VALUE5
+   , A.VERSION
+   , A.DELETE_FLAG
+   , lu1.LOOKUP_NAME as DELETE_FLAG_NAME
+ from
+   MWM_META_ITEM A
+   cross join WFM_LOCALE L
+   inner join WFM_LOOKUP lu1
+     on lu1.CORPORATION_CODE = A.CORPORATION_CODE
+    and lu1.LOOKUP_TYPE_CODE = 'DELETE_FLAG'
+    and lu1.LOOKUP_CODE = A.DELETE_FLAG
+    and lu1.LOCALE_CODE = L.LOCALE_CODE
+   inner join MWM_LOOKUP lu2
+     on lu2.CORPORATION_CODE = A.CORPORATION_CODE
+    and lu2.LOOKUP_GROUP_ID = 'META_INPUT_TYPE'
+    and lu2.LOOKUP_ID = A.INPUT_TYPE
+    and lu2.LOCALE_CODE = L.LOCALE_CODE
+   inner join MWM_LOOKUP lu3
+     on lu3.CORPORATION_CODE = A.CORPORATION_CODE
+    and lu3.LOOKUP_GROUP_ID = 'REQUIRED_FLAG'
+    and lu3.LOOKUP_ID = A.REQUIRED_FLAG
+    and lu3.LOCALE_CODE = L.LOCALE_CODE
+   left join MWM_MULTILINGUAL m1
+     on m1.TABLE_NAME = 'MWM_META_ITEM'
+    and m1.ID = A.META_ID
+    and m1.COLUMN_NAME = 'META_NAME'
+    and m1.LOCALE_CODE = L.LOCALE_CODE
+   left join MWM_OPTION O
+     on O.OPTION_ID = A.OPTION_ID
+    and O.DELETE_FLAG = '0'
+   left join MWM_MULTILINGUAL m2
+     on m2.TABLE_NAME = 'MWM_OPTION'
+    and m2.ID = O.OPTION_ID
+    and m2.COLUMN_NAME = 'OPTION_NAME'
+    and m2.LOCALE_CODE = L.LOCALE_CODE
+ where
+   L.LOCALE_CODE = ?
+
+#拡張項目取得
+DC0062_01: |+
+ select /* DC0062_01 */
+   *
+ from
+   MWM_META_ITEM
+ where
+   CORPORATION_CODE = ?
+   and META_CODE = ?
+
+#テンプレート一覧検索（件数）
+DC0070_01: |+
+ select /* DC0070_01 */ count(*)
+ from (
+   ###DC0070_02###
+ )
+
+#テンプレート一覧検索
+DC0070_02: |+
+ select /* DC0070_02 */
+   A.META_TEMPLATE_ID
+   , A.CORPORATION_CODE
+   , A.META_TEMPLATE_CODE
+   , nvl(m1.VAL, A.META_TEMPLATE_NAME) as META_TEMPLATE_NAME
+   , A.VERSION
+   , lu1.LOOKUP_NAME as DELETE_FLAG
+ from
+   MWM_META_TEMPLATE_DEF A
+   cross join WFM_LOCALE L
+   inner join WFM_LOOKUP lu1
+     on lu1.CORPORATION_CODE = A.CORPORATION_CODE
+    and lu1.LOOKUP_TYPE_CODE = 'DELETE_FLAG'
+    and lu1.LOOKUP_CODE = A.DELETE_FLAG
+    and lu1.LOCALE_CODE = L.LOCALE_CODE
+   left join MWM_MULTILINGUAL m1
+     on m1.TABLE_NAME = 'MWM_META_TEMPLATE_DEF'
+    and m1.ID = A.META_TEMPLATE_ID
+    and m1.COLUMN_NAME = 'META_TEMPLATE_NAME'
+    and m1.LOCALE_CODE = L.LOCALE_CODE
+ where
+   L.LOCALE_CODE = ?
+
+#メタテンプレート定義取得
+DC0072_01: |+
+ select /* DC0072_01 */
+   *
+ from
+   MWM_META_TEMPLATE_DEF
+ where
+   CORPORATION_CODE = ?
+   and META_TEMPLATE_CODE = ?
+
+#メタテンプレート明細一覧検索（件数）
+DC0072_02: |+
+ select /* DC0072_02 */ count(*)
+ from (
+   ###DC0072_03###
+ )
+
+#メタテンプレート明細一覧取得
+DC0072_03: |+
+ select /* DC0072_03 */
+   B.META_TEMPLATE_DETAIL_ID
+   , A.CORPORATION_CODE
+   , A.META_TEMPLATE_ID
+   , B.META_ID
+   , C.META_CODE
+   , nvl(m1.VAL, C.META_NAME) as META_NAME
+   , C.INPUT_TYPE
+   , lu2.LOOKUP_NAME as INPUT_TYPE_NAME
+   , B.REQUIRED_FLAG
+   , case B.REQUIRED_FLAG
+       when '1' then lu3.LOOKUP_NAME
+       else ''
+     end as REQUIRED_FLAG_NAME
+   , B.MAX_LENGTHS
+   , B.INITIAL_VALUE1
+   , B.INITIAL_VALUE2
+   , B.INITIAL_VALUE3
+   , B.INITIAL_VALUE4
+   , B.INITIAL_VALUE5
+   , B.SORT_ORDER
+   , B.VERSION
+   , B.DELETE_FLAG
+   , C.OPTION_ID
+   , nvl(m2.VAL, O.OPTION_NAME) as OPTION_NAME
+   , lu1.LOOKUP_NAME as DELETE_FLAG_NAME
+ from
+   MWM_META_TEMPLATE_DEF A
+   cross join WFM_LOCALE L
+   inner join MWM_META_TEMPLATE_DETAIL B
+     on B.META_TEMPLATE_ID = A.META_TEMPLATE_ID
+   inner join MWM_META_ITEM C
+     on C.META_ID = B.META_ID
+    and C.DELETE_FLAG = '0'
+   inner join WFM_LOOKUP lu1
+     on lu1.CORPORATION_CODE = A.CORPORATION_CODE
+    and lu1.LOOKUP_TYPE_CODE = 'DELETE_FLAG'
+    and lu1.LOOKUP_CODE = B.DELETE_FLAG
+    and lu1.LOCALE_CODE = L.LOCALE_CODE
+   inner join MWM_LOOKUP lu2
+     on lu2.CORPORATION_CODE = C.CORPORATION_CODE
+    and lu2.LOOKUP_GROUP_ID = 'META_INPUT_TYPE'
+    and lu2.LOOKUP_ID = C.INPUT_TYPE
+    and lu2.LOCALE_CODE = L.LOCALE_CODE
+   inner join MWM_LOOKUP lu3
+     on lu3.CORPORATION_CODE = A.CORPORATION_CODE
+    and lu3.LOOKUP_GROUP_ID = 'REQUIRED_FLAG'
+    and lu3.LOOKUP_ID = B.REQUIRED_FLAG
+    and lu3.LOCALE_CODE = L.LOCALE_CODE
+   left join MWM_MULTILINGUAL m1
+     on m1.TABLE_NAME = 'MWM_META_ITEM'
+    and m1.ID = C.META_ID
+    and m1.COLUMN_NAME = 'META_NAME'
+    and m1.LOCALE_CODE = L.LOCALE_CODE
+   left join MWM_OPTION O
+     on O.OPTION_ID = C.OPTION_ID
+    and O.DELETE_FLAG = '0'
+   left join MWM_MULTILINGUAL m2
+     on m2.TABLE_NAME = 'MWM_OPTION'
+    and m2.ID = O.OPTION_ID
+    and m2.COLUMN_NAME = 'OPTION_NAME'
+    and m2.LOCALE_CODE = L.LOCALE_CODE
+ where
+   L.LOCALE_CODE = ? and A.META_TEMPLATE_ID = ?
+
+#メタテンプレート明細取得
+DC0072_04: |+
+ select /* DC0074_01 */
+   *
+ from
+   MWM_META_TEMPLATE_DETAIL
+ where
+   META_TEMPLATE_ID = ?
+
+#メタテンプレート明細一括削除
+DC0072_05: |+
+ delete /* DC0072_05 */ from MWM_META_TEMPLATE_DETAIL where
+
+#並び順一括更新
+DC0074_02: |+
+ update /* DC0074_02 */ MWM_META_TEMPLATE_DETAIL
+ set
+    SORT_ORDER =
+    (case
+       when SORT_ORDER > ? and SORT_ORDER <= ? then SORT_ORDER - 1
+       when SORT_ORDER < ? and SORT_ORDER >= ? then SORT_ORDER + 1
+       else SORT_ORDER
+     end)
+  , CORPORATION_CODE_UPDATED = ?
+  , USER_CODE_UPDATED = ?
+  , TIMESTAMP_UPDATED = ?
+  , VERSION = VERSION + 1
+ where META_TEMPLATE_ID = ? and META_TEMPLATE_DETAIL_ID <> ?
+
+#テンプレート明細一覧(件数)
+DC0074_03: |+
+ select /* DC0074_03 */
+   count(*)
+ from
+  MWM_META_TEMPLATE_DETAIL
+ where
+   META_TEMPLATE_ID = ?
+
+#文書情報取得
+DC0100_01: |+
+ select /* DC0100_01 */
+   MDI.*
+ from
+   MWT_DOC_INFO MDI
+ where
+   MDI.DOC_ID = ?
+   and MDI.DELETE_FLAG = '0'
+
+#ブロック情報取得
+DC0100_05: |+
+ select /* DC0100_05 */
+   rownum as ID
+   , L.SCREEN_LOOKUP_ID AS BLOCK_DISPLAY_ID
+   , to_number(L.LOOKUP_ID) BLOCK_ID
+   , L.LOOKUP_NAME BLOCK_NAME
+   , '1' AS DISPLAY_FLAG
+   , '1' AS EXPANSION_FLAG
+ from
+   (select * from MWM_LOOKUP where CORPORATION_CODE = ? and LOOKUP_GROUP_ID = ? and LOCALE_CODE = ? and DELETE_FLAG = '0') L
+ order by
+   L.SORT_ORDER asc
+
+#業務文書情報取得
+DC0100_09: |+
+ select /* DC0100_09 */
+   *
+ from
+   MWT_BIZ_DOC_INFO
+ where
+   DOC_ID = ?
+
+#文書更新履歴の件数取得
+DC0100_10: |+
+ select /* DC0100_10 */
+    count(*)
+  from
+    MWT_DOC_UPDATE_LOG
+  where
+    DOC_ID = ?
+
+#文書-フォルダ連携情報取得
+DC0100_12: |+
+ select /* DC0100_12 */
+   *
+ from
+   MWT_DOC_FOLDER_RELATION_INFO
+ where
+   DOC_ID = ?
+
+#文書更新履歴取得
+DC0100_13: |+
+ select /* DC0100_13 */
+     A.DOC_UPDATE_LOG_ID
+   , A.DOC_ID
+   , A.SEQ_NO
+   , nvl(B.LOOKUP_NAME, A.CONTENTS_TYPE) AS CONTENTS_TYPE
+   , A.DOC_UPDATE_TIMESTAMP
+   , A.DOC_UPDATE_USER_NAME
+   , A.DOC_UPDATE_LOG
+ from
+   MWT_DOC_UPDATE_LOG A
+     left join MWM_LOOKUP B
+        on B.CORPORATION_CODE = ?
+       and B.LOOKUP_GROUP_ID = 'CONTENTS_TYPE'
+       and B.LOOKUP_ID = A.CONTENTS_TYPE
+       and B.LOCALE_CODE = ?
+       and B.DELETE_FLAG = '0'
+ where
+   A.DOC_ID = ?
+ order by
+   A.SEQ_NO
+
+#文書メモ情報取得
+DC0100_14: |+
+ select /* DC0100_14 */
+   *
+ from
+   MWT_DOC_APPENDED_INFO
+ where
+   DOC_ID = ?
+   and DELETE_FLAG = '0'
+ order by
+   SEQ_NO
+
+#文書IDに紐づく文書メモ情報の連番の最大値取得
+DC0100_15: |+
+ select /* DC0100_15 */
+   max(SEQ_NO)
+ from
+   MWT_DOC_APPENDED_INFO
+ where
+   DOC_ID = ?
+
+#履歴の履歴連番更新
+DC0100_17: |+
+ update ###TABLE_NAME### set HISTORY_SEQ_NO = HISTORY_SEQ_NO + 1 where
+
+#文書権限情報一覧取得
+DC0100_18: |+
+ select /* DC0100_18 */
+   *
+ from
+   MWT_DOC_ACCESSIBLE_INFO
+ where
+   DOC_ID = ?
+ order by
+   SEQ_NO
+
+#文書ファイル情報の一括削除
+DC0100_19: |+
+ delete /* DC0100_19 */ from MWT_DOC_FILE_INFO where
+
+#文書属性(拡張)一覧取得
+DC0100_20: |+
+ select /* DC0100_20 */
+   A.*
+   , B.REQUIRED_FLAG
+   , B.MAX_LENGTHS
+   , C.META_CODE
+   , nvl(m1.VAL, C.META_NAME) as META_NAME
+   , C.INPUT_TYPE
+   , C.OPTION_ID
+ from
+   MWT_DOC_META_INFO A
+     inner join MWM_META_TEMPLATE_DETAIL B
+        on B.META_TEMPLATE_DETAIL_ID = A.META_TEMPLATE_DETAIL_ID
+       and B.DELETE_FLAG = '0'
+     inner join MWM_META_ITEM C
+        on C.META_ID = B.META_ID
+       and C.DELETE_FLAG = '0'
+     left join MWM_MULTILINGUAL m1
+        on m1.TABLE_NAME = 'MWM_META_ITEM'
+       and m1.ID = C.META_ID
+       and m1.COLUMN_NAME = 'META_NAME'
+       and m1.LOCALE_CODE = ?
+ where
+   A.DOC_ID = ?
+
+#文書メタ情報の一括削除
+DC0100_21: |+
+ delete /* DC0100_21 */ from MWT_DOC_META_INFO where
+
+#画面プロセス定義取得
+DC0100_22: |+
+ select /* DC0100_22 */
+   A.*
+ from
+   MWM_SCREEN_PROCESS_DEF A
+ where
+   A.CORPORATION_CODE = ?
+   and A.SCREEN_PROCESS_CODE = ?
+   and A.DELETE_FLAG = '0'
+
+#現在、申請中のWFの件数取得
+DC0100_23: |+
+ select /* DC0100_23 */
+   count(A.DOC_WF_RELATION_ID)
+ from
+   MWT_DOC_WF_RELATION A
+ where
+   A.DOC_ID = ?
+   and exists (
+     select B.*
+     from WFT_PROCESS B
+     where B.CORPORATION_CODE = A.CORPORATION_CODE
+       and B.PROCESS_ID = A.PROCESS_ID
+       and B.PROCESS_STATUS in ('start', 'wait', 'run')
+       and B.APPROVAL_STATUS = '1'
+   )
+
+#WF連携情報取得
+DC0100_24: |+
+ select /* DC0100_24 */
+   A.*
+ from
+   MWT_DOC_WF_RELATION A
+ where
+
+#画面文書定義一覧の件数
+DC0110_01: |+
+ select /* DC0110_01 */ count(*) from MWV_SCREEN_DOC_DEF where LOCALE_CODE = ?
+
+#画面文書定義一覧の抽出
+DC0110_02: |+
+ select /* DC0110_02 */ * from MWV_SCREEN_DOC_DEF where LOCALE_CODE = ?
+
+#画面文書定義に紐付くアクセス可能画面マスタを削除
+DC0110_03: |+
+ delete /* DC0110_03 */ from MWM_ACCESSIBLE_DOC where SCREEN_DOC_ID = ?
+
+#画面文書定義を削除
+DC0110_04: |+
+ delete /* DC0110_04 */ from MWM_SCREEN_DOC_DEF where SCREEN_DOC_ID = ?
+
+#画面一覧
+DC0111_01: |+
+ select /* DC0111_01 */ S.SCREEN_ID, S.SCREEN_CODE, S.SCREEN_NAME
+ from MWV_SCREEN S
+ where S.LOCALE_CODE = ? and S.CORPORATION_CODE = ?
+ order by S.SCREEN_CODE ASC, S.SCREEN_ID ASC
+
+#画面文書定義をプライマリキーで抽出
+DC0111_02: |+
+ select /* DC0111_02 */ * from MWV_SCREEN_DOC_DEF where LOCALE_CODE = ? and SCREEN_DOC_ID = ?
+
+#画面プロセス定義一覧取得
+DC0111_03: |+
+ select /* DC0111_03 */
+   SCREEN_PROCESS_ID, SCREEN_PROCESS_CODE, SCREEN_PROCESS_NAME
+ from
+   MWV_SCREEN_PROCESS_DEF
+ where LOCALE_CODE = ?
+   and SCREEN_ID = ?
+   and CORPORATION_CODE = ?
+
+#画面文書定義をユニークキーで抽出
+DC0111_04: |+
+ select /* DC0111_04 */ * from MWM_SCREEN_DOC_DEF where CORPORATION_CODE = ? and SCREEN_DOC_CODE = ?
+
+#画面文書定義階層取得
+DC0120_01: |+
+ select /* DC0120_01 */
+   SDL.SCREEN_DOC_LEVEL_ID
+   , SDL.PARENT_LEVEL_CODE
+   , SDL.LEVEL_CODE
+   , nvl(M.VAL, SDL.LEVEL_NAME) LEVEL_NAME
+   , SDL.EXPANSION_FLAG
+   , SDL.SORT_ORDER
+ from
+   (
+     select T.*, LEVEL LEVEL_DEPTH from MWM_SCREEN_DOC_LEVEL T
+     start with T.LEVEL_CODE = T.PARENT_LEVEL_CODE
+     connect BY NOCYCLE
+       prior T.CORPORATION_CODE = T.CORPORATION_CODE
+       and prior T.LEVEL_CODE = T.PARENT_LEVEL_CODE
+       and T.DELETE_FLAG = '0'
+   ) SDL
+   left join (select * from MWM_MULTILINGUAL where TABLE_NAME = 'MWM_SCREEN_DOC_LEVEL' and COLUMN_NAME = 'LEVEL_NAME' and DELETE_FLAG = '0' and LOCALE_CODE = ?) M
+     on (M.ID = SDL.SCREEN_DOC_LEVEL_ID)
+ where SDL.CORPORATION_CODE = ?
+ order by
+   SDL.LEVEL_DEPTH
+   , SDL.SORT_ORDER
+   , SDL.LEVEL_CODE
+
+#画面文書定義取得
+DC0120_02: |+
+ select /* DC0120_02 */
+   SDD.SCREEN_DOC_ID
+   , SDD.SCREEN_DOC_CODE
+   , nvl(M1.VAL, SDD.SCREEN_DOC_NAME) SCREEN_DOC_NAME
+   , SDD.SCREEN_DOC_LEVEL_ID
+   , SDD.SORT_ORDER
+ from
+   MWM_SCREEN_DOC_DEF SDD
+   left join (select * from MWM_MULTILINGUAL where TABLE_NAME = 'MWM_SCREEN_DOC_DEF' and COLUMN_NAME = 'SCREEN_DOC_NAME' and DELETE_FLAG = '0' and LOCALE_CODE = ?) M1
+     on (M1.ID = SDD.SCREEN_DOC_ID)
+ where SDD.DELETE_FLAG = '0'
+   and SDD.CORPORATION_CODE = ?
+ order by
+   SDD.SORT_ORDER
+   , SDD.SCREEN_DOC_CODE
+
+#画面文書定義取得
+DC0131_01: |+
+ select /* DC0131_01 */
+   S.*
+   , D.SCREEN_DOC_NAME
+ from
+   MWM_ACCESSIBLE_DOC S
+   inner join (
+     select T1.SCREEN_DOC_ID, nvl(T2.VAL, T1.SCREEN_DOC_NAME) SCREEN_DOC_NAME
+     from MWM_SCREEN_DOC_DEF T1
+       left join (select * from MWM_MULTILINGUAL where TABLE_NAME = 'MWM_SCREEN_DOC_DEF' and COLUMN_NAME = 'SCREEN_DOC_NAME' and LOCALE_CODE = ?) T2
+         on (T1.SCREEN_DOC_ID = T2.ID)
+   ) D
+     on (S.SCREEN_DOC_ID = D.SCREEN_DOC_ID)
+ where S.CORPORATION_CODE = ?
+   and S.MENU_ROLE_CODE = ?
+   and S.DELETE_FLAG = '0'
+ order by
+   S.SCREEN_DOC_ID
+   , S.ACCESSIBLE_DOC_ID
+
+#画面文書定義階層－画面文書定義取得
+DC0131_02: |+
+ select /* DC0131_02 */
+   rownum ROW_ID
+   , T.*
+ from
+   (
+     select
+       SCREEN_DOC_LEVEL_ID ID
+       , 'book' TYPE
+       , CORPORATION_CODE
+       , PARENT_LEVEL_CODE
+       , LEVEL_CODE
+       , nvl(VAL, LEVEL_NAME) LEVEL_NAME
+       , EXPANSION_FLAG
+       , NULL VALID_START_DATE
+       , NULL VALID_END_DATE
+       , DELETE_FLAG
+     from
+       (
+         select T1.*, T2.VAL
+         from MWM_SCREEN_DOC_LEVEL T1
+         left join (select * from MWM_MULTILINGUAL where TABLE_NAME = 'MWM_SCREEN_DOC_LEVEL' and COLUMN_NAME = 'LEVEL_NAME' and LOCALE_CODE = ?) T2
+           on (T1.SCREEN_DOC_LEVEL_ID = T2.ID)
+       )
+     union all
+     select
+       SCREEN_DOC_ID ID
+       , 'file' TYPE
+       , D.CORPORATION_CODE
+       , nvl(L.LEVEL_CODE, SCREEN_DOC_CODE) PARENT_LEVEL_CODE
+       , D.SCREEN_DOC_CODE LEVEL_CODE
+       , nvl(D.VAL, D.SCREEN_DOC_NAME) LEVEL_NAME
+       , '0' EXPANSION_FLAG
+       , D.VALID_START_DATE
+       , D.VALID_END_DATE
+       , D.DELETE_FLAG
+     from
+       (
+         select T1.*, T2.VAL
+         from MWM_SCREEN_DOC_DEF T1
+         left join (select * from MWM_MULTILINGUAL where TABLE_NAME = 'MWM_SCREEN_DOC_DEF' and COLUMN_NAME = 'SCREEN_DOC_NAME' and LOCALE_CODE = ?) T2
+           on (T1.SCREEN_DOC_ID = T2.ID)
+         where not exists (select 'x' from MWM_ACCESSIBLE_DOC S where S.CORPORATION_CODE = ? and S.MENU_ROLE_CODE = ? and S.SCREEN_DOC_ID = T1.SCREEN_DOC_ID and S.DELETE_FLAG = '0')
+       ) D
+       left join MWM_SCREEN_DOC_LEVEL L
+         on (D.SCREEN_DOC_LEVEL_ID = L.SCREEN_DOC_LEVEL_ID)
+   ) T
+ where
+   1 = decode(T.TYPE, 'file', 1, decode(connect_by_isleaf, 1, 0, 1))
+ start with
+   T.LEVEL_CODE = T.PARENT_LEVEL_CODE
+ connect by
+   nocycle prior T.CORPORATION_CODE = T.CORPORATION_CODE
+   and prior T.LEVEL_CODE = T.PARENT_LEVEL_CODE
+   and T.DELETE_FLAG = '0'
+   and T.CORPORATION_CODE = ?
+ order by
+   LEVEL, TYPE, ID
+
+#画面文書定義取得
+DC0131_03: |+
+ select /* DC0131_03 */ * from MWV_SCREEN_DOC_DEF
+ where SCREEN_DOC_ID = ? and LOCALE_CODE = ?
+ order by SCREEN_DOC_ID
+
+#アクセス可能画面マスタで、すでに同一キーが登録済みでないか
+DC0131_04: |+
+ select /* DC0131_04 */ count(*)
+ from MWM_ACCESSIBLE_DOC
+ where
+  CORPORATION_CODE = ?
+  and MENU_ROLE_CODE = ?
+  and SCREEN_DOC_ID = ?
+
+#画面文書配下のコンテナを抽出
+DC0131_05: |+
+ select /* DC0131_05 */ C.*
+ from MWV_SCREEN_DOC_CONTAINER SPC
+  inner join MWV_CONTAINER C
+   on C.CONTAINER_ID = SPC.CONTAINER_ID
+   and C.LOCALE_CODE = ?
+ where
+  SPC.SCREEN_DOC_ID = ?
+ order by
+  SPC.CONTAINER_ID, SPC.NEST_LEVEL, SPC.SORT_ORDER, SPC.ROW_NUM
+
+#トレイ設定の選択肢を抽出
+DC0200_01: |+
+ select /* DC0200_01 */
+  ${REPLACE}
+ from
+  MWV_DOC_TRAY_CONFIG TC
+ where
+  TC.LOCALE_CODE = ?
+  and TC.CORPORATION_CODE = ?
+  and TC.PERSONAL_USE_FLAG = ?
+
+DC0200_02: |+
+  TC.DOC_TRAY_CONFIG_ID as TRAY_CONFIG_ID, TC.CORPORATION_CODE
+  , TC.DOC_TRAY_CONFIG_CODE as TRAY_CONFIG_CODE
+  , TC.DOC_TRAY_CONFIG_NAME as TRAY_CONFIG_NAME
+  , TC.SYSTEM_FLAG, TC.SYSTEM_FLAG_NAME
+  , TC.PAGE_SIZE, TC.SORT_ORDER, TC.VERSION
+  , TC.USER_CODE_CREATED, TC.USER_NAME_CREATED
+
+#文書業務管理項目名の一覧を抽出
+DC0210_02: |+
+ select /* DC0210_02 */
+  N.CORPORATION_CODE, N.DOC_BUSINESS_INFO_NAME_ID, N.DOC_BUSINESS_INFO_CODE, N.DOC_BUSINESS_INFO_NAME
+ from MWM_DOC_BUSINESS_INFO_NAME N
+  inner join WFM_LOCALE L
+   on L.LOCALE_CODE = ?
+  left join MWM_MULTILINGUAL M
+   on M.TABLE_NAME = 'MWM_DOC_BUSINESS_INFO_NAME'
+   and M.MULTILINGUAL_ID = N.DOC_BUSINESS_INFO_NAME_ID
+   and M.COLUMN_NAME = 'DOC_BUSINESS_INFO_NAME'
+   and M.LOCALE_CODE = L.LOCALE_CODE
+   and M.DELETE_FLAG = '0'
+ where
+  N.CORPORATION_CODE = ?
+  and N.VALID_FLAG = '1'
+  and N.DELETE_FLAG = '0'
+ order by
+  N.SORT_ORDER, N.DOC_BUSINESS_INFO_NAME_ID
+
+#文書トレイ設定マスタの抽出
+DC0210_03: |+
+ select /* DC0210_03 */ C.*
+ from MWV_DOC_TRAY_CONFIG C
+ where C.LOCALE_CODE = ? and C.DOC_TRAY_CONFIG_ID = ? and C.DELETE_FLAG = '0'
+ order by C.SORT_ORDER, C.DOC_TRAY_CONFIG_ID
+
+#文書トレイ設定検索条件マスタの抽出
+DC0210_04: |+
+ select /* DC0210_04 */ C.DOC_TRAY_CONFIG_CONDITION_ID, C.CORPORATION_CODE, C.DOC_BUSINESS_INFO_CODE
+  , C.CONDITION_MATCH_TYPE, C.SORT_ORDER, C.VERSION
+  , C.TRAY_INIT_VALUE1, C.TRAY_INIT_VALUE2, C.TRAY_INIT_VALUE3, C.TRAY_INIT_VALUE4
+  , nvl(M.VAL, B.DOC_BUSINESS_INFO_NAME) as DOC_BUSINESS_INFO_NAME
+ from MWM_DOC_TRAY_CONFIG_CONDITION C
+  inner join MWM_DOC_BUSINESS_INFO_NAME B
+   on B.CORPORATION_CODE = C.CORPORATION_CODE
+   and B.DOC_BUSINESS_INFO_CODE = C.DOC_BUSINESS_INFO_CODE
+   and B.DELETE_FLAG = '0'
+   and B.VALID_FLAG = '1'
+  left join MWM_MULTILINGUAL M
+   on M.TABLE_NAME = 'MWM_DOC_BUSINESS_INFO_NAME'
+   and M.ID = B.DOC_BUSINESS_INFO_NAME_ID
+   and M.COLUMN_NAME = 'DOC_BUSINESS_INFO_NAME'
+   and M.LOCALE_CODE = ?
+   and M.DELETE_FLAG = '0'
+ where C.DOC_TRAY_CONFIG_ID = ? and C.DELETE_FLAG = '0'
+ order by C.SORT_ORDER, C.DOC_TRAY_CONFIG_CONDITION_ID
+
+#文書トレイ設定検索結果マスタの抽出
+DC0210_05: |+
+ select /* DC0210_05 */ R.DOC_TRAY_CONFIG_RESULT_ID, R.DOC_TRAY_CONFIG_ID
+  , R.CORPORATION_CODE, R.DOC_BUSINESS_INFO_CODE, R.ALIGN_TYPE, R.COL_WIDTH, R.INITIAL_SORT_FLAG
+  , R.INITIAL_SORT_DESC_FLAG, R.LINK_FLAG, R.SORT_ORDER, R.VERSION
+  , nvl(M.VAL, B.DOC_BUSINESS_INFO_NAME) as DOC_BUSINESS_INFO_NAME
+  from MWM_DOC_TRAY_CONFIG_RESULT R
+  inner join MWM_DOC_BUSINESS_INFO_NAME B
+   on B.CORPORATION_CODE = R.CORPORATION_CODE
+   and B.DOC_BUSINESS_INFO_CODE = R.DOC_BUSINESS_INFO_CODE
+   and B.DELETE_FLAG = '0'
+   and B.VALID_FLAG = '1'
+  left join MWM_MULTILINGUAL M
+   on M.TABLE_NAME = 'MWM_DOC_BUSINESS_INFO_NAME'
+   and M.ID = B.DOC_BUSINESS_INFO_NAME_ID
+   and M.COLUMN_NAME = 'DOC_BUSINESS_INFO_NAME'
+   and M.LOCALE_CODE = ?
+   and M.DELETE_FLAG = '0'
+ where R.DOC_TRAY_CONFIG_ID = ? and R.DELETE_FLAG = '0'
+ order by R.SORT_ORDER, R.DOC_TRAY_CONFIG_RESULT_ID
+
+#文書トレイ設定検索条件マスタの抽出
+DC0210_06: |+
+ select /* DC0210_06 */ * from MWM_DOC_TRAY_CONFIG_CONDITION
+ where DOC_TRAY_CONFIG_ID = ? and DELETE_FLAG = '0'
+ order by SORT_ORDER, DOC_TRAY_CONFIG_CONDITION_ID
+
+#文書トレイ設定検索結果マスタの抽出
+DC0210_07: |+
+ select /* DC0210_07 */ * from MWM_DOC_TRAY_CONFIG_RESULT
+ where DOC_TRAY_CONFIG_ID = ? and DELETE_FLAG = '0'
+ order by SORT_ORDER, DOC_TRAY_CONFIG_RESULT_ID
+
+#トレイ設定コードが自レコード以外であるか
+DC0210_11: |+
+ select /* DC0210_11 */ count(*)
+ from MWM_DOC_TRAY_CONFIG
+ where CORPORATION_CODE = ? and DOC_TRAY_CONFIG_CODE = ? and DOC_TRAY_CONFIG_ID != ?
+
+#文書トレイ設定個人マスタを抽出
+DC0220_01: |+
+ select /* DC0220_01 */ *
+ from MWM_DOC_TRAY_CONFIG_PERSON P
+ where
+  P.CORPORATION_CODE = ?
+  and P.USER_CODE = ?
+  and P.DELETE_FLAG = '0'
+ order by DOC_TRAY_CONFIG_PERSONALIZE_ID
+
+#操作者のアクセス可能な文書トレイ設定を抽出
+DC0220_02: |+
+ select /* DC0220_02 */ TC.*
+ from MWV_DOC_TRAY_CONFIG TC
+ where
+  TC.LOCALE_CODE = ?
+  and TC.CORPORATION_CODE = ?
+  and (
+   (TC.PERSONAL_USE_FLAG = '0')
+   or (TC.SYSTEM_FLAG = '1')
+   or (TC.PERSONAL_USE_FLAG = '1' and TC.USER_CODE_CREATED = ?)
+  )
+ order by
+  TC.SORT_ORDER, TC.DOC_TRAY_CONFIG_ID
+
+#全員がアクセス可能な文書トレイ設定を抽出
+DC0220_03: |+
+ select /* DC0220_03 */ TC.*
+ from MWV_DOC_TRAY_CONFIG TC
+ where
+  TC.LOCALE_CODE = ?
+  and TC.CORPORATION_CODE = ?
+  and (TC.PERSONAL_USE_FLAG = '0' or TC.SYSTEM_FLAG = '1')
+ order by
+  TC.SORT_ORDER, TC.DOC_TRAY_CONFIG_ID
+
+#OCR状況選択肢取得
+DC1000_01: |+
+ select /* DC1000_01 */ *
+ from MWV_OPTION_ITEM
+ where CORPORATION_CODE = ?
+   and LOCALE_CODE = ?
+   and OPTION_CODE = 'OCR_FLAG'
+   and DELETE_FLAG = '0'
+ order by SORT_ORDER
+
+#OCR状況一覧
+DC1000_02: |+
+ select /* DC1000_02 */
+   ${REPLACE}
+ from MWT_DOC_FILE_INFO F
+   inner join WFM_LOCALE L
+     on (L.LOCALE_CODE = ?)
+   inner join MWT_DOC_FILE_DATA FD
+     on (F.DOC_FILE_DATA_ID = FD.DOC_FILE_DATA_ID)
+   inner join (
+     select
+       A.*
+       , case
+           when '1' = ? then '1' /* Adminユーザか */
+           when (?, ?) in ((A.PUBLISH_CORPORATION_CODE, A.PUBLISH_USER_CODE), (A.OWNER_CORPORATION_CODE, A.OWNER_USER_CODE)) then '1' /* 公開ユーザ又は所有ユーザか */
+           else '0'
+       end ACCESSIBLE_USER_FLAG
+     from
+       MWT_DOC_INFO A
+   ) D
+     on (F.DOC_ID = D.DOC_ID)
+   left join (
+     select
+       DOC_ID
+       , max(AUTH_REFER) as AUTH_REFER
+       , max(AUTH_DOWNLOAD) as AUTH_DOWNLOAD
+       , max(AUTH_EDIT) as AUTH_EDIT
+       , max(AUTH_DELETE) as AUTH_DELETE
+       , max(AUTH_COPY) as AUTH_COPY
+       , max(AUTH_MOVE) as AUTH_MOVE
+       , max(AUTH_PRINT) as AUTH_PRINT
+     from MWT_DOC_ACCESSIBLE_INFO
+     where
+       HASH_VALUE in (###REPLACE###)
+     group by
+       DOC_ID
+   ) ACC
+     on (ACC.DOC_ID = D.DOC_ID)
+   inner join WFT_PROCESS P
+     on (D.CORPORATION_CODE = P.CORPORATION_CODE and D.PROCESS_ID = P.PROCESS_ID)
+   left join MWT_DOC_OCR_DATA OD
+     on (FD.DOC_FILE_DATA_ID = OD.DOC_FILE_DATA_ID)
+   left join (select * from MWV_OPTION_ITEM where OPTION_CODE = 'OCR_FLAG') OI
+     on (F.CORPORATION_CODE = OI.CORPORATION_CODE and F.OCR_FLAG = OI.CODE and L.LOCALE_CODE = OI.LOCALE_CODE)
+ where F.CORPORATION_CODE = ?
+   and D.DELETE_FLAG = '0'
+   and (D.ACCESSIBLE_USER_FLAG = '1' or ACC.AUTH_REFER = '1')
+   and D.PUBLISH_FLAG = '1'
+   and trunc(SYSDATE) between D.PUBLISH_START_DATE and D.PUBLISH_END_DATE
+
+#OCR状況一覧のSELECT句
+DC1000_03: |+
+   F.DOC_FILE_DATA_ID
+   , P.APPLICATION_NO
+   , FD.FILE_NAME
+   , F.OCR_FLAG
+   , OI.LABEL OCR_FLAG_NM
+   , OD.TIMESTAMP_UPDATED OCR_EXECUTION_DATE

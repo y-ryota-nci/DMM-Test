@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+<link rel="stylesheet" href="../../assets/nci/styles.css" />
+<link rel="stylesheet" href="../../assets/nci/original.css" />
+<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+<style type="text/css">
+button.btn {
+	display: inline-block;
+	position: relative;
+	min-width: 85px;
+	margin: 10px 2px;
+}
+</style>
+<script src="../../assets/jquery/jquery.min.js"></script>
+<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="../../assets/nci/NCI.js"></script>
+<script src='../../assets/nci/validate.js'></script>
+<script src="./gd0010.js"></script>
+<title>GD0010 ガジェット(件数)</title>
+</head>
+<body>
+<section class="col-xs-12">
+	<article class="row">
+		<button id="applicationPendingCount" type="button" class="btn btn-primary hide"><span data-i18n="applicationPending">申請待ち</span><span class="badge"></span></button>
+		<button id="approvalPendingCount" type="button" class="btn btn-primary hide"><span data-i18n="approvalPending">承認待ち</span><span class="badge"></span></button>
+		<button id="approvedCount" type="button" class="btn btn-primary hide"><span data-i18n="approved">承認済み</span><span class="badge"></span></button>
+		<button id="newApplication" type="button" class="btn btn-primary hide" data-i18n="newApplication">新規申請</button>
+	</article>
+</section>
+</body>
+</html>

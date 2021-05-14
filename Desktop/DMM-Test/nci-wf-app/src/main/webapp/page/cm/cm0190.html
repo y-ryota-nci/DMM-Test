@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<style type="text/css">
+	#seach-result {
+		min-height: 650px;
+	}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src="./cm0190.js"></script>
+	<title>CM0190遷移先アクティビティ選択</title>
+</head>
+<body>
+	<header class="container-fluid"></header>
+
+	<section class="col-xs-12">
+		<article class="row">
+			<h1 class="page-header">遷移先アクティビティ選択</h1>
+		</article><!--/.row-->
+
+		<article id="seach-result" class="row">
+			<!-- 検索結果サブタイトル -->
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#result-contents"><i class="fa fa-chevron-up"></i><span data-i18n="searchResult">検索結果</span></div>
+				<div id="result-contents" class="panel-body panel-collapse collapse in">
+
+					<!-- 検索結果本体 -->
+					<div class="table-responsive">
+						<table class="table table-bordered table-hover table-striped responsive">
+							<colgroup>
+								<col style="width:200" />
+								<col style="width:120px" />
+								<col style="width:120px" />
+								<col style="width:100px" />
+								<col style="width:150px" />
+								<col style="width:100px" />
+							</colgroup>
+							<thead>
+							<tr>
+								<th data-i18n="activityId" style="text-align:center">
+								<th style="text-align:center">アクティビティ定義コード
+								<th style="text-align:center">アクティビティステータス
+								<th data-i18n="activityName" style="text-align:center">アクティビティ定義名
+								<th data-i18n="executionDate" style="text-align:center">処理日
+								<th data-i18n="pullforward" style="text-align:center">引上げ
+								<th class="hide">
+							</thead>
+
+							<tbody></tbody>
+
+							<tfoot class="template hide">
+							<tr>
+								<th><a href="#" data-field="activityId">アクティビティID</a>
+								<th><a href="#" data-field="activityDefCode">アクティビティ定義コード</a>
+								<th><a href="#" data-field="activityStatus">アクティビティステータス</a>
+								<th><a href="#" data-field="activityDefName">アクティビティ定義名</a>
+								<th data-field="activityDate">処理日
+								<th data-field="pullforwardable" style="text-align:center">引上げ可否
+								<th class="hide">
+									<span data-field="corporationCode"></span>
+									<span data-field="processId"></span>
+									<span data-field="timestampUpdatedProcess"></span>
+									<span data-field="processDefCode"></span>
+									<span data-field="processDefDetailCode"></span>
+									<span data-field="activityId"></span>
+									<span data-field="activityDefCode"></span>
+									<span data-field="processStatus"></span>
+									<span data-field="processStatusName"></span>
+									<span data-field="businessProcessStatus"></span>
+									<span data-field="businessProcessStatusName"></span>
+									<span data-field="pullforwardFlag"></span>
+									<span data-field="pullforwardControlType"></span>
+									<span data-field="businessActivityStatus"></span>
+									<span data-field="businessActivityStatusName"></span>
+									<span data-field="actionName"></span>
+							</tfoot>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group text-center">
+				<button class="btn btn-default btnClose" data-close>
+					<i class="fa fa-times"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+		</article>
+	</section>
+</body>
+</html>

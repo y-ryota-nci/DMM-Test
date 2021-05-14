@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="../../assets/codemirror/lib/codemirror.css" />
+	<link rel="stylesheet" href="../../assets/codemirror/theme/eclipse.css" />
+	<link rel="stylesheet" href="../../assets/codemirror/addon/hint/show-hint.css">
+
+	<script src="../../assets/codemirror/lib/codemirror.js"></script>
+	<script src="../../assets/codemirror/mode/sql/sql.js"></script>
+	<script src="../../assets/codemirror/addon/selection/active-line.js"></script>
+	<script src="../../assets/codemirror/addon/edit/matchbrackets.js"></script>
+	<script src="../../assets/codemirror/addon/edit/closebrackets.js"></script>
+	<script src="../../assets/codemirror/addon/comment/continuecomment.js"></script>
+	<script src="../../assets/codemirror/addon/comment/comment.js"></script>
+	<script src="../../assets/codemirror/addon/hint/show-hint.js"></script>
+	<script src="../../assets/codemirror/addon/hint/sql-hint.js"></script>
+	<script src="./sandbox_sql_editor.js"></script>
+
+	<title>SQLエディタ</title>
+
+</head>
+<body onload="_onload()">
+	「CTRL+SPACE」でオートコンプリート<br />
+	<div style="border:1px solid blue">
+		<textarea id="editor" rows="30" cols="50">
+SELECT SQL_NO_CACHE DISTINCT
+		@var1 AS `val1`, @'val2', @global.'sql_mode',
+		1.1 AS `float_val`, .14 AS `another_float`, 0.09e3 AS `int_with_esp`,
+		0xFA5 AS `hex`, x'fa5' AS `hex2`, 0b101 AS `bin`, b'101' AS `bin2`,
+		DATE '1994-01-01' AS `sql_date`, { T "1994-01-01" } AS `odbc_date`,
+		'my string', _utf8'your string', N'her string',
+        TRUE, FALSE, UNKNOWN
+	FROM DUAL
+	-- space needed after '--'
+	# 1 line comment
+	/* multiline
+	comment! */
+	LIMIT 1 OFFSET 0;
+		</textarea>
+	</div>
+</body>
+</html>

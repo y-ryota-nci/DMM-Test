@@ -1,0 +1,116 @@
+<!-- Textboxパーツのプロパティ -->
+<script type="text/javascript" src="./vd0114_1.js"></script>
+<div id="vd0114_1">
+	<label class="sub-title" data-i18n="textbox">TextBox</label>
+
+
+	<div class='form-group col-sm-3'>
+		<span data-i18n='inputType' class='required'>入力タイプ</span>
+		<select id='inputType' class='form-control required'></select>
+	</div>
+	<div class='form-group col-sm-3'>
+		<span data-i18n='validateType' class='required'>入力チェックタイプ</span>
+		<select id='validateType' class='form-control required'></select>
+	</div>
+	<div class='form-group col-sm-3'>
+		<span data-i18n='lengthType' class=''>桁数チェックタイプ</span>
+		<select id='lengthType' class='form-control'></select>
+	</div>
+	<div class='form-group col-sm-3'>
+		<span data-i18n='defaultValue'>デフォルト値</span>
+		<input id='defaultValue' type='text' class='form-control' maxlength='1000' />
+	</div>
+	<div class='form-group col-sm-3'>
+		<span data-i18n='maxLengthCharByte'>最大文字数／バイト数</span>
+		<input id='maxLength' type='text' class='form-control text-right' maxlength='5'
+				data-validate='{"pattern" : "integer", "min": 1, "max" : 9999 }' />
+	</div>
+	<div class='form-group col-sm-3'>
+		<span data-i18n='minLengthCharByte'>最少文字数／バイト数</span>
+		<input id='minLength' type='text' class='form-control text-right' maxlength='5'
+				data-validate='{"pattern" : "integer", "min": 0, "max" : 9999 }' />
+	</div>
+	<div class='form-group col-sm-3'>
+		<span data-i18n='imeMode' class=''>IMEの制御</span>
+		<select id='imeMode' class='form-control'></select>
+	</div>
+	<div class='form-group col-sm-3'>
+		<span data-i18n='rowCountTextarea'>行数（TextArea用）</span>
+		<input id='rowCount' type='text' class='form-control text-right' maxlength='2'
+				data-validate='{"pattern" : "integer", "min": 1, "max" : 99 }' />
+	</div>
+	<div class='form-group col-sm-2'>
+		<span data-i18n='prefix'>接頭語</span>
+		<input id='prefix' type='text' class='form-control' maxlength='2' />
+	</div>
+	<div class='form-group col-sm-2'>
+		<span data-i18n='suffix'>接尾語</span>
+		<input id='suffix' type='text' class='form-control' maxlength='2' />
+	</div>
+
+	<hr />
+
+	<div class='form-group col-sm-3'>
+		<span data-i18n='numberFormat' class=''>数値フォーマット</span>
+		<select id='numberFormat' class='form-control'></select>
+	</div>
+	<div class='form-group col-sm-3'>
+		<span data-i18n='roundType' class=''>端数処理タイプ</span>
+		<select id='roundType' class='form-control'></select>
+	</div>
+	<div class='form-group col-sm-2'>
+		<span data-i18n='decimalPlaces'>小数点桁数</span>
+		<input id='decimalPlaces' class='form-control text-right' maxlength='2'
+				data-validate='{"pattern" : "integer", "min": 0, "max" : 15 }' />
+	</div>
+	<div class='form-group col-sm-3'>
+		<span data-i18n='max'>最大値</span>
+		<input id='max' type='text' class='form-control text-right' maxlength='23'
+				data-validate='{"pattern" : "numeric", "min": -999999999999999, "max" : 999999999999999, "decimalPlaces":15 }' />
+	</div>
+	<div class='form-group col-sm-3'>
+		<span data-i18n='min'>最少値</span>
+		<input id='min' type='text' class='form-control text-right' maxlength='23'
+				data-validate='{"pattern" : "numeric", "min": -999999999999999, "max" : 999999999999999, "decimalPlaces":15 }' />
+	</div>
+	<div class='form-group col-sm-3'>
+		<input id='redIfNegative' type='checkbox' class='' value='true' />
+		<label for='redIfNegative' data-i18n='redIfNegative'>マイナスだと赤字</label>
+	</div>
+	<div class='form-group col-sm-3'>
+		<input id='saveAsPercent' type='checkbox' class='' value='true' />
+		<label for='saveAsPercent' data-i18n='saveAsPercent'>数値を1/100で保存する</label>
+	</div>
+	<div class='form-group col-sm-2'>
+		<input id='readonly' type='checkbox' class='' value='true' />
+		<label for='readonly' data-i18n='readonly'>読取専用</label>
+	</div>
+	<div class='form-group col-sm-4'>
+		<input id='renderAsHidden' type='checkbox' class='' value='true' />
+		<label for='renderAsHidden' data-i18n='renderAsHidden'>HIDDENとしてレンダリングするか</label>
+	</div>
+	<div class='form-group col-sm-4'>
+		<input id='trimValue' type='checkbox' class='' value='true' />
+		<label for='trimValue' data-i18n='removeSpaceAtSaving'>値からスペースを除去</label>
+	</div>
+	<div class='form-group col-sm-4'>
+		<input id='useCalendarUI' type='checkbox' class='' value='true' />
+		<label for='useCalendarUI' data-i18n='useCalendarUI'>カレンダーUIを使用する</label>
+	</div>
+	<div class='form-group col-sm-4'>
+		<input id='removeSlash' type='checkbox' class='' value='true' />
+		<label for='removeSlash' data-i18n='removeSlashAtSaving'>値からスラッシュを除去</label>
+	</div>
+
+
+	<fieldSet id="coodinatedPartsArea" class="form-group" style="width:100%">
+		<div class='form-group col-sm-4'>
+			<span data-i18n='coodinatedParts'>連動するパーツ</span>
+			<select id='partsIdFor' class='form-control'></select>
+		</div>
+		<div class='form-group col-sm-4'>
+			<span data-i18n='coodinationType'>連動タイプ</span>
+			<select id='coodinationType' class='form-control'></select>
+		</div>
+	</fieldSet>
+</div>

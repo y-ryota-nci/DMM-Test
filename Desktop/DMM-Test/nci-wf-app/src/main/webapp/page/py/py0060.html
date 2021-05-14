@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src="./py0060.js"></script>
+	<title>PY0060 管理_前払一覧</title>
+</head>
+<body>
+
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="col-xs-12">
+		<article class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">PY0060</h1>
+			</div>
+		</article><!--/.row-->
+
+		<article class="row mB40 mB40_sp">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<!-- 初期状態でcollapseを閉じておく方法：
+					$('div.panel-heading').addClass('collapsed');
+					$('i.fa').addClass('fa-chevron-down').removeClass('fa-chevron-up');
+					$('div.panel-collapse').removeClass('in').css('height', '30px');
+					-->
+					<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#condition-contents">
+						<i class="fa fa-chevron-up"></i>
+						<span data-i18n="searchCondition">検索条件</span>
+					</div>
+					<div id="condition-contents" class="panel-collapse collapse in">
+						<div class="panel-body">
+							<form id="formCondition" class="tableBox col-lg-12 col-md-12 col-sm-12">
+								<!-- ここにトレイ設定検索条件の定義に合わせてテンプレートが展開される-->
+								<div class="tr">
+									<div class="col-lg-2 col-md-2 col-sm-2 th">支払No</div>
+									<div class="col-lg-4 col-md-4 col-sm-4 td">
+										<input class="form-control" id="payNo" type="text">
+									</div>
+									<div class="col-lg-2 col-md-2 col-sm-2 th">支払件名</div>
+									<div class="col-lg-4 col-md-4 col-sm-4 td">
+										<input class="form-control" id="payNm" type="text" maxlength="100">
+									</div>
+								</div>
+								<div class="tr">
+									<div class="col-lg-2 col-md-2 col-sm-2 th">取引先</div>
+									<div class="col-lg-4 col-md-4 col-sm-4 td">
+										<input class="splrNmKj input-group-field form-control" id="splrNmKj" type="text" maxlength="100">
+									</div>
+									<div class="col-lg-2 col-md-2 col-sm-2 th">支払予定日</div>
+									<div class="col-lg-4 col-md-4 col-sm-4 td">
+										<div class="input-group">
+											<div class="has-feedback">
+												<input class="form-control from ymdPicker" id="payPlnDtFrom" type="text" data-validate='{"pattern":"date","to":"#payPlnDtTo"}'>
+												<i class="glyphicon glyphicon-calendar form-control-feedback">
+												</i>
+											</div>
+											<div class="input-group-addon">～
+											</div>
+											<div class="has-feedback">
+												<input class="form-control to ymdPicker" id="payPlnDtTo" type="text" data-validate='{"pattern":"date","from":"#payPlnDtFrom"}'>
+												<i class="glyphicon glyphicon-calendar form-control-feedback">
+												</i>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-xs-4">
+						</div>
+						<div class="col-xs-4 text-center">
+							<button class="btn btn-primary btn-wide" id="btnSearch">
+								<i class="fa fa-search"></i>
+								<span data-i18n="btnSearch">検索</span>
+							</button>
+							<button class="btn btn-default searchButton" id="btnReset">
+								<i class="glyphicon glyphicon-refresh"></i>
+								<span data-i18n="btnReset">リセット</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+		<!--/.row-->
+		<article class="row hide" id="seach-result">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#result-contents">
+						<i class="fa fa-chevron-up">
+						</i>
+						<span data-i18n="searchResult">検索結果
+						</span>
+					</div>
+					<div class="panel-body panel-collapse collapse in" id="result-contents">
+						<!-- ページ制御 -->
+						<div class="fixed-table-pagination row">
+							<div class="pull-left col-sm-4 col-lg-3">
+								<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+							</div>
+							<div class="pull-left col-sm-8 col-lg-6 text-center">
+								<ul class="pagination"></ul>
+							</div>
+							<div class="pull-right pagination-detail col-sm-12 col-lg-3 text-right">
+								<span data-i18n="rowCountPerPage">1ページの行数</span>
+								<select class="pageSize"></select>
+							</div>
+						</div>
+						<div class="table-responsive">
+							<table class="table table-bordered table-hover table-striped responsive">
+								<colgroup>
+									<col class="hide" style="width:35px" />
+									<col class="col-md-2">
+									<col class="col-md-3">
+									<col class="col-md-4">
+									<col class="col-md-1">
+									<col class="col-md-1">
+									<col class="col-md-1">
+								</colgroup>
+								<thead>
+									<tr>
+										<th class="hide"></th>
+										<th><a href="#" data-sort="P.PAY_NO">支払No</a></th>
+										<th><a href="#" data-sort="P.PAY_NM, P.PAY_NO">支払件名</a></th>
+										<th><a href="#" data-sort="P.SPLR_NM_KN, P.PAY_NO">取引先</a></th>
+										<th><a href="#" data-sort="P.PAY_PLN_DT, P.PAY_NO">支払予定日</a></th>
+										<th><a href="#" data-sort="P.MNY_TP, P.PAY_NO">通貨</a></th>
+										<th><a href="#" data-sort="P.PAY_AMT_INCTAX, P.PAY_NO">支払金額</a></th>
+									</tr>
+								</thead>
+								<tbody></tbody>
+								<tfoot class="template hide">
+									<tr>
+										<th class="hide"><input type="radio" name="payNo" data-field="payNo" class="selectable" disabled="disabled" /></th>
+										<td>
+											<input class="companyCd" data-field="companyCd" type="hidden" readonly/>
+											<a href="#" data-field="payNo">RI201805010001</a>
+											<span data-field="screenCode" class="hide"></span>
+										</td>
+										<td data-field="payNm">支払件名０１</td>
+										<td data-field="splrNmKj">取引先０１</td>
+										<td data-field="payPlnDt">2018/06/01</td>
+										<td data-field="mnyTpNm">円貨</td>
+										<td data-field="payAmtInctax" style="text-align:right;" class="dataType-number">1,000,000</td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+						<!-- ページ制御 -->
+						<div class="fixed-table-pagination row">
+							<div class="pull-left col-sm-4 col-lg-3">
+								<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+							</div>
+							<div class="pull-left col-sm-8 col-lg-6 text-center">
+								<ul class="pagination"></ul>
+							</div>
+							<div class="pull-right pagination-detail col-sm-12 col-lg-3 text-right">
+								<span data-i18n="rowCountPerPage">1ページの行数</span>
+								<select class="pageSize"></select>
+							</div>
+						</div>
+						<div class="btn-all hide">
+							<button id="btnUpdateRequest" class="btn btn-primary btn-wide" disabled="disabled">
+								<i class="fa fa-check"></i>
+								<span>変更_前払申請</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+		<!--/.row-->
+	</section>
+</body>
+</html>

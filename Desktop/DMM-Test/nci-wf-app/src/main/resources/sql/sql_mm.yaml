@@ -1,0 +1,722 @@
+MM0000_01: |+
+ select M.*
+ from MWM_MENU M
+  inner join MWM_SELECTABLE_MENU SM
+   on SM.MENU_ID = M.MENU_ID
+   and SM.MENU_ROLE_TYPE = ?
+   and SM.DELETE_FLAG = '0'
+  inner join WFM_MENU_ROLE MR
+   on MR.CORPORATION_CODE = ?
+   and MR.MENU_ROLE_CODE = ?
+   and MR.DELETE_FLAG = '0'
+ where
+  M.DELETE_FLAG = '0'
+  and not exists (
+   select *
+   from MWM_ACCESSIBLE_MENU AM
+   where AM.CORPORATION_CODE = MR.CORPORATION_CODE
+    and AM.MENU_ROLE_CODE = MR.MENU_ROLE_CODE
+    and AM.MENU_ID = SM.MENU_ID
+  )
+
+#プロセス定義用に名称ルックアップを抽出
+MM0000_02: |+
+ select /* MM0000_02 */ * from WFM_NAME_LOOKUP where TABLE_NAME = ? and
+
+
+#基準日以降で指定組織に所属しているユーザ数をカウント
+MM0002_01: |+
+ select /* MM0002_01 */
+  count(*)
+ from
+  WFM_ORGANIZATION O
+  inner join WFM_USER_BELONG UB
+   on UB.CORPORATION_CODE = O.CORPORATION_CODE
+   and UB.ORGANIZATION_CODE = O.ORGANIZATION_CODE
+   and UB.DELETE_FLAG = '0'
+   and UB.VALID_END_DATE >= ?
+  inner join WFM_USER U
+   on U.CORPORATION_CODE = UB.CORPORATION_CODE
+   and U.USER_CODE = UB.USER_CODE
+   and U.DELETE_FLAG = '0'
+   and U.VALID_END_DATE >= ?
+ where
+  O.CORPORATION_CODE = ?
+  and O.ORGANIZATION_CODE = ?
+
+#コンテナ一覧
+MM0020_01: |+
+ select /* MM0020_01 */ C.CONTAINER_ID, C.CONTAINER_CODE, nvl(MT.VAL, C.CONTAINER_NAME) as CONTAINER_NAME
+ from MWM_CONTAINER C
+  left join MWM_MULTILINGUAL MT
+   on MT.TABLE_NAME = 'MWM_CONTAINER'
+   and MT.ID = C.CONTAINER_ID
+   and MT.COLUMN_NAME = 'CONTAINER_NAME'
+   and MT.LOCALE_CODE = ?
+   and MT.DELETE_FLAG = '0'
+ where
+  C.CORPORATION_CODE = ? and C.DELETE_FLAG = '0'
+ order by
+  C.CONTAINER_CODE, C.CONTAINER_ID
+
+#パーツ表示条件
+MM0020_02: |+
+ select /* MM0020_02 */ PDC.*
+ from
+  MWM_PARTS P
+  inner join MWM_PARTS_DC PDC
+   on PDC.PARTS_ID = P.PARTS_ID
+   and PDC.DELETE_FLAG = '0'
+ where
+  P.CONTAINER_ID = ?
+  and P.DELETE_FLAG = '0'
+ order by
+  PDC.PARTS_ID, PDC.DC_ID, PDC.PARTS_DC_ID
+
+#パーツリスト(行に相当)
+MM0020_03: |+
+ select /* MM0020_03 */ P.PARTS_ID, P.PARTS_CODE, nvl(M1.VAL, P.LABEL_TEXT) as LABEL_TEXT
+ from
+  MWM_PARTS P
+  cross join WFM_LOCALE L
+  left join MWM_MULTILINGUAL M1
+   on M1.TABLE_NAME = 'MWM_PARTS'
+   and M1.ID = P.PARTS_ID
+   and M1.COLUMN_NAME = 'LABEL_TEXT'
+   and M1.LOCALE_CODE = L.LOCALE_CODE
+   and M1.DELETE_FLAG = '0'
+ where
+  P.CONTAINER_ID = ?
+  and L.LOCALE_CODE = ?
+ order by
+  P.SORT_ORDER, P.PARTS_CODE
+
+#表示条件リスト(列に相当)
+MM0020_04: |+
+ select /* MM0020_04 */ DC.DC_ID, nvl(M.VAL, DC.DC_NAME) as DC_NAME, DC.SORT_ORDER
+ from MWM_DC DC
+  inner join MWM_MULTILINGUAL M
+   on M.TABLE_NAME = 'MWM_DC'
+   and M.ID = DC.DC_ID
+   and M.COLUMN_NAME = 'DC_NAME'
+   and M.LOCALE_CODE = ?
+   and M.DELETE_FLAG = '0'
+ order by
+  DC.SORT_ORDER, DC.DC_ID
+
+#表示条件マスタ
+MM0020_05: |+
+ select /* MM0020_05 */ * from MWM_DC
+
+#ルックアップグループマスタ検索
+MM001001: |+
+ select /* MM001001 */
+ 	  mlg.*
+ 	, lu.LOOKUP_NAME AS DELETE_FLAG_NAME
+ from MWM_LOOKUP_GROUP mlg
+ 	, WFM_LOOKUP lu
+ where
+      mlg.CORPORATION_CODE   = lu.CORPORATION_CODE
+  AND lu.LOOKUP_TYPE_CODE  = 'DELETE_FLAG'
+  AND mlg.DELETE_FLAG    = lu.LOOKUP_CODE
+  AND mlg.LOCALE_CODE    = lu.LOCALE_CODE
+  ###REPLACE###
+
+#ルックアップグループマスタ検索
+MM001201: |+
+ select /* MM001201 */ *
+ from MWM_LOOKUP_GROUP
+ where
+  CORPORATION_CODE = ?
+  AND LOOKUP_GROUP_ID = ?
+  AND LOCALE_CODE = ?
+
+#ルックアップマスタ検索
+MM001202: |+
+ select /* MM001202 */
+    mlu.*
+  , lu.LOOKUP_NAME AS DELETE_FLAG_NAME
+ from MWM_LOOKUP mlu
+  , WFM_LOOKUP lu
+ where
+  mlu.CORPORATION_CODE = ?
+  AND mlu.LOOKUP_GROUP_ID = ?
+  AND mlu.LOCALE_CODE = ?
+  AND mlu.CORPORATION_CODE   = lu.CORPORATION_CODE
+  AND lu.LOOKUP_TYPE_CODE  = 'DELETE_FLAG'
+  AND mlu.DELETE_FLAG    = lu.LOOKUP_CODE
+  AND mlu.LOCALE_CODE    = lu.LOCALE_CODE
+  ###REPLACE###
+
+#ルックアップグループマスタ検索
+MM001301: |+
+ select /* MM001301 */ *
+ from MWM_LOOKUP_GROUP
+ where
+  CORPORATION_CODE = ?
+  AND LOOKUP_GROUP_ID = ?
+  AND LOCALE_CODE = ?
+
+#ルックアップマスタ検索
+MM001302: |+
+ select /* MM001302 */
+ 	  mlu.*
+ 	, mlg.LOOKUP_GROUP_NAME
+ 	, lu.LOOKUP_NAME		 AS DELETE_FLAG_NAME
+ from MWM_LOOKUP mlu
+ 	, MWM_LOOKUP_GROUP mlg
+ 	, WFM_LOOKUP lu
+ where
+ 	  mlu.CORPORATION_CODE	 = ?
+  AND mlu.LOOKUP_GROUP_ID	 = ?
+  AND mlu.LOOKUP_ID			 = ?
+  AND mlu.LOCALE_CODE		 = ?
+  AND mlu.CORPORATION_CODE	 = mlg.CORPORATION_CODE
+  AND mlu.LOOKUP_GROUP_ID	 = mlg.LOOKUP_GROUP_ID
+  AND mlu.LOCALE_CODE		 = mlg.LOCALE_CODE
+  AND mlu.CORPORATION_CODE	 = lu.CORPORATION_CODE
+  AND lu.LOOKUP_TYPE_CODE	 = 'DELETE_FLAG'
+  AND mlu.DELETE_FLAG		 = lu.LOOKUP_CODE
+  AND mlu.LOCALE_CODE		 = lu.LOCALE_CODE
+
+#業務管理項目名称
+MM0030_01: |+
+ SELECT /* MM0030_01 */
+      bi.business_info_name_id
+    , bi.corporation_code
+    , business_info_code
+    , NVL(m1.val, bi.business_info_name) AS business_info_name
+    , bi.business_info_type
+    , bi.valid_flag
+    , bi.screen_parts_input_flag
+    , bi.data_type
+    , bi.sort_order
+    , bi.version
+    , bi.delete_flag
+    , bi.corporation_code_created
+    , bi.user_code_created
+    , bi.timestamp_created
+    , bi.corporation_code_updated
+    , bi.user_code_updated
+    , bi.timestamp_updated
+ FROM
+    mwm_business_info_name bi
+        LEFT JOIN mwm_multilingual m1
+           ON m1.table_name = 'MWM_BUSINESS_INFO_NAME'
+           AND m1.id = bi.business_info_name_id
+           AND m1.column_name = 'BUSINESS_INFO_NAME'
+           AND m1.locale_code = ?
+           AND m1.delete_flag = '0'
+ WHERE
+       bi.corporation_code = ?
+ ORDER BY
+    bi.sort_order, bi.business_info_code
+
+MM0030_02: |+
+ UPDATE /* MM0030_02 */ wfm_variable_def
+ SET data_type = ?
+ WHERE corporation_code = ?
+   AND variable_def_code = ?
+
+#文書管理項目名称
+MM0040_01: |+
+ select /* MM0040_01 */
+      bi.DOC_BUSINESS_INFO_NAME_ID
+    , bi.CORPORATION_CODE
+    , bi.DOC_BUSINESS_INFO_CODE
+    , nvl(m1.VAL, bi.DOC_BUSINESS_INFO_NAME) AS DOC_BUSINESS_INFO_NAME
+    , bi.VALID_FLAG
+    , bi.SCREEN_PARTS_INPUT_FLAG
+    , bi.DATA_TYPE
+    , bi.SORT_ORDER
+    , bi.VERSION
+    , bi.DELETE_FLAG
+    , bi.CORPORATION_CODE_CREATED
+    , bi.USER_CODE_CREATED
+    , bi.TIMESTAMP_CREATED
+    , bi.CORPORATION_CODE_UPDATED
+    , bi.USER_CODE_UPDATED
+    , bi.TIMESTAMP_UPDATED
+ from
+    MWM_DOC_BUSINESS_INFO_NAME bi
+        left join MWM_MULTILINGUAL m1
+           on m1.TABLE_NAME = 'MWM_DOC_BUSINESS_INFO_NAME'
+           and m1.ID = bi.DOC_BUSINESS_INFO_NAME_ID
+           and m1.COLUMN_NAME = 'DOC_BUSINESS_INFO_NAME'
+           and m1.LOCALE_CODE = ?
+           and m1.DELETE_FLAG = '0'
+ where
+       bi.CORPORATION_CODE = ?
+ order by
+    bi.SORT_ORDER, bi.DOC_BUSINESS_INFO_CODE
+
+#採番形式マスタ検索
+MM0050_01: |+
+ select
+   /* MM0050_01 */
+   N.*, L.LOOKUP_NAME AS DELETE_FLAG_NAME
+ from
+   MWM_PARTS_NUMBERING_FORMAT N
+   inner join WFM_LOOKUP L
+    on L.CORPORATION_CODE = N.CORPORATION_CODE
+    and L.LOOKUP_TYPE_CODE = 'DELETE_FLAG'
+    and L.LOOKUP_CODE = N.DELETE_FLAG
+    and L.LOCALE_CODE = ?
+  ###REPLACE###
+
+#採番形式マスタ検索
+MM0051_01: |+
+ select /* MM0051_01 */
+  NF.*, L.LOOKUP_NAME as DELETE_FLAG_NAME
+ from
+  MWM_PARTS_NUMBERING_FORMAT NF
+  inner join WFM_LOOKUP L
+   on L.CORPORATION_CODE = NF.CORPORATION_CODE
+   and L.LOOKUP_TYPE_CODE = 'DELETE_FLAG'
+   and L.LOOKUP_CODE = NF.DELETE_FLAG
+   and L.LOCALE_CODE = ?
+   and L.DELETE_FLAG = '0'
+ where
+  NF.CORPORATION_CODE = ?
+  and NF.PARTS_NUMBERING_FORMAT_CODE = ?
+
+#採番形式項目マスタ
+MM0051_02: |+
+ select /* MM0051_02 */ *
+ from MWM_PARTS_NUMBERING_FORMAT_ITEM
+ where NUMBERING_FORMAT_ID = ? and DELETE_FLAG = '0'
+ order by SORT_ORDER
+
+#連番仕様マスタ検索
+MM0051_03: |+
+ select /* MM0051_02 */ * from MWM_PARTS_SEQUENCE_SPEC
+ where CORPORATION_CODE	 = ? and DELETE_FLAG = '0'
+ order by CORPORATION_CODE, PARTS_SEQUENCE_SPEC_CODE, PARTS_SEQUENCE_SPEC_ID
+
+#採番マスタ検索
+MM0052_01: |+
+ select /* MM0052_01 */
+  count(*)
+ from
+  MWM_PARTS_SEQUENCE_SPEC sq
+  inner join WFM_LOOKUP lu
+    on lu.CORPORATION_CODE = sq.CORPORATION_CODE
+    and lu.LOOKUP_TYPE_CODE  = 'DELETE_FLAG'
+    and lu.LOOKUP_CODE = sq.DELETE_FLAG
+    and lu.LOCALE_CODE = ?
+  inner join MWM_LOOKUP lu2
+    on lu2.CORPORATION_CODE = sq.CORPORATION_CODE
+    and lu2.LOOKUP_GROUP_ID	 = 'RESET_TYPE'
+    and lu2.LOOKUP_ID = sq.RESET_TYPE
+    and lu2.LOCALE_CODE = lu.LOCALE_CODE
+  left join MWM_MULTILINGUAL m
+    on m.TABLE_NAME = 'MWM_PARTS_SEQUENCE_SPEC'
+    and m.ID = sq.PARTS_SEQUENCE_SPEC_ID
+    and m.COLUMN_NAME = 'PARTS_SEQUENCE_SPEC_NAME'
+    and m.LOCALE_CODE = lu.LOCALE_CODE
+ where 1 = 1
+
+MM0052_02: |+
+ select /* MM0052_02 */
+  sq.PARTS_SEQUENCE_SPEC_ID, sq.CORPORATION_CODE, sq.PARTS_SEQUENCE_SPEC_CODE
+  , nvl(m.VAL, sq.PARTS_SEQUENCE_SPEC_NAME) as PARTS_SEQUENCE_SPEC_NAME, sq.SEQUENCE_LENGTH
+  , sq.RESET_TYPE, sq.START_VALUE, lu2.LOOKUP_NAME AS RESET_TYPE_NAME
+  , sq.VERSION, sq.DELETE_FLAG, sq.CORPORATION_CODE_CREATED
+  , sq.USER_CODE_CREATED, sq.TIMESTAMP_CREATED, sq.CORPORATION_CODE_UPDATED
+  , sq.USER_CODE_UPDATED, sq.TIMESTAMP_UPDATED, lu.LOOKUP_NAME as DELETE_FLAG_NAME
+ from
+  MWM_PARTS_SEQUENCE_SPEC sq
+  inner join WFM_LOOKUP lu
+    on lu.CORPORATION_CODE = sq.CORPORATION_CODE
+    and lu.LOOKUP_TYPE_CODE  = 'DELETE_FLAG'
+    and lu.LOOKUP_CODE = sq.DELETE_FLAG
+    and lu.LOCALE_CODE = ?
+  inner join MWM_LOOKUP lu2
+    on lu2.CORPORATION_CODE = sq.CORPORATION_CODE
+    and lu2.LOOKUP_GROUP_ID	 = 'RESET_TYPE'
+    and lu2.LOOKUP_ID = sq.RESET_TYPE
+    and lu2.LOCALE_CODE = lu.LOCALE_CODE
+  left join MWM_MULTILINGUAL m
+    on m.TABLE_NAME = 'MWM_PARTS_SEQUENCE_SPEC'
+    and m.ID = sq.PARTS_SEQUENCE_SPEC_ID
+    and m.COLUMN_NAME = 'PARTS_SEQUENCE_SPEC_NAME'
+    and m.LOCALE_CODE = lu.LOCALE_CODE
+ where 1 = 1
+
+#採番マスタ検索
+MM0053_01: |+
+ select /* MM0053_01 */
+  sq.PARTS_SEQUENCE_SPEC_ID, sq.CORPORATION_CODE, sq.PARTS_SEQUENCE_SPEC_CODE
+  , nvl(m.VAL, sq.PARTS_SEQUENCE_SPEC_NAME) as PARTS_SEQUENCE_SPEC_NAME, sq.SEQUENCE_LENGTH
+  , sq.RESET_TYPE, sq.START_VALUE, sq.VERSION, sq.DELETE_FLAG, sq.CORPORATION_CODE_CREATED
+  , sq.USER_CODE_CREATED, sq.TIMESTAMP_CREATED, sq.CORPORATION_CODE_UPDATED
+  , sq.USER_CODE_UPDATED, sq.TIMESTAMP_UPDATED, lu.LOOKUP_NAME as DELETE_FLAG_NAME
+ from
+  MWM_PARTS_SEQUENCE_SPEC sq
+  inner join WFM_LOOKUP lu
+    on lu.CORPORATION_CODE = sq.CORPORATION_CODE
+    and lu.LOOKUP_TYPE_CODE  = 'DELETE_FLAG'
+    and lu.LOOKUP_CODE = sq.DELETE_FLAG
+    and lu.LOCALE_CODE = ?
+  left join MWM_MULTILINGUAL m
+    on m.TABLE_NAME = 'MWM_PARTS_SEQUENCE_SPEC'
+    and m.ID = sq.PARTS_SEQUENCE_SPEC_ID
+    and m.COLUMN_NAME = 'PARTS_SEQUENCE_SPEC_NAME'
+    and m.LOCALE_CODE = lu.LOCALE_CODE
+ where
+  sq.CORPORATION_CODE = ?
+  and sq.PARTS_SEQUENCE_SPEC_CODE = ?
+
+#画面プロセス定義マスタ検索
+MM0060_01: |+
+ select /* MM0060_01 */
+   SPD.SCREEN_PROCESS_ID
+   , SPD.SCREEN_PROCESS_CODE
+   , nvl(MT.VAL, SPD.SCREEN_PROCESS_NAME) SCREEN_PROCESS_NAME
+ from MWM_SCREEN_PROCESS_DEF SPD
+ left join MWM_MULTILINGUAL MT
+   on MT.TABLE_NAME = 'MWM_CONTAINER'
+   and MT.ID = SPD.SCREEN_PROCESS_ID
+   and MT.COLUMN_NAME = 'CONTAINER_NAME'
+   and MT.LOCALE_CODE = ?
+   and MT.DELETE_FLAG = '0'
+ where
+  SPD.CORPORATION_CODE = ?
+  and SPD.DELETE_FLAG = '0'
+ order by
+  SPD.SCREEN_PROCESS_CODE, SPD.SCREEN_PROCESS_ID
+
+#ブロック表示条件
+MM0060_02: |+
+ select /* MM0060_02 */ BD.*
+ from MWM_BLOCK_DISPLAY BD
+ where BD.SCREEN_PROCESS_ID = ?
+   and BD.DELETE_FLAG = '0'
+ order by
+   BD.SORT_ORDER, BD.BLOCK_ID, BD.DC_ID, BD.BLOCK_DISPLAY_ID
+
+#ブロックリスト(行に相当)
+MM0060_03: |+
+ select /* MM0060_03 */ L.LOOKUP_ID BLOCK_ID, L.LOOKUP_NAME  BLOCK_NAME, L.SORT_ORDER
+ from (select * from MWM_LOOKUP where LOOKUP_GROUP_ID = 'BLOCK_ID' and DELETE_FLAG = '0' and LOCALE_CODE = ?) L
+ where L.CORPORATION_CODE = ?
+ order by
+   L.SORT_ORDER, L.LOOKUP_ID
+
+#表示条件リスト(列に相当)
+MM0060_04: |+
+ select /* MM0060_04 */ DC.DC_ID, nvl(M.VAL, DC.DC_NAME) as DC_NAME, DC.SORT_ORDER
+ from MWM_DC DC
+  inner join MWM_MULTILINGUAL M
+   on M.TABLE_NAME = 'MWM_DC'
+   and M.ID = DC.DC_ID
+   and M.COLUMN_NAME = 'DC_NAME'
+   and M.LOCALE_CODE = ?
+   and M.DELETE_FLAG = '0'
+ order by
+  DC.SORT_ORDER, DC.DC_ID
+
+#表示条件マスタ
+MM0060_05: |+
+ select /* MM0020_05 */ * from MWM_DC
+
+#デフォルトブロック表示条件マスタをブロック表示条件として抽出
+MM0060_06: |+
+ select /* MM0060_06 */
+  D.DEFAULT_BLOCK_DISPLAY_ID as BLOCK_DISPLAY_ID, D.BLOCK_ID, D.DC_ID
+  , D.DISPLAY_FLAG, D.EXPANSION_FLAG, D.SORT_ORDER
+ from MWM_DEFAULT_BLOCK_DISPLAY D
+ where D.CORPORATION_CODE = ?
+ order by D.DEFAULT_BLOCK_DISPLAY_ID
+
+#デフォルトブロック表示条件マスタを抽出
+MM0060_07: |+
+ select /* MM0060_07 */ D.*
+ from MWM_DEFAULT_BLOCK_DISPLAY D
+ where D.CORPORATION_CODE = ?
+ order by D.DEFAULT_BLOCK_DISPLAY_ID
+
+#システムプロパティ編集のプロパティ抽出
+MM0110_01: |+
+ select /* MM0110_01 */
+  P.PROPERTY_CODE, P.DEFAULT_VALUE, P.TIMESTAMP_UPDATED as DEFAULT_TIMESTAMP_UPDATED
+  , L.NAME_VALUE as PROPERTY_NAME
+  , CP.CORPORATION_CODE, CP.PROPERTY_VALUE, CP.TIMESTAMP_UPDATED as CORPORATION_TIMESTAMP_UPDATED
+ from WFM_CORP_PROP_MASTER P
+  left join WFM_CORPORATION_PROPERTY CP
+   on CP.PROPERTY_CODE = P.PROPERTY_CODE
+   and CP.CORPORATION_CODE = ?
+  left join WFM_NAME_LOOKUP L
+   on L.TABLE_NAME = 'WFM_CORP_PROP_MASTER'
+   and L.COLUMN_NAME = 'PROPERTY_NAME'
+   and L.ID = P.ID
+   and L.LOCALE_CODE = ?
+ where
+  P.SORT_ORDER > 0
+ order by
+  P.SORT_ORDER, P.PROPERTY_CODE, CP.ID
+
+MM0110_02: |+
+ select /* MM0110_02 */ * from WFM_CORP_PROP_MASTER
+
+MM0110_03: |+
+ select /* MM0110_03 */ * from WFM_CORPORATION_PROPERTY where CORPORATION_CODE = ?
+
+MM0110_04: |+
+ select /* MM0110_04 */ * from MWM_MAIL_CONFIG
+
+MM0110_05: |+
+ select /* MM0110_05 */ * from WFM_NAME_LOOKUP where TABLE_NAME in (?, ?)
+
+
+MM0120_01: |+
+ select /* MM0120_01 */ ${FIELDS}
+ from MWV_ANNOUNCEMENT A
+ where A.LOCALE_CODE = ?
+
+MM0120_02: |+
+  A.ROW_ID, A.ANNOUNCEMENT_ID, A.CORPORATION_CODE
+  , to_char(A.TIMESTAMP_START, 'yyyy/MM/dd hh24:mi') as TIMESTAMP_START
+  , to_char(A.TIMESTAMP_END, 'yyyy/MM/dd hh24:mi') as TIMESTAMP_END
+  , A.SUBJECT, A.CONTENTS, A.LINK_TITLE, A.LINK_URL, A.VERSION
+
+MM0121_01: |+
+ select /* MM0121_01 */ *
+ from MWV_ANNOUNCEMENT A
+ where A.ANNOUNCEMENT_ID = ?
+
+#メニュー編集一覧
+MM0130_01: |+
+ select /* MM0130_01 */ M.MENU_ID, nvl(ML.VAL, M.MENU_NAME) as MENU_NAME, M.MENU_ITEM_CODE1, M.MENU_ITEM_CODE2, M.MENU_ITEM_CODE3, M.URL, M.VERSION, M.DELETE_FLAG, M.CORPORATION_CODE_CREATED, M.USER_CODE_CREATED, M.TIMESTAMP_CREATED, M.CORPORATION_CODE_UPDATED, M.USER_CODE_UPDATED, M.TIMESTAMP_UPDATED
+ from MWM_MENU M
+  left join MWM_MULTILINGUAL ML
+   on ML.TABLE_NAME = 'MWM_MENU'
+   and ML.ID = M.MENU_ID
+   and ML.COLUMN_NAME = 'MENU_NAME'
+   and ML.DELETE_FLAG = '0'
+   and ML.LOCALE_CODE = ?
+ where
+  M.DELETE_FLAG = '0'
+  order by M.MENU_ITEM_CODE1, M.MENU_ITEM_CODE2, M.MENU_ITEM_CODE3
+
+MM0500_01: |+
+ select /* MM0500_01 */
+  DST.CORPORATION_CODE, DST.CORPORATION_NAME, DST.LOCALE_CODE
+  , (select count(*) from WFM_LOOKUP_TYPE LT where LT.CORPORATION_CODE = SRC.CORPORATION_CODE and LT.LOCALE_CODE = DST.LOCALE_CODE) as WFM_LOOKUP_TYPE_ALL
+  , (select count(*) from WFM_LOOKUP_TYPE LT where LT.CORPORATION_CODE = DST.CORPORATION_CODE and LT.LOCALE_CODE = DST.LOCALE_CODE) as WFM_LOOKUP_TYPE_COUNT
+  , (select count(*) from WFM_LOOKUP L where L.CORPORATION_CODE = SRC.CORPORATION_CODE and L.LOCALE_CODE = DST.LOCALE_CODE) as WFM_LOOKUP_ALL
+  , (select count(*) from WFM_LOOKUP L where L.CORPORATION_CODE = DST.CORPORATION_CODE and L.LOCALE_CODE = DST.LOCALE_CODE) as WFM_LOOKUP_COUNT
+  , (select count(*) from WFM_ACTION_V A where A.CORPORATION_CODE = SRC.CORPORATION_CODE and A.LOCALE_CODE = DST.LOCALE_CODE) as WFM_ACTION_ALL
+  , (select count(*) from WFM_ACTION_V A where A.CORPORATION_CODE = DST.CORPORATION_CODE and A.LOCALE_CODE = DST.LOCALE_CODE) as WFM_ACTION_COUNT
+  , (select count(*) from WFM_FUNCTION_V F where F.CORPORATION_CODE = SRC.CORPORATION_CODE and F.LOCALE_CODE = DST.LOCALE_CODE) as WFM_FUNCTION_ALL
+  , (select count(*) from WFM_FUNCTION_V F where F.CORPORATION_CODE = DST.CORPORATION_CODE and F.LOCALE_CODE = DST.LOCALE_CODE) as WFM_FUNCTION_COUNT
+  , (select count(*) from MWM_LOOKUP_GROUP LG where LG.CORPORATION_CODE = SRC.CORPORATION_CODE and LG.LOCALE_CODE = DST.LOCALE_CODE) as MWM_LOOKUP_GROUP_ALL
+  , (select count(*) from MWM_LOOKUP_GROUP LG where LG.CORPORATION_CODE = DST.CORPORATION_CODE and LG.LOCALE_CODE = DST.LOCALE_CODE) as MWM_LOOKUP_GROUP_COUNT
+  , (select count(*) from MWM_LOOKUP L where L.CORPORATION_CODE = SRC.CORPORATION_CODE and L.LOCALE_CODE = DST.LOCALE_CODE) as MWM_LOOKUP_ALL
+  , (select count(*) from MWM_LOOKUP L where L.CORPORATION_CODE = DST.CORPORATION_CODE and L.LOCALE_CODE = DST.LOCALE_CODE) as MWM_LOOKUP_COUNT
+  , (select count(*) from MWM_BUSINESS_INFO_NAME B where B.CORPORATION_CODE = SRC.CORPORATION_CODE) as MWM_BUSINESS_INFO_NAME_ALL
+  , (select count(*) from MWM_BUSINESS_INFO_NAME B where B.CORPORATION_CODE = DST.CORPORATION_CODE) as MWM_BUSINESS_INFO_NAME_COUNT
+  , (select count(*) from MWM_DOC_BUSINESS_INFO_NAME B where B.CORPORATION_CODE = SRC.CORPORATION_CODE) as MWM_DOC_BUSINESS_INFO_NAME_ALL
+  , (select count(*) from MWM_DOC_BUSINESS_INFO_NAME B where B.CORPORATION_CODE = DST.CORPORATION_CODE) as MWM_DOC_BUSINESS_INFO_NAME_COUNT
+  , (select count(*) from MWM_TRAY_CONFIG B where B.CORPORATION_CODE = SRC.CORPORATION_CODE) as MWM_TRAY_CONFIG_ALL
+  , (select count(*) from MWM_TRAY_CONFIG B where B.CORPORATION_CODE = DST.CORPORATION_CODE) as MWM_TRAY_CONFIG_COUNT
+  , (select count(*) from MWM_DOC_TRAY_CONFIG B where B.CORPORATION_CODE = SRC.CORPORATION_CODE) as MWM_DOC_TRAY_CONFIG_ALL
+  , (select count(*) from MWM_DOC_TRAY_CONFIG B where B.CORPORATION_CODE = DST.CORPORATION_CODE) as MWM_DOC_TRAY_CONFIG_COUNT
+  , (select count(*) from MWM_MAIL_VARIABLE B where B.CORPORATION_CODE = SRC.CORPORATION_CODE) as MWM_MAIL_VARIABLE_ALL
+  , (select count(*) from MWM_MAIL_VARIABLE B where B.CORPORATION_CODE = DST.CORPORATION_CODE) as MWM_MAIL_VARIABLE_COUNT
+  , (select count(*) from MWV_OPTION B where B.CORPORATION_CODE = SRC.CORPORATION_CODE and B.LOCALE_CODE = SRC.LOCALE_CODE) as MWM_OPTION_ALL
+  , (select count(*) from MWV_OPTION B where B.CORPORATION_CODE = DST.CORPORATION_CODE and B.LOCALE_CODE = DST.LOCALE_CODE) as MWM_OPTION_COUNT
+  , (select count(*) from MWV_OPTION_ITEM B where B.CORPORATION_CODE = SRC.CORPORATION_CODE and B.LOCALE_CODE = SRC.LOCALE_CODE) as MWM_OPTION_ITEM_ALL
+  , (select count(*) from MWV_OPTION_ITEM B where B.CORPORATION_CODE = DST.CORPORATION_CODE and B.LOCALE_CODE = DST.LOCALE_CODE) as MWM_OPTION_ITEM_COUNT
+ from
+  WFM_CORPORATION_V SRC
+  inner join WFM_CORPORATION_V DST
+   on DST.CORPORATION_CODE not in ('GROUP', SRC.CORPORATION_CODE)
+   and SRC.LOCALE_CODE = DST.LOCALE_CODE
+ where
+  SRC.CORPORATION_CODE = ?
+  and SRC.LOCALE_CODE = ?
+ order by
+  DST.CORPORATION_CODE
+
+MM0500_02: |+
+ select /* MM0500_02 */ *
+ from MWM_LOOKUP_GROUP G
+  inner join WFM_LOCALE LO
+   on LO.LOCALE_CODE = G.LOCALE_CODE
+ where
+  CORPORATION_CODE = ?
+  and not exists (
+   select * from MWM_LOOKUP_GROUP X
+   where X.CORPORATION_CODE = ?
+    and X.LOOKUP_GROUP_ID = G.LOOKUP_GROUP_ID
+    and X.LOCALE_CODE = G.LOCALE_CODE
+  )
+ order by G.CORPORATION_CODE, G.SORT_ORDER, G.SCREEN_LOOKUP_GROUP_ID
+
+MM0500_03: |+
+ select /* MM0500_03 */ *
+ from MWM_LOOKUP L
+  inner join WFM_LOCALE LO
+   on LO.LOCALE_CODE = L.LOCALE_CODE
+ where
+  CORPORATION_CODE = ?
+  and not exists (
+   select * from MWM_LOOKUP X
+   where X.CORPORATION_CODE = ?
+    and X.LOOKUP_GROUP_ID = L.LOOKUP_GROUP_ID
+    and X.LOOKUP_ID = L.LOOKUP_ID
+    and X.LOCALE_CODE = L.LOCALE_CODE
+  )
+ order by L.CORPORATION_CODE, L.LOOKUP_GROUP_ID, L.SORT_ORDER, L.SCREEN_LOOKUP_ID
+
+MM0500_04: |+
+ select /* MM0500_04 */ *
+ from MWM_BUSINESS_INFO_NAME B
+ where
+  CORPORATION_CODE = ?
+  and not exists (
+   select * from MWM_BUSINESS_INFO_NAME X
+   where X.CORPORATION_CODE = ?
+    and X.BUSINESS_INFO_CODE = B.BUSINESS_INFO_CODE
+  )
+ order by B.SORT_ORDER, B.BUSINESS_INFO_NAME_ID
+
+MM0500_05: |+
+ select /* MM0500_05 */ *
+ from MWM_DOC_BUSINESS_INFO_NAME B
+ where
+  CORPORATION_CODE = ?
+  and not exists (
+   select * from MWM_DOC_BUSINESS_INFO_NAME X
+   where X.CORPORATION_CODE = ?
+    and X.DOC_BUSINESS_INFO_CODE = B.DOC_BUSINESS_INFO_CODE
+  )
+ order by B.SORT_ORDER, B.DOC_BUSINESS_INFO_NAME_ID
+
+#トレイ設定
+MM0500_06: |+
+ select /* MM0500_06 */ *
+ from MWM_TRAY_CONFIG TC
+ where
+  TC.CORPORATION_CODE = ?
+  and not exists (
+   select * from MWM_TRAY_CONFIG X
+   where X.CORPORATION_CODE = ?
+    and X.TRAY_CONFIG_CODE = TC.TRAY_CONFIG_CODE
+  )
+ order by TC.SORT_ORDER, TC.TRAY_CONFIG_ID
+
+#トレイ設定検索条件
+MM0500_07: |+
+ select /* MM0500_07 */ *
+ from MWM_TRAY_CONFIG_CONDITION TCC
+ where
+  TCC.TRAY_CONFIG_ID = ?
+  and not exists (
+   select * from MWM_TRAY_CONFIG_CONDITION X
+   where X.CORPORATION_CODE = ?
+    and X.TRAY_CONFIG_ID = ?
+    and X.BUSINESS_INFO_CODE = TCC.BUSINESS_INFO_CODE
+  )
+ order by TCC.SORT_ORDER, TCC.TRAY_CONFIG_CONDITION_ID
+
+#トレイ設定検索結果
+MM0500_08: |+
+ select /* MM0500_08 */ *
+ from MWM_TRAY_CONFIG_RESULT TCR
+ where
+  TCR.TRAY_CONFIG_ID = ?
+  and not exists (
+   select * from MWM_TRAY_CONFIG_RESULT X
+   where X.CORPORATION_CODE = ?
+    and X.TRAY_CONFIG_ID = ?
+    and X.BUSINESS_INFO_CODE = TCR.BUSINESS_INFO_CODE
+  )
+ order by TCR.SORT_ORDER, TCR.TRAY_CONFIG_RESULT_ID
+
+#文書管理トレイ設定
+MM0500_09: |+
+ select /* MM0500_09 */ *
+ from MWM_DOC_TRAY_CONFIG TC
+ where
+  TC.CORPORATION_CODE = ?
+  and not exists (
+   select * from MWM_DOC_TRAY_CONFIG X
+   where X.CORPORATION_CODE = ?
+    and X.DOC_TRAY_CONFIG_CODE = TC.DOC_TRAY_CONFIG_CODE
+  )
+ order by TC.SORT_ORDER, TC.DOC_TRAY_CONFIG_ID
+
+#文書管理トレイ設定検索条件
+MM0500_10: |+
+ select /* MM0500_10 */ *
+ from MWM_DOC_TRAY_CONFIG_CONDITION TCC
+ where
+  TCC.DOC_TRAY_CONFIG_ID = ?
+  and not exists (
+   select * from MWM_DOC_TRAY_CONFIG_CONDITION X
+   where X.CORPORATION_CODE = ?
+    and X.DOC_TRAY_CONFIG_ID = ?
+    and X.DOC_BUSINESS_INFO_CODE = TCC.DOC_BUSINESS_INFO_CODE
+  )
+ order by TCC.SORT_ORDER, TCC.DOC_TRAY_CONFIG_CONDITION_ID
+
+#文書管理トレイ設定検索結果
+MM0500_11: |+
+ select /* MM0500_11 */ *
+ from MWM_DOC_TRAY_CONFIG_RESULT TCR
+ where
+  TCR.DOC_TRAY_CONFIG_ID = ?
+  and not exists (
+   select * from MWM_DOC_TRAY_CONFIG_RESULT X
+   where X.CORPORATION_CODE = ?
+    and X.DOC_TRAY_CONFIG_ID = ?
+    and X.DOC_BUSINESS_INFO_CODE = TCR.DOC_BUSINESS_INFO_CODE
+  )
+ order by TCR.SORT_ORDER, TCR.DOC_TRAY_CONFIG_RESULT_ID
+
+#メール変数マスタ
+MM0500_12: |+
+ select /* MM0500_12 */ V.*
+ from MWM_MAIL_VARIABLE V
+  inner join WFM_LOCALE LO
+   on LO.LOCALE_CODE = ?
+ where
+  CORPORATION_CODE = ?
+  and not exists (
+   select * from MWM_MAIL_VARIABLE X
+   where X.CORPORATION_CODE = ?
+    and X.MAIL_VARIABLE_CODE = V.MAIL_VARIABLE_CODE
+  )
+ order by V.CORPORATION_CODE, V.MAIL_VARIABLE_CODE, V.MAIL_VARIABLE_ID
+
+#選択肢マスタ
+MM0500_13: |+
+ select /* MM0500_13 */ SRC.*
+ from MWM_OPTION SRC
+ where
+  SRC.CORPORATION_CODE = ?
+  and not exists (
+   select * from MWM_OPTION DST
+   where DST.CORPORATION_CODE = ? and DST.OPTION_CODE = SRC.OPTION_CODE
+  )
+ order by SRC.CORPORATION_CODE, SRC.OPTION_CODE, SRC.OPTION_ID
+
+#選択肢項目マスタ
+MM0500_14: |+
+ select /* MM0500_14 */
+  OI2.OPTION_ITEM_ID, O1.OPTION_ID, OI2.CODE, OI2.LABEL, OI2.SORT_ORDER, OI2.VERSION, OI2.DELETE_FLAG
+ from MWM_OPTION O2
+  inner join MWM_OPTION_ITEM OI2
+   on OI2.OPTION_ID = O2.OPTION_ID
+  inner join MWM_OPTION O1
+   on O1.CORPORATION_CODE = ? /* DEST */
+   and O1.OPTION_CODE = O2.OPTION_CODE
+ where
+  O2.CORPORATION_CODE = ?   /* SRC */
+  and not exists (
+   select * from MWM_OPTION_ITEM X
+   where X.OPTION_ID = O1.OPTION_ID and X.CODE = OI2.CODE
+  )
+ order by O1.CORPORATION_CODE, O1.OPTION_CODE, OI2.SORT_ORDER, OI2.OPTION_ITEM_ID

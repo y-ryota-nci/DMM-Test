@@ -1,0 +1,27 @@
+<!-- Checkboxパーツのプロパティ -->
+<script type="text/javascript" src="vd0114_3.js"></script>
+<div id="vd0114_3">
+	<label class='sub-title' data-i18n='checkbox'>Checkbox</label>
+
+	<div class='form-group col-xs-4'>
+		<span class='required' data-i18n='checkedValue'>#{チェックありの時の値}</span>
+		<input id='checkedValue' type='text' class='form-control required' maxlength='3' data-validate='{"pattern" : "alphaNumber" }' />
+	</div>
+
+	<div class='form-group col-xs-4'>
+		<span class='' data-i18n='uncheckedValue'>#{チェックなしの時の値}</span>
+		<input id='uncheckedValue' type='text' class='form-control' maxlength='3' data-validate='{"pattern" : "alphaNumber" }' />
+	</div>
+
+	<div class='form-group col-xs-4'>
+		<span class='required' data-i18n='defaultValue'>#{デフォルト値}</span>
+		<select id='defaultValue' class='form-control required'></select>
+	</div>
+
+	<div class="form-group col-xs-4">
+		<span class='' data-i18n='checkboxLabel'>#{チェックボックスのラベル}</span>
+		<input id='checkboxLabel' type='text' class='form-control' maxlength='1000' />
+	</div>
+
+	<label data-i18n="MSG0187" class="text-muted">※チェックボックスでの未チェックは空文字扱いです。DB書き込み時だけ「チェックなしの時の値」が使用されます。</label>
+</div>

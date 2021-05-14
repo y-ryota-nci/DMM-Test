@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<style type="text/css">
+	section.main-contents {
+		padding-bottom:25px;
+	}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src='../../assets/nci/tray.js'></script>
+	<script src="./bd0802.js"></script>
+	<title>BD0802 予算計画履歴作成</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="col-xs-12 main-contents">
+		<article class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">予算計画履歴作成</h1>
+			</div>
+		</article><!--/.row-->
+
+		<article class="row mB40 mB40_sp">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div id="condition-contents" class="panel-collapse collapse in">
+						<div class="panel-body">
+							<form id="formCondition" class="tableBox col-sm-12">
+								<span class="hide" id="yrCd"></span>
+								<span class="hide" id="organizationCodeLv3"></span>
+								<span class="hide" id="rcvCostPayTp"></span>
+								<span class="hide" id="bsplTp"></span>
+								<div class="">
+									<div class="tr">
+										<div class="th col-sm-4"><span class="required">履歴名称</span></div>
+										<div class="td col-sm-8"><input id="hstNm" type="text" class="form-control required" maxlength="50" /></div>
+									</div>
+									<div class="tr">
+										<div class="th col-sm-4"><span class="">コメント</span></div>
+										<div class="td col-sm-8"><input id="hstRmk" type="text" class="form-control" data-validate='{"maxByteUtf8" : 1000}' maxlength="1000" /></div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+
+					<div id="result-contents" class="panel-body panel-collapse collapse in">
+						<h3>
+							<span data-field="yrNm"></span>・
+							<span data-field="rcvCostPayTpNm"></span>・
+							<span data-field="organizationNameLv2"></span>・
+							<span data-field="organizationNameLv3"></span>・
+							<span data-field="bsplTpNm">・</span>の履歴を作成します。
+						</h3>
+
+						<div class="table-responsive" id="search-result">
+							<table class="table table-bordered table-hover table-striped responsive">
+								<colgroup>
+									<col style="width:180px" />
+									<col span="13" style="width:140px" />
+
+								<thead>
+									<tr>
+										<th style="text-align:center">予算科目
+										<th style="text-align:center">3月
+										<th style="text-align:center">4月
+										<th style="text-align:center">5月
+										<th style="text-align:center">6月
+										<th style="text-align:center">7月
+										<th style="text-align:center">8月
+										<th style="text-align:center">9月
+										<th style="text-align:center">10月
+										<th style="text-align:center">11月
+										<th style="text-align:center">12月
+										<th style="text-align:center">1月
+										<th style="text-align:center">2月
+										<th style="text-align:center">合計
+									</tr>
+								</thead>
+
+								<tbody></tbody>
+
+								<tfoot class="template hide">
+									<tr>
+										<td><span data-field="bgtItmNm"></span>
+										<td class="text-right" data-field="bgtAmt03"></td>
+										<td class="text-right" data-field="bgtAmt04"></td>
+										<td class="text-right" data-field="bgtAmt05"></td>
+										<td class="text-right" data-field="bgtAmt06"></td>
+										<td class="text-right" data-field="bgtAmt07"></td>
+										<td class="text-right" data-field="bgtAmt08"></td>
+										<td class="text-right" data-field="bgtAmt09"></td>
+										<td class="text-right" data-field="bgtAmt10"></td>
+										<td class="text-right" data-field="bgtAmt11"></td>
+										<td class="text-right" data-field="bgtAmt12"></td>
+										<td class="text-right" data-field="bgtAmt01"></td>
+										<td class="text-right" data-field="bgtAmt02"></td>
+										<td class="text-right" data-field="bgtAmtTtl"></td>
+									</tr>
+								</tfoot>
+							 </table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article><!--/.row-->
+
+		<article class="row">
+			<div class="col-xs-3 text-right">
+			</div>
+			<div class="col-xs-6 text-center">
+				<button id="btnCreateHistory" type="button" class="btn btn-primary wide" disabled><i class="fa fa-camera"></i><span>履歴作成</span></button>
+			</div>
+			<div class="col-xs-3 text-right">
+				<button id="btnCancel" type="button" class="btn btn-default wide"><i class="fa fa-reply"></i><span data-i18n="btnBack">戻る</span></button>
+			</div>
+		</article><!--/.row-->
+	</section>	<!--/.main-->
+
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/jsTree/themes/default/style.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	#tree {
+	}
+	#iframe {
+		width: 100%;
+		height: 200vh; /* 仮の高さ。正確な高さはiframe内のコンテンツ側で計算、設定する  */
+	}
+	#treeOrg, #treeUser {
+		margin-left: 0.5rem;
+		margin-right: 0.5rem;
+	}
+	li[data-type=deleted] {
+		color : dimgray !important;
+	}
+	li[data-type=corporation] {
+		color : darkviolet;
+	}
+	li[data-type=corporation] li[data-type=organization]{
+		color : dodgerblue;
+	}
+	li[data-type=user] {
+		color : green;
+	}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/jsTree/jstree.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./mm0000.js"></script>
+	<title>MM0000 プロファイル管理</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<article id="MM0000" class="container">
+		<section class="row">
+			<span id="header" class="screen-name">MM0000</span>
+
+			<div class="sub-title" data-i18n="MM0000">プロファイル管理</div>
+		</section>
+
+		<section class="row">
+			<div class="col-sm-3 form-group">
+				<label data-i18n="baseDate">基準日</label>
+				<div class="has-feedback">
+					<input id="baseDate" type="text" maxlength="10" class="required ymdPicker form-control" data-validate='{ "pattern": "date" }' />
+					<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+				</div>
+			</div>
+			<div class="col-sm-3 form-group">
+				<label>
+					<input type="checkbox" id="displayValidOnly" value="true" checked />
+					<span data-i18n="displayValidOnly">削除データを含む</span>
+				</label>
+			</div>
+		</section>
+
+		<section class="row">
+			<!-- プロファイルツリー（企業／組織） -->
+			<div class="form-group col-md-7">
+				<div class="">
+					<button id="btnAddCorp" class="btn btn-info btn-sm" disabled>
+						<span class="glyphicon glyphicon-plus-sign" data-i18n="btnAddCorp">企業追加</span>
+					</button>
+					<button id="btnEditCorp" class="btn btn-info btn-sm" disabled>
+						<span class="glyphicon glyphicon-edit" data-i18n="btnEditCorp">企業編集</span>
+					</button>
+					<button id="btnAddOrg" class="btn btn-primary btn-sm" disabled>
+						<span class="glyphicon glyphicon-plus-sign" data-i18n="btnAddOrg">組織追加</span>
+					</button>
+					<button id="btnEditOrg" class="btn btn-primary btn-sm" disabled>
+						<span class="glyphicon glyphicon-edit" data-i18n="btnEditOrg">組織編集</span>
+					</button>
+					<button id="btnDeleteOrg" class="btn btn-primary btn-sm" disabled>
+						<span class="glyphicon glyphicon-trash" data-i18n="btnDeleteOrg">組織削除</span>
+					</button>
+					<button id="btnAddUser" class="btn btn-success btn-sm" disabled>
+						<span class="glyphicon glyphicon-plus-sign" data-i18n="btnAddUser">ユーザ追加</span>
+					</button>
+				</div>
+
+				<div id="treeOrg" class="alert alert-info"></div>
+			</div>
+
+			<!-- プロファイル（ユーザ） -->
+			<div class="form-group col-md-5">
+				<div class="">
+					<button id="btnEditUser" class="btn btn-success btn-sm" disabled>
+						<span class="glyphicon glyphicon-edit" data-i18n="btnEditUser">ユーザ編集</span>
+					</button>
+				</div>
+
+				<div id="treeUser" class="alert alert-success"></div>
+			</div>
+		</section>
+	</article>
+	<article id="MM0001" class="hide">
+		<iframe id="iframe-MM0001"></iframe>
+	</article>
+	<article id="MM0002" class="hide">
+		<iframe id="iframe-MM0002"></iframe>
+	</article>
+	<article id="MM0003" class="hide">
+		<iframe id="iframe-MM0003"></iframe>
+	</article>
+	<article id="MM0004" class="hide">
+		<iframe id="iframe-MM0004"></iframe>
+	</article>
+
+	<div id="confirmAddCorp" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content form-group">
+				<div class="modal-header">
+					<h5 data-i18n="MSG0109" class="dialog-title">新企業の企業コードと名称を入力してください。</h5>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label data-i18n="corporationCode" class="required">企業コード</label>
+						<input id="newCorporationCode" maxlength="10" class="required form-control" data-validate='{ "pattern" : "alphaNumberUnderscore" }' />
+					</div>
+					<div class="form-group">
+						<label data-i18n="corporationName" class="required">企業名</label>
+						<input id="newCorporationName" maxlength="100" class="required form-control" />
+					</div>
+				</div>
+				<div class="moda-footer form-group text-center">
+					<button id="btnAddCorpOk" class="btn btn-primary">
+						<i class="glyphicon glyphicon-ok-sign"></i>
+						<span data-i18n="btnOK">ＯＫ</span>
+					</button>
+					<button id="btnAddCorpCancel" class="btn btn-default">
+						<i class="glyphicon glyphicon-remove-sign"></i>
+						<span data-i18n="btnCancel">キャンセル</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

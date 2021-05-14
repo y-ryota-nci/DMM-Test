@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src="./ct0020.js"></script>
+	<title>CT0020 カタログ選択</title>
+</head>
+<body>
+<section class="col-xs-12">
+	<article class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">カタログ選択</h1>
+		</div>
+	</article><!--/.row-->
+
+	<article class="row mB40 mB40_sp">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix collapse_btn collapsed" role="button" data-toggle="collapse" data-target="#condition-contents"><i class="fa fa-chevron-down"></i><span>カタログ検索</span></div>
+				<div id="condition-contents" class="panel-collapse collapse">
+					<div class="panel-body">
+						<form id="formCondition" class="tableBox col-lg-12 col-md-12 col-sm-12">
+							<div class="tr">
+								<div class="th col-sm-4 col-md-2">品番</div>
+								<div class="td col-sm-8 col-md-4"><input type="text" id="catalogCode" class="form-control" maxlength="10" /></div>
+								<div class="th col-sm-4 col-md-2">カテゴリ</div>
+								<div class="td col-sm-8 col-md-4"><select id="catalogCategoryId" class="form-control"></select></div>
+							</div>
+							<div class="tr">
+								<div class="th col-sm-4 col-md-2">品目名称</div>
+								<div class="td col-sm-8 col-md-10"><input type="text" id="catalogName" class="form-control" maxlength="100"/></div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-xs-12 text-center">
+						<button id="btnSearch" class="btn btn-primary">
+							<i class="fa fa-search"></i>
+							<span data-i18n="btnSearch">#{btnSearch}</span>
+						</button>
+						<button class="btn btn-default btnClose" data-close>
+							<i class="fa fa-times"></i>
+							<span data-i18n="btnClose">#{閉じる}</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</article>
+
+	<article id="seach-result" class="row invisible">
+		<div class="col-lg-12">
+			<!-- 検索結果サブタイトル -->
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#result-contents"><i class="fa fa-chevron-up"></i><span>カタログ一覧</span></div>
+				<div id="result-contents" class="panel-body panel-collapse collapse in">
+
+					<!-- ページ制御 -->
+					<div class="fixed-table-pagination row">
+						<div class="pull-left col-sm-4">
+							<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+						</div>
+						<div class="pull-left col-sm-4 text-center">
+							<ul class="pagination"></ul>
+						</div>
+						<div class="pull-right col-sm-4 text-right pagination-detail">
+							<span data-i18n="rowCountPerPage">1ページの行数</span>
+							<select class="pageSize"></select>
+						</div>
+					</div>
+
+					<!-- 検索結果本体 -->
+					<div class="table-responsive">
+						<table class="table table-bordered table-hover table-striped responsive">
+							<colgroup>
+								<col style="width:35px" />
+								<col class="col-sm-12 col-xs-12" />
+							</colgroup>
+							<thead>
+							<tr>
+								<th class="text-center">選択</th>
+								<th>品目</th>
+							</tr>
+							</thead>
+							<tbody></tbody>
+							<tfoot class="template hide">
+							<tr>
+								<td class="text-center"><input type="radio" name="rdoSelect" /></td>
+								<td>
+									<span class="hide catalogId" data-field="catalogId"></span>
+									<span class="hide catalogCategoryId" data-field="catalogCategoryId"></span>
+									<span class="hide catalogUnitId" data-field="catalogUnitId"></span>
+									<span class="hide salesTaxType" data-field="salesTaxType"></span>
+									<table class="table table-bordered common">
+										<colgroup>
+											<col class="col-md-2" style="background-color: white;"/>
+											<col class="col-md-2" />
+											<col class="col-md-3" style="background-color: white;" />
+											<col class="col-md-2" />
+											<col class="col-md-3" style="background-color: white;" />
+										</colgroup>
+										<tbody>
+											<tr>
+												<td rowspan="6"><span class="hide catalogImageId" data-field="catalogImageId"></span></td>
+												<th>品番</th>
+												<td data-field="catalogCode">#{catalogCode}</td>
+												<th>カテゴリ</th>
+												<td data-field="catalogCategoryName">#{catalogCategoryName}</td>
+											</tr>
+											<tr>
+												<th>品目名称</th>
+												<td data-field="catalogName">#{catalogName}</td>
+												<th>在庫区分</th>
+												<td data-field="stockTypeName">#{stockTypeName}</td>
+											</tr>
+											<tr>
+												<th>発注先</th>
+												<td data-field="vendorName">#{vendorName}</td>
+												<th>単位</th>
+												<td data-field="catalogUnitName">#{catalogUnitName}</td>
+											</tr>
+											<tr>
+												<th>金額</th>
+												<td data-field="unitPrice">#{unitPrice}</td>
+												<th>消費税区分</th>
+												<td data-field="salesTaxTypeName">#{salesTaxTypeName}</td>
+											</tr>
+											<tr>
+												<th>メーカー</th>
+												<td data-field="makerName">#{makerName}</td>
+												<th>メーカー型式</th>
+												<td data-field="makerModelNumber">#{makerModelNumber}</td>
+											</tr>
+											<tr>
+												<th>備考</th>
+												<td colspan="3" data-field="escapeRemarks" data-html-escaped>#{escapeRemarks}</td>
+											</tr>
+										</tbody>
+
+									</table>
+								</td>
+							</tr>
+							</tfoot>
+						</table>
+					</div>
+
+					<!-- ページ制御 -->
+					<div class="fixed-table-pagination row">
+						<div class="pull-left col-sm-4">
+							<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+						</div>
+						<div class="pull-left col-sm-4 text-center">
+							<ul class="pagination"></ul>
+						</div>
+						<div class="pull-right col-sm-4 text-right pagination-detail">
+							<span data-i18n="rowCountPerPage">1ページの行数</span>
+							<select class="pageSize"></select>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-xs-12 text-center">
+						<button id="btnSelect" class="btn btn-primary" disabled>
+							<i class="fa fa-check"></i>
+							<span data-i18n="btnSelect">#{選択}</span>
+						</button>
+						<button class="btn btn-default btnClose" data-close>
+							<i class="fa fa-times"></i>
+							<span data-i18n="btnClose">#{閉じる}</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</article>
+</section>
+</body>
+</html>

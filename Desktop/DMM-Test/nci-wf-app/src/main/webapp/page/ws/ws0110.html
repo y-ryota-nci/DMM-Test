@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src="./ws0110.js"></script>
+	<title>WS0110 代理設定一覧</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<!-- 表示設定 -->
+	<section class="col-xs-12">
+		<article class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">代理設定一覧</h1>
+				<span data-i18n="MSG0111">%{この画面では、自分自身の『承認』を、他の人に『代理』してもらう設定ができます。}%</span>
+			</div>
+		</article><!--/.row-->
+		<article id="search-condition" class="row mB40 mB40_sp">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading" data-i18n="searchCondition">#{検索条件}</div>
+					<div class="panel-body">
+						<div class="form-group col-sm-4">
+							<div class="input-group">
+								<input id="corporationCode" type="hidden" readonly class="condition" />
+								<input id="userCode" type="hidden" readonly class="condition" />
+								<input id="userAddedInfo" type="hidden" readonly />
+								<input id="userName" type="text" class="required form-control" readonly />
+								<span class="input-group-btn">
+									<button id="btnSelectUser" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-info-sign"></i></button>
+								</span>
+								<span class="input-group-btn">
+									<button id="btnClearUser" class="btn btn-default btn-sm clear-input-group"><i class="glyphicon glyphicon-remove-circle"></i></button>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+		<article id="seach-result" class="row hide mB40 mB40_sp">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<!-- 検索結果サブタイトル -->
+					<div class="panel-heading" data-i18n="searchResult">#{検索結果}</div>
+					<div class="panel-body">
+						<!-- ページ制御 -->
+						<div class="fixed-table-pagination clearfix row">
+							<div class="col-lg-9 col-md-12">
+								<div class="pagination clearfix">
+									<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+									<ul class="pagination"></ul>
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-12 col-sm-12">
+								<div class="pagination-detail">
+									<span data-i18n="rowCountPerPage">1ページの行数</span>
+									<select class="pageSize"></select>
+								</div>
+							</div>
+						</div>
+
+						<div class="table-responsive">
+							<table class="table table-bordered table-hover table-striped responsive">
+								<colgroup>
+									<col class="col-md-4" />
+									<col class="col-md-2" />
+									<col class="col-md-3" />
+									<col class="col-md-3" />
+								</colgroup>
+								<thead>
+									<tr>
+										<th data-i18n="documentType">#{文書種別}</th>
+										<th data-i18n="proxyType">#{代理区分}</th>
+										<th data-i18n="proxyUser">#{代理先}</th>
+										<th data-i18n="proxyTerm">#{代理期間}</th>
+									</tr>
+								</thead>
+								<tbody></tbody>
+								<tfoot class="template hide">
+									<tr>
+										<th>
+											<input type="checkbox" class="selectable" />
+											<a href="#" data-field="processDefName">#{processDefName}(#{processDefDetailCode})</a>
+										</th>
+										<td class="text-left" data-field="approvalTypeName">#{approvalTypeName}</td>
+										<td class="text-left">
+											<span data-field="userAddedInfoTransfer">#{userAddedInfoTransfer}</span>
+											<span data-field="userNameTransfer">#{userNameTransfer}</span>
+										</td>
+										<td class="text-left">
+											<span data-field="validStartDateTransfer"></span>
+											～
+											<span data-field="validEndDateTransfer"></span>
+										</td>
+										<td class="hide" data-field="corporationCode"></td>
+										<td class="hide" data-field="seqNoAuthTransfer"></td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+
+						<!-- ページ制御 -->
+						<div class="fixed-table-pagination clearfix row">
+							<div class="col-lg-9 col-md-12">
+								<div class="pagination clearfix">
+									<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+									<ul class="pagination"></ul>
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-12 col-sm-12">
+								<div class="pagination-detail">
+									<span data-i18n="rowCountPerPage">1ページの行数</span>
+									<select class="pageSize"></select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<span data-i18n="MSG0112">%{自分自身の『承認』を、他の人に『代理』してもらう場合、『追加』ボタンを押してください。}%</span>
+			</div>
+			<div class="col-lg-12">
+				<button id="btnAdd" class="btn btn-primary btn-wide" disabled>
+					<i class="fa fa-plus-circle"></i><span data-i18n="btnAdd">#{追加}</span>
+				</button>
+				<button id="btnDelete" class="btn btn-danger btn-wide" disabled>
+					<i class="fa fa-trash"></i><span data-i18n="btnDelete">#{削除}</span>
+				</button>
+			</div>
+		</article>
+	</section>
+</body>
+</html>

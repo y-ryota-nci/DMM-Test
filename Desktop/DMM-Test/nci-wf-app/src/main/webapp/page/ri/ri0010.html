@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<style type="text/css">
+	#seach-result {
+		min-height: 480px;
+	}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src="./ri0010.js"></script>
+	<title>RI0010 発注選択</title>
+</head>
+<body>
+	<header class="container-fluid"></header>
+
+	<section class="col-xs-12">
+		<article class="row">
+			<h1 class="page-header">発注選択</h1>
+		</article><!--/.row-->
+
+		<article class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#condition-contents"><i class="fa fa-chevron-up"></i><span data-i18n="searchCondition">検索条件</span></div>
+				<div id="condition-contents" class="panel-collapse collapse in">
+					<form class="tableBox col-lg-12 col-md-12 col-sm-12" id="formCondition">
+						<input id="orgnzCd" type="hidden" />
+
+						<div class="tr">
+							<div class="col-lg-2 col-md-2 col-sm-2 th">発注No</div>
+							<div class="col-lg-4 col-md-4 col-sm-4 td">
+								<input class="corporationCode" id="corporationCode" type="hidden" readonly>
+								<input class="form-control" id="purordNo" type="text">
+							</div>
+							<div class="col-lg-2 col-md-2 col-sm-2 th">発注件名</div>
+							<div class="col-lg-4 col-md-4 col-sm-4 td">
+								<input class="form-control" id="purordNm" type="text">
+							</div>
+						</div>
+						<div class="tr">
+							<div class="col-lg-2 col-md-2 col-sm-2 th">取引先</div>
+							<div class="col-lg-4 col-md-4 col-sm-4 td">
+								<input class="splrNmKj form-control" id="splrNmKj" type="text" maxlength="100">
+							</div>
+							<div class="col-lg-2 col-md-2 col-sm-2 th">発注申請者</div>
+							<div class="col-lg-4 col-md-4 col-sm-4 td">
+								<input id="sbmtrNm" class="sbmtrNm form-control" type="text" maxlength="30">
+							</div>
+						</div>
+						<div class="tr">
+							<div class="col-lg-2 col-md-2 col-sm-2 th">検収予定日</div>
+							<div class="col-lg-4 col-md-4 col-sm-4 td">
+								<div class="input-group">
+									<div class="has-feedback">
+										<!-- <input type="text" class="form-control s-size fix display-inline from" /> -->
+										<input class="form-control from ymdPicker" id="inspCompDtFrom" type="text" data-validate='{"pattern":"date","to":"#inspCompDtTo"}'>
+										<i class="glyphicon glyphicon-calendar form-control-feedback">
+										</i>
+									</div>
+									<div class="input-group-addon">～
+									</div>
+									<div class="has-feedback">
+										<!-- <input type="text" class="form-control s-size fix display-inline to" /> -->
+										<input class="form-control to ymdPicker" id="inspCompDtTo" type="text" data-validate='{"pattern":"date","from":"#inspCompDtFrom"}'>
+										<i class="glyphicon glyphicon-calendar form-control-feedback">
+										</i>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-2 col-md-2 col-sm-2 th">支払予定日</div>
+							<div class="col-lg-4 col-md-4 col-sm-4 td">
+								<div class="input-group">
+									<div class="has-feedback">
+										<!-- <input type="text" class="form-control s-size fix display-inline from" /> -->
+										<input class="form-control from ymdPicker" id="payPlnDtFrom" type="text" data-validate='{"pattern":"date","to":"#payPlnDtTo"}'>
+										<i class="glyphicon glyphicon-calendar form-control-feedback">
+										</i>
+									</div>
+									<div class="input-group-addon">～
+									</div>
+									<div class="has-feedback">
+										<!-- <input type="text" class="form-control s-size fix display-inline to" /> -->
+										<input class="form-control to ymdPicker" id="payPlnDtTo" type="text" data-validate='{"pattern":"date","from":"#payPlnDtFrom"}'>
+										<i class="glyphicon glyphicon-calendar form-control-feedback">
+										</i>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tr">
+							<div class="col-lg-2 col-md-2 col-sm-2 th">検収状況</div>
+							<div class="col-lg-4 col-md-4 col-sm-4 td">
+								<span class="inline-block"><label for="purordStsPurordFixed"><input type="checkbox" id="purordStsPurordFixed" value="true">承認済</label></span>
+								<span class="inline-block"><label for="purordStsRcvinspFixed"><input type="checkbox" id="purordStsRcvinspFixed" value="true">検収中</label></span>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="form-group text-center">
+				<button id="btnSearch" class="btn btn-primary">
+					<i class="fa fa-search"></i>
+					<span data-i18n="btnFilter">#{btnFilter}</span>
+				</button>
+				<button class="btn btn-default btnClose" data-close>
+					<i class="fa fa-times"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+		</article>
+
+		<article id="seach-result" class="row invisible">
+			<!-- 検索結果サブタイトル -->
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#result-contents"><i class="fa fa-chevron-up"></i><span data-i18n="searchResult">検索結果</span></div>
+				<div id="result-contents" class="panel-body panel-collapse collapse in">
+
+					<!-- ページ制御 -->
+					<div class="fixed-table-pagination row">
+						<div class="pull-left col-sm-4 col-md-3">
+							<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+						</div>
+						<div class="pull-left col-sm-8 col-md-6 text-center">
+							<ul class="pagination"></ul>
+						</div>
+						<div class="pull-right pagination-detail col-sm-12 col-md-3">
+							<span data-i18n="rowCountPerPage">1ページの行数</span>
+							<select class="pageSize"></select>
+						</div>
+					</div>
+
+					<!-- 検索結果本体 -->
+					<div class="table-responsive">
+						<table class="table table-bordered table-hover table-striped responsive">
+							<colgroup>
+								<col style="width:30px" />
+								<col class="text-left" style="width:135px;">
+								<col class="text-left" style="width:70px;">
+								<col class="text-left" style="width:10%;">
+								<col class="text-left" style="width:10%;">
+								<col class="text-left" style="width:10%;">
+								<col class="text-left" style="width:10%;">
+								<col class="text-left" style="width:10%;">
+								<col class="text-left" style="width:120px;">
+								<col class="text-left" style="width:50px;">
+								<col class="text-left" style="width:80px;">
+								<col class="text-left" style="width:80px;">
+								<col class="text-left" style="width:80px;">
+								<col class="text-left" style="width:80px;">
+							</colgroup>
+							<thead>
+							<tr>
+								<th></th>
+								<th><a href="#" data-sort="D.COMPANY_CD, D.PURORD_NO, D.PURORD_DTL_NO">発注No</a></th>
+								<th><a href="#" data-sort="SPRT_TP_NM, D.COMPANY_CD, D.PURORD_NO, D.PURORD_DTL_NO">分納</a></th>
+								<th><a href="#" data-sort="O.PURORD_NM, D.COMPANY_CD, D.PURORD_NO, D.PURORD_DTL_NO">発注件名</a></th>
+								<th><a href="#" data-sort="O.SPLR_NM_KJ, D.COMPANY_CD, D.PURORD_NO, D.PURORD_DTL_NO">取引先</a></th>
+								<th><a href="#" data-sort="D.ITMEXPS_CD1, D.COMPANY_CD, D.PURORD_NO, D.PURORD_DTL_NO">費目1</a></th>
+								<th><a href="#" data-sort="D.ITMEXPS_CD2, D.COMPANY_CD, D.PURORD_NO, D.PURORD_DTL_NO">費目2</a></th>
+								<th><a href="#" data-sort="D.ITM_NM, D.COMPANY_CD, D.PURORD_NO, D.PURORD_DTL_NO">品目</a></th>
+								<th><a href="#" data-sort="D.BUMON_CD, D.COMPANY_CD, D.PURORD_NO, D.PURORD_DTL_NO">部門</a></th>
+								<th><a href="#" data-sort="MNY_NM, D.COMPANY_CD, D.PURORD_NO, D.PURORD_DTL_NO">通貨</a></th>
+								<th><a href="#" data-sort="PURORD_AMT, D.COMPANY_CD, D.PURORD_NO, D.PURORD_DTL_NO">発注金額</a></th>
+								<th><a href="#" data-sort="PURORD_AMT_REMAIN, D.COMPANY_CD, D.PURORD_NO, D.PURORD_DTL_NO">発注残金額</a></th>
+								<th><a href="#" data-sort="INSP_COMP_DT, D.COMPANY_CD, D.PURORD_NO, D.PURORD_DTL_NO">検収予定日</a></th>
+								<th><a href="#" data-sort="PAY_PLN_DT, D.COMPANY_CD, D.PURORD_NO, D.PURORD_DTL_NO">支払予定日</a></th>
+							</tr>
+							</thead>
+
+							<tbody></tbody>
+
+							<tfoot class="template hide">
+							<tr>
+								<td class="text-center">
+									<input type="checkbox" name="chkPurOrd" />
+								<td class="text-left" data-field="pPurordNo">#{pPurordNo}</td>
+								<td class="text-left" data-field="sprtTpNm">#{sprtTpNm}</td>
+								<td class="text-left" data-field="purordNm">#{purordNm}</td>
+								<td class="text-left" data-field="splrNmKj">#{splrNmKj}</td>
+								<td class="text-left" data-field="itmexpsNm1">#{itmexpsNm1}</td>
+								<td class="text-left" data-field="itmexpsNm2">#{itmexpsNm2}</td>
+								<td class="text-left" data-field="itmNm">#{itmNm}</td>
+								<td class="text-left" data-field="bumonCd">#{bumonCd}</td>
+								<td class="text-left" data-field="mnyNm">#{mnyNm}</td>
+								<td class="dataType-number" data-field="purordAmt" style="text-align:right;">#{purordAmt}</td>
+								<td class="dataType-number" data-field="purordAmtRemain" style="text-align:right;">#{purordAmtRemain}</td>
+
+								<td class="text-left" data-field="inspCompDt">#{inspCompDt}</td>
+								<td class="text-left" data-field="payPlnDt">#{payPlnDt}</td>
+
+								<td class="hide" data-field="bumonNm">#{bumonNm}</td>
+
+								<td class="hide" data-field="purordNo"></td>
+								<td class="hide" data-field="purordDtlNo"></td>
+								<td class="hide" data-field="splrCd"></td>
+								<td class="hide" data-field="splrNmKn"></td>
+								<td class="hide" data-field="mnyTp"></td>
+								<td class="hide" data-field="itmexpsCd1"></td>
+								<td class="hide" data-field="itmexpsCd2"></td>
+								<td class="hide" data-field="itmCd"></td>
+								<td class="hide" data-field="anlysCd"></td>
+								<td class="hide" data-field="rcvinspAmt"></td>
+								<td class="hide" data-field="purordAmtFc"></td>
+								<td class="hide" data-field="taxCd"></td>
+								<td class="hide" data-field="mnyCd"></td>
+								<td class="hide" data-field="iptNmFg"></td>
+								<td class="hide" data-field="orgnzCd"></td>
+								<td class="hide" data-field="companyCd"></td>
+								<td class="hide" data-field="payCondCd"></td>
+								<td class="hide" data-field="payCondNm"></td>
+								<td class="hide" data-field="payMth"></td>
+								<td class="hide" data-field="dlvLc"></td>
+								<td class="hide" data-field="paySiteCd"></td>
+								<td class="hide" data-field="paySiteNm"></td>
+								<td class="hide" data-field="sprtTp"></td>
+								<td class="hide" data-field="crpPrsTp"></td>
+								<td class="hide" data-field="dmsAbrTp"></td>
+								<td class="hide" data-field="advcstMrk"></td>
+								<td class="hide" data-field="dvcCd"></td>
+								<td class="hide" data-field="bndFlrCd"></td>
+								<td class="hide" data-field="bndFlrNm"></td>
+								<td class="hide" data-field="frtPntCd"></td>
+								<td class="hide" data-field="msrToolCd"></td>
+								<td class="hide" data-field="mdaId"></td>
+							</tr>
+							</tfoot>
+						</table>
+					</div>
+
+					<!-- ページ制御 -->
+					<div class="fixed-table-pagination row">
+						<div class="pull-left col-sm-4 col-lg-3">
+							<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+						</div>
+						<div class="pull-left col-sm-8 col-lg-6 text-center">
+							<ul class="pagination"></ul>
+						</div>
+						<div class="pull-right pagination-detail col-sm-12 col-lg-3">
+							<span data-i18n="rowCountPerPage">1ページの行数</span>
+							<select class="pageSize"></select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group text-center">
+				<button id="btnDecide" class="btn btn-primary" disabled>
+					<i class="fa fa-plus-circle"></i>
+					<span>決定</span>
+				</button>
+				<!-- 2018.12.10 ユーザ要望により、検収明細分割画面は廃止になった
+				<button id="btnDetail" class="btn btn-primary" disabled>
+					<i class="fa fa-plus-circle"></i>
+					<span>詳細</span>
+				</button>
+				-->
+				<button class="btn btn-default btnClose" data-close>
+					<i class="fa fa-times"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+		</article>
+	</section>
+</body>
+</html>

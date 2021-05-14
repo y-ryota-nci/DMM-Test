@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./mm0002.js"></script>
+	<title>#{MM0002 組織の編集}</title>
+</head>
+
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section id="organizationInfo" class="container">
+		<div class="row">
+			<span class="screen-name">#{MM0002}</span>
+
+			<label class="sub-title" data-i18n="organizationInfo">#{組織情報}</label>
+
+			<div class="form-group col-sm-6 col-md-3">
+				<label data-i18n="organizationCode">#{組織コード}</label>
+				<input id="organizationCode" type="text" class="required form-control" maxlength="10" disabled />
+				<input id="corporationCode" type="hidden" maxlength="10" />
+				<input id="timestampUpdated" type="hidden" />
+			</div>
+
+			<div class="form-group col-sm-6 col-md-3">
+				<label data-i18n="organizationAddedInfo" class="required">#{組織付加情報}</label>
+				<input id="organizationAddedInfo" type="text" class="required form-control" maxlength="50" data-validate='{ "pattern" : "alphaSymbolNumber" }' />
+			</div>
+
+			<div class="form-group col-sm-10 col-md-4">
+				<label data-i18n="organizationUp" class="required">#{上位組織}</label>
+				<div class="input-group">
+					<input id="organizationCodeUp" type="hidden" class="required" readonly />
+					<input id="organizationNameUp" type="text" class="form-control required" readonly>
+					<div class="input-group-btn">
+						<button id="btnSelectOrg" class="btn btn-default"><i class="glyphicon glyphicon-info-sign"></i></button>
+					</div>
+					<div class="input-group-btn">
+						<button class="btn btn-default clear-input-group"><i class="glyphicon glyphicon-remove-circle"></i></button>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group col-sm-2 col-md-2">
+				<label data-i18n="organizationLevel" class="required">#{組織階層}</label>
+				<input id="organizationLevel" type="text" class="required form-control" maxlength="3" data-validate='{"pattern" : "integer", "min" : -999, "max" : 999 }' readonly />
+			</div>
+
+			<div class="form-group col-sm-12 col-md-6">
+				<label data-i18n="organizationName" class="required">#{組織名称}</label>
+				<input id="organizationName" type="text" class="required form-control" maxlength="100" />
+			</div>
+
+			<div class="form-group col-sm-8 col-md-6">
+				<label data-i18n="organizationNameAbbr">#{組織略称}</label>
+				<input id="organizationNameAbbr" type="text" class="form-control" maxlength="100" />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label data-i18n="postNum">#{郵便番号}</label>
+				<input id="postNum" type="text" class="form-control" maxlength="10" data-validate='{"pattern" : "postCode" }' />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label data-i18n="address">#{住所}</label>
+				<input id="address" type="text" class="form-control" maxlength="300" />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label data-i18n="telNum">#{電話番号}</label>
+				<input id="telNum" type="text" class="form-control" maxlength="20" data-validate='{"pattern": "tel" }' />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label data-i18n="faxNum">#{Fax番号}</label>
+				<input id="faxNum" type="text" class="form-control" maxlength="20" data-validate='{"pattern": "tel" }' />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label><span data-i18n="extendedInfo">#{拡張情報}</span>01</label>
+				<input id="extendedInfo01" type="text" class="form-control" maxlength="30" />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label><span data-i18n="extendedInfo">#{拡張情報}</span>02</label>
+				<input id="extendedInfo02" type="text" class="form-control" maxlength="30" />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label><span data-i18n="extendedInfo">#{拡張情報}</span>03</label>
+				<input id="extendedInfo03" type="text" class="form-control" maxlength="30" />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label><span data-i18n="extendedInfo">#{拡張情報}</span>04</label>
+				<input id="extendedInfo04" type="text" class="form-control" maxlength="30" />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label><span data-i18n="extendedInfo">#{拡張情報}</span>05</label>
+				<input id="extendedInfo05" type="text" class="form-control" maxlength="30" />
+			</div>
+<!--
+			<div class="form-group col-sm-4 col-md-3">
+				<label><span data-i18n="extendedInfo">#{拡張情報}</span>06</label>
+				<input id="extendedInfo06" type="text" class="form-control" maxlength="30" />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label><span data-i18n="extendedInfo">#{拡張情報}</span>07</label>
+				<input id="extendedInfo07" type="text" class="form-control" maxlength="30" />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label><span data-i18n="extendedInfo">#{拡張情報}</span>08</label>
+				<input id="extendedInfo08" type="text" class="form-control" maxlength="30" />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label><span data-i18n="extendedInfo">#{拡張情報}</span>09</label>
+				<input id="extendedInfo09" type="text" class="form-control" maxlength="30" />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label><span data-i18n="extendedInfo">#{拡張情報}</span>10</label>
+				<input id="extendedInfo10" type="text" class="form-control" maxlength="30" />
+			</div>
+-->
+			<div class="form-group col-sm-8 col-md-6">
+				<label data-i18n="validTerm" class="required">#{有効期間}</label>
+				<div class="input-group">
+					<div class="has-feedback">
+						<input id="validStartDate" type="text" class="form-control ymdPicker required" maxlength="10" data-validate='{"pattern" : "date", "to" : "#validEndDate" }' />
+						<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+					</div>
+					<label class="input-group-addon">～</label>
+					<div class="has-feedback">
+						<input id="validEndDate" type="text" class="form-control ymdPicker required" maxlength="10" data-validate='{"pattern" : "date", "from" : "#validStartDate" }' />
+						<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label data-i18n="deleteFlag" class="required">#{削除区分}</label>
+				<input id="deleteFlag" type="hidden" disabled />
+				<input id="deleteFlagName" type="text" class="form-control" disabled />
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group text-center">
+				<button id="btnUpdate" class="btn btn-primary default-enabled" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnUpdate">#{更新}</span>
+				</button>
+				<button id="btnDelete" class="btn btn-danger default-enabled" disabled>
+					<i class="glyphicon glyphicon-trash"></i>
+					<span data-i18n="btnDelete">#{削除}</span>
+				</button>
+				<button id="btnBack" class="btn btn-default default-enabled">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnBack">#{戻る}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+</html>

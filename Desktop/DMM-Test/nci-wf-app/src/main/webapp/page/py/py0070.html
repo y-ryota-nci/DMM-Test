@@ -1,0 +1,257 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<style>
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src="./py0070.js"></script>
+	<title>PY0070 管理_買掛残高</title>
+</head>
+<body>
+
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="col-xs-12">
+		<article class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">PY0070</h1>
+			</div>
+		</article><!--/.row-->
+
+		<article class="row mB40 mB40_sp">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<!-- 初期状態でcollapseを閉じておく方法：
+					$('div.panel-heading').addClass('collapsed');
+					$('i.fa').addClass('fa-chevron-down').removeClass('fa-chevron-up');
+					$('div.panel-collapse').removeClass('in').css('height', '30px');
+					-->
+					<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#condition-contents">
+						<i class="fa fa-chevron-up">
+						</i>
+						<span data-i18n="searchCondition">検索条件
+						</span>
+					</div>
+					<div class="panel-collapse sliders collapse in" id="condition-contents" aria-expanded="true">
+						<div class="panel-body">
+							<form class="tableBox col-lg-12 col-md-12 col-sm-12" id="formCondition">
+								<!-- ここにトレイ設定検索条件の定義に合わせてテンプレートが展開される-->
+								<div class="tr">
+									<div class="col-lg-2 col-md-2 col-sm-2 th">
+										<label>会社コード</label>
+									</div>
+									<div class="col-lg-4 col-md-4 col-sm-4 td">
+										<select id="companyCd" class="form-control" style="width: 300px;"></select>
+									</div>
+									<div class="col-lg-2 col-md-2 col-sm-2 th">
+										<label class="required">期間</label>
+									</div>
+									<div class="col-lg-4 col-md-4 col-sm-4 td">
+										<div class="input-group">
+											<div class="has-feedback">
+												<input class="form-control required from ymPicker" id="addYmS" type="text" data-validate='{"pattern":"ym"}'> <i class="glyphicon glyphicon-calendar form-control-feedback"> </i>
+											</div>
+											<div class="input-group-addon">～</div>
+											<div class="has-feedback">
+												<input class="form-control required to ymPicker" id="addYmE" type="text" data-validate='{"pattern":"ym"}'> <i class="glyphicon glyphicon-calendar form-control-feedback"> </i>
+											</div>
+										</div>
+
+									</div>
+								</div>
+								<div class="tr">
+									<div class="col-lg-2 col-md-2 col-sm-2 th">
+										<label class="required">勘定科目</label>
+									</div>
+									<div class="col-lg-4 col-md-4 col-sm-4 td">
+										<select id="accCd" class="form-control required" style="width: 200px;"></select>
+									</div>
+									<div class="col-lg-2 col-md-2 col-sm-2 th">
+										<label>金額</label>
+									</div>
+									<div class="col-lg-4 col-md-4 col-sm-4 td">
+										<span class="inline-block">
+											<label for="excZeroAmt">
+												<input type="checkbox" id="excZeroAmt" value="true">金額が０の取引先を表示しない
+											</label>
+										</span>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="form-group" style="margin-top:5px;">
+						<div class="col-xs-12">
+						</div>
+						<div class="text-center col-sm-offset-4 col-sm-4">
+							<button class="btn btn-primary btn-wide" id="btnSearch">
+								<i class="fa fa-search"></i>
+								<span data-i18n="btnSearch">検索</span>
+							</button>
+							<button class="btn btn-default searchButton" id="btnReset">
+								<i class="glyphicon glyphicon-refresh"></i>
+								<span data-i18n="btnReset">リセット</span>
+							</button>
+						</div>
+						<div class="text-right col-sm-4">
+							<button id="btnDownload" class="btn btn-success">
+								<i class="glyphicon glyphicon-cloud-download"></i>
+								<span data-i18n="btnDownload">#{ダウンロード}</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+		<!--/.row-->
+		<article class="row hide" id="seach-result">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#result-contents">
+						<i class="fa fa-chevron-up">
+						</i>
+						<span data-i18n="searchResult">検索結果
+						</span>
+					</div>
+					<div class="panel-body panel-collapse collapse in" id="result-contents">
+						<!-- 合計 -->
+						<div class="tableBox col-lg-12 col-md-12 col-sm-12" id="formCondition">
+							<!-- ここにトレイ設定検索条件の定義に合わせてテンプレートが展開される-->
+							<div class="tr">
+								<div class="col-xs-1 th">前月残高合計
+								</div>
+								<div class="col-xs-2 td" style="text-align:right;">
+									<input type="text" id="prvTotalAmtJpy" class="form-control" style="text-align:right; background-color: transparent; border: none;" disabled="disabled" >
+								</div>
+								<div class="col-xs-1 th">借方金額合計
+								</div>
+								<div class="col-xs-2 td">
+									<input type="text" id="dbtTotalAmtJpy" class="form-control" style="text-align:right; background-color: transparent; border: none;" disabled="disabled" >
+								</div>
+								<div class="col-xs-1 th">貸方金額合計
+								</div>
+								<div class="col-xs-2 td">
+									<input type="text" id="cdtTotalAmtJpy" class="form-control" style="text-align:right; background-color: transparent; border: none;" disabled="disabled" >
+								</div>
+								<div class="col-xs-1 th">当月残高合計
+								</div>
+								<div class="col-xs-2 td">
+									<input type="text" id="nxtTotalAmtJpy" class="form-control" style="text-align:right; background-color: transparent; border: none;" disabled="disabled" >
+								</div>
+							</div>
+						</div>
+						<!-- ページ制御 -->
+						<div class="fixed-table-pagination row">
+							<div class="pull-left col-sm-4 col-lg-3">
+								<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+							</div>
+							<div class="pull-left col-sm-8 col-lg-6 text-center">
+								<ul class="pagination"></ul>
+							</div>
+							<div class="pull-right pagination-detail col-sm-12 col-lg-3">
+								<span data-i18n="rowCountPerPage">1ページの行数</span>
+								<select class="pageSize"></select>
+							</div>
+						</div>
+						<div class="table-responsive">
+							<table class="table table-bordered table-hover table-striped responsive">
+								<colgroup>
+									<col class="text-left" style="width:80px;">
+									<col class="text-left" style="width:180px;">
+									<col class="text-left" style="width:100px;">
+									<col class="text-left" style="width:220px;">
+									<col class="text-left" style="width:100px;">
+									<col class="text-left" style="width:100px;">
+									<col class="text-left" style="width:100px;">
+									<col class="text-left" style="width:100px;">
+								</colgroup>
+								<thead>
+									<tr>
+										<th><a href="#" data-sort="COMPANY_CD, SPLR_CD">会社コード</a></th>
+										<th><a href="#" data-sort="COMPANY_NM, SPLR_CD">会社名</a></th>
+										<th><a href="#" data-sort="SPLR_CD, COMPANY_CD">取引先コード</a></th>
+										<th><a href="#" data-sort="SPLR_NM_KJ, COMPANY_CD">取引先名</a></th>
+										<th><a href="#" data-sort="PRV_BAL_AMT_JPY, COMPANY_CD, SPLR_CD">前月残高</a></th>
+										<th><a href="#" data-sort="DBT_AMT_JPY, COMPANY_CD, SPLR_CD">借方金額</a></th>
+										<th><a href="#" data-sort="CDT_AMT_JPY, COMPANY_CD, SPLR_CD">貸方金額</a></th>
+										<th><a href="#" data-sort="NXT_BAL_AMT_JPY, COMPANY_CD, SPLR_CD">残高</a></th>
+									</tr>
+								</thead>
+								<tbody></tbody>
+								<tfoot class="template hide">
+									<tr>
+										<td>
+											<a href="#" data-field="companyCd" style="text-align:center;"></a>
+											<input type="hidden" class="companyCd" data-field="companyCd" readonly/>
+											<input type="hidden" class="splrCd" data-field="splrCd" readonly/>
+											<input type="hidden" class="addYmS" data-field="addYmS" readonly/>
+											<input type="hidden" class="addYmE" data-field="addYmE" readonly/>
+											<input type="hidden" class="accCd" data-field="accCd" readonly/>
+										</td>
+										<td>
+											<a href="#" data-field="companyNm"></a>
+											<input type="hidden" class="companyCd" data-field="companyCd" readonly/>
+											<input type="hidden" class="splrCd" data-field="splrCd" readonly/>
+											<input type="hidden" class="addYmS" data-field="addYmS" readonly/>
+											<input type="hidden" class="addYmE" data-field="addYmE" readonly/>
+											<input type="hidden" class="accCd" data-field="accCd" readonly/>
+										</td>
+										<td>
+											<a href="#" data-field="splrCd" style="text-align:center;"></a>
+											<input type="hidden" class="companyCd" data-field="companyCd" readonly/>
+											<input type="hidden" class="splrCd" data-field="splrCd" readonly/>
+											<input type="hidden" class="addYmS" data-field="addYmS" readonly/>
+											<input type="hidden" class="addYmE" data-field="addYmE" readonly/>
+											<input type="hidden" class="accCd" data-field="accCd" readonly/>
+										</td>
+										<td>
+											<a href="#" data-field="splrNmKj"></a>
+											<input type="hidden" class="companyCd" data-field="companyCd" readonly/>
+											<input type="hidden" class="splrCd" data-field="splrCd" readonly/>
+											<input type="hidden" class="addYmS" data-field="addYmS" readonly/>
+											<input type="hidden" class="addYmE" data-field="addYmE" readonly/>
+											<input type="hidden" class="accCd" data-field="accCd" readonly/>
+										</td>
+										<td data-field="prvBalAmtJpy" style="text-align:right;" class="dataType-number"></td>
+										<td data-field="dbtAmtJpy" style="text-align:right;" class="dataType-number"></td>
+										<td data-field="cdtAmtJpy" style="text-align:right;" class="dataType-number"></td>
+										<td data-field="nxtBalAmtJpy" style="text-align:right;" class="dataType-number"></td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+						<!-- ページ制御 -->
+						<div class="fixed-table-pagination row">
+							<div class="pull-left col-sm-4 col-lg-3">
+								<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+							</div>
+							<div class="pull-left col-sm-8 col-lg-6 text-center">
+								<ul class="pagination"></ul>
+							</div>
+							<div class="pull-right pagination-detail col-sm-12 col-lg-3">
+								<span data-i18n="rowCountPerPage">1ページの行数</span>
+								<select class="pageSize"></select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+		<!--/.row-->
+	</section>
+</body>
+</html>

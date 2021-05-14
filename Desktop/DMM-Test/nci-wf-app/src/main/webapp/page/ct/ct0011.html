@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<style type="text/css">
+	.form-control {
+		padding: 0px 12px;
+	}
+	.tableBox div.th.title {
+		background: #3075b0;
+		color: #fff;
+	}
+	.input-group-btn > .btn-sm {
+		height: 29px;
+	}
+	@media screen and (max-width: 767px) {
+		input.form-control{
+			height: 29px;
+			border-radius: 0;
+		}
+	}
+	.text-center {
+		text-align: center !important;
+	}
+	</style>
+
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src="./ct0011.js"></script>
+	<title>CT0011 カタログ登録</title>
+</head>
+<body>
+<header class="container-fluid">
+	<div id="nav"></div>
+</header>
+<section class="col-xs-12">
+	<article class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">カタログ登録</h1>
+		</div>
+	</article><!--/.row-->
+	<article class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading"><span>カタログ内容</span></div>
+				<div id="contents" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<div class="tableBox col-lg-12 col-md-12 col-sm-12">
+							<div class="tr">
+								<div class="col-lg-12 col-md-12 col-sm-12 th p100 title">基本情報</div>
+							</div>
+							<div class="tr">
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 th sub-th">品番</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 td">
+									<span id="catalogId" class="hide"></span>
+									<span id="corporationCode" class="hide"></span>
+									<span id="deleteFlag" class="hide"></span>
+									<span id="version" class="hide"></span>
+									<input id="catalogCode" type="text" class="form-control required" data-validate='{"pattern" : "alphaNumber"}' maxlength="10" />
+								</div>
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 th sub-th">カテゴリ</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 td"><select id="catalogCategoryId" class="form-control required"></select></div>
+							</div>
+							<div class="tr">
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 th sub-th">品目名称</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 td"><input id="catalogName" type="text" class="form-control required" data-validate='{"maxByteUtf8" : 90}' maxlength="30" /></div>
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 th sub-th">在庫区分</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 td"><input id="stockType" type="checkbox" value="1"></div>
+							</div>
+							<div class="tr">
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 th sub-th">発注先</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 td"><input id="vendorName" type="text" class="form-control required" data-validate='{"maxByteUtf8" : 90}' maxlength="30" /></div>
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 th sub-th">単位</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 td"><select id="catalogUnitId" class="form-control required"></select></div>
+							</div>
+							<div class="tr">
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 th sub-th">金額</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 td"><input id="unitPrice" type="text" class="form-control required text-right" data-validate='{"pattern" : "numeric" , "decimalPlaces" : 0, "min": 0, "max" : 9999999999}' /></div>
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 th sub-th">消費税区分</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 td"><select id="salesTaxType" class="form-control required"></select></div>
+							</div>
+							<div class="tr">
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 th sub-th">メーカー</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 td"><input id="makerName" type="text" class="form-control" data-validate='{"maxByteUtf8" : 90}' maxlength="30" /></div>
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 th sub-th">メーカー型式</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 td"><input id="makerModelNumber" type="text" class="form-control" data-validate='{"maxByteUtf8" : 90}' maxlength="30" /></div>
+							</div>
+							<div class="tr catalog-image">
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 th sub-th">画像</div>
+								<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12 td">
+									<span id="catalogImageId" class="hide"></span>
+									<div class="form-group col-sm-12 hidden-xs dragZone" data-i18n="dragAndDrop">#{ここにドラッグドロップすることでファイルアップロードが行われます}</div>
+									<div id="imageArea" class="col-xs-12 row"></div>
+									<div class="col-xs-12 row">
+										<button id="updFile" class="btn btn-default btn-sm"><i class="fa fa-upload"></i><span data-i18n="btnFileUpload">ファイルを選択...</span></button>
+										<input type="file" class="hide" />
+									</div>
+								</div>
+							</div>
+							<div class="tr used-departments">
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 th sub-th">利用部門</div>
+								<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12 td">
+									<div class="table-responsive">
+										<table class="table table-bordered table-hover table-striped table-condensed responsive">
+											<colgroup>
+												<col class="col-lg-1 col-md-1 col-sm-1 col-xs-1" />
+												<col class="col-lg-1 col-md-1 col-sm-1 col-xs-1" />
+												<col class="col-lg-4 col-md-4 col-sm-4 col-xs-4" />
+												<col class="col-lg-4 col-md-4 col-sm-4 col-xs-4" />
+												<col class="col-lg-2 col-md-2 col-sm-2 col-xs-2" />
+											</colgroup>
+											<thead>
+												<tr>
+													<th></th>
+													<th class="text-center">選択</th>
+													<th>部署コード</th>
+													<th>部署名称</th>
+													<th>担当部門</th>
+												</tr>
+											</thead>
+											<tbody></tbody>
+											<tfoot class="template hide">
+												<tr>
+													<td class="text-center">
+														<span class="index">1</span>
+														<span class="hide" data-field="catalogUsedDepartmentId"></span>
+														<span class="hide" data-field="version"></span>
+														<span class="hide" data-field="corporationCode"></span>
+													</td>
+													<td class="text-center"><input type="checkbox" class="selected" value="1"></td>
+													<td>
+														<div class="input-group">
+															<input type="text" class="form-control required" data-field="organizationCode" readonly="readonly" />
+															<span class="input-group-btn">
+																<button class="btn btn-default btn-sm btnSearchOrganization"><i class="fa fa-search"></i></button>
+																<button class="btn btn-default btn-sm btnClearOrganization"><i class="fa fa-times"></i></button>
+															</span>
+														</div>
+													</td>
+													<td><input type="text" class="form-control" data-field="organizationName" readonly="readonly" /></td>
+													<td class="text-center"><input type="checkbox" data-field="inChargeFlag" value="1" /></td>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+									<button id="btnLineAdd" class="btn btn-default margin btn-sm" type="button">行追加</button>
+									<button id="btnLineRemove" class="btn btn-default margin btn-sm" type="button">行削除</button>
+								</div>
+							</div>
+							<div class="tr">
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 th sub-th">備考</div>
+								<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12 td"><textarea id="remarks" class="form-control h110" data-validate='{"maxByteUtf8" : 4000, "maxLength" : 1000}'></textarea></div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-xs-12 text-center">
+								<button id="btnRegister" class="btn btn-primary">
+									<i class="fa fa-save"></i>
+									<span data-i18n="btnRegister">#{btnRegister}</span>
+								</button>
+								<button id="btnUpdate" class="btn btn-primary">
+									<i class="fa fa-save"></i>
+									<span data-i18n="btnUpdate">#{btnUpdate}</span>
+								</button>
+								<button id="btnDelete" class="btn btn-primary">
+									<i class="fa fa-trash"></i>
+									<span data-i18n="btnDelete">#{btnDelete}</span>
+								</button>
+								<button id="btnBack" class="btn btn-default">
+									<i class="fa fa-reply"></i>
+									<span data-i18n="btnBack">#{戻る}</span>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</article>
+</section>
+</body>
+</html>

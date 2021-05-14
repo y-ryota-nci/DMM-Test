@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./dcAttrEx.js"></script>
+	<script src="./dc0062.js"></script>
+	<title>#{DC0062 拡張項目登録}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="col-xs-12">
+		<article class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header"> 拡張項目登録</h1>
+			</div>
+		</article><!--/.row-->
+
+		<article class="row">
+			<div class="searchStyle col-lg-12">
+				<div id="inputed" class="tableBox col-lg-12 col-md-12 col-sm-12" >
+					<div class="tr">
+						<div class="col-lg-3 col-md-3 col-sm-3 th">
+							<label data-i18n="metaCode" class="required">#{メタコード}</label>
+						</div>
+						<div class="col-lg-9 col-md-9 col-sm-9 td">
+							<span class="col-xs-5 row">
+								<input type="text" id="metaCode" class="form-control required" maxlength="20" data-validate='{"pattern":"alphaNumber", "maxLength":20}'/>
+							</span>
+							<input type="hidden" id="metaId" />
+							<input type="hidden" id="version" />
+							<input type="hidden" id="corporationCode" />
+						</div>
+					</div>
+					<div class="tr">
+						<div class="col-lg-3 col-md-3 col-sm-3 th">
+							<label data-i18n="metaName" class="required">#{メタ名称}</label>
+						</div>
+						<div class="col-lg-9 col-md-9 col-sm-9 td">
+							<input type="text" id="metaName" class="form-control required" maxlength="100" data-validate='{"maxLength":100}'/>
+						</div>
+					</div>
+					<div class="tr">
+						<div class="col-lg-3 col-md-3 col-sm-3 th">
+							<label data-i18n="inputType" class="required">#{入力タイプ}</label>
+						</div>
+						<div class="col-lg-9 col-md-9 col-sm-9 td">
+							<select id="inputType" class="form-control required"></select>
+						</div>
+					</div>
+					<div class="tr">
+						<div class="col-lg-3 col-md-3 col-sm-3 th">
+							<label data-i18n=required>#{必須}</label>
+						</div>
+						<div class="col-lg-9 col-md-9 col-sm-9 td">
+							<input type="checkbox" id="requiredFlag" class="" value="1"/>
+						</div>
+					</div>
+					<div class="tr maxLengths hide">
+						<div class="col-lg-3 col-md-3 col-sm-3 th">
+							<label data-i18n=numberOfDigits>#{桁数}</label>
+						</div>
+						<div class="col-lg-9 col-md-9 col-sm-9 td">
+							<span class="col-xs-3 row">
+								<input type="text" id="maxLengths" class="form-control text-right" maxlength="3" data-validate='{"pattern":"integer", "min":0, "max":300}' />
+							</span>
+						</div>
+					</div>
+					<div class="tr optionId hide">
+						<div class="col-lg-3 col-md-3 col-sm-3 th">
+							<label data-i18n=optionItem class="required">#{選択肢項目}</label>
+						</div>
+						<div class="col-lg-9 col-md-9 col-sm-9 td">
+							<select id="optionId" class="form-contro1 requiredl"></select>
+						</div>
+					</div>
+					<div class="tr">
+						<div class="col-lg-3 col-md-3 col-sm-3 th">
+							<label data-i18n=initValue>#{初期値}</label>
+						</div>
+						<div id="initialValue" class="col-lg-9 col-md-9 col-sm-9 td">
+							<div class="input-group col-md-6 hide">
+								<input type="text" id="txtInitialValue1" class="form-control" maxlength="300" data-validate='{"maxLength":300}'/>
+							</div>
+							<div class="input-group col-md-3 hide">
+								<input type="text" id="numInitialValue1" class="form-control text-right" maxlength="10" data-validate='{"pattern":"numeric","min":-999999999, "max":999999999}'/>
+							</div>
+							<div class="input-group col-md-2 hide">
+								<input type="text" id="dateInitialValue1" class="form-control ymdPicker" data-validate='{"pattern":"date"}'/>
+								<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+							</div>
+							<div class="input-group col-xs-12 hide">
+								<textarea id="txtareaInitialValue1" class="form-control" maxlength="300" rows="3" data-validate='{"maxLength":300}'></textarea>
+							</div>
+							<div class="input-group col-xs-12 hide">
+								<input type="checkbox" id="chkInitialValue1" class="" value="1" />
+							</div>
+							<div class="input-group col-xs-12 hide">
+								<input type="radio" id="rdoInitialValue1" class="" />
+							</div>
+							<div class="input-group col-xs-12 hide">
+								<select id="ddlInitialValue1" class=""></select>
+							</div>
+							<div class="input-group col-md-6 col-xs-12 btnOrg hide">
+								<input type="text" id="orgInitialValue1" class="form-control col-md-5 col-xs-9" readonly="readonly" />
+								<span class="input-group-btn">
+									<button id="btnSelectOrg" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-info-sign"></i></button>
+								</span>
+								<span class="input-group-btn">
+									<button id="btnClearOrg" class="btn btn-default btn-sm clear-input-group"><i class="glyphicon glyphicon-remove-circle"></i></button>
+								</span>
+							</div>
+							<div class="input-group col-md-6 col-xs-12 btnUser hide">
+								<input type="text" id="usrInitialValue1" class="form-control col-md-5 col-xs-9" readonly="readonly" />
+								<span class="input-group-btn">
+									<button id="btnSelectUser" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-info-sign"></i></button>
+								</span>
+								<span class="input-group-btn">
+									<button id="btnClearUser" class="btn btn-default btn-sm clear-input-group"><i class="glyphicon glyphicon-remove-circle"></i></button>
+								</span>
+							</div>
+							<input type="hidden" id="initialValue1"/>
+							<input type="hidden" id="initialValue2"/>
+							<input type="hidden" id="initialValue3"/>
+							<input type="hidden" id="initialValue4"/>
+							<input type="hidden" id="initialValue5"/>
+						</div>
+					</div>
+					<div class="tr deleteFlag">
+						<div class="col-lg-3 col-md-3 col-sm-3 th">
+							<label data-i18n="deleteFlag" class="required">#{削除区分}</label>
+						</div>
+						<div class="col-lg-9 col-md-9 col-sm-9 td">
+							<span class="col-xs-3 row">
+								<select id="deleteFlag" class="form-control required"></select>
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group text-center searchButtonArea">
+					<button id="btnRegister" class="btn btn-primary searchButton" disabled>
+						<i class="glyphicon glyphicon-ok-sign"></i>
+						<span data-i18n="btnRegister">#{登録}</span>
+					</button>
+					<button id="btnUpdate" class="btn btn-primary searchButton" disabled>
+						<i class="glyphicon glyphicon-ok-sign"></i>
+						<span data-i18n="btnUpdate">#{更新}</span>
+					</button>
+					<button id="btnBack" class="btn btn-default searchButton" disabled>
+						<i class="glyphicon glyphicon-share-alt"></i>
+						<span data-i18n="btnBack">#{戻る}</span>
+					</button>
+				</div>
+			</div>
+		</article>
+	</section>
+</body>
+</html>

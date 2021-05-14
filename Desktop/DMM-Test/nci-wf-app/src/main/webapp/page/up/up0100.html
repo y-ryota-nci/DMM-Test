@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src="./up0100.js"></script>
+	<title>UP0100 アップロード履歴</title>
+</head>
+<body>
+
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="container">
+		<article class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">アップロード履歴</h1>
+			</div>
+		</article><!--/.row-->
+
+		<article class="row mB40 mB40_sp">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#condition-contents"><i class="fa fa-chevron-up"></i><span data-i18n="searchCondition">検索条件</span></div>
+					<div id="condition-contents" class="panel-collapse collapse in">
+						<div class="panel-body">
+							<form id="formCondition" class="tableBox col-lg-12 col-md-12 col-sm-12">
+								<div class="tr">
+									<div class="th col-sm-2" data-i18n="uploadDatetime">アップロード日時</div>
+									<div class="td col-sm-4">
+										<div class="input-group">
+											<div class="has-feedback">
+												<input type="text" class="form-control ymdPicker" id="uploadDatetimeFrom" data-validate='{"to" : "#uploadDatetimeTo", "pattern" : "date" }'/>
+												<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+											</div>
+											<div class="input-group-addon">
+											～
+											</div>
+											<div class="has-feedback">
+												<input type="text" class="form-control ymdPicker" id="uploadDatetimeTo" data-validate='{"from" : "#uploadDatetimeFrom" , "pattern" : "date"}'/>
+												<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+											</div>
+										</div>
+									</div>
+									<div class="th col-sm-2" data-i18n="status">登録</div>
+									<div class="td col-sm-4">
+										<div class="radio-inline">
+											<label>
+												<input type="radio" name="registeredFlag" value="" checked />
+												<span data-i18n="noDesignation">無指定</span>
+											</label>
+										</div>
+										<div class="radio-inline">
+											<label>
+												<input type="radio" name="registeredFlag" value="0" />
+												<span data-i18n="notRegistered">未設定</span>
+											</label>
+										</div>
+										<div class="radio-inline">
+											<label>
+												<input type="radio" name="registeredFlag" value="1" />
+												<span data-i18n="registered">設定済</span>
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="tr">
+									<div class="th col-sm-2" data-i18n="classification">種別</div>
+									<div class="td col-sm-4"><select id="uploadKind" class="form-control"></select></div>
+									<div class="th col-sm-2" data-i18n="appVersion">APPバージョン</div>
+									<div class="td col-sm-4"><input type="text" id="fileAppVersion" class="form-control" maxlength="100" /></div>
+								</div>
+								<div class="tr">
+									<div class="th col-sm-2" data-i18n="fileName">ファイル名</div>
+									<div class="td col-sm-4"><input type="text" id="fileName" class="form-control" maxlength="255" /></div>
+									<div class="th col-sm-2" data-i18n="timestampCreated">作成日時</div>
+									<div class="td col-sm-4">
+										<div class="input-group">
+											<div class="has-feedback">
+												<input type="text" class="form-control ymdPicker" id="fileTimestampFrom" data-validate='{"to" : "#fileTimestampTo", "pattern" : "date" }'/>
+												<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+											</div>
+											<div class="input-group-addon">
+											～
+											</div>
+											<div class="has-feedback">
+												<input type="text" class="form-control ymdPicker" id="fileTimestampTo" data-validate='{"from" : "#fileTimestampFrom" , "pattern" : "date"}'/>
+												<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div>
+						<div class="col-xs-4">
+						</div>
+						<div class="col-xs-4 text-center">
+							<button id="btnSearch" class="btn btn-primary btn-wide"><i class="fa fa-search"></i><span data-i18n="btnSearch">検索</span></button>
+						</div>
+						<div class="col-xs-4 text-right">
+						</div>
+					</div>
+				</div>
+			</div>
+		</article><!--/.row-->
+
+		<article id="search-result" class="row hide">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#result-contents"><i class="fa fa-chevron-up"></i><span data-i18n="searchResult">検索結果</span></div>
+					<div id="result-contents" class="panel-body panel-collapse collapse in">
+						<!-- ページ制御 -->
+						<div class="fixed-table-pagination row">
+							<div class="pull-left col-sm-4 col-lg-3">
+								<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+							</div>
+							<div class="pull-left col-sm-8 col-lg-6 text-center">
+								<ul class="pagination"></ul>
+							</div>
+							<div class="pull-right pagination-detail col-sm-12 col-lg-3">
+								<span data-i18n="rowCountPerPage">1ページの行数</span>
+								<select class="pageSize"></select>
+							</div>
+						</div>
+
+						<div class="table-responsive">
+							<table class="table table-bordered table-hover table-striped responsive">
+								<colgroup>
+									<col class="col-sm-2" />
+									<col class="col-sm-1" />
+									<col class="col-sm-2" />
+									<col class="col-sm-3" />
+									<col class="col-sm-2" />
+									<col class="col-sm-2" />
+								</colgroup>
+								<thead>
+									<tr>
+										<th rowspan="2"><a href="#" data-i18n="uploadDatetime" data-sort="UPLOAD_DATETIME, FILE_NAME, UPLOAD_FILE_ID">アップロード日時</a>
+										<th rowspan="2"><a href="#" data-i18n="status" data-sort="REGISTERED_FLAG, FILE_NAME, UPLOAD_DATETIME, UPLOAD_FILE_ID">登録</a>
+										<th colspan="4" data-field="fileInfo">ファイル情報
+									<tr>
+										<th><a href="#" data-i18n="classification" data-sort="UPLOAD_KIND, FILE_NAME, UPLOAD_DATETIME, UPLOAD_FILE_ID">アップロード種別</a>
+										<th><a href="#" data-i18n="fileName" data-sort="FILE_NAME, UPLOAD_DATETIME, UPLOAD_FILE_ID">アップロードファイル名</a>
+										<th><a href="#" data-i18n="createdCorporation" data-sort="FILE_CORPORATION_NAME, FILE_NAME, UPLOAD_DATETIME, UPLOAD_FILE_ID">ファイル作成企業</a>
+										<th><a href="#" data-i18n="timestampCreated" data-sort="FILE_TIMESTAMP, FILE_NAME, UPLOAD_DATETIME, UPLOAD_FILE_ID">ファイル作成日時</a><br />
+											<a href="#" data-i18n="appVersion" data-sort="FILE_APP_VERSION, FILE_NAME, UPLOAD_DATETIME, UPLOAD_FILE_ID">ファイル作成元APPバージョン</a><br />
+								</thead>
+								<tbody></tbody>
+								<tfoot class="template hide">
+									<tr>
+										<td><span data-field="uploadDatetime" class="linkable">アップロード日時</span>
+										<td><span data-field="registeredFlagName" class="">設定済</span>
+											<button class="show-hisotry btn btn-sm btn-default" type="button" data-i18n="history">履歴</button>
+										<td><span data-field="uploadKind" class="hide">種別</span>
+											<span data-field="uploadKindName" class="">種別名</span>
+										<td><span data-field="fileName" class="linkable">アップロードファイル名</span>
+											<span data-field="uploadFileId" class="hide">アップロードファイルID</span>
+										<td><span data-field="fileCorporationCode"></span><br>
+											<span data-field="fileCorporationName">ファイル作成企業</span>
+										<td><span data-field="fileTimestamp">ファイル作成日時</span><br />
+											ver.<span data-field="fileAppVersion">ファイル作成元APPバージョン</span><br />
+								</tfoot>
+							 </table>
+						</div>
+
+						<!-- ページ制御 -->
+						<div class="fixed-table-pagination row">
+							<div class="pull-left col-sm-4 col-lg-3">
+								<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+							</div>
+							<div class="pull-left col-sm-8 col-lg-6 text-center">
+								<ul class="pagination"></ul>
+							</div>
+							<div class="pull-right pagination-detail col-sm-12 col-lg-3">
+								<span data-i18n="rowCountPerPage">1ページの行数</span>
+								<select class="pageSize"></select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article><!--/.row-->
+	</section>	<!--/.main-->
+
+	<!-- アップロードファイルの登録履歴ポップアップ -->
+	<section id="history" class="modal fade">
+		<div class="modal-dialog dialog-sm center-modal">
+			<div class="modal-content">
+				<div class="modal-body lead">
+					<table class="table table-bordered table-hover table-striped responsive">
+						<thead>
+							<tr>
+								<th data-field="registTimestamp">登録日時
+								<th><span data-field="register"></span><span data-field="userAddedInfo">ユーザID</span>
+								<th><span data-field="register"></span><span data-field="userName">氏名</span>
+						<tbody></tbody>
+						<tfoot class="template hide">
+							<tr>
+								<td data-field="registeredDatetime">
+								<td data-field="registeredUserAddedInfo">
+								<td data-field="registeredUserName">
+						</tfoot>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary"  data-dismiss="modal">
+						<i class="glyphicon glyphicon-ok-sign"></i>
+						<span class="button-yes">OK</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</body>
+</html>

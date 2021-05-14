@@ -1,0 +1,3594 @@
+﻿# A5:ER FORMAT:12
+# A5:ER ENCODING:UTF8
+# A5:ER Mk-1 Copyright (C)2007 m.matsubara
+# A5:SQL Mk-2 Copyright (C)1997 m.matsubara
+#  http://www.wind.sannet.ne.jp/m_matsu/developer/a5m2/
+
+[Manager]
+ProjectName=Wish_ER(IWFパッケージ)
+Author=
+MaxEntityRowShow=1000
+ReadOnlyRecommend=0
+Page=デザイナ
+PageInfo="デザイナ",2,"A3Landscape",$FFFFFF
+Page=その他
+PageInfo="その他",2,"A3Landscape",$FFFFFF
+Domain=ID=NUMBER(18,0)
+DomainInfo="ID","NUMBER(18,0)",""
+Domain=企業コード=VARCHAR2(10)
+DomainInfo="企業コード","VARCHAR2(10)",""
+Domain=ユーザコード=VARCHAR2(25)
+DomainInfo="ユーザコード","VARCHAR2(25)",""
+Domain=ユーザ付加情報=VARCHAR2(50)
+DomainInfo="ユーザ付加情報","VARCHAR2(50)",""
+Domain=組織コード=VARCHAR2(10)
+DomainInfo="組織コード","VARCHAR2(10)",""
+Domain=役職コード=VARCHAR2(10)
+DomainInfo="役職コード","VARCHAR2(10)",""
+Domain=文字列キー=VARCHAR2(10)
+DomainInfo="文字列キー","VARCHAR2(10)",""
+Domain=名称(短)=VARCHAR2(90)
+DomainInfo="名称(短)","VARCHAR2(90)",""
+Domain=名称(中)=VARCHAR2(300)
+DomainInfo="名称(中)","VARCHAR2(300)",""
+Domain=名称(長)=VARCHAR2(900)
+DomainInfo="名称(長)","VARCHAR2(900)",""
+Domain=整数型(短)=NUMBER(4,0)
+DomainInfo="整数型(短)","NUMBER(4,0)",""
+Domain=フラグ=CHAR(1)
+DomainInfo="フラグ","CHAR(1)",""
+Domain=タイムスタンプ=TIMESTAMP(3)
+DomainInfo="タイムスタンプ","TIMESTAMP(3)",""
+Domain=説明=VARCHAR(4000)
+DomainInfo="説明","VARCHAR(4000)",""
+Domain=色(HTML)=VARCHAR2(7)
+DomainInfo="色(HTML)","VARCHAR2(7)",""
+LogicalView=1
+DecodeDomain=0
+ViewModePageIndividually=1
+ViewMode=2
+ViewFormat=0
+UseNondependenceDashLine=0
+FontName=Tahoma
+FontSize=6
+PaperSize=A4Landscape
+HeaderLeft=
+HeaderCenter=
+HeaderRight=
+FooterLeft=
+FooterCenter=
+FooterRight=
+ShowPageoutRelation=1
+RDBMSTypeName=Oracle Database
+GenerateDropTableStatement=1
+DropTableIfExists=0
+CommonField="バージョン","VERSION","*ID","NOT NULL",,"1","",$FFFFFFFF
+CommonField="削除フラグ","DELETE_FLAG","*フラグ","NOT NULL",,"\q0\q","1:削除、0:有効",$FFFFFFFF
+CommonField="登録会社CD","CORPORATION_CODE_CREATED","*企業コード","NOT NULL",,"\q-\q","",$FFFFFFFF
+CommonField="登録者","USER_CODE_CREATED","*ユーザコード","NOT NULL",,"\q-\q","",$FFFFFFFF
+CommonField="登録日時","TIMESTAMP_CREATED","*タイムスタンプ","NOT NULL",,"systimestamp","",$FFFFFFFF
+CommonField="更新会社CD","CORPORATION_CODE_UPDATED","*企業コード","NOT NULL",,"\q-\q","",$FFFFFFFF
+CommonField="更新者","USER_CODE_UPDATED","*ユーザコード","NOT NULL",,"\q-\q","",$FFFFFFFF
+CommonField="更新日時","TIMESTAMP_UPDATED","*タイムスタンプ","NOT NULL",,"systimestamp","",$FFFFFFFF
+DefaultPkName=PK_%0:s
+DefaultPkIndexName=PKI_%0:s
+DefaultIndexName=IDX_%0:s_%1:d
+DefaultFkName=FK_%0:s_%1:d
+SqlSeparator=1
+ShowTag=1
+ShowCommonAttributes=0
+
+[Relation]
+Entity1=MWT_UPLOAD_FILE
+Entity2=MWT_UPLOAD_REGISTERED
+RelationType1=2
+RelationType2=3
+Fields1=UPLOAD_FILE_ID
+Fields2=UPLOAD_FILE_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,4487,4153,4882,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20190319145942
+LineMode=0
+Bar1=449
+Bar2=415
+Bar3=488
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWT_UPLOAD_REGISTERED
+LName=アップロードファイル登録情報
+Comment=
+TableOption=
+Page=デザイナ
+Left=2250
+Top=1500
+Field="アップロードファイル登録ID","UPLOAD_FILE_REGISTERED_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="アップロードファイルID","UPLOAD_FILE_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="最新フラグ","LATEST_FLAG","*フラグ","NOT NULL",,"","0:以前のデータ、1:最新データ",$FFFFFFFF,""
+Field="登録日時","REGISTERED_DATETIME","*タイムスタンプ","NOT NULL",,"","登録処理日時",$FFFFFFFF,""
+Field="登録企業コード","REGISTERED_CORPORATION_CODE","*企業コード","NOT NULL",,"","登録処理を行ったユーザの企業コード",$FFFFFFFF,""
+Field="登録ユーザコード","REGISTERED_USER_CODE","*ユーザコード","NOT NULL",,"","登録処理を行ったユーザのユーザコード",$FFFFFFFF,""
+Field="登録時設定内容","REGISTERED_CONFIG","CLOB","NOT NULL",,"","登録時の設定内容のJSON表現",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20190319150017
+Position="デザイナ",2250,1500
+
+[Entity]
+PName=MWT_UPLOAD_FILE
+LName=アップロードファイル情報
+Comment=
+TableOption=
+Page=デザイナ
+Left=2250
+Top=1050
+Field="アップロードファイルID","UPLOAD_FILE_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="アップロード種別","UPLOAD_KIND","*文字列キー","NOT NULL",,"","UP0010:画面定義、UP0020:プロセス定義、UP0030:メニューロール定義、UP0040:トレイ表示設定、UP0050:メールテンプレート定義、UP0060:システム環境設定、UP0200:プロファイル情報",$FFFFFFFF,""
+Field="アップロード日時","UPLOAD_DATETIME","*タイムスタンプ","NOT NULL",,"","アップロードした日時",$FFFFFFFF,""
+Field="アップロード企業コード","UPLOAD_CORPORATION_CODE","*企業コード","NOT NULL",,"","アップロード先の企業コード",$FFFFFFFF,""
+Field="ファイル登録フラグ","REGISTERED_FLAG","*フラグ","NOT NULL",,"","0:未登録、1:登録済",$FFFFFFFF,""
+Field="ファイル名","FILE_NAME","*名称(中)","NOT NULL",,"","",$FFFFFFFF,""
+Field="ファイルサイズ","FILE_SIZE","NUMBER(10,0)","NOT NULL",,"","",$FFFFFFFF,""
+Field="ファイルデータ","FILE_DATA","BLOB",,,"","",$FFFFFFFF,""
+Field="作成日時","FILE_TIMESTAMP","*タイムスタンプ","NOT NULL",,"","アップロードファイルの作成日時",$FFFFFFFF,""
+Field="企業コード","FILE_CORPORATION_CODE","*企業コード","NOT NULL",,"","アップロードファイルの作成元企業コード",$FFFFFFFF,""
+Field="APPバージョン","FILE_APP_VERSION","*名称(短)","NOT NULL",,"","アップロードファイルの作成時APPバージョン",$FFFFFFFF,""
+Field="DB接続先","FILE_DB_STRING","*名称(中)","NOT NULL",,"","アップロードファイルの作成時のDB接続先",$FFFFFFFF,""
+Field="ホスト名","FILE_HOST_NAME","*名称(中)","NOT NULL",,"","アップロードファイルの作成時のAPPサーバのホスト名",$FFFFFFFF,""
+Field="ホストIPアドレス","FILE_HOST_IP_ADDR","VARCHAR2(40)","NOT NULL",,"","アップロードファイルの作成時のAPPサーバのホストIPアドレス",$FFFFFFFF,""
+Index==0,UPLOAD_KIND,UPLOAD_DATETIME,UPLOAD_CORPORATION_CODE,REGISTERED_FLAG
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20190319155734
+Position="デザイナ",2250,1050
+
+[Relation]
+Entity1=MWM_DC
+Entity2=MWM_DEFAULT_BLOCK_DISPLAY
+RelationType1=2
+RelationType2=3
+Fields1=DC_ID
+Fields2=DC_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,4786,3505,4387,R,R
+Dependence=0
+Caption=
+PName=
+LineMode=0
+Bar1=479
+Bar2=350
+Bar3=439
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_DEFAULT_BLOCK_DISPLAY
+LName=デフォルトブロック表示条件マスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=1920
+Top=1410
+Field="デフォルト表示条件ID","DEFAULT_BLOCK_DISPLAY_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="表示条件ID","DC_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="ブロックID","BLOCK_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="表示フラグ","DISPLAY_FLAG","*フラグ","NOT NULL",,"","",$FFFFFFFF,""
+Field="展開フラグ","EXPANSION_FLAG","*フラグ","NOT NULL",,"","",$FFFFFFFF,""
+Field="並び順","SORT_ORDER","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,CORPORATION_CODE ,BLOCK_ID ,DC_ID 
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20190220152219
+Position="デザイナ",1920,1410
+
+[Relation]
+Entity1=MWM_ROUTE_PATTERN
+Entity2=MWM_ROUTE_PATTERN_DETAIL
+RelationType1=2
+RelationType2=4
+Fields1=ROUTE_PATTERN_ID
+Fields2=ROUTE_PATTERN_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,5799,4058,5933,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20181107154257
+LineMode=0
+Bar1=580
+Bar2=406
+Bar3=593
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_ROUTE_PATTERN_DETAIL
+LName=承認パターン詳細マスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=2250
+Top=2650
+Field="承認パターン詳細ID","ROUTE_PATTERN_DETAIL_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="承認パターンID","ROUTE_PATTERN_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="アクティビティ定義コード","ACTIVITY_DEF_CODE","*文字列キー","NOT NULL",,"","",$FFFFFFFF,""
+Field="参加者企業コード","CORPORATION_CODE_ASSIGN","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="参加者ユーザコード","USER_CODE_ASSIGN","*ユーザコード",,,"","",$FFFFFFFF,""
+Field="参加者組織コード","ORGANIZATION_CODE_ASSIGN","*組織コード",,,"","",$FFFFFFFF,""
+Field="参加者役職コード","POST_CODE_ASSIGN","*役職コード",,,"","",$FFFFFFFF,""
+Index==0,ROUTE_PATTERN_ID
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20181107154154
+Position="デザイナ",2250,2650
+
+[Entity]
+PName=MWM_ROUTE_PATTERN
+LName=承認パターンマスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=2250
+Top=2300
+Field="承認パターンID","ROUTE_PATTERN_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="プロセス定義コード","PROCESS_DEF_CODE","*文字列キー","NOT NULL",,"","",$FFFFFFFF,""
+Field="プロセス定義明細コード","PROCESS_DEF_DETAIL_CODE","VARCHAR2(5)","NOT NULL",,"","",$FFFFFFFF,""
+Field="操作者企業コード","CORPORATION_CODE_OPERATOR","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="操作者ユーザコード","USER_CODE_OPERATOR","*ユーザコード","NOT NULL",,"","",$FFFFFFFF,""
+Field="タイトル","TITLE","*名称(中)","NOT NULL",,"","",$FFFFFFFF,""
+Field="備考","REMARKS","*説明",,,"","",$FFFFFFFF,""
+Field="デフォルトフラグ","DEFAULT_FLAG","*フラグ","NOT NULL",,"\q0\q","1：デフォルト 0：デフォルト外",$FFFFFFFF,""
+Index==0,CORPORATION_CODE,PROCESS_DEF_CODE,PROCESS_DEF_DETAIL_CODE,CORPORATION_CODE_OPERATOR,USER_CODE_OPERATOR
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20181116100307
+Position="デザイナ",2250,2300
+
+[Relation]
+Entity1=MWT_PROCESS_BBS
+Entity2=MWT_BBS_ATTACH_FILE_WF
+RelationType1=2
+RelationType2=3
+Fields1=PROCESS_BBS_ID
+Fields2=PROCESS_BBS_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,5745,4677,2956,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20181106101444
+LineMode=0
+Bar1=574
+Bar2=468
+Bar3=296
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWT_BBS_ATTACH_FILE_WF
+LName=プロセス掲示板情報添付ファイル
+Comment=プロセス掲示板情報用
+TableOption=
+Page=デザイナ
+Left=3650
+Top=1900
+Field="プロセス掲示板情報添付ファイルID","BBS_ATTACH_FILE_WF_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="ファイルタイプ","FILE_TYPE","*文字列キー",,,"","",$FFFFFFFF,""
+Field="ファイル名称","FILE_NAME","*名称(長)",,,"","",$FFFFFFFF,""
+Field="ファイルデータ","FILE_DATA","BLOB",,,"","",$FFFFFFFF,""
+Field="ファイルサイズ","FILE_SIZE","NUMBER(10,0)",,,"","",$FFFFFFFF,""
+Field="プロセス掲示板ID","PROCESS_BBS_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,PROCESS_BBS_ID
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20181106104322
+Position="デザイナ",3650,1900
+
+[Entity]
+PName=MWT_DOC_FILE_WF
+LName=ワークフロー文書ファイル
+Comment=ワークフロー文書ファイルブロック用
+TableOption=
+Page=デザイナ
+Left=3700
+Top=2650
+Field="ワークフロー文書ファイルID","DOC_FILE_WF_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード",,,"","",$FFFFFFFF,""
+Field="プロセスID","PROCESS_ID","NUMBER(10,0)",,,"","",$FFFFFFFF,""
+Field="ファイル名称","FILE_NAME","*名称(長)",,,"","",$FFFFFFFF,""
+Field="ファイルデータ","FILE_DATA","BLOB",,,"","",$FFFFFFFF,""
+Field="ファイルサイズ","FILE_SIZE","NUMBER(10,0)",,,"","",$FFFFFFFF,""
+Field="コメント","COMMENTS","*説明",,,"","",$FFFFFFFF,""
+Field="フォーマット","FMT","VARCHAR2(10)",,,"","Oracle全文検索にて使用するフォーマット列 \QBINARY\Q \QTEXT\Q \QIGNORE\Qのいずれかが設定",$FFFFFFFF,""
+Field="キャラクタセット","CSET","VARCHAR2(20)",,,"","Oracle全文検索にて使用するキャクラタセット フォーマットが\QTEXT\Qの場合のみ設定",$FFFFFFFF,""
+Index==0,PROCESS_ID,CORPORATION_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20190110114846
+Position="デザイナ",3700,2650,256,164
+
+[Relation]
+Entity1=MWM_SCREEN_PARTS_COND
+Entity2=MWM_SCREEN_PARTS_COND_ITEM
+RelationType1=2
+RelationType2=3
+Fields1=SCREEN_PARTS_COND_ID
+Fields2=SCREEN_PARTS_COND_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,7168,5183,4897,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20181012152312
+LineMode=0
+Bar1=717
+Bar2=518
+Bar3=490
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=MWM_PARTS
+Entity2=MWM_SCREEN_PARTS_COND
+RelationType1=2
+RelationType2=3
+Fields1=PARTS_ID
+Fields2=PARTS_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,8023,6892,2356,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20181012152321
+LineMode=0
+Bar1=802
+Bar2=689
+Bar3=236
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=MWM_SCREEN
+Entity2=MWM_SCREEN_PARTS_COND
+RelationType1=2
+RelationType2=3
+Fields1=SCREEN_ID
+Fields2=SCREEN_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,8172,5661,4251,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20181012151611
+LineMode=0
+Bar1=817
+Bar2=566
+Bar3=425
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_SCREEN_PARTS_COND
+LName=画面パーツ条件定義
+Comment=画面定義内における他パーツの値で有効/無効を切り替えるための定義。（画面定義の有効/無効でないので注意）
+TableOption=
+Page=デザイナ
+Left=1110
+Top=450
+Field="画面パーツ条件ID","SCREEN_PARTS_COND_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="画面ID","SCREEN_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="パーツID","PARTS_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="パーツ条件区分","PARTS_CONDITION_TYPE","*フラグ","NOT NULL",,"","1:有効条件, 2:可視条件, 3:読取専用条件",$FFFFFFFF,""
+Field="コールバック関数","CALLBACK_FUNCTION","*名称(短)",,,"","",$FFFFFFFF,""
+Field="並び順","SORT_ORDER","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,SCREEN_ID,PARTS_ID,PARTS_CONDITION_TYPE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20181015173240
+Position="デザイナ",1110,450
+
+[Entity]
+PName=MWM_SCREEN_PARTS_COND_ITEM
+LName=画面パーツ条件項目定義
+Comment=画面定義内における他パーツの値で有効/無効を切り替えるための定義。（画面定義の有効/無効でないので注意）
+TableOption=
+Page=デザイナ
+Left=1260
+Top=690
+Field="画面パーツ条件項目ID","SCREEN_PARTS_COND_ITEM_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="画面パーツ条件ID","SCREEN_PARTS_COND_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="項目クラス","ITEM_CLASS","*フラグ","NOT NULL",,"","1：論理演算子、2：カッコ、3：パーツ",$FFFFFFFF,""
+Field="条件区分","COND_TYPE","*名称(短)","NOT NULL",,"","「&&、||、!、(、)、パーツID」のいずれか",$FFFFFFFF,""
+Field="比較演算子","OPERATOR","*名称(短)",,,"","「==、!=、>、>=、<、<=」いずれか。有効条件種別が「3：パーツ」の場合のみ設定",$FFFFFFFF,""
+Field="比較先リテラル値","TARGET_LITERAL_VAL","*名称(短)",,,"","比較先パーツIDと比較先リテラル値で排他関係。有効条件種別が「3：パーツ」の場合のみ設定",$FFFFFFFF,""
+Field="比較先パーツID","TARGET_PARTS_ID","*ID",,,"","比較先パーツIDと比較先リテラル値で排他関係。有効条件種別が「3：パーツ」の場合のみ設定",$FFFFFFFF,""
+Field="数値化フラグ","NUMERIC_FLAG","*フラグ","NOT NULL",,"","比較先の値を「1：数値として処理」「0：文字列として処理」",$FFFFFFFF,""
+Field="並び順","SORT_ORDER","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Field="同定キー","IDENTIFY_KEY","VARCHAR2(32)","NOT NULL",,"","画面アップロード時のデータ同定キー",$FFFFFFFF,""
+Index==1,SCREEN_PARTS_COND_ID,IDENTIFY_KEY
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20181016111220
+Position="デザイナ",1260,690
+
+[Relation]
+Entity1=MWM_PARTS_COND
+Entity2=MWM_PARTS_COND_ITEM
+RelationType1=2
+RelationType2=3
+Fields1=PARTS_COND_ID
+Fields2=PARTS_COND_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,5067,6466,4896,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20181012150801
+LineMode=0
+Bar1=507
+Bar2=647
+Bar3=490
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=MWM_PARTS
+Entity2=MWM_PARTS_COND
+RelationType1=2
+RelationType2=3
+Fields1=PARTS_ID
+Fields2=PARTS_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,4593,5000,4960,R,R
+Position="その他",0,5000,5000,5000,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20181012150752
+LineMode=0
+Bar1=459
+Bar2=500
+Bar3=496
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_PARTS_COND
+LName=パーツ条件定義
+Comment=他パーツの値で有効/無効を切り替えるための定義
+TableOption=
+Page=デザイナ
+Left=600
+Top=1080
+Field="パーツ条件ID","PARTS_COND_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="パーツID","PARTS_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="パーツ条件区分","PARTS_CONDITION_TYPE","*フラグ","NOT NULL",,"","1:有効条件, 2:可視条件, 3:読取専用条件",$FFFFFFFF,""
+Field="コールバック関数","CALLBACK_FUNCTION","*名称(短)",,,"","条件式を判定したあとに呼び出されるコールバック関数",$FFFFFFFF,""
+Field="並び順","SORT_ORDER","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,PARTS_ID,PARTS_CONDITION_TYPE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20181015173322
+Position="デザイナ",600,1080
+
+[Entity]
+PName=MWM_PARTS_COND_ITEM
+LName=パーツ条件項目定義
+Comment=
+TableOption=
+Page=デザイナ
+Left=330
+Top=1020
+Field="パーツ条件項目ID","PARTS_COND_ITEM_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="パーツ条件ID","PARTS_COND_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="項目クラス","ITEM_CLASS","*フラグ","NOT NULL",,"","1：論理演算子、2：カッコ、3：パーツ",$FFFFFFFF,""
+Field="条件区分","COND_TYPE","*名称(短)","NOT NULL",,"","「&&、||、!、(、)、パーツID」のいずれか",$FFFFFFFF,""
+Field="比較演算子","OPERATOR","*名称(短)",,,"","「==、!=、>、>=、<、<=」いずれか。有効条件種別が「3：パーツ」の場合のみ設定",$FFFFFFFF,""
+Field="比較先リテラル値","TARGET_LITERAL_VAL","*名称(短)",,,"","有効条件種別が「3：パーツ」の場合のみ設定。比較先パーツIDと比較先リテラル値で排他関係",$FFFFFFFF,""
+Field="比較先パーツID","TARGET_PARTS_ID","*ID",,,"","有効条件種別が「3：パーツ」の場合のみ設定。比較先パーツIDと比較先リテラル値で排他関係",$FFFFFFFF,""
+Field="数値化フラグ","NUMERIC_FLAG","*フラグ","NOT NULL",,"","比較先の値を「1：数値として処理」「0：文字列として処理」",$FFFFFFFF,""
+Field="並び順","SORT_ORDER","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Field="同定キー","IDENTIFY_KEY","VARCHAR2(32)","NOT NULL",,"","画面アップロード時のデータ同定キー",$FFFFFFFF,""
+Index==1,PARTS_COND_ID,IDENTIFY_KEY
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20181016110430
+Position="デザイナ",330,1020
+
+[Relation]
+Entity1=WFM_POST_WORK
+Entity2=WFM_USER_BELONG_WORK
+RelationType1=1
+RelationType2=3
+Fields1=CORPORATION_CODE,POST_CODE
+Fields2=CORPORATION_CODE,POST_CODE
+Cardinarity1=
+Cardinarity2=
+Position="その他",0,5341,8186,5411,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20180817171245
+LineMode=0
+Bar1=534
+Bar2=819
+Bar3=541
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=WFM_USER_WORK
+Entity2=WFM_USER_BELONG_WORK
+RelationType1=2
+RelationType2=3
+Fields1=CORPORATION_CODE,USER_CODE
+Fields2=CORPORATION_CODE,USER_CODE
+Cardinarity1=
+Cardinarity2=
+Position="その他",0,5000,5000,8299,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20180817171407
+LineMode=0
+Bar1=500
+Bar2=500
+Bar3=830
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=WFM_ORGANIZATION_WORK
+Entity2=WFM_USER_BELONG_WORK
+RelationType1=1
+RelationType2=3
+Fields1=CORPORATION_CODE,ORGANIZATION_CODE
+Fields2=CORPORATION_CODE,ORGANIZATION_CODE
+Cardinarity1=
+Cardinarity2=
+Position="その他",0,4039,5961,2428,R,R
+Dependence=0
+Caption=
+PName=
+LineMode=0
+Bar1=404
+Bar2=596
+Bar3=243
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=WFM_USER_BELONG_WORK
+LName=ユーザ所属マスタ(ワーク)
+Comment=
+TableOption=
+Page=その他
+Left=500
+Top=1200
+Field="会社コード","CORPORATION_CODE","*企業コード","NOT NULL",0,"","",$FFFFFFFF,""
+Field="ユーザコード","USER_CODE","*ユーザコード","NOT NULL",1,"","",$FFFFFFFF,""
+Field="ユーザ所属連番","SEQ_NO_USER_BELONG","NUMBER(10, 0)","NOT NULL",2,"","",$FFFFFFFF,""
+Field="組織コード","ORGANIZATION_CODE","*組織コード",,,"","",$FFFFFFFF,""
+Field="役職コード","POST_CODE","*役職コード",,,"","",$FFFFFFFF,""
+Field="主務兼務区分","JOB_TYPE","CHAR(1)",,,"","",$FFFFFFFF,""
+Field="所属長フラグ","IMMEDIATE_MANAGER_FLAG","CHAR(1)",,,"","",$FFFFFFFF,""
+Field="責任者フラグ","DIRECTOR_FLAG","CHAR(1)",,,"","",$FFFFFFFF,""
+Field="有効期間開始年月日","VALID_START_DATE","DATE",,,"","",$FFFFFFFF,""
+Field="有効期間終了年月日","VALID_END_DATE","DATE",,,"","",$FFFFFFFF,""
+Field="削除フラグ","DELETE_FLAG","CHAR(1)",,,"","",$FFFFFFFF,""
+Field="更新会社コード","CORPORATION_CODE_UPDATED","*企業コード",,,"","",$FFFFFFFF,""
+Field="更新ユーザコード","USER_CODE_UPDATED","*ユーザコード",,,"","",$FFFFFFFF,""
+Field="更新ユーザIPアドレス","IP_UPDATED","VARCHAR2(40)",,,"","",$FFFFFFFF,""
+Field="更新日時","TIMESTAMP_UPDATED","*タイムスタンプ",,,"","",$FFFFFFFF,""
+UsingCommonColumns=0
+EffectMode=None
+Tag=ワークテーブル
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180828111147
+Position="その他",500,1200
+
+[Entity]
+PName=WFM_USER_WORK
+LName=ユーザマスタ(ワーク)
+Comment=
+TableOption=
+Page=その他
+Left=900
+Top=100
+Field="会社コード","CORPORATION_CODE","*企業コード","NOT NULL",0,"","",$FFFFFFFF,""
+Field="ユーザコード","USER_CODE","*ユーザコード","NOT NULL",1,"","",$FFFFFFFF,""
+Field="ユーザ名称(日本)","USER_NAME_JA","VARCHAR2(300)",,,"","",$FFFFFFFF,""
+Field="ユーザ名称(英語)","USER_NAME_EN","VARCHAR2(300)",,,"","",$FFFFFFFF,""
+Field="ユーザ名称(中国語)","USER_NAME_ZH","VARCHAR2(300)",,,"","",$FFFFFFFF,""
+Field="ユーザ略称(日本)","USER_NAME_ABBR_JA","VARCHAR2(300)",,,"","",$FFFFFFFF,""
+Field="ユーザ略称(英語)","USER_NAME_ABBR_EN","VARCHAR2(300)",,,"","",$FFFFFFFF,""
+Field="ユーザ略称(中国語)","USER_NAME_ABBR_ZH","VARCHAR2(300)",,,"","",$FFFFFFFF,""
+Field="郵便番号","POST_NUM","VARCHAR2(10)",,,"","",$FFFFFFFF,""
+Field="住所(日本)","ADDRESS_JA","VARCHAR2(1000)",,,"","",$FFFFFFFF,""
+Field="住所(英語)","ADDRESS_EN","VARCHAR2(1000)",,,"","",$FFFFFFFF,""
+Field="住所(中国語)","ADDRESS_ZH","VARCHAR2(1000)",,,"","",$FFFFFFFF,""
+Field="電話番号","TEL_NUM","VARCHAR2(20)",,,"","",$FFFFFFFF,""
+Field="携帯電話番号","TEL_NUM_CEL","VARCHAR2(20)",,,"","",$FFFFFFFF,""
+Field="メールアドレス","MAIL_ADDRESS","VARCHAR2(320)",,,"","",$FFFFFFFF,""
+Field="ユーザ付加情報","USER_ADDED_INFO","VARCHAR2(50)",,,"","",$FFFFFFFF,""
+Field="印章名称","SEAL_NAME","VARCHAR2(100)",,,"","",$FFFFFFFF,""
+Field="管理者権限区分","ADMINISTRATOR_TYPE","CHAR(1)",,,"","",$FFFFFFFF,""
+Field="デフォルトロケールコード","DEFAULT_LOCALE_CODE","VARCHAR2(5)",,,"","",$FFFFFFFF,""
+Field="拡張情報01","EXTENDED_INFO_01","VARCHAR2(100)",,,"","",$FFFFFFFF,""
+Field="拡張情報02","EXTENDED_INFO_02","VARCHAR2(100)",,,"","",$FFFFFFFF,""
+Field="拡張情報03","EXTENDED_INFO_03","VARCHAR2(100)",,,"","",$FFFFFFFF,""
+Field="拡張情報04","EXTENDED_INFO_04","VARCHAR2(100)",,,"","",$FFFFFFFF,""
+Field="拡張情報05","EXTENDED_INFO_05","VARCHAR2(100)",,,"","",$FFFFFFFF,""
+Field="拡張情報06","EXTENDED_INFO_06","VARCHAR2(100)",,,"","",$FFFFFFFF,""
+Field="拡張情報07","EXTENDED_INFO_07","VARCHAR2(100)",,,"","",$FFFFFFFF,""
+Field="拡張情報08","EXTENDED_INFO_08","VARCHAR2(100)",,,"","",$FFFFFFFF,""
+Field="拡張情報09","EXTENDED_INFO_09","VARCHAR2(100)",,,"","",$FFFFFFFF,""
+Field="拡張情報10","EXTENDED_INFO_10","VARCHAR2(100)",,,"","",$FFFFFFFF,""
+Field="有効期間開始年月日","VALID_START_DATE","DATE",,,"","",$FFFFFFFF,""
+Field="有効期間終了年月日","VALID_END_DATE","DATE",,,"","",$FFFFFFFF,""
+Field="削除フラグ","DELETE_FLAG","CHAR(1)",,,"","",$FFFFFFFF,""
+Field="初期パスワード","DEFAULT_PASSWORD","VARCHAR2(100)",,,"","",$FFFFFFFF,""
+Field="更新会社コード","CORPORATION_CODE_UPDATED","*企業コード",,,"","",$FFFFFFFF,""
+Field="更新ユーザコード","USER_CODE_UPDATED","*ユーザコード",,,"","",$FFFFFFFF,""
+Field="更新ユーザIPアドレス","IP_UPDATED","VARCHAR2(40)",,,"","",$FFFFFFFF,""
+Field="更新日時","TIMESTAMP_UPDATED","*タイムスタンプ",,,"","",$FFFFFFFF,""
+UsingCommonColumns=0
+EffectMode=None
+Tag=ワークテーブル
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180828111129
+Position="その他",900,100
+
+[Entity]
+PName=WFM_POST_WORK
+LName=役職マスタ(ワーク)
+Comment=バルク処理の効率を上げるため、意図的にプライマリキーやNOT NULL制約をつけていない
+TableOption=
+Page=その他
+Left=500
+Top=100
+Field="会社コード","CORPORATION_CODE","*企業コード","NOT NULL",0,"","",$FFFFFFFF,""
+Field="役職コード","POST_CODE","*役職コード","NOT NULL",1,"","",$FFFFFFFF,""
+Field="役職名称(日本)","POST_NAME_JA","VARCHAR2(300)",,,"","",$FFFFFFFF,""
+Field="役職名称(英語)","POST_NAME_EN","VARCHAR2(300)",,,"","",$FFFFFFFF,""
+Field="役職名称(中国語)","POST_NAME_ZH","VARCHAR2(300)",,,"","",$FFFFFFFF,""
+Field="役職付加情報","POST_ADDED_INFO","VARCHAR2(50)",,,"","",$FFFFFFFF,""
+Field="役職略称(日本語)","POST_NAME_ABBR_JA","VARCHAR2(300)",,,"","",$FFFFFFFF,""
+Field="役職略称(英語)","POST_NAME_ABBR_EN","VARCHAR2(300)",,,"","",$FFFFFFFF,""
+Field="役職略称(中国語)","POST_NAME_ABBR_ZH","VARCHAR2(300)",,,"","",$FFFFFFFF,""
+Field="役職階層","POST_LEVEL","NUMBER(3, 0)",,,"","",$FFFFFFFF,""
+Field="有効期間開始年月日","VALID_START_DATE","DATE",,,"","",$FFFFFFFF,""
+Field="有効期間終了年月日","VALID_END_DATE","DATE",,,"","",$FFFFFFFF,""
+Field="上位役職者設定フラグ","UPPER_POST_SETTINGS_FLAG","CHAR(1)",,,"","",$FFFFFFFF,""
+Field="削除フラグ","DELETE_FLAG","CHAR(1)",,,"","",$FFFFFFFF,""
+Field="更新会社コード","CORPORATION_CODE_UPDATED","*企業コード",,,"","",$FFFFFFFF,""
+Field="更新ユーザコード","USER_CODE_UPDATED","*ユーザコード",,,"","",$FFFFFFFF,""
+Field="更新ユーザIPアドレス","IP_UPDATED","VARCHAR2(40)",,,"","",$FFFFFFFF,""
+Field="更新日時","TIMESTAMP_UPDATED","*タイムスタンプ",,,"","",$FFFFFFFF,""
+UsingCommonColumns=0
+EffectMode=None
+Tag=ワークテーブル
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180828111111
+Position="その他",500,100
+
+[Entity]
+PName=WFM_ORGANIZATION_WORK
+LName=組織マスタ(ワーク)
+Comment=バルク処理の効率を上げるため、意図的にプライマリキーやNOT NULL制約をつけていない
+TableOption=
+Page=その他
+Left=100
+Top=100
+Field="会社コード","CORPORATION_CODE","*企業コード","NOT NULL",0,"","",$FFFFFFFF,""
+Field="組織コード","ORGANIZATION_CODE","*組織コード","NOT NULL",1,"","",$FFFFFFFF,""
+Field="組織名称(日本)","ORGANIZATION_NAME_JA","VARCHAR2(300)",,,"","",$FFFFFFFF,""
+Field="組織名称(英語)","ORGANIZATION_NAME_EN","VARCHAR2(300)",,,"","",$FFFFFFFF,""
+Field="組織名称(中国語)","ORGANIZATION_NAME_ZH","VARCHAR2(300)",,,"","",$FFFFFFFF,""
+Field="組織付加情報","ORGANIZATION_ADDED_INFO","VARCHAR2(50)",,,"","",$FFFFFFFF,""
+Field="組織略称(日本)","ORGANIZATION_NAME_ABBR_JA","VARCHAR2(300)",,,"","",$FFFFFFFF,""
+Field="組織略称(英語)","ORGANIZATION_NAME_ABBR_EN","VARCHAR2(300)",,,"","",$FFFFFFFF,""
+Field="組織略称(中国語)","ORGANIZATION_NAME_ABBR_ZH","VARCHAR2(300)",,,"","",$FFFFFFFF,""
+Field="上位組織コード","ORGANIZATION_CODE_UP","*組織コード",,,"","",$FFFFFFFF,""
+Field="郵便番号","POST_NUM","VARCHAR2(10)",,,"","",$FFFFFFFF,""
+Field="住所(日本)","ADDRESS_JA","VARCHAR2(1000)",,,"","",$FFFFFFFF,""
+Field="住所(英語)","ADDRESS_EN","VARCHAR2(1000)",,,"","",$FFFFFFFF,""
+Field="住所(中国語)","ADDRESS_ZH","VARCHAR2(1000)",,,"","",$FFFFFFFF,""
+Field="電話番号","TEL_NUM","VARCHAR2(20)",,,"","",$FFFFFFFF,""
+Field="FAX番号","FAX_NUM","VARCHAR2(20)",,,"","",$FFFFFFFF,""
+Field="組織階層","ORGANIZATION_LEVEL","NUMBER(5, 0)",,,"","",$FFFFFFFF,""
+Field="ソート順","SORT_ORDER","NUMBER(5, 0)",,,"","",$FFFFFFFF,""
+Field="拡張情報01","EXTENDED_INFO_01","VARCHAR2(100)",,,"","",$FFFFFFFF,""
+Field="拡張情報02","EXTENDED_INFO_02","VARCHAR2(100)",,,"","",$FFFFFFFF,""
+Field="拡張情報03","EXTENDED_INFO_03","VARCHAR2(100)",,,"","",$FFFFFFFF,""
+Field="拡張情報04","EXTENDED_INFO_04","VARCHAR2(100)",,,"","",$FFFFFFFF,""
+Field="拡張情報05","EXTENDED_INFO_05","VARCHAR2(100)",,,"","",$FFFFFFFF,""
+Field="拡張情報06","EXTENDED_INFO_06","VARCHAR2(100)",,,"","",$FFFFFFFF,""
+Field="拡張情報07","EXTENDED_INFO_07","VARCHAR2(100)",,,"","",$FFFFFFFF,""
+Field="拡張情報08","EXTENDED_INFO_08","VARCHAR2(100)",,,"","",$FFFFFFFF,""
+Field="拡張情報09","EXTENDED_INFO_09","VARCHAR2(100)",,,"","",$FFFFFFFF,""
+Field="拡張情報10","EXTENDED_INFO_10","VARCHAR2(100)",,,"","",$FFFFFFFF,""
+Field="有効期間開始年月日","VALID_START_DATE","DATE",,,"","",$FFFFFFFF,""
+Field="有効期間終了年月日","VALID_END_DATE","DATE",,,"","",$FFFFFFFF,""
+Field="削除フラグ","DELETE_FLAG","CHAR(1)",,,"","",$FFFFFFFF,""
+Field="更新会社コード","CORPORATION_CODE_UPDATED","*企業コード",,,"","",$FFFFFFFF,""
+Field="更新ユーザコード","USER_CODE_UPDATED","*ユーザコード",,,"","",$FFFFFFFF,""
+Field="更新ユーザIPアドレス","IP_UPDATED","VARCHAR2(40)",,,"","",$FFFFFFFF,""
+Field="更新日時","TIMESTAMP_UPDATED","*タイムスタンプ",,,"","",$FFFFFFFF,""
+UsingCommonColumns=0
+EffectMode=None
+Tag=ワークテーブル
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180828111046
+Position="その他",100,100
+
+[Entity]
+PName=MWM_MAIL_VARIABLE
+LName=メール変数マスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=3500
+Top=1250
+Field="メール変数ID","MAIL_VARIABLE_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="メール変数コード","MAIL_VARIABLE_CODE","*名称(短)","NOT NULL",,"","",$FFFFFFFF,""
+Field="メール変数ラベル","MAIL_VARIABLE_LABEL","*名称(短)",,,"","",$00FF0000,""
+Field="メール変数値","MAIL_VARIABLE_VALUE","*名称(中)",,,"","",$00FF0000,""
+Index==1,CORPORATION_CODE ,MAIL_VARIABLE_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180724174600
+Position="デザイナ",3500,1250
+
+[Comment]
+Comment=新規申請画面を使わず、メニュー内に新規申請機能を取り込みたい場合にだけ画面プロセス／メニュー連携マスタを使用する。新規申請画面を使うなら画面プロセス／メニュー連携マスタは不要。
+FontName=Tahoma
+FontBold=0
+FontItalic=0
+FontUnderline=0
+FontSize=6
+FontColor=$000000
+LineColor=$000000
+BkColor=$FFFFFF
+Page=デザイナ
+Left=2300
+Top=350
+Width=278
+Height=251
+
+[Relation]
+Entity1=MWM_MENU
+Entity2=MWM_SCREEN_PROCESS_MENU
+RelationType1=2
+RelationType2=1
+Fields1=MENU_ID
+Fields2=MENU_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,5800,4741,5038,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20180723152953
+LineMode=0
+Bar1=580
+Bar2=474
+Bar3=504
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=MWM_SCREEN_PROCESS_DEF
+Entity2=MWM_SCREEN_PROCESS_MENU
+RelationType1=2
+RelationType2=3
+Fields1=SCREEN_PROCESS_ID
+Fields2=SCREEN_PROCESS_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,2953,4304,5804,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20180723153013
+LineMode=0
+Bar1=295
+Bar2=430
+Bar3=580
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_SCREEN_PROCESS_MENU
+LName=画面プロセス／メニュー連携マスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=2300
+Top=200
+Field="画面プロセスメニュー定義ID","SCREEN_PROCESS_MENU_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="画面プロセス定義ID","SCREEN_PROCESS_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="メニューID","MENU_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,MENU_ID ,CORPORATION_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180723184501
+Position="デザイナ",2300,200
+
+[Relation]
+Entity1=MWM_PARTS
+Entity2=MWM_PARTS_EVENT
+RelationType1=2
+RelationType2=3
+Fields1=PARTS_ID
+Fields2=PARTS_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,3338,7300,5063,R,R
+Dependence=0
+Caption=
+PName=
+LineMode=0
+Bar1=334
+Bar2=730
+Bar3=506
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_PARTS_EVENT
+LName=パーツイベント定義
+Comment=
+TableOption=
+Page=デザイナ
+Left=660
+Top=2070
+Field="パーツイベントID","PARTS_EVENT_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="パーツID","PARTS_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="イベント名","EVENT_NAME","*名称(短)",,,"","",$FFFFFFFF,""
+Field="イベント関数名","FUNCTION_NAME","*名称(短)",,,"","イベント発火時に呼び出されるJavascript関数名",$FFFFFFFF,""
+Field="イベント関数パラメータ","FUNCTION_PARAMETER","*名称(中)",,,"","イベント関数を呼び出す際の追加引数",$FFFFFFFF,""
+Field="並び順","SORT_ORDER","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,PARTS_ID,EVENT_NAME
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180612150135
+Position="デザイナ",660,2070
+
+[Entity]
+PName=MWM_MENU_SCREEN_EXCLUDE
+LName=メニュー配下除外画面マスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=2650
+Top=600
+Field="メニュー配下除外画面ID","MENU_SCREEN_EXCLUDE_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="除外パターン","EXCLUDE_PATTERN","VARCHAR2(100)","NOT NULL",,"","アクセス権判定をしない画面IDの正規表現パターン",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180523160026
+Position="デザイナ",2650,600
+
+[Relation]
+Entity1=MWM_MENU
+Entity2=MWM_MENU_SCREEN
+RelationType1=2
+RelationType2=3
+Fields1=MENU_ID
+Fields2=MENU_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,4973,3229,4850,R,R
+Dependence=0
+Caption=
+PName=
+LineMode=0
+Bar1=497
+Bar2=323
+Bar3=485
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_MENU_SCREEN
+LName=メニュー配下画面マスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=2650
+Top=450
+Field="メニュー配下画面ID","SCREEN_MENU_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="メニューID","MENU_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="画面ID","SCREEN_ID","VARCHAR2(2000)",,,"","",$FFFFFFFF,""
+Index==0,MENU_ID,SCREEN_ID
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180522182328
+Position="デザイナ",2650,450
+
+[Line]
+Page=デザイナ
+Left=786
+Top=2820
+Width=0
+Height=0
+
+[Entity]
+PName=MWT_RESET_PASSWORD
+LName=リセットパスワード情報
+Comment=
+TableOption=
+Page=デザイナ
+Left=2550
+Top=1950
+Field="リセットパスワードID","RESET_PASSWORD_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="ユーザコード","USER_CODE","*ユーザコード","NOT NULL",,"","",$FFFFFFFF,""
+Field="パスワード","PASSWORD","VARCHAR2(100)","NOT NULL",,"","暗号化されていること",$FFFFFFFF,""
+Field="発行日時","ISSUE_DATETIME","*タイムスタンプ","NOT NULL",,"","",$FFFFFFFF,""
+Field="リセット日時","RESET_DATETIME","*タイムスタンプ",,,"","パスワードがリセットされた日時",$FFFFFFFF,""
+Index==0,CORPORATION_CODE,USER_CODE,ISSUE_DATETIME
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180828110630
+Position="デザイナ",2550,1950
+
+[Relation]
+Entity1=MWM_TRAY_CONFIG
+Entity2=MWM_TRAY_CONFIG_PERSON
+RelationType1=2
+RelationType2=3
+Fields1=TRAY_CONFIG_ID
+Fields2=TRAY_CONFIG_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,4792,5775,5132,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20171208141246
+LineMode=0
+Bar1=479
+Bar2=578
+Bar3=513
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_TRAY_CONFIG_PERSON
+LName=トレイ設定個人マスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=2250
+Top=2100
+Field="トレイ設定パーソナライズID","TRAY_CONFIG_PERSONALIZE_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="トレイ設定ID","TRAY_CONFIG_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="ユーザコード","USER_CODE","*ユーザコード","NOT NULL",,"","#:デフォルトの文書トレイ設定, #以外:この文書トレイ設定を使用するユーザのユーザコード",$FFFFFFFF,""
+Field="トレイタイプ","TRAY_TYPE","VARCHAR2(10)","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,CORPORATION_CODE,USER_CODE,TRAY_TYPE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180718092406
+Position="デザイナ",2250,2100
+
+[Relation]
+Entity1=MWM_BUSINESS_INFO_NAME
+Entity2=MWM_TRAY_CONFIG_CONDITION
+RelationType1=2
+RelationType2=3
+Fields1=CORPORATION_CODE,BUSINESS_INFO_CODE
+Fields2=CORPORATION_CODE,BUSINESS_INFO_CODE
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,3635,3591,5234,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20171213185647
+LineMode=0
+Bar1=364
+Bar2=359
+Bar3=523
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=MWM_BUSINESS_INFO_NAME
+Entity2=MWM_TRAY_CONFIG_RESULT
+RelationType1=2
+RelationType2=3
+Fields1=CORPORATION_CODE,BUSINESS_INFO_CODE
+Fields2=CORPORATION_CODE,BUSINESS_INFO_CODE
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,5978,3591,4886,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20171213185828
+LineMode=0
+Bar1=598
+Bar2=359
+Bar3=489
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=MWM_TRAY_CONFIG
+Entity2=MWM_TRAY_CONFIG_RESULT
+RelationType1=2
+RelationType2=4
+Fields1=TRAY_CONFIG_ID
+Fields2=TRAY_CONFIG_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,7331,7445,4805,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20171205113223
+LineMode=0
+Bar1=733
+Bar2=744
+Bar3=480
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=MWM_TRAY_CONFIG
+Entity2=MWM_TRAY_CONFIG_CONDITION
+RelationType1=2
+RelationType2=3
+Fields1=TRAY_CONFIG_ID
+Fields2=TRAY_CONFIG_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,5023,4698,5003,R,R
+Dependence=0
+Caption=
+PName=
+LineMode=0
+Bar1=502
+Bar2=470
+Bar3=500
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_TRAY_CONFIG_RESULT
+LName=トレイ設定検索結果マスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=2950
+Top=2550
+Field="トレイ設定検索結果ID","TRAY_CONFIG_RESULT_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="トレイ設定ID","TRAY_CONFIG_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="業務管理項目コード","BUSINESS_INFO_CODE","VARCHAR2(30)","NOT NULL",,"","",$FFFFFFFF,""
+Field="列幅","COL_WIDTH","*整数型(短)","NOT NULL",,"","Bootstrapのグリッド幅",$FFFFFFFF,""
+Field="位置揃え区分","ALIGN_TYPE","*フラグ","NOT NULL",,"","L:左寄せ、C:センタリング、R:右寄せ",$FFFFFFFF,""
+Field="リンクフラグ","LINK_FLAG","*フラグ","NOT NULL",,"","1:申請画面用リンクを生成する, 0:リンクを生成しない",$FFFFFFFF,""
+Field="初期ソートフラグ","INITIAL_SORT_FLAG","*フラグ","NOT NULL",,"","1:初期ソートに使用する, 0:初期ソートに使わない",$FFFFFFFF,""
+Field="初期ソート昇順フラグ","INITIAL_SORT_DESC_FLAG","*フラグ","NOT NULL",,"","1:初期ソートで昇順ソートする, 0:初期ソートで降順ソートする",$FFFFFFFF,""
+Field="並び順","SORT_ORDER","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,TRAY_CONFIG_ID,CORPORATION_CODE,BUSINESS_INFO_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20171213185752
+Position="デザイナ",2950,2550,273,249
+
+[Entity]
+PName=MWM_TRAY_CONFIG
+LName=トレイ設定マスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=2650
+Top=2300
+Field="トレイ設定ID","TRAY_CONFIG_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="トレイ設定コード","TRAY_CONFIG_CODE","VARCHAR2(30)","NOT NULL",,"","",$FFFFFFFF,""
+Field="トレイ設定名","TRAY_CONFIG_NAME","*名称(短)","NOT NULL",,"","",$00FF4100,""
+Field="システムフラグ","SYSTEM_FLAG","*フラグ","NOT NULL",,"","1:システムデータ(削除不可)、0:ユーザデータ",$FFFFFFFF,""
+Field="個人使用フラグ","PERSONAL_USE_FLAG","*フラグ","NOT NULL",,"","1:作成者個人用のトレイ設定、0:共有のトレイ設定",$FFFFFFFF,""
+Field="1ページ当たりの件数","PAGE_SIZE","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Field="並び順","SORT_ORDER","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,CORPORATION_CODE,TRAY_CONFIG_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180718144619
+Position="デザイナ",2650,2300
+
+[Entity]
+PName=MWM_TRAY_CONFIG_CONDITION
+LName=トレイ設定検索条件マスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=2950
+Top=2250
+Field="トレイ設定検索条件ID","TRAY_CONFIG_CONDITION_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="トレイ設定ID","TRAY_CONFIG_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="業務管理項目コード","BUSINESS_INFO_CODE","VARCHAR2(30)","NOT NULL",,"","",$FFFFFFFF,""
+Field="検索条件一致区分","CONDITION_MATCH_TYPE","*フラグ","NOT NULL",,"","",$FFFFFFFF,""
+Field="初期値１","TRAY_INIT_VALUE1","*名称(短)",,,"","",$FFFFFFFF,""
+Field="初期値２","TRAY_INIT_VALUE2","*名称(短)",,,"","",$FFFFFFFF,""
+Field="初期値３","TRAY_INIT_VALUE3","*名称(短)",,,"","",$FFFFFFFF,""
+Field="初期値４","TRAY_INIT_VALUE4","*名称(短)",,,"","",$FFFFFFFF,""
+Field="並び順","SORT_ORDER","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,TRAY_CONFIG_ID,CORPORATION_CODE,BUSINESS_INFO_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20171213191321
+Position="デザイナ",2950,2250
+
+[Relation]
+Entity1=MWM_JAVASCRIPT
+Entity2=MWM_SCREEN_JAVASCRIPT
+RelationType1=2
+RelationType2=3
+Fields1=JAVASCRIPT_ID
+Fields2=JAVASCRIPT_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,5055,5932,5055,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20171113142955
+LineMode=0
+Bar1=506
+Bar2=593
+Bar3=506
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=MWM_SCREEN
+Entity2=MWM_SCREEN_JAVASCRIPT
+RelationType1=2
+RelationType2=3
+Fields1=SCREEN_ID
+Fields2=SCREEN_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,5020,3899,4473,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20171113143004
+LineMode=0
+Bar1=502
+Bar2=390
+Bar3=447
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_SCREEN_JAVASCRIPT
+LName=画面Javascript定義
+Comment=
+TableOption=
+Page=デザイナ
+Left=1140
+Top=240
+Field="画面JavascriptID","SCREEN_JAVASCRIPT_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="画面ID","SCREEN_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="JavaScriptID","JAVASCRIPT_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="並び順","SORT_ORDER","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,SCREEN_ID,JAVASCRIPT_ID
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20171113174952
+Position="デザイナ",1140,240
+
+[Entity]
+PName=MWT_PROCESS_BBS
+LName=プロセス掲示板情報
+Comment=
+TableOption=
+Page=デザイナ
+Left=3600
+Top=1550
+Field="プロセス掲示板ID","PROCESS_BBS_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="プロセスID","PROCESS_ID","NUMBER(10, 0)","NOT NULL",,"","",$FFFFFFFF,""
+Field="親プロセス掲示板ID","PROCESS_BBS_ID_UP","*ID","NOT NULL",,"","0ならスレッドの起点",$FFFFFFFF,""
+Field="投稿日時","TIMESTAMP_SUBMIT","*タイムスタンプ","NOT NULL",,"","",$FFFFFFFF,""
+Field="プロセス掲示板メール区分","PROCESS_BBS_MAIL_TYPE","*フラグ","NOT NULL",,"","0:通知なし、1:起案者だけに通知、2:起案者と承認済の参加者に通知、3:起案者と未承認を含む全承認者に通知",$FFFFFFFF,""
+Field="投稿者企業コード","CORPORATION_CODE_SUBMIT","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="投稿者ユーザコード","USER_CODE_SUBMIT","*ユーザコード","NOT NULL",,"","",$FFFFFFFF,""
+Field="投稿者組織コード","ORGANIZATION_CODE_SUBMIT","*組織コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="投稿者役職コード","POST_CODE_SUBMIT","*役職コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="記事内容","CONTENTS","*説明","NOT NULL",,"","",$FFFFFFFF,""
+Index==0,CORPORATION_CODE,PROCESS_ID,TIMESTAMP_SUBMIT
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180828110605
+Position="デザイナ",3600,1550
+
+[Entity]
+PName=MWM_ANNOUNCEMENT
+LName=お知らせマスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=3750
+Top=1250
+Field="お知らせID","ANNOUNCEMENT_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="掲載開始日時","TIMESTAMP_START","*タイムスタンプ","NOT NULL",,"","",$FFFFFFFF,""
+Field="掲載終了日時","TIMESTAMP_END","*タイムスタンプ","NOT NULL",,"","",$FFFFFFFF,""
+Field="件名","SUBJECT","*名称(中)",,,"","",$00FF4100,""
+Field="お知らせ内容","CONTENTS","*説明",,,"","",$00FF4100,""
+Field="リンクのタイトル","LINK_TITLE","*名称(中)",,,"","",$00FF4100,""
+Field="リンク先URL","LINK_URL","*名称(中)",,,"","",$00FF4100,""
+Field="備考","REMARKS","*名称(長)",,,"","",$00FF4100,""
+Index==0,CORPORATION_CODE,TIMESTAMP_START,TIMESTAMP_END
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180828105636
+Position="デザイナ",3750,1250
+
+[Entity]
+PName=MWT_PARTS_ATTACH_FILE_WF
+LName=ワークフローパーツ添付ファイル
+Comment=
+TableOption=
+Page=デザイナ
+Left=3660
+Top=2340
+Field="ワークフローパーツ添付ファイルID","PARTS_ATTACH_FILE_WF_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="ランタイムID","RUNTIME_ID","*ID",,,"","トランザクション(ユーザデータ)のランタイムID",$FFFFFFFF,""
+Field="パーツID","PARTS_ID","*ID",,,"","",$FFFFFFFF,""
+Field="並び順","SORT_ORDER","*整数型(短)",,,"","",$FFFFFFFF,""
+Field="ファイル名","FILE_NAME","*名称(長)","NOT NULL",,"","",$FFFFFFFF,""
+Field="ファイルデータ","FILE_DATA","BLOB",,,"","",$FFFFFFFF,""
+Field="ファイルサイズ","FILE_SIZE","NUMBER(10,0)",,,"","",$FFFFFFFF,""
+Field="コメント","COMMENTS","*説明",,,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード",,,"","",$FFFFFFFF,""
+Field="プロセスID","PROCESS_ID","*ID",,,"","",$FFFFFFFF,""
+Index==0,RUNTIME_ID,PARTS_ID,SORT_ORDER
+Index==0,CORPORATION_CODE,PROCESS_ID,RUNTIME_ID,PARTS_ID,SORT_ORDER
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20181102094036
+Position="デザイナ",3660,2340
+
+[Relation]
+Entity1=MWM_PARTS
+Entity2=MWM_PARTS_ATTACH_FILE
+RelationType1=1
+RelationType2=3
+Fields1=PARTS_ID
+Fields2=PARTS_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,1904,8096,4953,R,R
+Dependence=0
+Caption=
+PName=
+LineMode=0
+Bar1=190
+Bar2=810
+Bar3=495
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_PARTS_ATTACH_FILE
+LName=パーツ添付ファイル定義
+Comment=デザイン時にパーツへバイナリデータを紐付けるためのテーブル。申請時はワークフロー添付ファイルテーブル(MWT_ATTACH_FILE_WF)を使って下さい。
+TableOption=
+Page=デザイナ
+Left=660
+Top=1680
+Field="パーツ添付ファイルID","PARTS_ATTACH_FILE_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="パーツID","PARTS_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="グループ化キー","GROUP_KEY","*名称(中)",,,"","１パーツで複数添付ファイルを持つ場合に、それぞれを識別するためのキー",$FFFFFFFF,""
+Field="ファイル名称","FILE_NAME","*名称(長)",,,"","",$FFFFFFFF,""
+Field="ファイルデータ","FILE_DATA","BLOB",,,"","",$FFFFFFFF,""
+Field="ファイルサイズ","FILE_SIZE","NUMBER(10,0)",,,"","",$FFFFFFFF,""
+Field="コメント","COMMENTS","*説明",,,"","",$FFFFFFFF,""
+Index==1,PARTS_ID,GROUP_KEY
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20181102093515
+Position="デザイナ",660,1680
+
+[Relation]
+Entity1=MWM_MAIL_TEMPLATE_HEADER
+Entity2=MWM_MAIL_TEMPLATE_BODY
+RelationType1=2
+RelationType2=4
+Fields1=MAIL_TEMPLATE_HEADER_ID
+Fields2=MAIL_TEMPLATE_HEADER_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,4854,5886,5103,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170922130924
+LineMode=0
+Bar1=485
+Bar2=589
+Bar3=510
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=MWM_MAIL_TEMPLATE_FILE
+Entity2=MWM_MAIL_TEMPLATE_HEADER
+RelationType1=2
+RelationType2=3
+Fields1=MAIL_TEMPLATE_FILE_ID
+Fields2=MAIL_TEMPLATE_FILE_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,5438,5536,4682,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170922130908
+LineMode=0
+Bar1=544
+Bar2=554
+Bar3=468
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_MAIL_CONFIG
+LName=メール環境設定マスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=3250
+Top=1250
+Field="メール環境設定ID","MAIL_CONFIG_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="環境設定コード","CONFIG_CODE","*名称(短)","NOT NULL",,"","",$FFFFFFFF,""
+Field="環境設定名","CONFIG_NAME","*名称(短)","NOT NULL",,"","",$FFFFFFFF,""
+Field="環境設定値","CONFIG_VALUE","*名称(短)",,,"","",$FFFFFFFF,""
+Field="並び順","SORT_ORDER","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Field="備考","REMARKS","*名称(中)",,,"","",$00FF0000,""
+Index==1,CONFIG_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20171113133616
+Position="デザイナ",3250,1250
+
+[Entity]
+PName=MWM_MAIL_TEMPLATE_FILE
+LName=メールテンプレートファイルマスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=3250
+Top=1450
+Field="メールテンプレートファイルID","MAIL_TEMPLATE_FILE_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="メールテンプレートファイル名","MAIL_TEMPLATE_FILENAME","*名称(短)","NOT NULL",,"","",$FFFFFFFF,""
+Field="備考","REMARKS","*名称(中)","NOT NULL",,"","",$00FF4100,""
+Index==1,MAIL_TEMPLATE_FILENAME
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170907145003
+Position="デザイナ",3250,1450
+
+[Entity]
+PName=MWM_MAIL_TEMPLATE_BODY
+LName=メールテンプレート本文マスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=3250
+Top=2100
+Field="メールテンプレート本文ID","MAIL_TEMPLATE_BODY_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="メールテンプレートヘッダID","MAIL_TEMPLATE_HEADER_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="言語コード","LOCALE_CODE","VARCHAR2(5)","NOT NULL",,"","",$FFFFFFFF,""
+Field="メール件名","MAIL_SUBJECT","*名称(中)",,,"","",$FFFFFFFF,""
+Field="メール本文","MAIL_BODY","CLOB",,,"","",$FFFFFFFF,""
+Index==1,MAIL_TEMPLATE_HEADER_ID,LOCALE_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170907145834
+Position="デザイナ",3250,2100
+
+[Entity]
+PName=MWM_MAIL_TEMPLATE_HEADER
+LName=メールテンプレートヘッダーマスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=3250
+Top=1650
+Field="メールテンプレートヘッダID","MAIL_TEMPLATE_HEADER_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="メールテンプレートファイルID","MAIL_TEMPLATE_FILE_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="追加する送信先","SEND_TO","*名称(中)",,,"","設定されていれば標準の送信先に追加",$FFFFFFFF,""
+Field="追加するCC送信先","SEND_CC","*名称(中)",,,"","設定されていれば標準のCCに追加",$FFFFFFFF,""
+Field="追加するBCC送信先","SEND_BCC","*名称(中)",,,"","設定されていれば標準のBCCに追加",$FFFFFFFF,""
+Field="送信者アドレス","SEND_FROM","*名称(中)",,,"","設定されていれば標準の送信者を上書き",$FFFFFFFF,""
+Field="送信者名","SEND_FROM_PERSONAL","*名称(中)",,,"","設定されていれば標準の送信者を上書き",$00000000,""
+Field="返信先","RETURN_TO","*名称(中)",,,"","設定されていれば返信先を上書き",$FFFFFFFF,""
+Index==1,MAIL_TEMPLATE_FILE_ID,CORPORATION_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180625160131
+Position="デザイナ",3250,1650
+
+[Relation]
+Entity1=MWM_TABLE
+Entity2=MWM_PARTS_TABLE_INFO
+RelationType1=2
+RelationType2=3
+Fields1=TABLE_ID
+Fields2=TABLE_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,3410,2303,5182,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170922141155
+LineMode=0
+Bar1=341
+Bar2=230
+Bar3=518
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=MWM_PARTS
+Entity2=MWM_PARTS_TABLE_INFO
+RelationType1=2
+RelationType2=3
+Fields1=PARTS_ID
+Fields2=PARTS_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,4850,6081,1938,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170922141213
+LineMode=0
+Bar1=485
+Bar2=608
+Bar3=194
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=MWM_TABLE_SEARCH
+Entity2=MWM_PARTS_TABLE_INFO
+RelationType1=2
+RelationType2=3
+Fields1=TABLE_SEARCH_ID
+Fields2=TABLE_SEARCH_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,3172,5207,5337,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170922131058
+LineMode=0
+Bar1=317
+Bar2=521
+Bar3=534
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_PARTS_TABLE_INFO
+LName=パーツ汎用テーブル情報
+Comment=
+TableOption=
+Page=デザイナ
+Left=1020
+Top=1950
+Field="パーツ汎用テーブル情報ID","PARTS_TABLE_INFO_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="パーツID","PARTS_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="汎用テーブルID","TABLE_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="汎用テーブル検索ID","TABLE_SEARCH_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,PARTS_ID,TABLE_SEARCH_ID
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170828183307
+Position="デザイナ",1020,1950
+
+[Relation]
+Entity1=MWM_TABLE
+Entity2=MWM_CATEGORY_CONFIG
+RelationType1=2
+RelationType2=3
+Fields1=TABLE_ID
+Fields2=TABLE_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,2328,3933,7348,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170726153302
+LineMode=0
+Bar1=233
+Bar2=393
+Bar3=735
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=MWM_CATEGORY
+Entity2=MWM_CATEGORY_CONFIG
+RelationType1=2
+RelationType2=3
+Fields1=CATEGORY_ID,CORPORATION_CODE
+Fields2=CATEGORY_ID,CORPORATION_CODE
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,7784,3109,3420,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170731143820
+LineMode=0
+Bar1=778
+Bar2=311
+Bar3=342
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_CATEGORY_CONFIG
+LName=汎用テーブルカテゴリ構成
+Comment=
+TableOption=
+Page=デザイナ
+Left=1860
+Top=2040
+Field="汎用テーブルカテゴリ構成ID","CATEGORY_CONFIG_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="汎用テーブルカテゴリID","CATEGORY_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="汎用テーブルID","TABLE_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,CORPORATION_CODE,TABLE_ID
+Index==1,CATEGORY_ID,TABLE_ID
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170802182013
+Position="デザイナ",1860,2040
+
+[Relation]
+Entity1=MWM_TABLE
+Entity2=MWM_TABLE_AUTHORITY
+RelationType1=2
+RelationType2=3
+Fields1=TABLE_ID
+Fields2=TABLE_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,7136,4989,5758,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170726153311
+LineMode=0
+Bar1=714
+Bar2=499
+Bar3=576
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_TABLE_AUTHORITY
+LName=汎用テーブル権限
+Comment=
+TableOption=
+Page=デザイナ
+Left=1860
+Top=2220
+Field="汎用テーブル権限ID","TABLE_AUTHORITY_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="メニューロールコード","MENU_ROLE_CODE","VARCHAR2(25)","NOT NULL",,"","",$FFFFFFFF,""
+Field="汎用テーブルID","TABLE_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,CORPORATION_CODE,MENU_ROLE_CODE,TABLE_ID
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170726151943
+Position="デザイナ",1860,2220
+
+[Relation]
+Entity1=MWM_CATEGORY
+Entity2=MWM_CATEGORY_AUTHORITY
+RelationType1=2
+RelationType2=3
+Fields1=CATEGORY_ID,CORPORATION_CODE
+Fields2=CATEGORY_ID,CORPORATION_CODE
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,4138,3109,4138,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170731143722
+LineMode=0
+Bar1=414
+Bar2=311
+Bar3=414
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_CATEGORY_AUTHORITY
+LName=汎用テーブルカテゴリ権限
+Comment=
+TableOption=
+Page=デザイナ
+Left=1860
+Top=1890
+Field="汎用テーブルカテゴリ権限ID","CATEGORY_AUTHORITY_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="汎用テーブルカテゴリID","CATEGORY_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="メニューロールコード","MENU_ROLE_CODE","VARCHAR2(25)","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,CORPORATION_CODE,MENU_ROLE_CODE,CATEGORY_ID
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170802181837
+Position="デザイナ",1860,1890
+
+[Relation]
+Entity1=MWM_TABLE_SEARCH
+Entity2=MWM_TABLE_SEARCH_COLUMN
+RelationType1=2
+RelationType2=3
+Fields1=TABLE_SEARCH_ID
+Fields2=TABLE_SEARCH_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,7032,5477,3535,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170726144404
+LineMode=0
+Bar1=703
+Bar2=548
+Bar3=354
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_TABLE_SEARCH_COLUMN
+LName=汎用テーブル検索カラム
+Comment=
+TableOption=
+Page=デザイナ
+Left=1380
+Top=2220
+Field="汎用テーブル検索カラムID","TABLE_SEARCH_COLUMN_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="汎用テーブル検索ID","TABLE_SEARCH_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="カラム名","COLUMN_NAME","VARCHAR2(128)","NOT NULL",,"","",$FFFFFFFF,""
+Field="論理カラム名","LOGICA_COLUMN_NAME","*名称(長)",,,"","",$00FF4100,""
+Field="カラム型区分","SEARCH_COLUMN_TYPE","*フラグ","NOT NULL",,"","S:文字、N:数値、D:日付、T:時刻",$FFFFFFFF,""
+Field="並び順","SORT_ORDER","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Field="検索条件　表示区分","CONDITION_DISPLAY_TYPE","*フラグ","NOT NULL",,"","0:不使用、1:表示(テキストボックス)、2:表示(ドロップダウン)、 3:非表示(暗黙の条件)",$FFFFFFFF,""
+Field="検索条件　表示位置","CONDITION_DISPLAY_POSITION","*整数型(短)",,,"","",$FFFFFFFF,""
+Field="検索条件　一致区分","CONDITION_MATCH_TYPE","*フラグ",,,"","1:完全一致、2:前方一致、3:部分一致、4:範囲（以上～以下）、5:(未使用)、6:以上「＞＝」、 7:以下「＜＝」、8:超過「＞」 、9:未満「＜」 、A:不等価「！＝」",$FFFFFFFF,""
+Field="検索条件　選択肢コード","CONDITION_OPTION_ID","*ID",,,"","検索条件一致区分＝選択肢リストのとき、選択肢マスタ.選択肢ID。その他では未使用",$FFFFFFFF,""
+Field="検索条件　初期値区分1","CONDITION_INIT_TYPE_1","*フラグ",,,"","0:ブランク、1:固定値、2:ログイン者企業コード、3:ログイン者ユーザID、4:ログイン者言語コード、5:システム日付(yyyy/MM/dd)、6:パーツ",$FFFFFFFF,""
+Field="検索条件　初期値1","CONDITION_INIT_VALUE_1","*名称(短)",,,"","",$FFFFFFFF,""
+Field="検索条件　初期値区分2","CONDITION_INIT_TYPE_2","*フラグ",,,"","0:ブランク、1:固定値、2:ログイン者企業コード、3:ログイン者ユーザID、4:ログイン者言語コード、5:システム日付(yyyy/MM/dd)、6:パーツ",$FFFFFFFF,""
+Field="検索条件　初期値2","CONDITION_INIT_VALUE_2","*名称(短)",,,"","",$FFFFFFFF,""
+Field="検索条件　ブランク区分","CONDITION_BLANK_TYPE","*フラグ",,,"","1:絞込み対象外、2:必須入力、3:NULLで絞込む、4:検索結果0件を強制",$FFFFFFFF,""
+Field="検索条件　トリムフラグ","CONDITION_TRIM_FLAG","*フラグ",,,"\q0\q","1:トリミングする、0:トリミングしない",$FFFFFFFF,""
+Field="検索条件　カナ変換区分","CONDITION_KANA_CONVERT_TYPE","*文字列キー",,,"\qNONE\q","FW_KANA:全角カナへ変換、FW_HIRA:全角ひらがなへ変換、SW_KANA：半角カナへ変換、NONE:変換しない",$FFFFFFFF,""
+Field="検索結果　表示区分","RESULT_DISPLAY_TYPE","*フラグ","NOT NULL",,"","0:不使用、1:表示、2:隠し項目",$FFFFFFFF,""
+Field="検索結果　表示位置","RESULT_DISPLAY_POSITION","*整数型(短)",,,"","検索結果の列の並び順",$FFFFFFFF,""
+Field="検索結果　表示幅","RESULT_DISPLAY_WIDTH","*整数型(短)",,,"","1～12",$FFFFFFFF,""
+Field="検索結果　位置揃え区分","RESULT_ALIGN_TYPE","*フラグ",,,"","L:左揃え、C:中央揃え、R:右揃え",$FFFFFFFF,""
+Field="検索結果　デフォルトソート順","RESULT_ORDER_BY_POSITION","*整数型(短)",,,"","SQLのORDER BY句の並び順",$FFFFFFFF,""
+Field="検索結果　デフォルトソート方向","RESULT_ORDER_BY_DIRECTION","*フラグ",,,"","A:ASC、D:DESC",$FFFFFFFF,""
+Index==1,TABLE_SEARCH_ID,COLUMN_NAME
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180925142157
+Position="デザイナ",1380,2220
+
+[Relation]
+Entity1=MWM_TABLE
+Entity2=MWM_TABLE_SEARCH
+RelationType1=2
+RelationType2=3
+Fields1=TABLE_ID
+Fields2=TABLE_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,7197,2566,3316,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170726144348
+LineMode=0
+Bar1=720
+Bar2=257
+Bar3=332
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_TABLE_SEARCH
+LName=汎用テーブル検索
+Comment=
+TableOption=
+Page=デザイナ
+Left=1020
+Top=2190
+Field="汎用テーブル検索ID","TABLE_SEARCH_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="汎用テーブルID","TABLE_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="汎用テーブル検索コード","TABLE_SEARCH_CODE","*名称(短)","NOT NULL",,"","",$FFFFFFFF,""
+Field="汎用テーブル検索名","TABLE_SEARCH_NAME","*名称(短)","NOT NULL",,"","",$00FF4100,""
+Field="初期検索フラグ","DEFAULT_SEARCH_FLAG","*フラグ","NOT NULL",,"","1:初期検索する、0:初期検索しない",$FFFFFFFF,""
+Field="表示名","DISPLAY_NAME","*名称(短)",,,"","ポップアップ画面での表示名称",$00FF4100,""
+Index==1,CORPORATION_CODE,TABLE_SEARCH_CODE,TABLE_ID
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20181220145158
+Position="デザイナ",1020,2190
+
+[Line]
+Page=デザイナ
+Left=185
+Top=2159
+Width=0
+Height=0
+
+[Entity]
+PName=MWM_CATEGORY
+LName=汎用テーブルカテゴリ
+Comment=
+TableOption=
+Page=デザイナ
+Left=1470
+Top=1890
+Field="汎用テーブルカテゴリID","CATEGORY_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="カテゴリコード","CATEGORY_CODE","VARCHAR2(30)","NOT NULL",,"","",$FFFFFFFF,""
+Field="カテゴリ名","CATEGORY_NAME","*名称(短)","NOT NULL",,"","画面上はフォルダ名",$00FF4100,""
+Index==1,CORPORATION_CODE,CATEGORY_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170802181742
+Position="デザイナ",1470,1890
+
+[Entity]
+PName=MWM_TABLE
+LName=汎用テーブル
+Comment=
+TableOption=
+Page=デザイナ
+Left=1440
+Top=2070
+Field="汎用テーブルID","TABLE_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="物理テーブル名","TABLE_NAME","*名称(短)","NOT NULL",,"","",$FFFFFFFF,""
+Field="論理テーブル名","LOGICAL_TABLE_NAME","*名称(長)",,,"","",$00FF4100,""
+Field="エンティティタイプ","ENTITY_TYPE","*フラグ","NOT NULL",,"","T:テーブル、V:ビュー",$FFFFFFFF,""
+Index==1,TABLE_NAME
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170802143759
+Position="デザイナ",1440,2070
+
+[Relation]
+Entity1=MWM_PARTS_SEQUENCE_SPEC
+Entity2=MWT_PARTS_SEQUENCE_INSTANCE
+RelationType1=2
+RelationType2=3
+Fields1=PARTS_SEQUENCE_SPEC_ID
+Fields2=PARTS_SEQUENCE_SPEC_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,5347,4536,4747,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170714160405
+LineMode=0
+Bar1=535
+Bar2=454
+Bar3=475
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWT_PARTS_SEQUENCE_INSTANCE
+LName=パーツ連番インスタンス
+Comment=
+TableOption=
+Page=デザイナ
+Left=400
+Top=2200
+Field="連番インスタンスID","PARTS_SEQUENCE_INSTANCE_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="連番仕様ID","PARTS_SEQUENCE_SPEC_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="グループ化キー","GROUPING_KEY","*名称(中)",,,"","",$FFFFFFFF,""
+Field="現在値","CURRENT_VALUE","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="最終リセット日","LAST_RESET_DATE","*タイムスタンプ","NOT NULL",,"","",$FFFFFFFF,""
+Index=IDX_MWT_PARTS_SEQ_INSTANCE_1=1,PARTS_SEQUENCE_SPEC_ID,GROUPING_KEY
+UsingCommonColumns=0
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180828110529
+Position="デザイナ",400,2200
+
+[Relation]
+Entity1=MWM_OPTION
+Entity2=MWM_PARTS_OPTION
+RelationType1=2
+RelationType2=3
+Fields1=OPTION_ID
+Fields2=OPTION_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,5996,4004,4976,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170704181224
+LineMode=0
+Bar1=600
+Bar2=400
+Bar3=498
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=MWM_PARTS
+Entity2=MWM_PARTS_OPTION
+RelationType1=2
+RelationType2=3
+Fields1=PARTS_ID
+Fields2=PARTS_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,9351,4050,4296,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170704181231
+LineMode=0
+Bar1=935
+Bar2=405
+Bar3=430
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_PARTS_OPTION
+LName=パーツ選択肢定義
+Comment=
+TableOption=
+Page=デザイナ
+Left=1380
+Top=1620
+Field="パーツ選択肢ID","PARTS_OPTION_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="パーツID","PARTS_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="選択肢ID","OPTION_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,PARTS_ID
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170726132648
+Position="デザイナ",1380,1620
+
+[Relation]
+Entity1=MWM_OPTION
+Entity2=MWM_OPTION_ITEM
+RelationType1=2
+RelationType2=3
+Fields1=OPTION_ID
+Fields2=OPTION_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,4879,3513,4397,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170704180933
+LineMode=0
+Bar1=488
+Bar2=351
+Bar3=440
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_OPTION_ITEM
+LName=選択肢項目マスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=1950
+Top=1680
+Field="選択肢要素ID","OPTION_ITEM_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="選択肢ID","OPTION_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="コード","CODE","VARCHAR2(30)",,,"","",$FFFFFFFF,""
+Field="ラベル","LABEL","*名称(短)","NOT NULL",,"","",$00FF0000,""
+Field="並び順","SORT_ORDER","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,OPTION_ID,CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170724185336
+Position="デザイナ",1950,1680
+
+[Entity]
+PName=MWM_OPTION
+LName=選択肢マスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=1650
+Top=1650
+Field="選択肢ID","OPTION_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="選択肢コード","OPTION_CODE","VARCHAR2(30)",,,"","",$FFFFFFFF,""
+Field="選択肢名","OPTION_NAME","*名称(短)","NOT NULL",,"","",$00FF0000,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,OPTION_CODE,CORPORATION_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170803173621
+Position="デザイナ",1650,1650
+
+[Relation]
+Entity1=MWM_PARTS
+Entity2=MWM_SCREEN_CALC
+RelationType1=2
+RelationType2=3
+Fields1=PARTS_ID
+Fields2=PARTS_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,2477,8601,8392,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170623174218
+LineMode=0
+Bar1=248
+Bar2=860
+Bar3=839
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=MWM_SCREEN
+Entity2=MWM_SCREEN_CALC
+RelationType1=1
+RelationType2=3
+Fields1=SCREEN_ID
+Fields2=SCREEN_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,6582,6110,4750,R,R
+Dependence=0
+Caption=
+PName=
+LineMode=0
+Bar1=658
+Bar2=611
+Bar3=475
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=MWM_SCREEN_CALC
+Entity2=MWM_SCREEN_CALC_EC
+RelationType1=1
+RelationType2=3
+Fields1=SCREEN_CALC_ID
+Fields2=SCREEN_CALC_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,5267,5879,6041,R,R
+Dependence=0
+Caption=
+PName=
+LineMode=0
+Bar1=527
+Bar2=588
+Bar3=604
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=MWM_SCREEN_CALC
+Entity2=MWM_SCREEN_CALC_ITEM
+RelationType1=1
+RelationType2=3
+Fields1=SCREEN_CALC_ID
+Fields2=SCREEN_CALC_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,2121,6672,3890,R,R
+Dependence=0
+Caption=
+PName=
+LineMode=0
+Bar1=212
+Bar2=667
+Bar3=389
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_SCREEN_CALC_EC
+LName=画面計算式有効条件
+Comment=
+TableOption=
+Page=デザイナ
+Left=1560
+Top=1110
+Field="画面計算式有効条件ID","SCREEN_CALC_EC_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="画面計算式ID","SCREEN_CALC_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="有効条件種別","EC_CLASS","*フラグ","NOT NULL",,"","1：論理演算子、2：カッコ、3：パーツ",$FFFFFFFF,""
+Field="有効条件区分","EC_TYPE","*名称(短)","NOT NULL",,"","「&&、||、!、(、)、パーツID」のいずれか",$FFFFFFFF,""
+Field="比較演算子","EC_OPERATOR","*名称(短)",,,"","「==、!=、<、<=、>、>=」のいずれか。有効条件種別が「3：パーツ」の場合のみ設定",$FFFFFFFF,""
+Field="比較先リテラル値","TARGET_LITERAL_VAL","*名称(短)",,,"","有効条件種別が「3：パーツ」の場合のみ設定。比較先パーツIDと比較先リテラル値で排他関係",$FFFFFFFF,""
+Field="比較先パーツID","TARGET_PARTS_ID","*ID",,,"","有効条件種別が「3：パーツ」の場合のみ設定。比較先パーツIDと比較先リテラル値で排他関係",$FFFFFFFF,""
+Field="数値化フラグ","NUMERIC_FLAG","*フラグ","NOT NULL",,"","比較先の値を「1：数値として判定」「0：文字列として判定」",$FFFFFFFF,""
+Field="並び順","SORT_ORDER","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Field="同定キー","IDENTIFY_KEY","VARCHAR2(32)","NOT NULL",,"","画面アップロード時のデータ同定キー",$FFFFFFFF,""
+Index==1,SCREEN_CALC_ID ,IDENTIFY_KEY
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180529161351
+Position="デザイナ",1560,1110
+
+[Entity]
+PName=MWM_SCREEN_CALC_ITEM
+LName=画面計算項目定義
+Comment=
+TableOption=
+Page=デザイナ
+Left=1200
+Top=1170
+Field="画面計算項目ID","SCREEN_CALC_ITEM_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="画面計算式ID","SCREEN_CALC_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="計算項目区分","CALC_ITEM_TYPE","*フラグ","NOT NULL",,"","1:演算子、2:カッコ、3:リテラル値、4:パーツ",$FFFFFFFF,""
+Field="計算項目値","CALC_ITEM_VALUE","*名称(中)","NOT NULL",,"","計算項目区分が「4:パーツ」ならパーツID",$FFFFFFFF,""
+Field="強制計算フラグ","FORCE_CALC_FLAG","*フラグ","NOT NULL",,"","1:空白をゼロとみなして強制計算、0:空白は計算対象外",$FFFFFFFF,""
+Field="並び順","SORT_ORDER","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Field="同定キー","IDENTIFY_KEY","VARCHAR2(32)","NOT NULL",,"","画面アップロード時のデータ同定キー",$FFFFFFFF,""
+Index==1,SCREEN_CALC_ID,IDENTIFY_KEY
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180827143820
+Position="デザイナ",1200,1170
+
+[Entity]
+PName=MWM_SCREEN_CALC
+LName=画面計算式定義
+Comment=
+TableOption=
+Page=デザイナ
+Left=1600
+Top=650
+Field="画面計算式ID","SCREEN_CALC_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="画面ID","SCREEN_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="パーツID","PARTS_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="パーツ計算式名","PARTS_CALC_NAME","*名称(短)","NOT NULL",,"","",$00FF0000,""
+Field="並び順","SORT_ORDER","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Field="デフォルトフラグ","DEFAULT_FLAG","*フラグ","NOT NULL",,"\q0\q","1：デフォルト 0：デフォルト外",$FFFFFFFF,""
+Field="同定キー","IDENTIFY_KEY","VARCHAR2(32)","NOT NULL",,"","画面アップロード時のデータ同定キー",$FFFFFFFF,""
+Field="コールバック関数","CALLBACK_FUNCTION","*名称(短)",,,"","計算式を実行したあとに呼び出されるコールバック関数",$FFFFFFFF,""
+Index==1,SCREEN_ID,PARTS_ID,IDENTIFY_KEY
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20181220140831
+Position="デザイナ",1600,650,173,214
+
+[Entity]
+PName=MWM_PARTS_SEQUENCE_SPEC
+LName=パーツ連番仕様マスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=350
+Top=1900
+Field="パーツ連番仕様ID","PARTS_SEQUENCE_SPEC_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="パーツ連番仕様コード","PARTS_SEQUENCE_SPEC_CODE","VARCHAR2(10)","NOT NULL",,"","",$FFFFFFFF,""
+Field="パーツ連番仕様名称","PARTS_SEQUENCE_SPEC_NAME","*名称(中)","NOT NULL",,"","",$00FF0000,""
+Field="桁数","SEQUENCE_LENGTH","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Field="リセット区分","RESET_TYPE","*フラグ","NOT NULL",,"\q0\q","0:リセットしない、1:年、2:月、3:日、4:年度",$FFFFFFFF,""
+Field="開始値","START_VALUE","*ID","NOT NULL",,"1","",$FFFFFFFF,""
+Index==1,CORPORATION_CODE,PARTS_SEQUENCE_SPEC_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170721165920
+Position="デザイナ",350,1900
+
+[Entity]
+PName=MWM_PARTS_NUMBERING_FORMAT
+LName=パーツ採番形式
+Comment=
+TableOption=
+Page=デザイナ
+Left=100
+Top=1900
+Field="パーツ採番形式ID","PARTS_NUMBERING_FORMAT_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="パーツ採番コード","PARTS_NUMBERING_FORMAT_CODE","VARCHAR2(10)","NOT NULL",,"","",$FFFFFFFF,""
+Field="パーツ採番名称","PARTS_NUMBERING_FORMAT_NAME","*名称(中)","NOT NULL",,"","",$00FF4100,""
+Field="フォーマット","NUMBERING_FORMAT","*名称(中)",,,"","",$FFFFFFFF,""
+Field="書式区分1","FORMAT_TYPE1","*フラグ",,,"","L：固定値、T:システム日付、S:連番、O:ログイン者組織",$FFFFFFFF,""
+Field="書式値1","FORMAT_VALUE1","*名称(短)",,,"","固定値｛フリーフォーマット｝、システム日付｛FYYYY:年度(4桁)、FYY:年度(2桁)、YYYY:年(4桁)、YY:年(2桁)、MM:月、DD:日｝、ログイン者組織｛NAME:名称、SNAME:略称、ID:組織付加情報、EX1:拡張情報1、EX2:拡張情報2、EX3:拡張情報3、EX4:拡張情報4、EX5:拡張情報5｝、連番｛連番仕様ID｝",$FFFFFFFF,""
+Field="グループ化フラグ1","GROUPING_FLAG1","*フラグ",,,"","1:グループ化する、0:グループ化しない",$FFFFFFFF,""
+Field="書式区分2","FORMAT_TYPE2","*フラグ",,,"","L：固定値、T:システム日付、S:連番、O:ログイン者組織",$FFFFFFFF,""
+Field="書式値2","FORMAT_VALUE2","*名称(短)",,,"","固定値｛フリーフォーマット｝、システム日付｛FYYYY:年度(4桁)、FYY:年度(2桁)、YYYY:年(4桁)、YY:年(2桁)、MM:月、DD:日｝、ログイン者組織｛NAME:名称、SNAME:略称、ID:組織付加情報、EX1:拡張情報1、EX2:拡張情報2、EX3:拡張情報3、EX4:拡張情報4、EX5:拡張情報5｝、連番｛連番仕様ID｝",$FFFFFFFF,""
+Field="グループ化フラグ2","GROUPING_FLAG2","*フラグ",,,"","1:グループ化する、0:グループ化しない",$FFFFFFFF,""
+Field="書式区分3","FORMAT_TYPE3","*フラグ",,,"","L：固定値、T:システム日付、S:連番、O:ログイン者組織",$FFFFFFFF,""
+Field="書式値3","FORMAT_VALUE3","*名称(短)",,,"","固定値｛フリーフォーマット｝、システム日付｛FYYYY:年度(4桁)、FYY:年度(2桁)、YYYY:年(4桁)、YY:年(2桁)、MM:月、DD:日｝、ログイン者組織｛NAME:名称、SNAME:略称、ID:組織付加情報、EX1:拡張情報1、EX2:拡張情報2、EX3:拡張情報3、EX4:拡張情報4、EX5:拡張情報5｝、連番｛連番仕様ID｝",$FFFFFFFF,""
+Field="グループ化フラグ3","GROUPING_FLAG3","*フラグ",,,"","1:グループ化する、0:グループ化しない",$FFFFFFFF,""
+Field="書式区分4","FORMAT_TYPE4","*フラグ",,,"","L：固定値、T:システム日付、S:連番、O:ログイン者組織",$FFFFFFFF,""
+Field="書式値4","FORMAT_VALUE4","*名称(短)",,,"","固定値｛フリーフォーマット｝、システム日付｛FYYYY:年度(4桁)、FYY:年度(2桁)、YYYY:年(4桁)、YY:年(2桁)、MM:月、DD:日｝、ログイン者組織｛NAME:名称、SNAME:略称、ID:組織付加情報、EX1:拡張情報1、EX2:拡張情報2、EX3:拡張情報3、EX4:拡張情報4、EX5:拡張情報5｝、連番｛連番仕様ID｝",$FFFFFFFF,""
+Field="グループ化フラグ4","GROUPING_FLAG4","*フラグ",,,"","1:グループ化する、0:グループ化しない",$FFFFFFFF,""
+Field="書式区分5","FORMAT_TYPE5","*フラグ",,,"","L：固定値、T:システム日付、S:連番、O:ログイン者組織",$FFFFFFFF,""
+Field="書式値5","FORMAT_VALUE5","*名称(短)",,,"","固定値｛フリーフォーマット｝、システム日付｛FYYYY:年度(4桁)、FYY:年度(2桁)、YYYY:年(4桁)、YY:年(2桁)、MM:月、DD:日｝、ログイン者組織｛NAME:名称、SNAME:略称、ID:組織付加情報、EX1:拡張情報1、EX2:拡張情報2、EX3:拡張情報3、EX4:拡張情報4、EX5:拡張情報5｝、連番｛連番仕様ID｝",$FFFFFFFF,""
+Field="グループ化フラグ5","GROUPING_FLAG5","*フラグ",,,"","1:グループ化する、0:グループ化しない",$FFFFFFFF,""
+Field="書式区分6","FORMAT_TYPE6","*フラグ",,,"","L：固定値、T:システム日付、S:連番、O:ログイン者組織",$FFFFFFFF,""
+Field="書式値6","FORMAT_VALUE6","*名称(短)",,,"","固定値｛フリーフォーマット｝、システム日付｛FYYYY:年度(4桁)、FYY:年度(2桁)、YYYY:年(4桁)、YY:年(2桁)、MM:月、DD:日｝、ログイン者組織｛NAME:名称、SNAME:略称、ID:組織付加情報、EX1:拡張情報1、EX2:拡張情報2、EX3:拡張情報3、EX4:拡張情報4、EX5:拡張情報5｝、連番｛連番仕様ID｝",$FFFFFFFF,""
+Field="グループ化フラグ6","GROUPING_FLAG6","*フラグ",,,"","1:グループ化する、0:グループ化しない",$FFFFFFFF,""
+Field="書式区分7","FORMAT_TYPE7","*フラグ",,,"","L：固定値、T:システム日付、S:連番、O:ログイン者組織",$FFFFFFFF,""
+Field="書式値7","FORMAT_VALUE7","*名称(短)",,,"","固定値｛フリーフォーマット｝、システム日付｛FYYYY:年度(4桁)、FYY:年度(2桁)、YYYY:年(4桁)、YY:年(2桁)、MM:月、DD:日｝、ログイン者組織｛NAME:名称、SNAME:略称、ID:組織付加情報、EX1:拡張情報1、EX2:拡張情報2、EX3:拡張情報3、EX4:拡張情報4、EX5:拡張情報5｝、連番｛連番仕様ID｝",$FFFFFFFF,""
+Field="グループ化フラグ7","GROUPING_FLAG7","*フラグ",,,"","1:グループ化する、0:グループ化しない",$FFFFFFFF,""
+Field="書式区分8","FORMAT_TYPE8","*フラグ",,,"","L：固定値、T:システム日付、S:連番、O:ログイン者組織",$FFFFFFFF,""
+Field="書式値8","FORMAT_VALUE8","*名称(短)",,,"","固定値｛フリーフォーマット｝、システム日付｛FYYYY:年度(4桁)、FYY:年度(2桁)、YYYY:年(4桁)、YY:年(2桁)、MM:月、DD:日｝、ログイン者組織｛NAME:名称、SNAME:略称、ID:組織付加情報、EX1:拡張情報1、EX2:拡張情報2、EX3:拡張情報3、EX4:拡張情報4、EX5:拡張情報5｝、連番｛連番仕様ID｝",$FFFFFFFF,""
+Field="グループ化フラグ8","GROUPING_FLAG8","*フラグ",,,"","1:グループ化する、0:グループ化しない",$FFFFFFFF,""
+Field="書式区分9","FORMAT_TYPE9","*フラグ",,,"","L：固定値、T:システム日付、S:連番、O:ログイン者組織",$FFFFFFFF,""
+Field="書式値9","FORMAT_VALUE9","*名称(短)",,,"","固定値｛フリーフォーマット｝、システム日付｛FYYYY:年度(4桁)、FYY:年度(2桁)、YYYY:年(4桁)、YY:年(2桁)、MM:月、DD:日｝、ログイン者組織｛NAME:名称、SNAME:略称、ID:組織付加情報、EX1:拡張情報1、EX2:拡張情報2、EX3:拡張情報3、EX4:拡張情報4、EX5:拡張情報5｝、連番｛連番仕様ID｝",$FFFFFFFF,""
+Field="グループ化フラグ9","GROUPING_FLAG9","*フラグ",,,"","1:グループ化する、0:グループ化しない",$FFFFFFFF,""
+Index=IDX_MWM_PARTS_NUMBERING_FORMAT=1,CORPORATION_CODE,PARTS_NUMBERING_FORMAT_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170802190058
+Position="デザイナ",100,1900
+
+[Relation]
+Entity1=MWM_JAVASCRIPT
+Entity2=MWM_JAVASCRIPT_HISTORY
+RelationType1=2
+RelationType2=4
+Fields1=JAVASCRIPT_ID
+Fields2=JAVASCRIPT_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,7946,5500,3709,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170614120119
+LineMode=0
+Bar1=795
+Bar2=550
+Bar3=371
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_JAVASCRIPT_HISTORY
+LName=JavaScriptファイル履歴
+Comment=最新のデータは削除区分=0:有効。過去データは削除区分=1:削除済。
+TableOption=
+Page=デザイナ
+Left=570
+Top=450
+Field="JavaScript履歴ID","JAVASCRIPT_HISTORY_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="JavaScriptID","JAVASCRIPT_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="履歴No","HISTORY_NO","*整数型(短)","NOT NULL",,"","最新のデータは削除区分=0:有効。過去データは削除区分=1:削除済。",$FFFFFFFF,""
+Field="スクリプト","SCRIPT","CLOB","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,JAVASCRIPT_ID,HISTORY_NO
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170628091333
+Position="デザイナ",570,450
+
+[Relation]
+Entity1=MWM_PARTS
+Entity2=MWM_PARTS_RELATION
+RelationType1=2
+RelationType2=3
+Fields1=PARTS_ID
+Fields2=PARTS_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,8294,6496,2703,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20180611113858
+LineMode=0
+Bar1=829
+Bar2=650
+Bar3=270
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_PARTS_RELATION
+LName=パーツ関連定義
+Comment=
+TableOption=
+Page=デザイナ
+Left=1110
+Top=1650
+Field="パーツ関連ID","PARTS_RELATION_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="パーツID","PARTS_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="カラム名","COLUMN_NAME","*名称(短)","NOT NULL",,"","パーツ間の関係を示すコード",$FFFFFFFF,""
+Field="パーツI/O区分","PARTS_IO_TYPE","*フラグ","NOT NULL",,"\q3\q","1:入力、2:出力、3:両方",$FFFFFFFF,""
+Field="対象パーツID","TARGET_PARTS_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="並び順","SORT_ORDER","*整数型(短)","NOT NULL",,"1","",$FFFFFFFF,""
+Field="幅","WIDTH","*整数型(短)",,,"","",$FFFFFFFF,""
+Field="変更非通知フラグ","NO_CHANGE_EVENT_FLAG","*フラグ","NOT NULL",,"\q0\q","1:変更を非通知、0:変更を通知",$FFFFFFFF,""
+Index==1,PARTS_ID,TARGET_PARTS_ID,COLUMN_NAME
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20190228142529
+Position="デザイナ",1110,1650
+
+[Entity]
+PName=MWM_BUSINESS_INFO_NAME
+LName=業務管理項目名称マスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=3350
+Top=2400
+Field="業務管理項目名称ID","BUSINESS_INFO_NAME_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="業務管理項目コード","BUSINESS_INFO_CODE","VARCHAR2(30)","NOT NULL",,"","",$FFFFFFFF,""
+Field="業務管理項目名称","BUSINESS_INFO_NAME","*名称(中)","NOT NULL",,"","",$00FF4100,""
+Field="業務管理項目区分","BUSINESS_INFO_TYPE","CHAR(1)","NOT NULL",,"","1：検索キー 2：WF変数 3：両方",$FFFFFFFF,""
+Field="有効フラグ","VALID_FLAG","*フラグ","NOT NULL",,"","0：無効 1：有効",$FFFFFFFF,""
+Field="画面パーツ入力可否フラグ","SCREEN_PARTS_INPUT_FLAG","*フラグ","NOT NULL",,"","0：入力不可 1：入力可",$FFFFFFFF,""
+Field="型","DATA_TYPE","VARCHAR2(10)",,,"","bool：真偽型 date：日付型 int：整数型 string：文字列型",$FFFFFFFF,""
+Field="ソート順","SORT_ORDER","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,CORPORATION_CODE,BUSINESS_INFO_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180117115330
+Position="デザイナ",3350,2400
+
+[Entity]
+PName=MWT_ATTACH_FILE_WF
+LName=ワークフロー添付ファイル
+Comment=添添付ファイルブロック用
+TableOption=
+Page=デザイナ
+Left=3700
+Top=2100
+Field="ワークフロー添付ファイルID","ATTACH_FILE_WF_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード",,,"","",$FFFFFFFF,""
+Field="プロセスID","PROCESS_ID","NUMBER(10,0)",,,"","",$FFFFFFFF,""
+Field="ファイル名称","FILE_NAME","*名称(長)",,,"","",$FFFFFFFF,""
+Field="ファイルデータ","FILE_DATA","BLOB",,,"","",$FFFFFFFF,""
+Field="ファイルサイズ","FILE_SIZE","NUMBER(10,0)",,,"","",$FFFFFFFF,""
+Field="コメント","COMMENTS","*説明",,,"","",$FFFFFFFF,""
+Index==0,PROCESS_ID,CORPORATION_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20181102093817
+Position="デザイナ",3700,2100,257,180
+
+[Relation]
+Entity1=MWM_SCREEN_PROCESS_LEVEL
+Entity2=MWM_SCREEN_PROCESS_DEF
+RelationType1=1
+RelationType2=3
+Fields1=SCREEN_PROCESS_LEVEL_ID
+Fields2=SCREEN_PROCESS_LEVEL_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,5159,5138,7074,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170517114257
+LineMode=0
+Bar1=516
+Bar2=514
+Bar3=707
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_SCREEN_PROCESS_LEVEL
+LName=画面プロセス定義階層マスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=1900
+Top=100
+Field="画面プロセス定義階層ID","SCREEN_PROCESS_LEVEL_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="親階層コード","PARENT_LEVEL_CODE","VARCHAR2(4)","NOT NULL",,"","",$FFFFFFFF,""
+Field="階層コード","LEVEL_CODE","VARCHAR2(4)","NOT NULL",,"","",$FFFFFFFF,""
+Field="階層名","LEVEL_NAME","*名称(中)","NOT NULL",,"","",$00FF4100,""
+Field="展開フラグ","EXPANSION_FLAG","*フラグ","NOT NULL",,"","1:展開、0:閉鎖",$FFFFFFFF,""
+Field="並び順","SORT_ORDER","*整数型(短)",,,"1","",$FFFFFFFF,""
+Index==1,CORPORATION_CODE,LEVEL_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180517093811
+Position="デザイナ",1900,100
+
+[Relation]
+Entity1=MWM_CONTAINER
+Entity2=MWM_PARTS_CHILD_HOLDER
+RelationType1=2
+RelationType2=3
+Fields1=CONTAINER_ID
+Fields2=CHILD_CONTAINER_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,5223,6205,2982,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170516133847
+LineMode=0
+Bar1=522
+Bar2=620
+Bar3=298
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=MWM_PARTS
+Entity2=MWM_PARTS_CHILD_HOLDER
+RelationType1=2
+RelationType2=1
+Fields1=PARTS_ID
+Fields2=PARTS_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,666,2279,5820,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170517161120
+LineMode=0
+Bar1=67
+Bar2=228
+Bar3=582
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_PARTS_CHILD_HOLDER
+LName=パーツ子要素定義
+Comment=
+TableOption=
+Page=デザイナ
+Left=450
+Top=720
+Field="パーツ子要素ID","PARTS_CHILD_HOLDER_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="パーツID","PARTS_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="子コンテナID","CHILD_CONTAINER_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="初期行数","INIT_ROW_COUNT","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Field="最小行数","MIN_ROW_COUNT","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Field="ページサイズ","PAGE_SIZE","*整数型(短)",,,"","0以下だとページ制御しない",$FFFFFFFF,""
+Index==1,PARTS_ID
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170526130645
+Position="デザイナ",450,720
+
+[Entity]
+PName=MWM_MULTILINGUAL
+LName=多言語対応マスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=2280
+Top=1800
+Field="多言語ID","MULTILINGUAL_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="テーブル名","TABLE_NAME","VARCHAR2(50)","NOT NULL",,"","",$FFFFFFFF,""
+Field="ID","ID","*ID","NOT NULL",,"","対象テーブルのユニークID",$FFFFFFFF,""
+Field="カラム名","COLUMN_NAME","VARCHAR2(50)","NOT NULL",,"","",$FFFFFFFF,""
+Field="言語コード","LOCALE_CODE","VARCHAR2(5)","NOT NULL",,"","",$FFFFFFFF,""
+Field="多言語値","VAL","*説明",,,"","",$FFFFFFFF,""
+Index==1,TABLE_NAME,COLUMN_NAME,ID,LOCALE_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20171023174308
+Position="デザイナ",2280,1800
+
+[Comment]
+Comment=青字のカラムは多言語対応を要するカラム。
+FontName=Tahoma
+FontBold=0
+FontItalic=0
+FontUnderline=0
+FontSize=9
+FontColor=$FF0000
+LineColor=$000000
+BkColor=$FFFFFF
+Page=デザイナ
+Left=3240
+Top=750
+Width=354
+Height=154
+
+[Relation]
+Entity1=MWM_SCREEN_PROCESS_DEF
+Entity2=MWM_BLOCK_DISPLAY
+RelationType1=2
+RelationType2=3
+Fields1=SCREEN_PROCESS_ID
+Fields2=SCREEN_PROCESS_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,4762,4701,4404,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170509153429
+LineMode=0
+Bar1=476
+Bar2=470
+Bar3=440
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=MWM_DC
+Entity2=MWM_BLOCK_DISPLAY
+RelationType1=2
+RelationType2=3
+Fields1=DC_ID
+Fields2=DC_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,4349,5000,4809,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170509153412
+LineMode=0
+Bar1=435
+Bar2=500
+Bar3=481
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_BLOCK_DISPLAY
+LName=ブロック表示条件マスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=1890
+Top=900
+Field="ブロック表示条件ID","BLOCK_DISPLAY_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="表示条件ID","DC_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="画面プロセス定義ID","SCREEN_PROCESS_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="ブロックID","BLOCK_ID","*整数型(短)","NOT NULL",,"","1:申請情報、2:文書内容、3:添付ファイル、5:決裁関連文書、6:履歴情報、7:承認者情報、8:デフォルト閲覧者（デフォルト参照者情報）、9:参照者情報、10:要説明情報（掲示板）、11:メモ情報、14:文書管理関連文書",$FFFFFFFF,""
+Field="表示フラグ","DISPLAY_FLAG","*フラグ","NOT NULL",,"","1:表示、0:非表示",$FFFFFFFF,""
+Field="展開フラグ","EXPANSION_FLAG","*フラグ","NOT NULL",,"","1:展開、0:閉鎖",$FFFFFFFF,""
+Field="並び順","SORT_ORDER","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,DC_ID,SCREEN_PROCESS_ID,BLOCK_ID
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170517111346
+Position="デザイナ",1890,900
+
+[Relation]
+Entity1=WFM_MENU_ROLE
+Entity2=MWM_ACCESSIBLE_MENU
+RelationType1=2
+RelationType2=3
+Fields1=CORPORATION_CODE,MENU_ROLE_CODE
+Fields2=CORPORATION_CODE,MENU_ROLE_CODE
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,5785,7043,6548,R,R
+Dependence=0
+Caption=
+PName=
+LineMode=0
+Bar1=578
+Bar2=704
+Bar3=655
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=WFM_MENU_ROLE
+Entity2=MWM_ACCESSIBLE_SCREEN
+RelationType1=2
+RelationType2=3
+Fields1=CORPORATION_CODE,MENU_ROLE_CODE
+Fields2=CORPORATION_CODE,MENU_ROLE_CODE
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,9292,5415,4571,R,R
+Dependence=0
+Caption=
+PName=
+LineMode=0
+Bar1=929
+Bar2=542
+Bar3=457
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=WFM_MENU_ROLE
+Entity2=WFM_MENU_ROLE_DETAIL
+RelationType1=2
+RelationType2=3
+Fields1=CORPORATION_CODE,MENU_ROLE_CODE
+Fields2=CORPORATION_CODE,MENU_ROLE_CODE
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,5018,3259,4265,R,R
+Dependence=1
+Caption=
+PName=
+LineMode=0
+Bar1=502
+Bar2=326
+Bar3=426
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=WFM_MENU_ROLE_DETAIL
+LName=メニューロール構成
+Comment=
+TableOption=
+Page=デザイナ
+Left=3700
+Top=200
+Field="会社コード","CORPORATION_CODE","VARCHAR2(10)","NOT NULL",0,"","",$FFFFFFFF,""
+Field="メニューロールコード","MENU_ROLE_CODE","VARCHAR2(25)","NOT NULL",1,"","",$FFFFFFFF,""
+Field="メニューロール構成連番","SEQ_NO_MENU_ROLE_DETAIL","NUMBER(10, 0)","NOT NULL",2,"","",$FFFFFFFF,""
+Field="メニューロール指定方式区分","MENU_ROLE_ASSIGNMENT_TYPE","CHAR(1)","NOT NULL",,"","",$FFFFFFFF,""
+Field="メニューロール会社コード","CORPORATION_CODE_ACCESS","VARCHAR2(10)","NOT NULL",,"","",$FFFFFFFF,""
+Field="メニューロール組織コード","ORGANIZATION_CODE_ACCESS","VARCHAR2(10)",,,"","",$FFFFFFFF,""
+Field="メニューロール役職コード","POST_CODE_ACCESS","VARCHAR2(10)",,,"","",$FFFFFFFF,""
+Field="メニューロールユーザコード","USER_CODE_ACCESS","VARCHAR2(25)",,,"","",$FFFFFFFF,""
+Field="有効期間開始年月日","VALID_START_DATE","DATE","NOT NULL",,"","",$FFFFFFFF,""
+Field="有効期間終了年月日","VALID_END_DATE","DATE","NOT NULL",,"","",$FFFFFFFF,""
+Field="削除フラグ","DELETE_FLAG","CHAR(1)","NOT NULL",,"","",$FFFFFFFF,""
+Field="ID","ID","NUMBER(22, 0)","NOT NULL",,"","",$FFFFFFFF,""
+Field="作成会社コード","CORPORATION_CODE_CREATED","VARCHAR2(10)","NOT NULL",,"","",$FFFFFFFF,""
+Field="作成ユーザコード","USER_CODE_CREATED","VARCHAR2(25)","NOT NULL",,"","",$FFFFFFFF,""
+Field="作成IPアドレス","IP_CREATED","VARCHAR2(40)","NOT NULL",,"","",$FFFFFFFF,""
+Field="作成日時","TIMESTAMP_CREATED","*タイムスタンプ","NOT NULL",,"","",$FFFFFFFF,""
+Field="更新会社コード","CORPORATION_CODE_UPDATED","VARCHAR2(10)","NOT NULL",,"","",$FFFFFFFF,""
+Field="更新ユーザコード","USER_CODE_UPDATED","VARCHAR2(25)","NOT NULL",,"","",$FFFFFFFF,""
+Field="更新IPアドレス","IP_UPDATED","VARCHAR2(40)","NOT NULL",,"","",$FFFFFFFF,""
+Field="更新日時","TIMESTAMP_UPDATED","*タイムスタンプ","NOT NULL",,"","",$FFFFFFFF,""
+Index=UK_WFM_MENU_ROLE_DETAIL=2,ID
+NoDDL=1
+UsingCommonColumns=0
+EffectMode=None
+Tag=IWF
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180828111320
+Position="デザイナ",3700,200
+
+[Entity]
+PName=WFM_MENU_ROLE
+LName=メニューロールマスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=3400
+Top=200
+Field="会社コード","CORPORATION_CODE","VARCHAR2(10)","NOT NULL",0,"","",$FFFFFFFF,""
+Field="メニューロールコード","MENU_ROLE_CODE","VARCHAR2(25)","NOT NULL",1,"","",$FFFFFFFF,""
+Field="メニューロール名称","MENU_ROLE_NAME","VARCHAR2(100)","NOT NULL",,"","",$FFFFFFFF,""
+Field="メニューロール区分","MENU_ROLE_TYPE","CHAR(1)","NOT NULL",,"","",$FFFFFFFF,""
+Field="企業グループコード","CORPORATION_GROUP_CODE","VARCHAR2(10)",,,"","",$FFFFFFFF,""
+Field="有効期間開始年月日","VALID_START_DATE","DATE","NOT NULL",,"","",$FFFFFFFF,""
+Field="有効期間終了年月日","VALID_END_DATE","DATE","NOT NULL",,"","",$FFFFFFFF,""
+Field="削除フラグ","DELETE_FLAG","CHAR(1)","NOT NULL",,"","",$FFFFFFFF,""
+Field="ID","ID","NUMBER(22, 0)","NOT NULL",,"","",$FFFFFFFF,""
+Field="作成会社コード","CORPORATION_CODE_CREATED","VARCHAR2(10)","NOT NULL",,"","",$FFFFFFFF,""
+Field="作成ユーザコード","USER_CODE_CREATED","VARCHAR2(25)","NOT NULL",,"","",$FFFFFFFF,""
+Field="作成ユーザIPアドレス","IP_CREATED","VARCHAR2(40)","NOT NULL",,"","",$FFFFFFFF,""
+Field="作成日時","TIMESTAMP_CREATED","*タイムスタンプ","NOT NULL",,"","",$FFFFFFFF,""
+Field="更新会社コード","CORPORATION_CODE_UPDATED","VARCHAR2(10)","NOT NULL",,"","",$FFFFFFFF,""
+Field="更新ユーザコード","USER_CODE_UPDATED","VARCHAR2(25)","NOT NULL",,"","",$FFFFFFFF,""
+Field="更新ユーザIPアドレス","IP_UPDATED","VARCHAR2(40)","NOT NULL",,"","",$FFFFFFFF,""
+Field="更新日時","TIMESTAMP_UPDATED","*タイムスタンプ","NOT NULL",,"","",$FFFFFFFF,""
+Index=UK_WFM_MENU_ROLE=2,ID
+NoDDL=1
+UsingCommonColumns=0
+EffectMode=None
+Tag=IWF
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180828111259
+Position="デザイナ",3400,200
+
+[Relation]
+Entity1=MWM_SCREEN_PROCESS_DEF
+Entity2=MWM_ACCESSIBLE_SCREEN
+RelationType1=2
+RelationType2=3
+Fields1=SCREEN_PROCESS_ID
+Fields2=SCREEN_PROCESS_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,5458,4961,3462,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170512094320
+LineMode=0
+Bar1=546
+Bar2=496
+Bar3=346
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_ACCESSIBLE_SCREEN
+LName=アクセス可能画面マスタ
+Comment=メニューロールごとのアクセス可能な画面プロセス定義を関連付けたテーブル
+TableOption=
+Page=デザイナ
+Left=2650
+Top=750
+Field="アクセス可能画面ID","ACCESSIBLE_SCREEN_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","VARCHAR2(10)","NOT NULL",,"","",$FFFFFFFF,""
+Field="メニューロールコード","MENU_ROLE_CODE","VARCHAR2(25)","NOT NULL",,"","",$FFFFFFFF,""
+Field="画面プロセス定義ID","SCREEN_PROCESS_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="適用開始日","VALID_START_DATE","DATE","NOT NULL",,"","",$FFFFFFFF,""
+Field="適用終了日","VALID_END_DATE","DATE","NOT NULL",,"","",$FFFFFFFF,""
+Field="新規起案表示フラグ","NEW_APPLY_DISPLAY_FLAG","*フラグ","NOT NULL",,"\q0\q","新規起案メニューに表示するか？1:表示する、0:表示しない",$FFFFFFFF,""
+Index==1,CORPORATION_CODE,MENU_ROLE_CODE,SCREEN_PROCESS_ID
+EffectMode=None
+Tag=デザイン
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20210118105232
+Position="デザイナ",2650,750,251,193
+
+[Relation]
+Entity1=MWM_MENU
+Entity2=MWM_SELECTABLE_MENU
+RelationType1=2
+RelationType2=3
+Fields1=MENU_ID
+Fields2=MENU_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,4603,4764,4097,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170427103907
+LineMode=0
+Bar1=460
+Bar2=476
+Bar3=410
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_SELECTABLE_MENU
+LName=選択可能メニューマスタ
+Comment=メニューロール区分で選択可能なメニュー定義。使用する際にはメニューロールマスタ.メニューロール区分で絞ること。
+TableOption=
+Page=デザイナ
+Left=3000
+Top=200
+Field="選択可能メニューID","SELECTABLE_MENU_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="メニューロール区分","MENU_ROLE_TYPE","*フラグ","NOT NULL",,"","1:一般、2:ASP管理者、4:企業管理者",$FFFFFFFF,""
+Field="メニューID","MENU_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,MENU_ROLE_TYPE,MENU_ID
+EffectMode=None
+Tag=デザイン
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170502180604
+Position="デザイナ",3000,200
+
+[Relation]
+Entity1=MWM_MENU
+Entity2=MWM_ACCESSIBLE_MENU
+RelationType1=2
+RelationType2=3
+Fields1=MENU_ID
+Fields2=MENU_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,4603,4764,3332,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170427103846
+LineMode=0
+Bar1=460
+Bar2=476
+Bar3=333
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_ACCESSIBLE_MENU
+LName=アクセス可能メニューマスタ
+Comment=メニューロールごとにアクセス可能なメニューを定義したテーブル。
+TableOption=
+Page=デザイナ
+Left=3000
+Top=350
+Field="アクセス可能メニューID","ACCESSIBLE_MENU_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="メニューロールコード","MENU_ROLE_CODE","VARCHAR2(25)","NOT NULL",,"","",$FFFFFFFF,""
+Field="メニューID","MENU_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="適用開始日","VALID_START_DATE","DATE","NOT NULL",,"","",$FFFFFFFF,""
+Field="適用終了日","VALID_END_DATE","DATE","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,CORPORATION_CODE,MENU_ROLE_CODE,MENU_ID
+EffectMode=None
+Tag=デザイン
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170502180558
+Position="デザイナ",3000,350
+
+[Entity]
+PName=MWM_MENU
+LName=メニューマスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=2650
+Top=200
+Field="メニューID","MENU_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="メニュー名称","MENU_NAME","*名称(中)","NOT NULL",,"","",$00FF0000,""
+Field="メニュー階層コード1","MENU_ITEM_CODE1","*文字列キー","NOT NULL",,"","",$FFFFFFFF,""
+Field="メニュー階層コード2","MENU_ITEM_CODE2","*文字列キー","NOT NULL",,"","",$FFFFFFFF,""
+Field="メニュー階層コード3","MENU_ITEM_CODE3","*文字列キー","NOT NULL",,"","",$FFFFFFFF,""
+Field="URL","URL","*名称(長)","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,MENU_ITEM_CODE1,MENU_ITEM_CODE2,MENU_ITEM_CODE3
+EffectMode=None
+Tag=デザイン
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170516134228
+Position="デザイナ",2650,200
+
+[Relation]
+Entity1=MWM_SCREEN
+Entity2=MWM_SCREEN_PROCESS_DEF
+RelationType1=2
+RelationType2=3
+Fields1=SCREEN_ID
+Fields2=SCREEN_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,8448,6593,4028,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170427114031
+LineMode=0
+Bar1=845
+Bar2=659
+Bar3=403
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_SCREEN_PROCESS_DEF
+LName=画面プロセス定義マスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=1850
+Top=500
+Field="画面プロセス定義ID","SCREEN_PROCESS_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="画面プロセス定義コード","SCREEN_PROCESS_CODE","VARCHAR2(20)","NOT NULL",,"","画面プロセス定義を識別するための文字列。異環境での同定キー。",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="プロセス定義コード","PROCESS_DEF_CODE","VARCHAR2(20)","NOT NULL",,"","",$FFFFFFFF,""
+Field="プロセス定義コード枝番","PROCESS_DEF_DETAIL_CODE","VARCHAR2(5)","NOT NULL",,"","",$FFFFFFFF,""
+Field="画面ID","SCREEN_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="画面プロセス定義名","SCREEN_PROCESS_NAME","*名称(中)","NOT NULL",,"","",$00FF4100,""
+Field="説明","DESCRIPTION","*名称(長)",,,"","",$00FF4100,""
+Field="適用開始日","VALID_START_DATE","DATE","NOT NULL",,"","",$FFFFFFFF,""
+Field="適用終了日","VALID_END_DATE","DATE","NOT NULL",,"","",$FFFFFFFF,""
+Field="画面プロセス定義階層ID","SCREEN_PROCESS_LEVEL_ID","*ID",,,"","",$FFFFFFFF,""
+Field="並び順","SORT_ORDER","*整数型(短)",,,"1","",$FFFFFFFF,""
+Index==1,CORPORATION_CODE,PROCESS_DEF_CODE,PROCESS_DEF_DETAIL_CODE,SCREEN_ID
+Index==1,CORPORATION_CODE ,SCREEN_PROCESS_CODE
+Index==0,SCREEN_ID
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180828143502
+Position="デザイナ",1850,500
+
+[Relation]
+Entity1=MWM_CONTAINER
+Entity2=MWM_CONTAINER_JAVASCRIPT
+RelationType1=2
+RelationType2=3
+Fields1=CONTAINER_ID
+Fields2=CONTAINER_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,7308,5662,5111,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170502092322
+LineMode=0
+Bar1=731
+Bar2=566
+Bar3=511
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=MWM_JAVASCRIPT
+Entity2=MWM_CONTAINER_JAVASCRIPT
+RelationType1=2
+RelationType2=3
+Fields1=JAVASCRIPT_ID
+Fields2=JAVASCRIPT_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,5115,5141,5145,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170502092316
+LineMode=0
+Bar1=512
+Bar2=514
+Bar3=514
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_CONTAINER_JAVASCRIPT
+LName=コンテナJavaScript定義
+Comment=コンテナで利用するJavaScriptファイルを定義したテーブル
+TableOption=
+Page=デザイナ
+Left=500
+Top=250
+Field="コンテナJavaScriptID","CONTAINER_JAVASCRIPT_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="コンテナID","CONTAINER_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="JavaScriptID","JAVASCRIPT_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="並び順","SORT_ORDER","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,CONTAINER_ID,JAVASCRIPT_ID
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170614140003
+Position="デザイナ",500,250,207,101
+
+[Relation]
+Entity1=MWM_CONTAINER
+Entity2=MWM_PARTS_COLUMN
+RelationType1=2
+RelationType2=4
+Fields1=CONTAINER_ID
+Fields2=CONTAINER_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,2137,3317,2821,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170427113819
+LineMode=0
+Bar1=214
+Bar2=332
+Bar3=282
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=MWM_PARTS_CALC
+Entity2=MWM_PARTS_CALC_EC
+RelationType1=2
+RelationType2=3
+Fields1=PARTS_CALC_ID
+Fields2=PARTS_CALC_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,6597,6941,4748,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170502181603
+LineMode=0
+Bar1=660
+Bar2=694
+Bar3=475
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=MWM_PARTS_CALC
+Entity2=MWM_PARTS_CALC_ITEM
+RelationType1=2
+RelationType2=4
+Fields1=PARTS_CALC_ID
+Fields2=PARTS_CALC_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,2880,7123,4728,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170502093234
+LineMode=0
+Bar1=288
+Bar2=712
+Bar3=473
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_PARTS_CALC_EC
+LName=パーツ計算式有効条件定義
+Comment=
+TableOption=
+Page=デザイナ
+Left=360
+Top=1590
+Field="パーツ計算式有効条件ID","PARTS_CALC_EC_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="パーツ計算式ID","PARTS_CALC_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="有効条件種別","EC_CLASS","*フラグ","NOT NULL",,"","1：論理演算子、2：カッコ、3：パーツ",$FFFFFFFF,""
+Field="有効条件区分","EC_TYPE","*名称(短)","NOT NULL",,"","「&&、||、!、(、)、パーツID」のいずれか",$FFFFFFFF,""
+Field="比較演算子","EC_OPERATOR","*名称(短)",,,"","「==、!=、<、<=、>、>=」のいずれか。有効条件種別が「3：パーツ」の場合のみ設定",$FFFFFFFF,""
+Field="比較先リテラル値","TARGET_LITERAL_VAL","*名称(短)",,,"","有効条件種別が「3：パーツ」の場合のみ設定。比較先パーツIDと比較先リテラル値で排他関係",$FFFFFFFF,""
+Field="比較先パーツID","TARGET_PARTS_ID","*ID",,,"","有効条件種別が「3：パーツ」の場合のみ設定。比較先パーツIDと比較先リテラル値で排他関係",$FFFFFFFF,""
+Field="数値化フラグ","NUMERIC_FLAG","*フラグ","NOT NULL",,"","比較先の値を「1：数値として判定」「0：文字列として判定」",$FFFFFFFF,""
+Field="並び順","SORT_ORDER","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Field="同定キー","IDENTIFY_KEY","VARCHAR2(32)","NOT NULL",,"","画面アップロード時のデータ同定キー",$FFFFFFFF,""
+Index==1,PARTS_CALC_ID ,IDENTIFY_KEY
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180529161439
+Position="デザイナ",360,1590
+
+[Entity]
+PName=MWM_PARTS_CALC_ITEM
+LName=パーツ計算項目定義
+Comment=
+TableOption=
+Page=デザイナ
+Left=90
+Top=1590
+Field="パーツ計算項目ID","PARTS_CALC_ITEM_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="パーツ計算式ID","PARTS_CALC_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="計算項目区分","CALC_ITEM_TYPE","*フラグ","NOT NULL",,"","1:演算子、2:カッコ、3:リテラル値、4:パーツの値",$FFFFFFFF,""
+Field="計算項目値","CALC_ITEM_VALUE","*名称(中)","NOT NULL",,"","計算項目区分＝4:パーツ値ならパーツID",$FFFFFFFF,""
+Field="強制計算フラグ","FORCE_CALC_FLAG","*フラグ","NOT NULL",,"","1:空白をゼロとみなして強制計算、0:空白は計算対象外",$FFFFFFFF,""
+Field="並び順","SORT_ORDER","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Field="同定キー","IDENTIFY_KEY","VARCHAR2(32)","NOT NULL",,"","画面アップロード時のデータ同定キー",$FFFFFFFF,""
+Index==1,PARTS_CALC_ID,IDENTIFY_KEY
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180827143846
+Position="デザイナ",90,1590
+
+[Relation]
+Entity1=MWM_DC
+Entity2=MWM_PARTS_DC
+RelationType1=2
+RelationType2=3
+Fields1=DC_ID
+Fields2=DC_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,4675,5608,3309,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170502095824
+LineMode=0
+Bar1=468
+Bar2=561
+Bar3=331
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_DC
+LName=表示条件定義マスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=1950
+Top=1230
+Field="表示条件ID","DC_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="条件名","DC_NAME","*名称(短)","NOT NULL",,"","起票、承認、決裁、など",$00FF4100,""
+Field="並び順","SORT_ORDER","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170516141747
+Position="デザイナ",1950,1230
+
+[Relation]
+Entity1=MWM_PARTS
+Entity2=MWM_PARTS_DC
+RelationType1=2
+RelationType2=3
+Fields1=PARTS_ID
+Fields2=PARTS_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,8214,5614,4084,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170502093500
+LineMode=0
+Bar1=821
+Bar2=561
+Bar3=408
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_PARTS_DC
+LName=パーツ表示条件
+Comment=ワークフローの進み具合でパーツの有効無効/表示非表示を切り替えるための定義。
+TableOption=
+Page=デザイナ
+Left=1550
+Top=1450
+Field="パーツ表示条件ID","PARTS_DC_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="パーツID","PARTS_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="表示条件ID","DC_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="表示区分","DC_TYPE","*整数型(短)","NOT NULL",,"","1:入力可、2:入力不可、3:非表示",$FFFFFFFF,""
+Index==1,PARTS_ID,DC_ID
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170519185340
+Position="デザイナ",1550,1450
+
+[Entity]
+PName=MWM_JAVASCRIPT
+LName=JavaScriptファイル定義
+Comment=システムで利用するJavaScriptファイルの定義。ファイル名を同定キーとしている
+TableOption=
+Page=デザイナ
+Left=850
+Top=250
+Field="JavaScriptID","JAVASCRIPT_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="ファイル名","FILE_NAME","*名称(短)","NOT NULL",,"","異環境での同定キーとなる。拡張子に \q.js\qをつけるのが望ましい",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","VARCHAR2(10)","NOT NULL",,"","",$FFFFFFFF,""
+Field="備考","REMARKS","*名称(中)",,,"","",$00FF0000,""
+Index==1,FILE_NAME,CORPORATION_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170927191150
+Position="デザイナ",850,250
+
+[Relation]
+Entity1=MWM_CONTAINER
+Entity2=MWM_SCREEN
+RelationType1=1
+RelationType2=3
+Fields1=CONTAINER_ID
+Fields2=CONTAINER_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,1779,4887,1655,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20171113143240
+LineMode=0
+Bar1=178
+Bar2=489
+Bar3=166
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_SCREEN
+LName=画面定義
+Comment=
+TableOption=
+Page=デザイナ
+Left=1440
+Top=90
+Field="画面ID","SCREEN_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="コンテナID","CONTAINER_ID","*ID",,,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="画面コード","SCREEN_CODE","*名称(短)","NOT NULL",,"","画面を識別するための文字列。異環境での同定キー。",$FFFFFFFF,""
+Field="画面名称","SCREEN_NAME","*名称(中)","NOT NULL",,"","",$00FF4100,""
+Field="スクラッチフラグ","SCRATCH_FLAG","*フラグ","NOT NULL",,"","1:スクラッチ開発、0:画面デザイナ使用",$FFFFFFFF,""
+Field="画面カスタマイズクラス","SCREEN_CUSTOM_CLASS","*名称(中)",,,"","サーバサイドのカスタマイズを行うクラスのFQCN",$FFFFFFFF,""
+Field="Submit時の関数名","SUBMIT_FUNC_NAME","*名称(短)",,,"","申請画面でのWFボタン押下時に呼び出される関数名",$FFFFFFFF,""
+Field="Submit時のパラメータ","SUBMIT_FUNC_PARAM","*名称(中)",,,"","Submit時の関数に渡されるパラメータ値",$FFFFFFFF,""
+Field="Load時の関数名","LOAD_FUNC_NAME","*名称(短)",,,"","画面ロード時に呼び出される関数名",$FFFFFFFF,""
+Field="Load時のパラメータ","LOAD_FUNC_PARAM","*名称(中)",,,"","画面ロード時に呼び出される関数に渡すパラメータ",$FFFFFFFF,""
+Field="起案担当者変更時の関数名","CHANGE_START_USER_FUNC_NAME","*名称(短)",,,"","起案担当者変更時に呼び出される関数名",$FFFFFFFF,""
+Field="起案担当者変更時のパラメータ","CHANGE_START_USER_FUNC_PARAM","*名称(中)",,,"","起案担当者変更時に呼び出される関数へ渡すパラメータ",$FFFFFFFF,""
+Field="アップロード日時","UPLOAD_DATETIME","*タイムスタンプ",,,"","画面定義のアップロードの反映日時",$FFFFFFFF,""
+Index==1,SCREEN_CODE,CORPORATION_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20190319142426
+Position="デザイナ",1440,90
+
+[Relation]
+Entity1=MWM_PARTS
+Entity2=MWM_PARTS_CALC
+RelationType1=2
+RelationType2=3
+Fields1=PARTS_ID
+Fields2=PARTS_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,7878,1414,6037,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170502093552
+LineMode=0
+Bar1=788
+Bar2=141
+Bar3=604
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_PARTS_CALC
+LName=パーツ計算式定義
+Comment=
+TableOption=
+Page=デザイナ
+Left=120
+Top=1290
+Field="パーツ計算式ID","PARTS_CALC_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="パーツID","PARTS_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="パーツ計算式名","PARTS_CALC_NAME","*名称(短)","NOT NULL",,"","",$00FF4100,""
+Field="並び順","SORT_ORDER","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Field="デフォルトフラグ","DEFAULT_FLAG","*フラグ","NOT NULL",,"\q0\q","1：デフォルト 0：デフォルト外",$FFFFFFFF,""
+Field="同定キー","IDENTIFY_KEY","VARCHAR2(32)","NOT NULL",,"","画面アップロード時のデータ同定キー",$FFFFFFFF,""
+Field="コールバック関数","CALLBACK_FUNCTION","*名称(短)",,,"","計算式を実行したあとに呼び出されるコールバック関数",$FFFFFFFF,""
+Index==1,PARTS_ID,IDENTIFY_KEY
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20181220140444
+Position="デザイナ",120,1290,192,190
+
+[Relation]
+Entity1=MWM_PARTS
+Entity2=MWM_PARTS_COLUMN
+RelationType1=2
+RelationType2=3
+Fields1=PARTS_ID
+Fields2=PARTS_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,1556,844,5194,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170502093940
+LineMode=0
+Bar1=156
+Bar2=84
+Bar3=519
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_PARTS_COLUMN
+LName=パーツカラム定義
+Comment=パーツのDBカラム定義
+TableOption=
+Page=デザイナ
+Left=150
+Top=720
+Field="パーツカラムID","PARTS_COLUMN_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="コンテナID","CONTAINER_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="パーツID","PARTS_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="カラム名","COLUMN_NAME","*名称(短)","NOT NULL",,"","",$FFFFFFFF,""
+Field="カラム型","COLUMN_TYPE","*整数型(短)","NOT NULL",,"","1:VARCHAR, 2:NUMBER, 3:DATE, 4:TIMESTAMP, 5:CLOB, 6:BLOB",$FFFFFFFF,""
+Field="カラム長","COLUMN_SIZE","*整数型(短)",,,"","",$FFFFFFFF,""
+Field="小数点桁数","DECIMAL_POINT","*整数型(短)",,,"","",$FFFFFFFF,""
+Field="コメント","COMMENTS","*名称(中)",,,"","",$FFFFFFFF,""
+Field="役割コード","ROLE_CODE","*名称(短)","NOT NULL",,"","パーツが複数カラムで構成されている場合に、このカラムがパーツのどんなデータを保存するかを示す。例えばユーザ選択パーツでの電話番号データを示すカラムに役割コード=\QtelNum\Qと設定するなど。",$FFFFFFFF,""
+Field="並び順","SORT_ORDER","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,CONTAINER_ID,COLUMN_NAME
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170705095510
+Position="デザイナ",150,720
+
+[Relation]
+Entity1=MWM_CONTAINER
+Entity2=MWM_PARTS
+RelationType1=2
+RelationType2=3
+Fields1=CONTAINER_ID
+Fields2=CONTAINER_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,8002,1824,982,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170512093421
+LineMode=0
+Bar1=800
+Bar2=182
+Bar3=98
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=MWM_CONTAINER
+LName=コンテナ定義
+Comment=パーツを束ねる箱の定義。
+TableOption=
+Page=デザイナ
+Left=100
+Top=100
+Field="コンテナID","CONTAINER_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="コンテナコード","CONTAINER_CODE","*文字列キー","NOT NULL",,"","コンテナを識別するためのコード。異環境での同定キーとなる",$FFFFFFFF,""
+Field="コンテナ名","CONTAINER_NAME","*名称(短)","NOT NULL",,"","",$00FF4100,""
+Field="背景HTML","BG_HTML","CLOB",,,"","",$FFFFFFFF,""
+Field="カスタムCSSスタイル","CUSTOM_CSS_STYLE","CLOB",,,"","コンテナ固有のCSSスタイル",$FFFFFFFF,""
+Field="テーブル名","TABLE_NAME","*名称(中)","NOT NULL",,"","",$FFFFFFFF,""
+Field="テーブル同期日時","TABLE_SYNC_TIMESTAMP","*タイムスタンプ",,,"","最後にテーブルを同期した日時",$FFFFFFFF,""
+Field="テーブル変更日時","TABLE_MODIFIED_TIMESTAMP","*タイムスタンプ","NOT NULL",,"","最後にテーブル定義を変更した日時",$FFFFFFFF,""
+Field="パーツコード連番","PARTS_CODE_SEQ","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Field="フォントサイズ","FONT_SIZE","NUMBER(2,0)",,,"","",$FFFFFFFF,""
+Field="Submit時の関数名","SUBMIT_FUNC_NAME","*名称(短)",,,"","申請画面でのWFボタン押下時に呼び出される関数名",$FFFFFFFF,""
+Field="Submit時のパラメータ","SUBMIT_FUNC_PARAM","*名称(中)",,,"","Submit時の関数に渡されるパラメータ値",$FFFFFFFF,""
+Field="Load時の関数名","LOAD_FUNC_NAME","*名称(短)",,,"","申請画面の申請内容ブロックの初期化後に呼び出される関数名",$FFFFFFFF,""
+Field="Load時のパラメータ","LOAD_FUNC_PARAM","*名称(中)",,,"","Load時の関数に渡されるパラメータ",$FFFFFFFF,""
+Field="起案担当者変更時の関数名","CHANGE_START_USER_FUNC_NAME","*名称(短)",,,"","起案担当者変更時に呼び出される関数名",$FFFFFFFF,""
+Field="起案担当者変更時のパラメータ","CHANGE_START_USER_FUNC_PARAM","*名称(中)",,,"","起案担当者変更時に呼び出される関数へ渡すパラメータ",$FFFFFFFF,""
+Field="テーブル削除不可フラグ","NOT_DROP_TABLE_FLAG","*フラグ",,,"","1:DB同期時にテーブルをDROPしない、0:必要に応じてテーブルをDROPする",$FFFFFFFF,""
+Index==1,CONTAINER_CODE,CORPORATION_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20181009134553
+Position="デザイナ",100,100
+
+[Entity]
+PName=MWM_PARTS
+LName=パーツ定義
+Comment=
+TableOption=
+Page=デザイナ
+Left=840
+Top=810
+Field="パーツID","PARTS_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="コンテナID","CONTAINER_ID","*ID","NOT NULL",,"","当パーツの親コンテナID",$FFFFFFFF,""
+Field="パーツコード","PARTS_CODE","*文字列キー","NOT NULL",,"","コンテナを識別するためのコード。異環境での同定キーとなる。コンテナ内でユニーク",$FFFFFFFF,""
+Field="パーツ種別","PARTS_TYPE","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Field="必須フラグ","REQUIRED_FLAG","*フラグ","NOT NULL",,"","1:必須、0:任意",$FFFFFFFF,""
+Field="表示ラベル","LABEL_TEXT","*名称(中)",,,"","任意",$00FF0000,""
+Field="説明","DESCRIPTION","*名称(長)",,,"","",$00FF4100,""
+Field="並び順","SORT_ORDER","*整数型(短)","NOT NULL",,"","(同一コンテナ内での)並び順",$FFFFFFFF,""
+Field="タブ順付与フラグ","GRANT_TAB_INDEX_FLAG","*フラグ","NOT NULL",,"","1:付与する、0:付与しない",$FFFFFFFF,""
+Field="コピー起票対象フラグ","COPY_TARGET_FLAG","*フラグ","NOT NULL",,"","1:対象、0:非対象",$FFFFFFFF,""
+Field="業務管理項目コード","BUSINESS_INFO_CODE","VARCHAR2(30)",,,"","ここで設定されたWFT_PROCESSのカラムへパーツ値を書き込む",$FFFFFFFF,""
+Field="文書管理項目コード","DOC_BUSINESS_INFO_CODE","VARCHAR2(30)",,,"","ここで設定されたMWT_DOC_INFOのカラムへパーツ値を書き込む",$FFFFFFFF,""
+Field="レンダリング方法","RENDERING_METHOD","*整数型(短)","NOT NULL",,"0","0:Bootstrapのグリッドでレンダリング、1:インラインとしてレンダリング",$FFFFFFFF,""
+Field="幅(最小画面時)","COL_XS","NUMBER(2,0)",,,"","Bootstrapの col-xs-*に相当",$FFFFFFFF,""
+Field="幅(小画面時)","COL_SM","NUMBER(2,0)",,,"","Bootstrapの col-sm-*に相当",$FFFFFFFF,""
+Field="幅(中画面時)","COL_MD","NUMBER(2,0)",,,"","Bootstrapの col-md-*に相当",$FFFFFFFF,""
+Field="幅(大画面時)","COL_LG","NUMBER(2,0)",,,"","Bootstrapの col-lg-*に相当",$FFFFFFFF,""
+Field="モバイル非表示フラグ","MOBILE_INVISIBLE_FLAG","*フラグ",,,"","1:モバイル端末なら非表示、0:常に表示",$FFFFFFFF,""
+Field="CSSクラス","CSS_CLASS","*名称(中)",,,"","",$FFFFFFFF,""
+Field="CSSスタイル","CSS_STYLE","*名称(長)",,,"","",$FFFFFFFF,""
+Field="フォントサイズ","FONT_SIZE","NUMBER(2,0)",,,"","",$FFFFFFFF,""
+Field="フォントカラー","FONT_COLOR","*色(HTML)",,,"","HEX表記",$FFFFFFFF,""
+Field="フォント太さ","FONT_BOLD","*フラグ",,,"","1:太字、0:通常",$FFFFFFFF,""
+Field="背景色(入力時)","BG_COLOR_INPUT","*色(HTML)",,,"","HEX表記",$FFFFFFFF,""
+Field="背景色(参照時)","BG_COLOR_REFER","*色(HTML)",,,"","HEX表記",$FFFFFFFF,""
+Field="背景の透明フラグ","BG_TRANSPARENT_FLAG","*フラグ",,,"","1:透明、0:通常",$FFFFFFFF,""
+Field="拡張情報","EXT_INFO","CLOB",,,"","JSON形式",$FFFFFFFF,""
+Field="背景HTMLセル番号","BG_HTML_CELL_NO","*整数型(短)",,,"","背景HTML内に埋め込まれたセル番号セル連番に対応。同一セル連番のパーツは並び順でソートして配置される",$FFFFFFFF,""
+Index==1,CONTAINER_ID,PARTS_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180628180550
+Position="デザイナ",840,810,315,725
+
+[Shape]
+Page=デザイナ
+Left=48
+Top=32
+Width=2133
+Height=2813
+ShapeType=Rectangle
+Text=画面デザイナー関連
+FontName=Tahoma
+FontSize=10
+FontColor=$000000
+TextAlign=$0
+ImageFileName=
+
+[Relation]
+Entity1=MWM_LOOKUP_GROUP
+Entity2=MWM_LOOKUP
+RelationType1=2
+RelationType2=3
+Fields1=CORPORATION_CODE,LOOKUP_GROUP_ID,LOCALE_CODE
+Fields2=CORPORATION_CODE,LOOKUP_GROUP_ID,LOCALE_CODE
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,4626,5820,4630,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170922131015
+LineMode=0
+Bar1=463
+Bar2=582
+Bar3=463
+TermPos1=R
+TermPos2=R
+
+[Relation]
+Entity1=MWT_ACCESS_LOG
+Entity2=MWT_ACCESS_LOG_DETAIL
+RelationType1=2
+RelationType2=3
+Fields1=ACCESS_LOG_ID
+Fields2=ACCESS_LOG_ID
+Cardinarity1=
+Cardinarity2=
+Position="デザイナ",0,4913,5363,4658,R,R
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20170329140323
+LineMode=0
+Bar1=491
+Bar2=536
+Bar3=466
+TermPos1=R
+TermPos2=R
+
+[Line]
+Page=デザイナ
+Left=3230
+Top=1649
+Width=0
+Height=0
+
+[Entity]
+PName=MWT_ACCESS_LOG
+LName=アクセスログ
+Comment=
+TableOption=
+Page=デザイナ
+Left=2900
+Top=1250
+Field="アクセスログID","ACCESS_LOG_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="アクセス日時","ACCESS_TIME","*タイムスタンプ","NOT NULL",,"","",$FFFFFFFF,""
+Field="URI","URI","VARCHAR2(2000)","NOT NULL",,"","",$FFFFFFFF,""
+Field="アクセスログ結果区分","ACCESS_LOG_RESULT_TYPE","*フラグ","NOT NULL",,"","U:不明、S:成功、F:失敗",$FFFFFFFF,""
+Field="セッションID","SESSION_ID","VARCHAR2(32)","NOT NULL",,"","",$FFFFFFFF,""
+Field="ユーザエージェント","USER_AGENT","VARCHAR2(512)","NOT NULL",,"","",$FFFFFFFF,""
+Field="操作者企業コード","OPE_CORPORATION_CODE","*企業コード",,,"","未ログイン時はNULL",$FFFFFFFF,""
+Field="操作者ユーザコード","OPE_USER_CODE","*ユーザコード",,,"","未ログイン時はNULL",$FFFFFFFF,""
+Field="操作者ユーザ付加情報","OPE_USER_ADDED_INFO","*ユーザ付加情報",,,"","未ログイン時はNULL",$FFFFFFFF,""
+Field="操作者IPアドレス","OPE_IP_ADDRESS","VARCHAR2(40)","NOT NULL",,"","",$FFFFFFFF,""
+Field="画面ID","SCREEN_ID","*名称(短)","NOT NULL",,"","",$FFFFFFFF,""
+Field="画面名称","SCREEN_NAME","*名称(中)",,,"","",$FFFFFFFF,""
+Field="アクション","ACTION_NAME","*名称(短)",,,"","",$FFFFFFFF,""
+Field="APPバージョン","APP_VERSION","*名称(短)",,,"","",$FFFFFFFF,""
+Field="DB接続文字列","DB_CONNECT_STRING","*名称(中)",,,"","",$FFFFFFFF,""
+Field="ホストアドレス","HOST_IP_ADDRESS","VARCHAR2(40)",,,"","実際に処理を行ったホストのIPアドレス",$FFFFFFFF,""
+Field="ホストポート番号","HOST_PORT","NUMBER(10,0)",,,"","実際に処理を行ったホストのポート番号",$FFFFFFFF,""
+Field="スレッド名","THREAD_NAME","*名称(短)",,,"","リクエストを処理したメインスレッド名",$FFFFFFFF,""
+Field="なりすまし元の企業コード","SPOOFING_CORPORATION_CODE","*企業コード",,,"","なしすましを行った元のユーザ情報。なりすましていなければ null",$FFFFFFFF,""
+Field="なりすまし元のユーザコード","SPOOFING_USER_CODE","*ユーザコード",,,"","なしすましを行った元のユーザ情報。なりすましていなければ null",$FFFFFFFF,""
+Field="なりすまし元のユーザ付加情報","SPOOFING_USER_ADDED_INFO","*ユーザ付加情報",,,"","なしすましを行った元のユーザ情報。なりすましていなければ null",$FFFFFFFF,""
+Index==0,ACCESS_TIME,OPE_CORPORATION_CODE,OPE_USER_ADDED_INFO,SCREEN_ID,ACTION_NAME,ACCESS_LOG_RESULT_TYPE
+Index==0,ACCESS_TIME,SCREEN_ID,ACTION_NAME,ACCESS_LOG_RESULT_TYPE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180828105459
+Position="デザイナ",2900,1250
+
+[Entity]
+PName=MWT_ACCESS_LOG_DETAIL
+LName=アクセスログ明細
+Comment=
+TableOption=
+Page=デザイナ
+Left=2900
+Top=2000
+Field="アクセスログ明細ID","ACCESS_LOG_DETAIL_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="アクセスログID","ACCESS_LOG_ID","*ID","NOT NULL",,"","",$FFFFFFFF,""
+Field="アクセス日時","ACCESS_TIME","*タイムスタンプ","NOT NULL",,"systimestamp","アクセスログ明細を記録した時間",$FFFFFFFF,""
+Field="値","KEY_VALUE","CLOB","NOT NULL",,"","JSON形式でパラメータを記録",$FFFFFFFF,""
+Index==0,ACCESS_LOG_ID
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20180828105521
+Position="デザイナ",2900,2000
+
+[Entity]
+PName=MWM_NUMBERING
+LName=採番マスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=2550
+Top=1250
+Field="テーブル名","TABLE_NAME","VARCHAR2(60)","NOT NULL",0,"","",$FFFFFFFF,""
+Field="カラム名","COLUMN_NAME","VARCHAR2(90)","NOT NULL",1,"","",$FFFFFFFF,""
+Field="現在値","CURRENT_VALUE","*ID","NOT NULL",,"0","",$FFFFFFFF,""
+UsingCommonColumns=0
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170510113316
+Position="デザイナ",2550,1250
+
+[Entity]
+PName=MWM_LOOKUP
+LName=画面ルックアップマスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=2550
+Top=1700
+Field="画面ルックアップID","SCREEN_LOOKUP_ID","@INT","NOT NULL",0,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="ルックアップグループID","LOOKUP_GROUP_ID","VARCHAR2(50)","NOT NULL",,"","",$FFFFFFFF,""
+Field="ルックアップID","LOOKUP_ID","VARCHAR2(50)","NOT NULL",,"","",$FFFFFFFF,""
+Field="言語コード","LOCALE_CODE","VARCHAR2(5)","NOT NULL",,"","",$FFFFFFFF,""
+Field="名称値","LOOKUP_NAME","*名称(中)","NOT NULL",,"","",$FFFFFFFF,""
+Field="名称値2","LOOKUP_NAME2","*名称(中)",,,"","",$FFFFFFFF,""
+Field="並び順","SORT_ORDER","*整数型(短)","NOT NULL",,"","",$FFFFFFFF,""
+Index==1,CORPORATION_CODE,LOOKUP_GROUP_ID,LOOKUP_ID,LOCALE_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170509182055
+Position="デザイナ",2550,1700
+
+[Entity]
+PName=MWM_LOOKUP_GROUP
+LName=画面ルックアップグループマスタ
+Comment=
+TableOption=
+Page=デザイナ
+Left=2550
+Top=1400
+Field="画面ルックアップグループID","SCREEN_LOOKUP_GROUP_ID","*ID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="企業コード","CORPORATION_CODE","*企業コード","NOT NULL",,"","",$FFFFFFFF,""
+Field="ルックアップグループID","LOOKUP_GROUP_ID","VARCHAR2(50)","NOT NULL",,"","",$FFFFFFFF,""
+Field="言語コード","LOCALE_CODE","VARCHAR2(5)","NOT NULL",,"","",$FFFFFFFF,""
+Field="ルックアップグループ名称","LOOKUP_GROUP_NAME","*名称(中)","NOT NULL",,"","",$FFFFFFFF,""
+Field="並び順","SORT_ORDER","*整数型(短)",,,"","",$FFFFFFFF,""
+Index==1,CORPORATION_CODE,LOOKUP_GROUP_ID,LOCALE_CODE
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20170510122428
+Position="デザイナ",2550,1400
+
+[Shape]
+Page=デザイナ
+Left=2228
+Top=37
+Width=1812
+Height=2813
+ShapeType=Rectangle
+Text=
+FontName=Tahoma
+FontSize=9
+FontColor=$000000
+ImageFileName=

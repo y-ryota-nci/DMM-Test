@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src='../../assets/nci/tray.js'></script>
+	<script src="./wl0037.js"></script>
+	<title>WL0037 一括承認一覧</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="col-xs-12">
+		<article class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">一括承認</h1>
+			</div>
+		</article><!--/.row-->
+
+		<article class="row mB40 mB40_sp">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<!-- 初期状態でcollapseを閉じておく方法：
+						$('div.panel-heading').addClass('collapsed');
+						$('i.fa').addClass('fa-chevron-down').removeClass('fa-chevron-up');
+						$('div.panel-collapse').removeClass('in').css('height', '30px');
+					 -->
+					<div class="panel-heading clearfix collapse_btn collapsed" role="button" data-toggle="collapse" data-target="#condition-contents"><i class="fa fa-chevron-down"></i><span data-i18n="searchCondition">検索条件</span></div>
+					<div id="condition-contents" class="panel-collapse collapse" style="height:30px">
+						<div class="panel-body">
+							<form id="formCondition" class="tableBox col-lg-12 col-md-12 col-sm-12">
+								<!-- ここにトレイ設定検索条件の定義に合わせてテンプレートが展開される-->
+							</form>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-xs-4">
+						</div>
+						<div class="col-xs-3 text-center">
+							<button id="btnSearch" class="btn btn-primary btn-wide"><i class="fa fa-search"></i><span data-i18n="btnSearch">検索</span></button>
+						</div>
+						<div class="col-xs-5 text-right">
+							<!--
+							<button id="btnDownloadCsv" class="btn btn-default btn-wide"><i class="fa fa-download"></i><span data-i18n="btnDownload" class="hidden-xs">ダウンロード</span></button>
+							-->
+							<button id="btnPersonalize" class="btn btn-success btn-wide"><i class="fa fa-cog"></i><span data-i18n="btnPersonalize" class="hidden-xs">パーソナライズ</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article><!--/.row-->
+
+		<article id="seach-result" class="row ">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#result-contents"><i class="fa fa-chevron-up"></i><span data-i18n="searchResult">検索結果</span></div>
+					<div id="result-contents" class="panel-body panel-collapse collapse in">
+						<!-- ページ制御 -->
+						<div class="fixed-table-pagination clearfix row">
+							<div class="col-lg-9 col-md-12">
+								<div class="btn-all forPC">
+									<button class="btnSelectAll btn btn-default btn-sm" data-i18n="btnSelectAll">全選択</button>
+									<button class="btnCancelAll btn btn-default btn-sm" data-i18n="btnCancelAll">全解除</button>
+								</div>
+
+								<div class="pagination clearfix">
+									<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+									<ul class="pagination"></ul>
+								</div>
+							</div>
+
+							<div class="col-lg-3 col-md-12 col-sm-12">
+								<div class="pagination-detail">
+									<span data-i18n="rowCountPerPage">1ページの行数</span>
+									<select class="pageSize"></select>
+								</div>
+							</div>
+							<div class="btn-all forSP col-lg-12">
+								<button class="btnSelectAll btn btn-default" data-i18n="btnSelectAll">全選択</button>
+								<button class="btnCancelAll btn btn-default" data-i18n="btnCancelAll">全解除</button>
+							</div>
+						</div>
+						<div class="table-responsive">
+							<table id="tblSearchResult" class="table table-bordered table-hover table-striped responsive">
+								<colgroup></colgroup>
+								<thead><tr></thead>
+								<tbody></tbody>
+								<tfoot class="template hide">
+									<tr>
+									<!-- ここにトレイ設定検索結果の定義が展開される -->
+								</tfoot>
+							</table>
+						</div>
+
+						<!-- ページ制御 -->
+						<div class="fixed-table-pagination clearfix row">
+							<div class="col-lg-9 col-md-12">
+								<div class="btn-all forPC">
+									<button class="btnSelectAll btn btn-default btn-sm" data-i18n="btnSelectAll">全選択</button>
+									<button class="btnCancelAll btn btn-default btn-sm" data-i18n="btnCancelAll">全解除</button>
+								</div>
+								<div class="pagination clearfix">
+									<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+									<ul class="pagination"></ul>
+								</div>
+							</div>
+
+							<div class="col-lg-3 col-md-12 col-sm-12">
+								<div class="pagination-detail">
+									<span data-i18n="rowCountPerPage">1ページの行数</span>
+									<select class="pageSize"></select>
+								</div>
+							</div>
+							<div class="btn-all forSP col-lg-12">
+								<button class="btnSelectAll btn btn-default" data-i18n="btnSelectAll">全選択</button>
+								<button class="btnCancelAll btn btn-default" data-i18n="btnCancelAll">全解除</button>
+							</div>
+						</div>
+						<div class="btn-all">
+							<button id="btnApproveAtOnce" class="btn btn-primary btn-wide" disabled>
+								<i class="fa fa-check-square"></i><span data-i18n="btnApproveAtOnce">一括承認</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article><!--/.row-->
+	</section>	<!--/.main-->
+
+	<!-- トレイ設定検索条件のテンプレートデータ -->
+	<section id="tray-template" class="hide">
+		<!-- ここにtray-template.htmlの内容が読み込まれる -->
+	</section>
+
+	<div class="modal fade" id="messageDetailsDialog" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div id="messageDetails" class="alert alert-danger">
+						<ul></ul>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

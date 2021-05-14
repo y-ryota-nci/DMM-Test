@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/jsTree/themes/default/style.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/codeBook.js'></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./vd0144.js"></script>
+	<title>#{VD0144 計算式設定}</title>
+</head>
+<body>
+	<header></header>
+
+	<section class="container">
+		<div class="row">
+			<span class="screen-name">#{VD0144}</span>
+			<div>
+				<span data-i18n="MSG0277" style="color:red;">#{※コールバック関数を設定すると計算後に設定した関数を呼び出します。}</span><br/>
+			</div>
+
+			<label class="sub-title" data-i18n="calcFormulaSetting">#{計算式設定}</label>
+
+			<table class="table-bordered table-condensed col-xs-12">
+				<colgroup>
+					<col class="col-xs-3" />
+					<col class="col-xs-9" />
+				</colgroup>
+				<tr>
+					<td valign="top">
+						<div class="col-xs-12">
+							<table class="table-condensed">
+								<colgroup>
+									<col class="col-xs-3" />
+									<col class="col-xs-3" />
+									<col class="col-xs-3" />
+									<col class="col-xs-3" />
+								</colgroup>
+
+								<tbody>
+									<tr class="hide">
+										<td colspan="4">
+											<select id="container" class="form-control">
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="4">
+											<button id="btnParts" class="btn btn-default">
+												<span data-i18n="btnPartsSpecify">#{パーツ指定}</span>
+											</button>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="4">
+											<button id="btnLiteral" class="btn btn-default">
+												<span data-i18n="btnLiteral">#{定数}</span>
+											</button>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<button id="btnPlus" class="btn btn-default" value="+">
+												<span data-i18n="btnPlus">#{+}</span>
+											</button>
+										</td>
+										<td>
+											<button id="btnMinus" class="btn btn-default" value="-">
+												<span data-i18n="btnMinus">#{-}</span>
+											</button>
+										</td>
+										<td>
+											<button id="btnMultiply" class="btn btn-default" value="*">
+												<span data-i18n="btnMultiply">#{X}</span>
+											</button>
+										</td>
+										<td>
+											<button id="btnDivide" class="btn btn-default" value="/">
+												<span data-i18n="btnDivide">#{/}</span>
+											</button>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<button id="btnOpenParenthesis" class="btn btn-default" value="(">
+												&nbsp;&nbsp;<span data-i18n="btnOpenBrackets">#{(}</span>&nbsp;&nbsp;
+											</button>
+										</td>
+										<td>
+											<button id="btnCloseParenthesis" class="btn btn-default" value=")">
+												&nbsp;&nbsp;<span data-i18n="btnCloseBrackets">#{)}</span>&nbsp;&nbsp;
+											</button>
+										</td>
+										<td class="hide"></td>
+										<td class="hide"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div style="padding-top:30px;" class="col-xs-12">
+							<table class="table-condensed">
+								<colgroup>
+									<col class="col-xs-4" />
+									<col class="col-xs-4" />
+									<col class="col-xs-4" />
+								</colgroup>
+								<tbody>
+									<tr>
+									<td>
+										<button id="btnRegist" class="btn btn-primary" disabled>
+											<i class="glyphicon glyphicon-cog"></i>
+											<span data-i18n="btnRegister">#{登録}</span>
+										</button>
+									</td>
+									<td>
+										<button id="btnDelete" class="btn btn-danger" disabled>
+											<i class="glyphicon glyphicon-trash"></i>
+											<span data-i18n="btnDelete">#{削除}</span>
+										</button>
+									</td>
+									<td>
+										<button id="btnClose" class="btn btn-default">
+											<i class="glyphicon glyphicon-share-alt"></i>
+											<span data-i18n="btnClose">#{閉じる}</span>
+										</button>
+									</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</td>
+					<td valign="top">
+						<div>
+							<table class="table-condensed" style="width:100%;">
+								<colgroup>
+									<col class="col-xs-3" />
+									<col class="col-xs-9" />
+								</colgroup>
+								<tr>
+									<th data-i18n="calcName">#{計算式名}：</th>
+									<th>
+										<input id="partsCalcName" class="form-control required" type="text" value="" maxlength='30' />
+									</th>
+								</tr>
+								<tr>
+									<th data-i18n="calcFormula">#{計算式}：</th>
+									<th><span id="formula"></span></th>
+								</tr>
+								<tr>
+									<th data-i18n="callbackFunction">#{コールバック関数}：</th>
+									<th>
+										<input id="callbackFunction" class="form-control" type="text" value="" maxlength='90' />
+									</th>
+								</tr>
+							</table>
+						</div>
+						<div id="setting">
+							<table id="tblCalcItems" class="table-striped table-bordered table-condensed responsive" style="width:100%;">
+								<colgroup>
+									<col class="col-xs-3" />
+									<col class="col-xs-5" />
+									<col class="col-xs-3" />
+									<col class="col-xs-1" />
+								</colgroup>
+
+								<thead>
+									<tr>
+										<th data-i18n="classification">#{区分}</th>
+										<th data-i18n="contents">#{内容}</th>
+										<th data-i18n="calcBlankAsZero">#{空白をゼロで計算}
+										<th></th>
+									</tr>
+								</thead>
+
+								<tbody>
+								</tbody>
+
+								<tfoot class="template hide">
+									<!-- 以下、算術演算子用のTRタグ -->
+									<tr>
+										<td><i class='glyphicon glyphicon-align-justify clickable'></i><span data-i18n="operator">#{演算子}</span></td>
+										<td><span data-field="dispItemValue"></span></td>
+										<td>&nbsp;</td>
+										<td class="text-center">
+											<button class="btn btn-sm btn-danger btnDelItem">
+												<i class="glyphicon glyphicon-minus-sign"></i>
+											</button>
+										</td>
+										<td class="hide" data-field="partsCalcId"></td>
+										<td class="hide" data-field="calcItemType"></td>
+										<td class="hide" data-field="calcItemValue"></td>
+										<td class="hide" data-field="sortOrder"></td>
+										<td class="hide" data-field="partsCalcItemId"></td>
+									</tr>
+									<!-- 以下、括弧用のTRタグ -->
+									<tr>
+										<td><i class='glyphicon glyphicon-align-justify clickable'></i><span data-i18n="brackets">#{カッコ}</span></td>
+										<td><span data-field="dispItemValue"></span></td>
+										<td>&nbsp;</td>
+										<td class="text-center">
+											<button class="btn btn-sm btn-danger btnDelItem">
+												<i class="glyphicon glyphicon-minus-sign"></i>
+											</button>
+										</td>
+										<td class="hide" data-field="partsCalcId"></td>
+										<td class="hide" data-field="calcItemType"></td>
+										<td class="hide" data-field="calcItemValue"></td>
+										<td class="hide" data-field="sortOrder"></td>
+										<td class="hide" data-field="partsCalcItemId"></td>
+									</tr>
+									<!-- 以下、定数用のTRタグ -->
+									<tr>
+										<td><i class='glyphicon glyphicon-align-justify clickable'></i><span data-i18n="constant">#{定数}</span></td>
+										<td>
+											<input data-field="calcItemValue" class="literal form-control required" type="text" value=""
+												data-validate='{"min":-9999999999,"max":9999999999,"pattern":"numeric","roundType":4,"decimalPlaces":5}'/>
+										</td>
+										<td>&nbsp;</td>
+										<td class="text-center">
+											<button class="btn btn-sm btn-danger btnDelItem">
+												<i class="glyphicon glyphicon-minus-sign"></i>
+											</button>
+										</td>
+										<td class="hide" data-field="partsCalcId"></td>
+										<td class="hide" data-field="calcItemType"></td>
+										<td class="hide" data-field="sortOrder"></td>
+										<td class="hide" data-field="partsCalcItemId"></td>
+									</tr>
+									<!-- 以下、パーツ用のTRタグ -->
+									<tr>
+										<td><i class='glyphicon glyphicon-align-justify clickable'></i><span data-i18n="parts">#{パーツ}</span></td>
+										<td>
+											<select data-field="calcItemValue" class="parts form-control required"></select>
+										</td>
+										<td class="text-center"><input type="checkbox" data-field="forceCalcFlag" value="true" /></td>
+										<td class="text-center">
+											<button class="btn btn-sm btn-danger btnDelItem">
+												<i class="glyphicon glyphicon-minus-sign"></i>
+											</button>
+										</td>
+										<td class="hide" data-field="partsCalcId"></td>
+										<td class="hide" data-field="calcItemType"></td>
+										<td class="hide" data-field="sortOrder"></td>
+										<td class="hide" data-field="partsCalcItemId"></td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</section>
+
+
+</body>
+</html>

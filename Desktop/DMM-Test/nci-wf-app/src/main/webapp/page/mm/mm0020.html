@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	input[type=text].dcName {
+		width: 150px;
+		margin-right: 10px;
+	}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./mm0020.js"></script>
+	<title>#{MM0020 表示条件設定}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="container">
+		<div class="row">
+			<span class="screen-name">#{MM0020}</span>
+
+			<label class="sub-title" data-i18n="containerInfo">コンテナ情報</label>
+			<div class='col-xs-6'>
+				<label data-i18n='containerName' class='required'>コンテナ名</label>
+				<div class='input-group'>
+					<select id='containerId' class='form-control required'></select>
+					<span class='input-group-btn'>
+						<button id='btnSearch' class='btn btn-primary'>
+							<i class="glyphicon glyphicon-search"></i>
+							<span data-i18n='btnSearch'>検索</span>
+						</button>
+					</span>
+				</div>
+			</div>
+		</div>
+
+		<div id='searchResult' class='row hide'>
+			<label class="sub-title" data-i18n="displayCondition">表示条件</label>
+
+			<div class='form-group col-xs-12'>
+				<label data-i18n='displayConditionToUse' class='required'>使用する表示条件を選択して下さい。</label>
+				<div id='dcList'>
+					<label class='dcId' data-field='dcId1'>
+						<input type='checkbox' class='dcId' />
+						<input type='text' class='dcName required' maxlength="30" />
+					</label>
+					<label class='dcId' data-field='dcId2'>
+						<input type='checkbox' class='dcId' />
+						<input type='text' class='dcName required' maxlength="30" />
+					</label>
+					<label class='dcId' data-field='dcId3'>
+						<input type='checkbox' class='dcId' />
+						<input type='text' class='dcName required' maxlength="30" />
+					</label>
+					<label class='dcId' data-field='dcId4'>
+						<input type='checkbox' class='dcId' />
+						<input type='text' class='dcName required' maxlength="30" />
+					</label>
+					<label class='dcId' data-field='dcId5'>
+						<input type='checkbox' class='dcId' />
+						<input type='text' class='dcName required' maxlength="30" />
+					</label>
+					<label class='dcId' data-field='dcId6'>
+						<input type='checkbox' class='dcId' />
+						<input type='text' class='dcName required' maxlength="30" />
+					</label>
+					<label class='dcId' data-field='dcId7'>
+						<input type='checkbox' class='dcId' />
+						<input type='text' class='dcName required' maxlength="30" />
+					</label>
+					<label class='dcId' data-field='dcId8'>
+						<input type='checkbox' class='dcId' />
+						<input type='text' class='dcName required' maxlength="30" />
+					</label>
+					<label class='dcId' data-field='dcId9'>
+						<input type='checkbox' class='dcId' />
+						<input type='text' class='dcName required' maxlength="30" />
+					</label>
+					<label class='dcId' data-field='dcId10'>
+						<input type='checkbox' class='dcId' />
+						<input type='text' class='dcName required' maxlength="30" />
+					</label>
+					<label class='dcId' data-field='dcId11'>
+						<input type='checkbox' class='dcId' />
+						<input type='text' class='dcName required' maxlength="30" />
+					</label>
+					<label class='dcId' data-field='dcId12'>
+						<input type='checkbox' class='dcId' />
+						<input type='text' class='dcName required' maxlength="30" />
+					</label>
+					<label class='dcId' data-field='dcId101'>
+						<input type='checkbox' class='dcId' />
+						<input type='text' class='dcName required' maxlength="30" />
+					</label>
+					<label class='dcId' data-field='dcId102'>
+						<input type='checkbox' class='dcId' />
+						<input type='text' class='dcName required' maxlength="30" />
+					</label>
+				</div>
+			</div>
+			<div class='form-group col-md-4 col-sm-6 col-xs-8'>
+				<label data-i18n='MSG0124'>選択されている列へ表示設定を一括設定します</label>
+				<div class="input-group">
+					<select id='batchDcType' class='dcType form-control'></select>
+					<span class="input-group-btn">
+						<button id="btnBatchDcType" class="btn btn-success">
+							<i class="glyphicon glyphicon-volume-up"></i>
+							<span data-i18n="btnBatchSetting">#{一括設定}</span>
+						</button>
+					</span>
+				</div>
+			</div>
+
+			<table id='tblDC' class='table table-hover table-striped table-condensed responsive'>
+				<colgroup>
+					<col style='width:110px;' />
+					<col style='width:150px;' />
+
+				<thead>
+					<tr>
+						<th data-i18n='partsCode'>パーツコード
+						<th data-i18n='label'>ラベル
+						<th class='hide dcId1'>
+							<label>
+								<input type='radio' name='batch' value='1' checked/>
+								<span class='dcName'></span>
+							</label>
+						<th class='hide dcId2'>
+							<label>
+								<input type='radio' name='batch' value='2' />
+								<span class='dcName'></span>
+							</label>
+						<th class='hide dcId3'>
+							<label>
+								<input type='radio' name='batch' value='3' />
+								<span class='dcName'></span>
+							</label>
+						<th class='hide dcId4'>
+							<label>
+								<input type='radio' name='batch' value='4' />
+								<span class='dcName'></span>
+							</label>
+						<th class='hide dcId5'>
+							<label>
+								<input type='radio' name='batch' value='5' />
+								<span class='dcName'></span>
+							</label>
+						<th class='hide dcId6'>
+							<label>
+								<input type='radio' name='batch' value='6' />
+								<span class='dcName'></span>
+							</label>
+						<th class='hide dcId7'>
+							<label>
+								<input type='radio' name='batch' value='7' />
+								<span class='dcName'></span>
+							</label>
+						<th class='hide dcId8'>
+							<label>
+								<input type='radio' name='batch' value='8' />
+								<span class='dcName'></span>
+							</label>
+						<th class='hide dcId9'>
+							<label>
+								<input type='radio' name='batch' value='9' />
+								<span class='dcName'></span>
+							</label>
+						<th class='hide dcId10'>
+							<label>
+								<input type='radio' name='batch' value='10' />
+								<span class='dcName'></span>
+							</label>
+						<th class='hide dcId11'>
+							<label>
+								<input type='radio' name='batch' value='11' />
+								<span class='dcName'></span>
+							</label>
+						<th class='hide dcId12'>
+							<label>
+								<input type='radio' name='batch' value='12' />
+								<span class='dcName'></span>
+							</label>
+						<th class='hide dcId101'>
+							<label>
+								<input type='radio' name='batch' value='101' />
+								<span class='dcName'></span>
+							</label>
+						<th class='hide dcId102'>
+							<label>
+								<input type='radio' name='batch' value='102' />
+								<span class='dcName'></span>
+							</label>
+				</thead>
+
+				<tbody></tbody>
+
+				<tfoot class='hide template'>
+					<tr>
+						<td><span data-field='partsCode'></span><span data-field='partsId'></span>
+						<td><span data-field='labelText'></span>
+						<td class='hide dcId1'><select data-field='dcType1' class='dcType form-control required'></select>
+						<td class='hide dcId2'><select data-field='dcType2' class='dcType form-control required'></select>
+						<td class='hide dcId3'><select data-field='dcType3' class='dcType form-control required'></select>
+						<td class='hide dcId4'><select data-field='dcType4' class='dcType form-control required'></select>
+						<td class='hide dcId5'><select data-field='dcType5' class='dcType form-control required'></select>
+						<td class='hide dcId6'><select data-field='dcType6' class='dcType form-control required'></select>
+						<td class='hide dcId7'><select data-field='dcType7' class='dcType form-control required'></select>
+						<td class='hide dcId8'><select data-field='dcType8' class='dcType form-control required'></select>
+						<td class='hide dcId9'><select data-field='dcType9' class='dcType form-control required'></select>
+						<td class='hide dcId10'><select data-field='dcType10' class='dcType form-control required'></select>
+						<td class='hide dcId11'><select data-field='dcType11' class='dcType form-control required'></select>
+						<td class='hide dcId12'><select data-field='dcType12' class='dcType form-control required'></select>
+						<td class='hide dcId101'><select data-field='dcType101' class='dcType form-control required'></select>
+						<td class='hide dcId102'><select data-field='dcType102' class='dcType form-control required'></select>
+				</tfoot>
+			</table>
+			<div class="row text-center">
+				<button id="btnUpdate" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-plus-sign"></i>
+					<span data-i18n="btnUpdate">#{更新}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

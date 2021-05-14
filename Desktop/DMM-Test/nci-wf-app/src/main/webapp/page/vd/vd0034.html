@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/jsTree/themes/default/style.min.css" />
+	<link rel="stylesheet" href="../../assets/whhg-font/css/whhg.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	#tree { margin-top: 15px; }
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/jsTree/jstree.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="../../assets/nci/codeBook.js"></script>
+	<script src="../../assets/nci/parts.js"></script>
+	<script src="./vd0034.js"></script>
+	<title>#{VD0034 パーツ属性コピー画面}</title>
+</head>
+<body>
+	<header></header>
+
+	<section class="container">
+		<div class="row">
+			<span class="screen-name">#{VD0034}</span>
+			<label class="sub-title" data-i18n="screenSettings">パーツ属性コピー</label>
+		</div>
+
+		<div class="row">
+			<label class="copySourceScreen">コピー元画面</label>
+			<div class="col-xs-12">
+				<select id="srcScreenId" class="form-control"></select>
+			</div>
+		</div>
+		<br>
+		<div id="srcParts" class="row hide">
+			<label data-i18n="copySourceParts">コピー元パーツ</label>
+			<div class="col-xs-12">
+				<table class="table table-hover table-striped table-condensed responsive">
+					<colgroup>
+						<col class="col-xs-3" />
+						<col class="col-xs-2" />
+						<col class="col-xs-3" />
+						<col class="col-xs-2" />
+						<col class="col-xs-2" />
+					</colgroup>
+					<thead>
+						<tr>
+							<th data-i18n="partsCode">#{パーツコード}
+							<th data-i18n="classification">#{パーツ種別}
+							<th data-i18n="labelText">#{表示ラベル}
+							<th class="text-center">
+								<span data-i18n="condDef">#{条件定義}</span><br>
+								<button data-i18n="btnSelectAll" class="btnSelectAll condFlag" type="button"></button>
+								<button data-i18n="btnCancelAll" class="btnCancelAll condFlag" type="button"></button>
+							<th class="text-center">
+								<span data-i18n="calcFormula">#{計算式}</span><br>
+								<button data-i18n="btnSelectAll" class="btnSelectAll calcFlag" type="button"></button>
+								<button data-i18n="btnCancelAll" class="btnCancelAll calcFlag" type="button"></button>
+					</thead>
+					<tbody></tbody>
+					<tfoot class="template hide">
+						<tr>
+							<td>
+								<span data-field="designCode">#{デザインコード}</span>
+								<span data-field="partsId" class="hide">#{パーツID}</span>
+							<td><span data-field="partsTypeName">#{パーツ種別}</span>
+							<td><span data-field="labelText">#{表示ラベル}</span>
+							<td class="text-center"><input type="checkbox" data-field="condFlag" class="condFlag" value="true" />
+							<td class="text-center"><input type="checkbox" data-field="calcFlag" class="calcFlag" value="true" />
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="text-center">
+			<button id="btnCopy" class="btn btn-primary" disabled>
+				<i class="glyphicon glyphicon-ok-sign"></i>
+				<span data-i18n="btnCopy">#{更新}</span>
+			</button>
+			<button id='btnClose' class='btn btn-default'>
+				<i class='glyphicon glyphicon-share-alt'></i>
+				<span data-i18n='btnClose'>#{閉じる}</span>
+			</button>
+		</div>
+	</section>
+</body>
+</html>

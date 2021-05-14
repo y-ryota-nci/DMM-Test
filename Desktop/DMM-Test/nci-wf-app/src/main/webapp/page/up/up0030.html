@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+		/* ファイルのドラッグ＆ドロップ */
+		.dragZone {
+			border: 2px dotted #0B85A1;
+			color: #92AAB0;
+			text-align: left;
+			vertical-align: middle;
+			padding: 10px 10px 10 10px;
+			margin-bottom: 10px;
+			font-size: 200%;
+		}
+		table.table>tbody>tr>td,
+		table.table>tbody>tr>th {
+			vertical-align : middle;
+			padding-right : 30px;
+		}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./up0030.js"></script>
+	<title>#{UP0030 メニューロール定義アップロード}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="container">
+		<div class="row">
+			<span class="screen-name">#{UP0030}</span>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<label class="sub-title">
+				<span data-i18n="uploadFileInfo">アップロードファイル情報</span>
+			</label>
+		</div>
+		<div id="dragAndDropArea" class="row">
+			<div data-i18n="dragAndDrop" class="form-group col-sm-12 dragZone">ここにドラッグ＆ドロップすることでファイルアップロードが行われます</div>
+			<div class="form-group col-sm-12">
+				<input type="file" id="file" />
+			</div>
+		</div>
+		<div id="processInfoArea" class="row hide">
+			<input type="hidden" id="uploadFileId" />
+
+			<table class="table table-hover table-striped table-condensed responsive">
+				<colgroup>
+					<col class="col-sm-3" />
+					<col class="col-sm-2" />
+					<col class="col-sm-2" />
+					<col class="col-sm-3" />
+					<col class="col-sm-2" />
+					<col class="hide" />
+				</colgroup>
+				<thead>
+					<tr>
+						<th data-i18n="createdCorporation">#{企業}
+						<th data-i18n="hostIpAddr">#{ホストIPアドレス}
+						<th data-i18n="appVersion">#{APPバージョン}
+						<th data-i18n="dbDestination">#{DB接続先}
+						<th data-i18n="timestampCreated">#{作成日時}
+						<th data-i18n="hostName" class="hide">#{ホスト名}
+				</thead>
+				<tbody>
+					<tr>
+						<th><span data-field="corporationCode">#{企業コード}</span><br />
+							<span data-field="corporationName">#{企業名}</span>
+						<td id="hostIpAddr">#{ホストIPアドレス}
+						<td id="appVersion">#{APPバージョン}
+						<td id="dbDestination">#{DB接続先}
+						<td id="timestampCreated">#{作成日時}
+						<td id="hostName" class="hide">#{ホスト名}
+				</tbody>
+			</table>
+		</div>
+	</section>
+	<section class="container">
+		<div class="row">
+			<div id="inputed" class="col-sm-7 hide-initial hide">
+				<label class="sub-title">
+					<span data-i18n="importConfig">取込設定</span>
+				</label>
+				<table class="table table-hover table-striped table-condensed">
+					<colgroup>
+						<col class="col-sm-5" />
+						<col class="col-sm-7" />
+					</colgroup>
+					<tbody>
+						<tr>
+							<th class="text-right">
+								<span data-i18n="targetsOfImport">#{取込対象}</span>
+							<td>
+								<label>
+									<input type="checkbox" id="isMenuRoleDetail" value="true" />
+									<span data-i18n="menuRoleDetail">#{メニューロール構成}</span>
+								</label>
+						<tr>
+							<th class="text-right">
+								<span data-i18n="menuRole">#{メニューロール}</span>
+								<div class="btn-group">
+									<button id="btnSelectAll" class="btn btn-default btn-sm" data-i18n="btnSelectAll">#{全選択}</button>
+									<button id="btnCancelAll" class="btn btn-default btn-sm" data-i18n="btnCancelAll">#{全解除}</button>
+								</div>
+							<td>
+								<table class="table table-hover table-striped table-condensed responsive">
+									<colgroup>
+										<col class="col-sm-12" />
+									<tbody></tbody>
+									<tfoot class="hide template">
+										<tr>
+											<td>
+												<label>
+													<input type="checkbox" data-field="menuRoleCode" checked />
+													<span data-field="menuRoleCode" class="form-control-static">#{メニューロールコード}</span>
+													<span data-field="menuRoleName" class="form-control-static">#{メニューロール名}</span>
+												</label>
+											</td>
+										</tr>
+									</tfoot>
+								</table>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-sm-1"></div>
+			<div class="col-sm-4 hide-initial hide">
+				<span class="text-primary" data-i18n="MSG0153">#{下記は必ず取込対象となります。}</span>
+				<ul>
+					<li data-i18n="menuRole">#{メニューロール}</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<div class="col-sm-4 text-left"></div>
+			<div class="col-sm-4 text-center">
+				<button id="btnRegister" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnRegister">#{更新}</span>
+				</button>
+				<button id="btnReset" class="btn btn-default">
+					<i class="glyphicon glyphicon-refresh"></i>
+					<span data-i18n="btnReset">#{btnReset}</span>
+				</button>
+			</div>
+			<div class="col-sm-4 text-right">
+				<button id="btnBack" class="btn btn-default">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnBack">#{btnReset}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+<link rel="stylesheet" href="../../assets/nci/app.css" />
+<style type="text/css">
+input[type=text].dcName {
+	width: 150px;
+	margin-right: 10px;
+}
+input[type=text].sortOrder {
+	width: 50px;
+}
+.checkbox-inline + .checkbox-inline{
+	margin-left: 0px;
+}
+</style>
+<script src="../../assets/jquery/jquery.min.js"></script>
+<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="../../assets/nci/NCI.js"></script>
+<script src="../../assets/nci/validate.js"></script>
+<script src="./mm0060.js"></script>
+<title>#{MM0060 ブロック表示順設定}</title>
+</head>
+<body>
+<header class="container-fluid"><div id="nav"></div></header>
+<section class="container">
+	<div>
+		<span class="screen-name">#{MM0060}</span>
+		<label class="sub-title" data-i18n="screenProcessInfo">#{画面プロセス情報}</label>
+		<div class="col-xs-6">
+			<label data-i18n="screenProcessName" class="required">#{画面プロセス名}</label>
+			<div class="input-group">
+				<select id="screenProcessId" class="form-control required"></select>
+				<span class="input-group-btn">
+					<button id="btnSearch" class="btn btn-primary">
+						<i class="glyphicon glyphicon-search"></i>
+						<span data-i18n="btnSearch">#{検索}</span>
+					</button>
+				</span>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="container">
+	<div id="displayCondition" class="hide">
+		<label class="sub-title" data-i18n="blockDisplaySettting">#{表示条件}</label>
+		<div class="form-group col-xs-12">
+			<label data-i18n="displayConditionToUse" class="required">#{使用する表示条件を選択して下さい。}</label>
+			<div id="dcList">
+				<label class="dcId" data-field="dcId1">
+					<input type="checkbox" class="dcId" />
+					<input type="text" class="dcName required" maxlength="30" />
+				</label>
+				<label class="dcId" data-field="dcId2">
+					<input type="checkbox" class="dcId" />
+					<input type="text" class="dcName required" maxlength="30" />
+				</label>
+				<label class="dcId" data-field="dcId3">
+					<input type="checkbox" class="dcId" />
+					<input type="text" class="dcName required" maxlength="30" />
+				</label>
+				<label class="dcId" data-field="dcId4">
+					<input type="checkbox" class="dcId" />
+					<input type="text" class="dcName required" maxlength="30" />
+				</label>
+				<label class="dcId" data-field="dcId5">
+					<input type="checkbox" class="dcId" />
+					<input type="text" class="dcName required" maxlength="30" />
+				</label>
+				<label class="dcId" data-field="dcId6">
+					<input type="checkbox" class="dcId" />
+					<input type="text" class="dcName required" maxlength="30" />
+				</label>
+				<label class="dcId" data-field="dcId7">
+					<input type="checkbox" class="dcId" />
+					<input type="text" class="dcName required" maxlength="30" />
+				</label>
+				<label class="dcId" data-field="dcId8">
+					<input type="checkbox" class="dcId" />
+					<input type="text" class="dcName required" maxlength="30" />
+				</label>
+				<label class="dcId" data-field="dcId9">
+					<input type="checkbox" class="dcId" />
+					<input type="text" class="dcName required" maxlength="30" />
+				</label>
+				<label class="dcId" data-field="dcId10">
+					<input type="checkbox" class="dcId" />
+					<input type="text" class="dcName required" maxlength="30" />
+				</label>
+				<label class="dcId" data-field="dcId11">
+					<input type="checkbox" class="dcId" />
+					<input type="text" class="dcName required" maxlength="30" />
+				</label>
+				<label class="dcId" data-field="dcId12">
+					<input type="checkbox" class="dcId" />
+					<input type="text" class="dcName required" maxlength="30" />
+				</label>
+			</div>
+		</div>
+		<div id="divSelectButton" class="form-group col-xs-12">
+			<label data-i18n="MSG0137">#{選択されている行のチェック状態を変更します。}</label>
+			<div class="button-group">
+				<button id="btnSelectAll" class="btn btn-success btn-sm">
+					<i class="glyphicon glyphicon-ok-circle"></i>
+					<span data-i18n="btnSelectAll">#{全選択}</span>
+				</button>
+				<button id="btnCancelAll" class="btn btn-success btn-sm">
+					<i class="glyphicon glyphicon-ban-circle"></i>
+					<span data-i18n="btnCancelAll">#{全解除}</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="container">
+	<div id="searchResult" class="hide">
+		<table id="tblDC" class="table table-hover table-striped table-condensed responsive">
+			<colgroup>
+				<col style="width:230px;" />
+				<col style="width:70px;" />
+			</colgroup>
+			<thead>
+				<tr>
+					<th data-i18n="blockName">#{ブロック名称}</th>
+					<th data-i18n="sortOrder">#{並び順}</th>
+					<th class="hide dcId1"><span class="dcName"></span></th>
+					<th class="hide dcId2"><span class="dcName"></span></th>
+					<th class="hide dcId3"><span class="dcName"></span></th>
+					<th class="hide dcId4"><span class="dcName"></span></th>
+					<th class="hide dcId5"><span class="dcName"></span></th>
+					<th class="hide dcId6"><span class="dcName"></span></th>
+					<th class="hide dcId7"><span class="dcName"></span></th>
+					<th class="hide dcId8"><span class="dcName"></span></th>
+					<th class="hide dcId9"><span class="dcName"></span></th>
+					<th class="hide dcId10"><span class="dcName"></span></th>
+					<th class="hide dcId11"><span class="dcName"></span></th>
+					<th class="hide dcId12"><span class="dcName"></span></th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+			<tfoot class="hide template">
+				<tr>
+					<th class="form-inline">
+						<i class="glyphicon glyphicon-align-justify clickable"></i>
+						<label>
+							<input type="radio" name="batch" data-field="blockId" disabled="disabled" />
+							<span data-field="blockName"></span><span data-field="blockId" class="hide"></span>
+						</label>
+					</th>
+					<td class="form-inline"><input type="text" data-field="sortOrder" class="form-control input-sm sortOrder text-right" readonly data-validate='{"pattern" : "integer", "min": 0, "max" : 9999 }'></td>
+					<td class="hide dcId1">
+						<label class="checkbox-inline"><input type="checkbox" data-field="displayFlag1" value="1" class="displayFlag"><span data-i18n="display">#{表示}</span></label>
+						<label class="checkbox-inline"><input type="checkbox" data-field="expansionFlag1" value="1" class="expansionFlag"><span data-i18n="expansion">#{展開}</span></label>
+					</td>
+					<td class="hide dcId2">
+						<label class="checkbox-inline"><input type="checkbox" data-field="displayFlag2" value="1" class="displayFlag"><span data-i18n="display">#{表示}</span></label>
+						<label class="checkbox-inline"><input type="checkbox" data-field="expansionFlag2" value="1" class="expansionFlag"><span data-i18n="expansion">#{展開}</span></label>
+					</td>
+					<td class="hide dcId3">
+						<label class="checkbox-inline"><input type="checkbox" data-field="displayFlag3" value="1" class="displayFlag"><span data-i18n="display">#{表示}</span></label>
+						<label class="checkbox-inline"><input type="checkbox" data-field="expansionFlag3" value="1" class="expansionFlag"><span data-i18n="expansion">#{展開}</span></label>
+					</td>
+					<td class="hide dcId4">
+						<label class="checkbox-inline"><input type="checkbox" data-field="displayFlag4" value="1" class="displayFlag"><span data-i18n="display">#{表示}</span></label>
+						<label class="checkbox-inline"><input type="checkbox" data-field="expansionFlag4" value="1" class="expansionFlag"><span data-i18n="expansion">#{展開}</span></label>
+					</td>
+					<td class="hide dcId5">
+						<label class="checkbox-inline"><input type="checkbox" data-field="displayFlag5" value="1" class="displayFlag"><span data-i18n="display">#{表示}</span></label>
+						<label class="checkbox-inline"><input type="checkbox" data-field="expansionFlag5" value="1" class="expansionFlag"><span data-i18n="expansion">#{展開}</span></label>
+					</td>
+					<td class="hide dcId6">
+						<label class="checkbox-inline"><input type="checkbox" data-field="displayFlag6" value="1" class="displayFlag"><span data-i18n="display">#{表示}</span></label>
+						<label class="checkbox-inline"><input type="checkbox" data-field="expansionFlag6" value="1" class="expansionFlag"><span data-i18n="expansion">#{展開}</span></label>
+					</td>
+					<td class="hide dcId7">
+						<label class="checkbox-inline"><input type="checkbox" data-field="displayFlag7" value="1" class="displayFlag"><span data-i18n="display">#{表示}</span></label>
+						<label class="checkbox-inline"><input type="checkbox" data-field="expansionFlag7" value="1" class="expansionFlag"><span data-i18n="expansion">#{展開}</span></label>
+					</td>
+					<td class="hide dcId8">
+						<label class="checkbox-inline"><input type="checkbox" data-field="displayFlag8" value="1" class="displayFlag"><span data-i18n="display">#{表示}</span></label>
+						<label class="checkbox-inline"><input type="checkbox" data-field="expansionFlag8" value="1" class="expansionFlag"><span data-i18n="expansion">#{展開}</span></label>
+					</td>
+					<td class="hide dcId9">
+						<label class="checkbox-inline"><input type="checkbox" data-field="displayFlag9" value="1" class="displayFlag"><span data-i18n="display">#{表示}</span></label>
+						<label class="checkbox-inline"><input type="checkbox" data-field="expansionFlag9" value="1" class="expansionFlag"><span data-i18n="expansion">#{展開}</span></label>
+					</td>
+					<td class="hide dcId10">
+						<label class="checkbox-inline"><input type="checkbox" data-field="displayFlag10" value="1" class="displayFlag"><span data-i18n="display">#{表示}</span></label>
+						<label class="checkbox-inline"><input type="checkbox" data-field="expansionFlag10" value="1" class="expansionFlag"><span data-i18n="expansion">#{展開}</span></label>
+					</td>
+					<td class="hide dcId11">
+						<label class="checkbox-inline"><input type="checkbox" data-field="displayFlag11" value="1" class="displayFlag"><span data-i18n="display">#{表示}</span></label>
+						<label class="checkbox-inline"><input type="checkbox" data-field="expansionFlag11" value="1" class="expansionFlag"><span data-i18n="expansion">#{展開}</span></label>
+					</td>
+					<td class="hide dcId12">
+						<label class="checkbox-inline"><input type="checkbox" data-field="displayFlag12" value="1" class="displayFlag"><span data-i18n="display">#{表示}</span></label>
+						<label class="checkbox-inline"><input type="checkbox" data-field="expansionFlag12" value="1" class="expansionFlag"><span data-i18n="expansion">#{展開}</span></label>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+		<div class="row text-center">
+			<div class="col-sm-3"></div>
+			<div class="col-sm-6">
+				<button id="btnUpdate" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-plus-sign"></i>
+					<span data-i18n="btnUpdate">#{更新}</span>
+				</button>
+				<button id="btnCopyDefault" class="btn btn-warning" disabled>
+					<i class="glyphicon glyphicon-tags"></i>
+					<span data-i18n="btnCopyDefault">#{デフォルトをコピー}</span>
+				</button>
+			</div>
+			<div class="col-sm-3 text-right">
+				<button id="btnDelete" class="btn btn-danger" disabled>
+					<i class="glyphicon glyphicon-trash"></i>
+					<span data-i18n="btnDelete">#{削除}</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</section>
+</body>
+</html>

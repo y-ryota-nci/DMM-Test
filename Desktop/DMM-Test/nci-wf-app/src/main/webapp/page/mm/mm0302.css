@@ -1,0 +1,267 @@
+@CHARSET "UTF-8";
+
+#designArea {
+	height: 700px;
+}
+
+#componentArea {
+	height: 72px;
+	padding: 0;
+}
+
+#routeArea {
+	position:relative;
+	height: 626px;
+	padding: 0;
+	overflow: scroll;
+}
+
+#propertyArea {
+	height: 700px;
+	overflow-y: scroll;
+}
+
+#propertyArea > div.panel-heading {
+	height: 698px;
+	padding: 1px;
+}
+
+#propertyArea > div.panel-heading > article.ac-container {
+	margin: 1px;
+}
+
+span.component {
+	display: inline-block;
+	width: 60px;
+	height: 60px;
+	padding: 0;
+	text-align: center;
+	vertical-align: middle;
+	cursor: move;
+	position: relative;
+	background-size: 58px !important;
+	background-repeat: no-repeat;
+	border-radius: 7px 7px 7px 7px / 7px 7px 7px 7px;
+}
+
+span.template {
+	margin: 5px 2px;
+}
+
+span.component > span {
+	display: inline-block;
+	position: absolute;
+	left: -21px;
+	top: 40px;
+	z-index: 15;
+	font-weight: bold;
+	width: 100px;
+	text-align: center;
+	font-size: 14px;
+}
+
+span.normal {
+	color: rgb(8, 61, 186);
+	text-shadow: 1px 1px 0px rgb(255, 255, 255), -1px 1px 0px rgb(255, 255, 255), 1px -1px 0px rgb(255, 255, 255), -1px -1px 0px rgb(255, 255, 255);
+}
+
+span.start-end {
+	color: rgb(255, 255, 255);
+	text-shadow: 1px 1px 0px rgb(90, 82, 255), -1px 1px 0px rgb(90, 82, 255), 1px -1px 0px rgb(90, 82, 255), -1px -1px 0px rgb(90, 82, 255);
+}
+
+span.kind-00 {
+	border:1px solid transparent;
+	background-image: url("../../assets/nci/images/route_start.png") !important;
+}
+
+span.kind-01 {
+	background:azure;
+	border:1px solid #4169E1;
+	background-image: url("../../assets/nci/images/route_start_user.png") !important;
+}
+
+span.kind-02 {
+	background:azure;
+	border:1px solid #4169E1;
+	background-image: url("../../assets/nci/images/route_one_user.png") !important;
+}
+
+span.kind-03 {
+	background:azure;
+	border:1px solid #4169E1;
+	background-image: url("../../assets/nci/images/route_group_user.png") !important;
+}
+
+span.kind-04 {
+	background:azure;
+	border:1px solid #4169E1;
+	background-image: url("../../assets/nci/images/route_etc_user.png") !important;
+}
+
+span.kind-99 {
+	border:1px solid transparent;
+	background-image: url("../../assets/nci/images/route_end.png") !important;
+}
+
+span.kind-PS {
+	border:1px solid transparent;
+	background-image: url("../../assets/nci/images/route_parallel_start.png") !important;
+}
+
+span.kind-PE {
+	border:1px solid transparent;
+	background-image: url("../../assets/nci/images/route_parallel_end.png") !important;
+}
+
+span.parallel-hover {
+	background:#D2E9FF;
+	border:1px solid #004080;
+}
+
+span.selected {
+	/*
+	background:pink;
+	border:1px solid #FF1493;
+	background:yellow;
+	border:1px solid #F2C800;
+	background:#e6e6fa;
+	border:3px solid #6262FF;
+	*/
+
+	background:linen;
+	border:2px solid #E87400;
+	background-size: 56px !important;
+}
+
+span.selected > span {
+	top: 39px;
+	left: -22px;
+}
+
+
+div.label-action {
+	padding-top: 5px;
+}
+
+div.label-expression {
+	padding-top: 4px;
+	white-space: nowrap;
+	cursor: pointer;
+}
+
+span.component > button.btn-remove {
+	position: absolute;
+	left: 47px;
+	top: -7px;
+	padding: 0px;
+}
+
+span.component > button.btn-remove > i {
+	margin-top: 2px;
+	margin-left: 3px;
+}
+
+span.selected > button.btn-remove {
+	left: 46px;
+	top: -8px;
+}
+
+div.route-message {
+	opacity:0.8;
+	z-index: 10000;
+}
+
+path, ._jsPlumb_endpoint {
+	cursor: pointer;
+}
+
+.form-horizontal {
+	margin-bottom: 5px;
+}
+
+.form-group-sm .form-control-static {
+	height: 25px;
+	min-height: 25px;
+	padding: 0px 5px 0px;
+	font-size: 12px;
+	line-height: 25px;
+	border-radius: 1px;
+}
+.form-horizontal .form-group-sm .control-label {
+	font-size: 12px;
+	font-weight: 700;
+	text-align: left;
+	padding: 0px 5px;
+	line-height: 25px;
+}
+
+.form-horizontal .form-group-sm .control-input {
+	padding: 0px 5px 4px;
+}
+
+.form-horizontal .radio-inline {
+	padding-top:  0px;
+	min-height: 26px;
+}
+
+.form-horizontal .radio-inline input[type=radio] {
+	margin-left: 0px;
+	position: relative;
+}
+
+input[data-field="executionTerm"].form-control {
+	width:  50px;
+}
+
+input[data-field="activityEndValue"].form-control {
+	width:  50px;
+}
+
+input[type="checkbox"] {
+	margin-right: 10px;
+}
+
+.alert {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+#propertyArea .alert {
+	font-size: 12px;
+	padding: 10px;
+}
+
+.popover-title {
+	text-align: center;
+	padding:5px 10px;
+	font-size: 12px;
+}
+.popover-content {
+	text-align: center;
+	padding:5px 10px;
+	font-size: 12px;
+}
+
+h4, .h4, h5, .h5, h6, .h6 {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border-bottom: 1px solid;
+}
+
+table caption.noRecord {
+	font-size: 12px;
+}
+
+caption {
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+#connectionMenu ul.dropdown-menu > li {
+	word-wrap:break-word;
+	overflow-wrap:break-word;
+}
+#connectionMenu ul.dropdown-menu > li > a {
+	white-space: normal;
+}

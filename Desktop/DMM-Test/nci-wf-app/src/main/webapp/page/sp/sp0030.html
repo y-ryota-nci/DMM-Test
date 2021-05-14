@@ -1,0 +1,103 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+		/* ファイルのドラッグ＆ドロップ */
+		.dragZone {
+			border: 2px dotted #0B85A1;
+			color: #92AAB0;
+			text-align: left;
+			vertical-align: middle;
+			padding: 10px 10px 10 10px;
+			margin-bottom: 10px;
+			font-size: 200%;
+		}
+		table.table>tbody>tr>td,
+		table.table>tbody>tr>th {
+			vertical-align : middle;
+			padding-right : 30px;
+		}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<!-- 	<script src="../../assets/whhg-font/custom.js"></script> -->
+<!-- 	<script src="../../assets/nci/original.js"></script> -->
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src="./sp0030.js"></script>
+	<title>SP0030 取引先アップロード</title>
+</head>
+<body>
+
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="container">
+		<div class="row">
+			<span class="screen-name">#{SP0030}</span>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<label class="sub-title">
+				<span data-i18n="uploadFileInfo">アップロードファイル情報</span>
+			</label>
+		</div>
+
+		<div id="dragAndDropArea" class="row">
+			<div data-i18n="dragAndDrop" class="form-group col-sm-12 dragZone">ここにドラッグ＆ドロップすることでファイルアップロードが行われます</div>
+			<div class="form-group col-sm-12">
+				<input type="file" id="file" />
+			</div>
+		</div>
+		<div id="uploadFileArea" class="row hide">
+			<input type="hidden" id="encoded" />
+
+			<table class="table table-hover table-striped table-condensed">
+				<colgroup>
+					<col class="col-sm-8" />
+					<col class="col-sm-2" />
+					<col class="col-sm-2" />
+				</colgroup>
+				<thead>
+					<tr>
+						<th data-i18n="fileName">#{ファイル名}</th>
+						<th class="text-center">取引先</th>
+						<th class="text-center">振込先</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td id="fileName">#{ファイル名}</td>
+						<td data-field="splrCount" class="text-center">#{取引先数}</td>
+						<td data-field="payeeBnkaccCount" class="text-center">#{振込先数}</td>
+				</tbody>
+			</table>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<div class="text-center">
+				<button id="btnUploadRegister" class="btn btn-primary">
+					<i class="glyphicon glyphicon-ok"></i>
+					<span>登録</span>
+				</button>
+				<button id="btnUploadReset" class="btn btn-default">
+					<i class="glyphicon glyphicon-refresh"></i>
+					<span data-i18n="btnReset">#{btnReset}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+
+</body>
+</html>

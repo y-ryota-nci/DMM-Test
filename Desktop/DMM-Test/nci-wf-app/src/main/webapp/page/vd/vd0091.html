@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<link rel="stylesheet" href="../../assets/whhg-font/css/whhg.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./vd0091.js"></script>
+	<title>VD0091 新規申請メニュー割当設定</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="container">
+		<div class="row">
+			<span class="screen-name">#{VD0091}</span>
+
+			<label class="sub-title">
+				<span  data-i18n="screenProcessMenuInfo"></span>
+			</label>
+
+			<form class="form-horizontal" id="inputed">
+				<div data-i18n="MSG0245" class="col-sm-offset-4 col-sm-8 text-muted">{このメニューを押下したときに新規起票する画面プロセスを選択して下さい。}</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label" data-i18n="menuName">#{メニュー名}</label>
+					<div class="col-sm-8">
+						<label id="menuName" class="control-label"></label>
+
+						<span id="corporationCode" class="hide"></span>
+						<span id="menuId" class="hide"></span>
+						<span id="screenProcessMenuId" class="hide"></span>
+						<span id="version" class="hide"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-4 control-label required" data-i18n="screenProcessInfo">#{画面プロセス情報}</label>
+					<div class="col-sm-8">
+						<select id="screenProcessId" class="form-control"></select>
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<div class="col-xs-4 text-left">
+			</div>
+			<div class="col-xs-4 text-center">
+				<button id="btnUpdate" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnUpdate">#{更新}</span>
+				</button>
+				<button id="btnBack" class="btn btn-default">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnBack">#{戻る}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+
+	<div id="ecs"></div>
+	<div id="calcs"></div>
+	<div id="scripts"></div>
+</body>
+</html>

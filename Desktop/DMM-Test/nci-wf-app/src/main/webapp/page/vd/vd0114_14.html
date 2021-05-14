@@ -1,0 +1,62 @@
+<!-- 画像パーツのプロパティ -->
+<script type="text/javascript" src="vd0114_14.js"></script>
+<div id="vd0114_14" class="row">
+	<label class="sub-title" data-i18n="picture">画像</label>
+
+	<fieldset id="borderSettings" class="fieldset">
+		<legend>
+			<label>
+				<input id="useBorderLine" type="checkbox" value="true" />
+				<span data-i18n="useBorderLine">#{枠を使う}</span>
+			</label>
+		</legend>
+		<div class="col-sm-3 form-group">
+			<span class="form-control-static" data-i18n="borderWidth">#{枠の幅}</span>
+			<input id="borderWidth" type="text" class="form-control" maxlength="4"
+					data-validate='{ "pattern" : "integer", "min" : 30, "max" : 2000 }' />
+		</div>
+		<div class="col-sm-3 form-group">
+			<span class="form-control-static" data-i18n="borderHeight">#{枠の高さ}</span>
+			<input id="borderHeight" type="text" class="form-control" maxlength="4"
+					data-validate='{ "pattern" : "integer", "min" : 30, "max" : 2000 }' />
+		</div>
+		<div class='col-sm-3 form-group'>
+			<span class="form-control-static" data-i18n="borderLineColor">#{枠線の色}</span>
+			<input id='borderLineColor' type='text' maxlength='7' class='form-control color-picker'
+					data-validate='{ "pattern" : "alphaNumberSymbol" }' />
+		</div>
+		<div class="col-sm-3 form-group">
+			<span class="form-control-static" data-i18n="borderLineWidth">#{枠線の太さ}</span>
+			<input id="borderLineWidth" type="text" class="form-control" maxlength="4"
+					data-validate='{ "pattern" : "integer", "min" : 1, "max" : 10 }' />
+		</div>
+	</fieldset>
+	<div class="col-sm-3 form-group">
+		<label>
+			<input id="runtimeUploadFlag" type="checkbox" value="true" />
+			<span data-i18n="runtimeUploadFlag" class="form-control-static">#{申請時にアップロードする}</span>
+		</label>
+	</div>
+	<div class="col-sm-3 form-group">
+		<label>
+			<input id="useDummyIfNoImage" type="checkbox" value="true" />
+			<span data-i18n="useDummyIfNoImage" class="form-control-static">#{画像未設定時にダミー画像を表示するか}</span>
+		</label>
+	</div>
+	<div class="col-sm-3 form-group">
+		<span class="form-control-static" data-i18n="uploadButtonLabel">#{アップロードボタンのラベル}</span>
+		<input id="uploadButtonLabel" type="text" class="form-control" maxlength="20" />
+	</div>
+	<div class="col-sm-3 form-group">
+		<span class="form-control-static" data-i18n="clearButtonLabel">#{クリアボタンのラベル}</span>
+		<input id="clearButtonLabel" type="text" class="form-control" maxlength="20" />
+	</div>
+	<span class="text-muted" data-i18n="MSG0209">%{画像の優先順位：申請時の画像＞デザイン時の画像＞ダミー画像＞ブランク}%</span>
+	<div class="col-sm-6 form-group">
+		<img id="sampleImage" />
+		<div>
+			<input id="file" type="file" />
+			<button id="btnClearImage" class="" data-i18n="btnClear"></button>
+		</div>
+	</div>
+</div>

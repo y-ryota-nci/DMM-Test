@@ -1,0 +1,122 @@
+<!-- 文書ファイルブロック -->
+<article id="docBlock0006">
+	<div class="panel panel-default">
+		<div id="a1" class="panel-heading clearfix">
+			<span id="docBlock0006_expansion" class="collapse_btn collapsed" role="button" data-toggle="collapse" data-target="#docBlock0006_contents">
+				<i class="fa fa-chevron-down"></i><span data-field="blockName">#{文書ファイル}</span>
+			</span>
+			<div class="topend_btn">
+				<a href="#pageend" class="pageend">END</a>
+			</div>
+			<div class="topend_btn">
+				<a href="#pagetop" class="pagetop">TOP</a>
+			</div>
+		</div>
+
+		<div id="docBlock0006_contents" class="panel-body panel-collapse collapse">
+			<div class="form-horizontal col-lg-12 col-md-12 col-sm-12">
+				<div class="col-md-3 mB10 mB10_sp">
+					<button id="btnUploadFile" class="btn btn-default btn-sm"><i class="fa fa-file"></i><span data-i18n="btnFileUpload">#{ファイルを選択...}</span></button>
+					<input type="file" id="fileUpload" class="hide" multiple />
+					<button id="btnDeleteFile" class="btn btn-default btn-sm"><i class="fa fa-trash"></i><span data-i18n="btnDelete">#{削除}</span></button>
+				</div>
+				<div class="col-md-9 mB10 mB10_sp text-right">
+					<i class="fa fa-lg fa-lock">:<span data-i18n="unableEdit">#{編集不可}</span></i>
+					<i class="fa fa-lg fa-unlock-alt">:<span data-i18n="editing">#{編集中}</span></i>
+					<i class="fa fa-lg fa-edit">:<span data-i18n="editOrRefer">#{編集/参照}</span></i>
+					<i class="fa fa-lg fa-download">:<span data-i18n="download">#{ダウンロード}</span></i>
+					<i class="fa fa-lg fa-copy">:<span data-i18n="copy">#{コピー}</span></i>
+					<i class="fa fa-lg fa-arrows">:<span data-i18n="move">#{移動}</span></i>
+					<i class="fa fa-lg fa-trash">:<span data-i18n="delete">#{削除}</span></i>
+				</div>
+			</div>
+			<div id="divDocFiles" class="table-responsive">
+				<table id="docFiles" class="table table-bordered table-hover table-striped responsive">
+					<colgroup>
+						<col style="width:40px;">
+						<col class="col-xs-3">
+						<col class="col-xs-2">
+						<col class="col-xs-2">
+						<col class="col-xs-5">
+					</colgroup>
+					<thead>
+						<tr>
+							<th data-i18n=""></th>
+							<th data-i18n="fileName">#{ファイル名}</th>
+							<th data-i18n="version">#{バージョン}</th>
+							<th data-i18n="processing">#{処理}</th>
+							<th data-i18n="comment">#{コメント}</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+					<tfoot class="hide template">
+						<tr>
+							<td>
+								<input type="checkbox" class="selectable" >
+								<span class="hide" data-field="docFileId">#{docFileId}</span>
+								<span class="hide" data-field="version">#{version}</span>
+								<span class="hide" data-field="docFileDataId">#{docFileDataId}</span>
+							</td>
+							<td>
+								<a href="javascript:void(0)" data-field="fileName" class="lnkDownloadDocFile">#{fileName}</a>
+								<span data-field="fileName">#{fileName}</span>
+							</td>
+							<td>
+								<div class="dispVersion">
+									<span class="" data-field="majorVersion"></span>
+									<span>.</span>
+									<span class="" data-field="minorVersion"></span>
+								</div>
+								<div class="inputVersion input-group">
+									<input type="text" data-field="majorVersion" class="form-control text-right required" maxlength="3" data-validate='{"pattern":"integer", "min":0, "max":999}' />
+									<span class="input-group-addon">.</span>
+									<input type="text" data-field="minorVersion" class="form-control text-right required" maxlength="3" data-validate='{"pattern":"integer", "min":0, "max":999}' />
+								</div>
+							</td>
+							<td class="processing">
+								<a href="javascript:void(0);"><i class="fa fa-fw fa-lg hide fa-lock"></i></a>
+								<a href="javascript:void(0);"><i class="fa fa-fw fa-lg hide fa-unlock-alt"></i></a>
+								<a href="javascript:void(0);"><i class="fa fa-fw fa-lg hide fa-edit"></i></a>
+								<a href="javascript:void(0);"><i class="fa fa-fw fa-lg hide fa-download"></i></a>
+								<a href="javascript:void(0);"><i class="fa fa-fw fa-lg hide fa-copy"></i></a>
+								<a href="javascript:void(0);"><i class="fa fa-fw fa-lg hide fa-arrows"></i></a>
+								<a href="javascript:void(0);"><i class="fa fa-fw fa-lg hide fa-trash"></i></a>
+							</td>
+							<td>
+								<span data-field="comments"></span>
+								<input type="text" data-field="comments" class="form-control" data-validate='{"maxByteUtf8" : 4000}'></input>
+							</td>
+						</tr>
+						<!--
+						<tr>
+							<td>
+								<input type="checkbox" class="selectable" >
+								<span class="hide" data-field="docFileId">#{docFileId}</span>
+								<span class="hide" data-field="docFileDataId">#{docFileDataId}</span>
+							</td>
+							<td>
+								<a href="javascript:void(0)" data-field="fileName" class="lnkDownloadDocFile">#{fileName}</a>
+							</td>
+							<td>
+								<div class="input-group">
+									<input type="text" data-field="majorVersion" class="form-control text-right required" maxlength="3" data-validate='{"pattern":"integer", "min":0, "max":999}' />
+									<span class="input-group-addon">.</span>
+									<input type="text" data-field="minorVersion" class="form-control text-right required" maxlength="3" data-validate='{"pattern":"integer", "min":0, "max":999}' />
+								</div>
+							</td>
+							<td>
+							</td>
+							<td>
+								<input type="text" id="comments" class="form-control" data-validate='{"maxByteUtf8" : 4000}'></input>
+							</td>
+						</tr>
+						-->
+					</tfoot>
+				</table>
+				<div id="docFileDragableArea">
+					<div class="form-group col-sm-12 hidden-xs dragZone" data-i18n="dragAndDrop">#{ここにドラッグドロップすることでファイルアップロードが行われます}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</article>

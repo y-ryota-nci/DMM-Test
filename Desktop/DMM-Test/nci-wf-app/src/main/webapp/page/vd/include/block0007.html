@@ -1,0 +1,65 @@
+<!-- 承認者情報ブロック -->
+<article id="block0007">
+	<div class="panel panel-default">
+		<div id="a1" class="panel-heading clearfix">
+			<span id="block0007_expansion" class="collapse_btn collapsed" role="button" data-toggle="collapse" data-target="#block0007_contents">
+				<i class="fa fa-chevron-down"></i><span data-field="blockName">#{承認者情報}</span>
+			</span>
+<!-- 			<div class="topend_btn"> -->
+<!-- 				<a href="#pagetop" class="pagetop">TOP</a> -->
+<!-- 				<a href="#pageend" class="pageend">END</a> -->
+<!-- 			</div> -->
+		</div>
+
+		<div id="block0007_contents" class="panel-body panel-collapse collapse">
+			<button id="btnOpenRouteStatus" class="btn btn-default">
+				<span data-i18n="btnRouteStatus">#{承認状況}</span>
+			</button>
+
+			<table id="tblRoute" class="table table-condensed responsive">
+				<colgroup>
+					<col class="col-xs-3" />
+					<col class="col-xs-6 col-md-3" />
+					<col class="col-md-2 hidden-xs hidden-sm" />
+					<col class="col-md-1 hidden-xs hidden-sm" />
+					<col class="col-xs-3" />
+				</colgroup>
+
+				<thead>
+					<tr>
+						<th data-i18n="step">#{ステップ}</th>
+						<th data-i18n="approver">#{承認者}</th>
+						<th data-i18n="organization" class=" hidden-xs hidden-sm">#{組織}</th>
+						<th data-i18n="post" class=" hidden-xs hidden-sm">#{役職}</th>
+						<th data-i18n="proxyUser3">#{代理者}</th>
+					</tr>
+				</thead>
+
+				<tbody></tbody>
+
+				<tfoot class="template hide">
+					<!-- 並行承認用 -->
+					<tr class="parallel">
+						<th colspan="2">
+							<a href="javascript:void(0);" class="parallel" data-field="activityDefName">#{activityDefName}</a>
+						</th>
+						<th colspan="2" class="hidden-xs hidden-sm"></th>
+						<th></th>
+						<td data-field="activityDefCode" class="hide">#{activityDefCode}</td>
+					</tr>
+					<!-- 通常 -->
+					<tr class="normal">
+						<th data-field="activityDefName">#{activityDefName}</th>
+						<td>
+							<span class="glyphicon glyphicon-arrow-right arrow invisible"></span>
+							<span data-field="userName">#{userName}</span>
+						</td>
+						<td data-field="organizationName"class="hidden-xs hidden-sm">#{organizationName}</td>
+						<td data-field="postName" class="hidden-xs hidden-sm">#{postName}</td>
+						<td data-field="proxyUsers" data-html-escaped>#{proxyUsers}</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+</article>

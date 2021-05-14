@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src='../../assets/nci/tray.js'></script>
+	<script src="./bd0809.js"></script>
+	<title>BD0809 予算分析明細確認画面</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="col-xs-12">
+		<article class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">予算分析明細確認画面</h1>
+			</div>
+		</article><!--/.row-->
+
+		<article class="row mB40 mB40_sp">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#condition-contents"><i class="fa fa-chevron-up"></i><span data-i18n="searchCondition">検索条件</span></div>
+					<div id="condition-contents" class="panel-collapse collapse in">
+						<div class="panel-body">
+							<form id="formCondition" class="tableBox col-sm-12">
+								<input type="hidden" id="companyCd" />
+								<input type="hidden" id="yrCd" />
+								<input type="hidden" id="organizationCodeLv2" />
+								<input type="hidden" id="organizationCodeLv3" />
+								<input type="hidden" id="rcvCostPayTp" />
+								<input type="hidden" id="mm" />
+								<input type="hidden" id="bgtItmCd" />
+								<div class="">
+									<div class="tr">
+										<div class="th col-sm-2"><span>組織</span></div>
+										<div class="td col-sm-4"><input id="sbmtrDptNm" type="text" class="form-control" maxlength="100" /></div>
+										<div class="th col-sm-2"><span>申請者</span></div>
+										<div class="td col-sm-4"><input id="sbmtrNm" type="text" class="form-control" maxlength="100" /></div>
+									</div>
+									<div class="tr">
+										<div class="th col-sm-2"><span>取引先</span></div>
+										<div class="td col-sm-4"><input id="splrNmKj" type="text" class="form-control" maxlength="100" /></div>
+										<div class="th col-sm-2"><span>案件No</span></div>
+										<div class="td col-sm-4"><input id="applicationNo" type="text" class="form-control" maxlength="12" /></div>
+									</div>
+									<div class="tr">
+										<div class="th col-sm-2"><span>案件明細No</span></div>
+										<div class="td col-sm-4"><input id="applicationDtlNo" type="text" class="form-control" maxlength="3" data-validate='{"pattern" : "integer", "min": 1, "max" : 999 }' /></div>
+										<div class="th col-sm-2"><span>管理科目</span></div>
+										<div class="td col-sm-4"><input id="mngaccNm" type="text" class="form-control" maxlength="30" /></div>
+									</div>
+									<div class="tr">
+										<div class="th col-sm-2"><span>費目</span></div>
+										<div class="td col-sm-4"><input id="itmexpsNm" type="text" class="form-control" maxlength="60" /></div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-xs-3">
+						</div>
+						<div class="col-xs-6 text-center">
+							<button id="btnSearch" class="btn btn-primary btn-wide"><i class="fa fa-search"></i><span data-i18n="btnSearch">検索</span></button>
+							<button id="btnReset" class="btn btn-default btn-wide"><i class="fa fa-refresh"></i><span data-i18n="btnReset">リセット</span></button>
+						</div>
+						<div class="col-xs-3 text-right">
+							<button id="btnBack" class="btn btn-default btn-wide"><i class="fa fa-reply"></i><span data-i18n="btnBack">戻る</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article><!--/.row-->
+
+		<article id="seach-result" class="row hide">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#result-contents"><i class="fa fa-chevron-up"></i><span data-i18n="searchResult">検索結果</span></div>
+					<div id="result-contents" class="panel-body panel-collapse collapse in">
+						<!-- ページ制御 -->
+						<div class="fixed-table-pagination row">
+							<div class="pull-left col-sm-4 col-lg-3">
+								<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+							</div>
+							<div class="pull-left col-sm-8 col-lg-6 text-center">
+								<ul class="pagination"></ul>
+							</div>
+							<div class="pull-right pagination-detail col-sm-12 col-lg-3">
+								<span data-i18n="rowCountPerPage">1ページの行数</span>
+								<select class="pageSize"></select>
+							</div>
+						</div>
+
+						<div class="table-responsive">
+							<table class="table table-bordered table-hover table-striped responsive">
+								<colgroup>
+									<col style="width:120px" />
+									<col style="width:90px" />
+									<col style="width:250px" />
+									<col style="width:250px" />
+									<col style="width:150px" />
+									<col style="width:150px" />
+									<col style="width:120px" />
+									<col style="width:120px" />
+								<thead>
+									<tr>
+										<th class="text-center"><a href="#" data-sort="APPLICATION_NO, APPLICATION_DTL_NO">案件No</a>
+										<th class="text-center"><a href="#" data-sort="APPLICATION_DTL_NO, APPLICATION_NO">案件明細No</a>
+										<th class="text-center"><a href="#" data-sort="SUBJECT, APPLICATION_NO, APPLICATION_DTL_NO">件名</a>
+										<th class="text-center"><a href="#" data-sort="SPLR_NM_KJ, APPLICATION_NO, APPLICATION_DTL_NO">取引先</a>
+										<th class="text-center">管理科目
+										<th class="text-center"><a href="#" data-sort="ITMEXPS_NM1, ITMEXPS_NM2, APPLICATION_NO, APPLICATION_DTL_NO">費目</a>
+										<th class="text-center"><a href="#" data-sort="BUMON_CD, APPLICATION_NO, APPLICATION_DTL_NO">部門コード</a>
+										<th class="text-center"><a href="#" data-sort="AMT_JPY_INCTAX, APPLICATION_NO, APPLICATION_DTL_NO">金額(税抜)</a>
+
+								<tbody></tbody>
+
+								<tfoot class="template hide">
+									<tr>
+										<td>
+											<a data-field="applicationNo" href="#" class="open-document"></a>
+											<span class="hide" data-field="companyCd"></span>
+										</td>
+										<td data-field="applicationDtlNo" class="text-center">
+										<td data-field="subject">
+										<td data-field="splrNmKj">
+										<td data-field="mngaccNm">
+										<td><span data-field="itmexpsNm1"></span>&nbsp;<span data-field="itmexpsNm2"></span>
+										<td data-field="bumonCd">
+										<td data-field="amt" class="text-right" data-validate='{ "pattern" : "numeric" }'>
+								</tfoot>
+							 </table>
+						</div>
+
+						<!-- ページ制御 -->
+						<div class="fixed-table-pagination row">
+							<div class="pull-left col-sm-4 col-lg-3">
+								<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+							</div>
+							<div class="pull-left col-sm-8 col-lg-6 text-center">
+								<ul class="pagination"></ul>
+							</div>
+							<div class="pull-right pagination-detail col-sm-12 col-lg-3">
+								<span data-i18n="rowCountPerPage">1ページの行数</span>
+								<select class="pageSize"></select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article><!--/.row-->
+	</section>	<!--/.main-->
+
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src="./ti0000.js"></script>
+	<title>#{TI0000 汎用テーブル検索(パーツ)}</title>
+</head>
+<body>
+	<header class="container"></header>
+
+	<section class="col-xs-12">
+		<article class="row">
+			<h1 class="page-header">汎用マスタ検索</h1>
+		</article><!--/.row-->
+
+		<!-- 検索条件のテンプレート -->
+		<article id="condTemplate" class="hide">
+			<!-- 単一テキストボックス -->
+			<div id="cond-singleText">
+				<input type="text" class="form-control" />
+			</div>
+			<!-- 範囲テキストボックス -->
+			<div id="cond-rangeText" class="input-group">
+				<div class="has-feedback">
+					<input type="text" class="form-control from" />
+				</div>
+				<div class="input-group-addon" data-i18n="fromTo">～</div>
+				<div class="has-feedback">
+					<input type="text" class="form-control to" />
+				</div>
+			</div>
+			<!-- 単一ドロップダウンリスト -->
+			<div id="cond-singleDropdown">
+				<select class="form-control"></select>
+			</div>
+			<!-- 範囲ドロップダウンリスト -->
+			<div id="cond-rangeDropdown" class="input-group">
+				<div class="has-feedback">
+					<select class="form-control from"></select>
+				</div>
+				<div class="input-group-addon" data-i18n="fromTo">～</div>
+				<div class="has-feedback">
+					<select class="form-control to"></select>
+				</div>
+			</div>
+		</article>
+
+		<article class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#condition-contents"><i class="fa fa-chevron-up"></i><span data-i18n="searchCondition">検索条件</span></div>
+				<div id="condition-contents" class="panel-collapse collapse in">
+					<form id="formCondition" class="panel-body">
+						<div id="tableBox" class="tableBox">
+							<!-- ********************* -->
+							<!-- ここに検索条件が差し込まれる -->
+							<!-- ********************* -->
+						</div>
+					</form>
+				</div>
+				<div class="form-group text-center">
+					<button id="btnSearch" class="btn btn-primary">
+						<i class="glyphicon glyphicon-search"></i>
+						<span data-i18n="btnFilter">#{btnFilter}</span>
+					</button>
+					<button id="btnReset" class="btn btn-default">
+						<i class="glyphicon glyphicon-refresh"></i>
+						<span data-i18n="btnReset">#{btnReset}</span>
+					</button>
+					<button id="btnClose" class="btn btn-default" data-close>
+						<i class="glyphicon glyphicon-share-alt"></i>
+						<span data-i18n="btnClose">#{閉じる}</span>
+					</button>
+				</div>
+			</div>
+		</article>
+
+		<article id="seach-result" class="row invisible">
+			<!-- 検索結果サブタイトル -->
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#result-contents"><i class="fa fa-chevron-up"></i><span data-i18n="searchResult">検索結果</span></div>
+				<div id="result-contents" class="panel-body panel-collapse collapse in">
+
+					<!-- ページ制御 -->
+					<div class="fixed-table-pagination row">
+						<div class="pull-left col-sm-4 col-md-3">
+							<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+						</div>
+						<div class="pull-left col-sm-8 col-md-6 text-center">
+							<ul class="pagination"></ul>
+						</div>
+						<div class="pull-right pagination-detail col-sm-12 col-md-3">
+							<span data-i18n="rowCountPerPage">1ページの行数</span>
+							<select class="pageSize"></select>
+						</div>
+					</div>
+
+					<!-- 検索結果本体 -->
+					<div class="table-responsive">
+						<table id="tblResult" class="table table-bordered table-hover table-striped table-condensed responsive">
+							<colgroup>
+								<col style="width:30px" />
+								<!-- ********************* -->
+								<!-- ここに列幅が差し込まれる   -->
+								<!-- ********************* -->
+							</colgroup>
+
+							<thead>
+								<tr>
+									<th class="text-center"></th>
+									<!-- ********************* -->
+									<!-- ここに検索ヘッダが差し込まれる   -->
+									<!-- ********************* -->
+							</thead>
+
+							<tbody></tbody>
+
+							<tfoot class="template hide">
+								<tr>
+									<th class="text-center"><input type="radio" name="rdoSelect" disabled="disabled" />
+									<!-- ********************* -->
+									<!-- ここに検索結果が差し込まれる   -->
+									<!-- ********************* -->
+							</tfoot>
+						</table>
+					</div>
+
+					<!-- ページ制御 -->
+					<div class="fixed-table-pagination row">
+						<div class="pull-left col-sm-4 col-lg-3">
+							<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+						</div>
+						<div class="pull-left col-sm-8 col-lg-6 text-center">
+							<ul class="pagination"></ul>
+						</div>
+						<div class="pull-right pagination-detail col-sm-12 col-lg-3">
+							<span data-i18n="rowCountPerPage">1ページの行数</span>
+							<select class="pageSize"></select>
+						</div>
+					</div>
+
+					<div class="form-group text-center">
+						<button id="btnSelect" class="btn btn-primary" disabled>
+							<i class="glyphicon glyphicon-ok-sign"></i>
+							<span data-i18n="btnSelect">#{選択}</span>
+						</button>
+						<button id="btnClose2" class="btn btn-default" data-close>
+							<i class="glyphicon glyphicon-share-alt"></i>
+							<span data-i18n="btnClose">#{閉じる}</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</article>
+	</section>
+</body>
+</html>

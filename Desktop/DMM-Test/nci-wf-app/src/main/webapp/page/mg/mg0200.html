@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style>
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<!-- 	<script src="../../assets/whhg-font/custom.js"></script> -->
+<!-- 	<script src="../../assets/nci/original.js"></script> -->
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src="./mg0200.js"></script>
+	<title>mg0200 会計カレンダマスタ</title>
+</head>
+<body>
+
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="col-xs-12">
+	<!-- <article id="MG0200" class="container"> -->
+		<article class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">mg0200</h1>
+			<div class="sub-title"><span>会計カレンダマスタ</span></div>
+			</div>
+		</article><!--/.row-->
+
+		<article class="row mB40 mB40_sp">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-collapse sliders collapse in" id="condition-contents" aria-expanded="true">
+						<div class="panel-body">
+							<form class="tableBox col-lg-12 col-md-12 col-sm-12" id="formCondition">
+								<div class="tr">
+									<div class="col-lg-2 col-md-2 col-sm-2 th"><label class="required">年月</label></div>
+									<div class="col-lg-10 col-md-10 col-sm-10 td">
+										<div class="col-xs-3">
+											<div class="has-feedback">
+												<input class="companyCd" id="companyCd" type="hidden" readonly/>
+												<input class="form-control required ymPicker" id="clndYm" type="text" data-validate='{"pattern":"ym"}'> <i class="glyphicon glyphicon-calendar form-control-feedback"> </i>
+											</div>
+										</div>
+										<div class="col-xs-7">
+											<div class="has-feedback">
+												<button class="btn btnSearch" id="btnSearch" style="width: 50px; height: 29px; padding: 2px;">
+													<span>表示</span>
+												</button>
+												<button class="btn btnPrev" id="btnPrev" style="width: 50px; height: 29px; padding: 2px;">
+													<span>&lt;&lt;</span>
+												</button>
+												<button class="btn btnNext" id="btnNext" style="width: 50px; height: 29px; padding: 2px;">
+													<span>&gt;&gt;</span>
+												</button>
+												<button class="btn btnCreate" id="btnCreate" style="width: 50px; height: 29px; padding: 2px;">
+													<span>生成</span>
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="form-group" style="margin-top:5px;">
+						<div class="col-xs-12">
+						</div>
+						<div class="col-xs-12 text-center">
+							<div style="float:right;">
+								<button id="btnUpload" class="btn btn-warning">
+									<i class="glyphicon glyphicon-cloud-upload"></i>
+									<span data-i18n="btnUpload">アップロード</span>
+								</button>
+								<button id="btnDownload" class="btn btn-success">
+									<i class="glyphicon glyphicon-cloud-download"></i>
+									<span data-i18n="btnDownload">ダウンロード</span>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+
+		<article class="row hide" id="resultArea">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-body panel-collapse collapse in" id="result-contents" >
+						<div class="table-responsive">
+							<div class="col-sm-12 col-lg-12">
+								<table class="table table-bordered table-hover table-striped responsive" style="min-width:680px;">
+									<colgroup>
+										<col style="width: 60px;">
+										<col style="width: 40px;">
+										<col style="width: 70px;">
+										<col style="width: 90px;">
+										<col style="width: 110px;">
+										<col style="width: 110px;">
+										<col style="width: 110px;">
+										<col style="width: 90px;">
+									</colgroup>
+									<thead>
+										<tr>
+											<th><span>日付</span></th>
+											<th><span>曜日</span></th>
+											<th><span>休日区分</span></th>
+											<th><span>銀行休日区分</span></th>
+											<th><span>決済区分(購買)</span></th>
+											<th><span>決済区分(債務)</span></th>
+											<th><span>決済区分(財務)</span></th>
+											<th><span>月次締め時間</span></th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+									<tfoot class="template hide">
+										<tr>
+											<td data-field="clndDt" style="text-align: center;"></td>
+											<td data-field="clndDayNm" style="text-align: center;"></td>
+											<td>
+												<select data-field="hldayTp" class="required">
+													<option value="0" label=""/>
+													<option value="1" label="休日"/>
+												</select>
+											</td>
+											<td>
+												<select data-field="bnkHldayTp" class="required">
+													<option value="0" label=""/>
+													<option value="1" label="休日"/>
+												</select>
+											</td>
+											<td>
+												<select data-field="stlTpPur" class="required">
+													<option value="1" label="決算＆当月"/>
+													<option value="2" label="当月"/>
+												</select>
+											</td>
+											<td>
+												<select data-field="stlTpFncobl" class="required">
+													<option value="1" label="決算＆当月"/>
+													<option value="2" label="当月"/>
+												</select>
+											</td>
+											<td>
+												<select data-field="stlTpFncaff" class="required">
+													<option value="1" label="決算＆当月"/>
+													<option value="2" label="当月"/>
+												</select>
+											</td>
+											<td>
+												<input data-field="mlClsTmFmt" maxlength="5" class="form-control required" />
+											</td>
+											<td data-field="companyCd" class="hide"></td>
+											<td data-field="clndDay" class="hide"></td>
+											<td data-field="timestampUpdated" class="hide"></td>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row mB40 mB40_sp">
+				<div class="text-center">
+					<button id="btnUpdate" class="btn btn-primary btnUpdate hide">
+						<i class="glyphicon glyphicon-ok-sign"></i>
+						<span data-i18n="btnUpdate">#{更新}</span>
+					</button>
+				</div>
+			</div>
+		</article>
+
+		<section class="container">
+		</section>
+
+		<!-- Information -->
+		<div class="modal fade" id="mg0200Information">
+			<div class="modal-dialog dialog-sm center-modal">
+				<div class="modal-content">
+					<div class="modal-body lead">
+						<i class="glyphicon glyphicon-question-sign orange"></i>
+						<span id="mg0200InformationContents" class="modal-body"></span>
+					</div>
+					<div class="modal-footer">
+						<div class="form-group text-center">
+							<button class="btn btn-primary" data-dismiss="modal">
+								<i class="glyphicon glyphicon-ok"></i>
+								<span>OK</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- アップロードファイル選択ポップアップ -->
+		<div class="modal fade container" id="uploadFileSelect">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+						<h4 class="modal-title">会計カレンダーアップロード</h4>
+					</div>
+					<div class="modal-body">
+						<div style="padding: 0 30px 0 30px;">
+							<div class="row">
+								<label class="sub-title" id="error-alert-message_after_sub-title">
+									<span data-i18n="uploadFileInfo">アップロードファイル情報</span>
+								</label>
+							</div>
+							<div id="dragAndDropArea" class="row">
+								<div data-i18n="dragAndDrop" class="form-group col-sm-12 dragZone">ここにドラッグ＆ドロップすることでファイルアップロードが行われます</div>
+								<div class="form-group col-sm-12">
+									<input type="file" id="file" />
+								</div>
+							</div>
+							<div id="uploadFileArea" class="row hide">
+								<input type="hidden" id="encoded" />
+
+								<table class="table table-hover table-striped table-condensed">
+									<colgroup>
+										<col class="col-sm-10" />
+										<col class="col-sm-2" />
+									</colgroup>
+									<thead>
+										<tr>
+											<th data-i18n="fileName">#{ファイル名}</th>
+											<th class="text-center">会計カレンダ</th>
+									</thead>
+									<tbody>
+										<tr>
+											<td id="fileName">#{ファイル名}</td>
+											<td data-field="count" class="text-center">#{会計カレンダー数}</td>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<div id="btnUploadFileSelectContainer" class="form-group text-center">
+							<button id="btnUploadRegister" class="btn btn-primary">
+								<i class="glyphicon glyphicon-ok"></i>
+								<span>登録</span>
+							</button>
+							<button id="btnUploadReset" class="btn btn-default">
+								<i class="glyphicon glyphicon-refresh"></i>
+								<span data-i18n="btnReset">#{btnReset}</span>
+							</button>
+							<button class="btn btn-default" data-dismiss="modal">
+								<i class="glyphicon glyphicon-share-alt"></i>
+								<span>閉じる</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</section>
+</body>
+</html>

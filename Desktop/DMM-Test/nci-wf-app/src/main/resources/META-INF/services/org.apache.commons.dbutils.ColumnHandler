@@ -1,0 +1,2 @@
+#CLOBをStringとして読み込み用のカラムハンドラー
+jp.co.nci.iwf.util.NciClobColumnHandler

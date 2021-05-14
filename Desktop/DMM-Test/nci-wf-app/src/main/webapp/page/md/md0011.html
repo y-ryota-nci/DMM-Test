@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+<link rel="stylesheet" href="../../assets/nci/styles.css" />
+<link rel="stylesheet" href="../../assets/nci/original.css" />
+<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+<style>
+#editArea .parts {
+	float: left;
+	position: relative;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+#editArea .displayReadonly {
+	background: transparent;
+	border: 1px solid transparent;
+	cursor: default;
+	box-shadow : 0 0 0 0;
+	height: auto;
+	line-height: 1;
+}
+#editArea * {
+	font-size: 14px !important;
+}
+#editArea .btn>span {
+	font-size: 16px !important;
+}
+#editArea .modal-title {
+	font-size:19px !important;
+}
+h1 {
+	font-size: 22px !important;
+}
+.table-condensed>tbody>tr>td, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>td,
+.table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>thead>tr>th {
+	padding: 2px 5px 2px 5px;
+}
+.table>thead>tr>th {
+	height: 40px;
+}
+</style>
+<script src="../../assets/jquery/jquery.min.js"></script>
+<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<!-- 	<script src="../../assets/whhg-font/custom.js"></script> -->
+<!-- 	<script src="../../assets/nci/original.js"></script> -->
+<script src="../../assets/nci/NCI.js"></script>
+<script src='../../assets/nci/validate.js'></script>
+<script src="./md0011.js"></script>
+<title>MD0011管理 取引先マスタ</title>
+</head>
+<body>
+
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="col-xs-12">
+		<article>
+			<div>
+				<h1 class="page-header">MD0011</h1>
+			</div>
+		</article>
+
+		<div id="editArea" class="panel panel-default">
+			<div class="panel-body">
+				<article class="mB40 mB40_sp">
+					<!-- 基本情報 -->
+					<table class="table table-hover table-bordered table-condensed responsive">
+						<colgroup>
+							<col style="width: 10%; background-color: rgb(234, 241, 247);">
+							<col style="width: 15%; background-color: rgb(255, 255, 255);">
+							<col style="width: 10%; background-color: rgb(234, 241, 247);">
+							<col style="width: 15%; background-color: rgb(255, 255, 255);">
+							<col style="width: 10%; background-color: rgb(234, 241, 247);">
+							<col style="width: 15%; background-color: rgb(255, 255, 255);">
+							<col style="width: 10%; background-color: rgb(234, 241, 247);">
+							<col style="width: 15%; background-color: rgb(255, 255, 255);">
+						</colgroup>
+						<tbody>
+							<tr>
+								<td class="droppable" style="background-color: rgb(48, 117, 176);" colspan="8">
+									<label class="form-control-static" style="color: #ffffff">基本情報</label>
+								</td>
+							</tr>
+							<tr>
+								<!-- 会社コード -->
+								<td class="droppable">
+									<label class="form-control-static">会社コード</label>
+								</td>
+								<td class="droppable" colspan="3">
+									<article id="companyAddedInfo" class="parts col-xs-12 col-sm-3 col-md-3 col-lg-2 inputable">
+										<input type="text" class="form-control" readonly="readonly" data-role="text" style="margin-right: 2px;" />
+									</article>
+									<article id="companyNm" class="parts col-xs-12 col-sm-9 col-md-9 col-lg-10 inputable">
+										<input type="text" class="form-control" readonly="readonly" data-role="text" style="margin-right: 2px;" />
+									</article>
+
+									<input type="hidden" id="companyCd" value="" />
+								</td>
+								<!-- 取引先状態区分 -->
+								<td class="droppable">
+									<label class="form-control-static">取引先状態区分</label>
+								</td>
+								<td class="droppable">
+									<article id="trdStsTp" class="parts col-xs-12 inputable"></article>
+								</td>
+								<!-- 取引先コード -->
+								<td class="droppable">
+									<label class="form-control-static">取引先コード</label>
+								</td>
+								<td class="droppable">
+									<article id="splrCd" class="parts col-xs-12 inputable"></article>
+								</td>
+							</tr>
+							<tr>
+
+								<!-- 法人・個人区分 -->
+								<td class="droppable">
+									<label class="form-control-static">法人・個人区分</label>
+								</td>
+								<td class="droppable">
+									<article id="crpPrsTp" class="parts col-xs-12 inputable"></article>
+								</td>
+
+								<!-- 国内・海外区分 -->
+								<td class="droppable">
+									<label class="form-control-static">国内・海外</label>
+								</td>
+								<td class="droppable">
+									<article id="dmsAbrTp" class="parts col-xs-12 inputable"></article>
+								</td>
+
+								<!-- 国名 -->
+								<td class="droppable">
+									<label class="form-control-static">国名</label>
+								</td>
+								<td class="droppable">
+									<article id="lndNm" class="parts col-xs-12 inputable"></article>
+								</td>
+
+								<!-- 法人番号 -->
+								<td class="droppable">
+									<label for="crpNo" class="form-control-static">法人番号</label>
+								</td>
+								<td class="droppable">
+									<article id="crpNo" class="parts col-xs-12 inputable"></article>
+								</td>
+							</tr>
+							<tr>
+								<!-- 取引先名称（漢字） -->
+								<td class="droppable">
+									<label class="form-control-static">取引先名称（漢字）</label>
+								</td>
+								<td class="droppable" colspan="3">
+									<article id="splrNmKj" class="parts col-xs-12 inputable"></article>
+								</td>
+
+								<!-- 取引先名称（半角ｶﾅ） -->
+								<td class="droppable">
+									<label class="form-control-static">取引先名称（半角ｶﾅ）</label>
+								</td>
+								<td class="droppable" colspan="3">
+									<article id="splrNmKn" class="parts col-xs-12 inputable"></article>
+								</td>
+							</tr>
+							<tr>
+								<!-- 取引先名称（略称） -->
+								<td class="droppable">
+									<label class="form-control-static">取引先名称（略称）</label>
+								</td>
+								<td class="droppable" colspan="3">
+									<article id="splrNmS" class="parts col-xs-12 inputable"></article>
+								</td>
+
+								<!-- 取引先名称（英名） -->
+								<td class="droppable">
+									<article class="parts inputable parts-label">
+										<label for="splrNmE" class="form-control-static">取引先名称（英名）</label>
+									</article>
+								</td>
+								<td class="droppable" colspan="3">
+									<article id="splrNmE" class="parts col-xs-12 inputable"></article>
+								</td>
+							</tr>
+							<tr>
+								<!-- 郵便番号 -->
+								<td class="droppable">
+									<label class="form-control-static">郵便番号</label>
+								</td>
+								<td class="droppable">
+									<article id="zipCd" class="parts col-xs-12 inputable"></article>
+								</td>
+
+								<!-- 住所（都道府県） -->
+								<td class="droppable">
+									<label class="form-control-static">住所（都道府県）</label>
+								</td>
+								<td class="droppable" colspan="1">
+									<article id="adrPrfCd" class="parts col-xs-12 inputable"></article>
+								</td>
+
+								<!-- 住所（市区町村） -->
+								<td class="droppable">
+									<label class="form-control-static">住所（市区町村）</label>
+								</td>
+								<td class="droppable" colspan="3">
+									<article id="adr1" class="parts col-xs-12 inputable"></article>
+								</td>
+							</tr>
+							<tr>
+								<!-- 住所（町名/番地） -->
+								<td class="droppable">
+									<label class="form-control-static">住所（町名/番地）</label>
+								</td>
+								<td class="droppable" colspan="3">
+									<article id="adr2" class="parts col-xs-12 inputable"></article>
+								</td>
+
+								<!-- 住所（建物名） -->
+								<td class="droppable">
+									<label class="form-control-static">住所（建物名）</label>
+								</td>
+								<td class="droppable" colspan="3">
+									<article id="adr3" class="parts col-xs-12 inputable"></article>
+								</td>
+							</tr>
+							<tr>
+								<!-- 電話番号 -->
+								<td class="droppable">
+									<label class="form-control-static">電話番号</label>
+								</td>
+								<td class="droppable">
+									<article id="telNo" class="parts col-xs-12 inputable"></article>
+								</td>
+
+								<!-- FAX番号 -->
+								<td class="droppable">
+									<label class="form-control-static">FAX番号</label>
+								</td>
+								<td class="droppable">
+									<article id="faxNo" class="parts col-xs-12 inputable"></article>
+								</td>
+
+								<!-- 関係会社区分 -->
+								<td class="droppable">
+									<label class="form-control-static">関係会社区分</label>
+								</td>
+								<td class="droppable" colspan="3">
+									<article id="affcmpTp" class="parts col-xs-12 inputable"></article>
+								</td>
+							</tr>
+							<tr>
+								<!-- 有効開始日付 -->
+								<td class="droppable">
+									<label class="form-control-static">有効開始日付</label>
+								</td>
+								<td class="droppable">
+									<article id="vdDtS" class="parts col-xs-12 inputable has-feedback"></article>
+								</td>
+
+								<!-- 有効終了日付 -->
+								<td class="droppable">
+									<label class="form-control-static">有効終了日付</label>
+								</td>
+								<td class="droppable">
+									<article id="vdDtE" class="parts col-xs-12 inputable has-feedback"></article>
+								</td>
+
+								<!-- 部門コード -->
+								<td class="droppable">
+									<label class="form-control-static">部門コード</label>
+								</td>
+								<td class="droppable" colspan="3">
+									<article id="bumonCd" class="parts col-xs-12 inputable has-feedback sm-4 col-md-3 col-lg-3 "></article>
+									<article id="bumonNm" class="parts col-xs-12 inputable has-feedbacksm-8 col-md-9 col-lg-9 ""></article>
+								</td>
+							</tr>
+							<tr>
+								<!-- 備考 -->
+								<td class="droppable">
+									<label class="form-control-static">備考</label>
+								</td>
+								<td class="droppable" colspan="7">
+									<article id="rmk" class="parts col-xs-12 inputable"></article>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<br>
+
+					<!-- 取引先口座管理情報 -->
+					<article>
+						<table class="table table-hover table-bordered table-condensed responsive">
+							<colgroup>
+								<col style="width: 100%; background-color: rgb(255, 255, 255);">
+							</colgroup>
+							<tbody>
+								<tr>
+									<td class="droppable" style="background-color: rgb(48, 117, 176);">
+										<label class="form-control-static" style="color: #ffffff">取引先口座管理情報</label>
+									</td>
+								</tr>
+								<tr>
+									<td class="droppable">
+
+										<article id="seach-result" class="hide">
+											<div class="">
+												<table class="table table-striped table-bordered table-condensed responsive" style="min-width:960px;">
+													<colgroup>
+														<col style="width:50px">
+															<col class="col-xs-1" style="background-color: #fff;">
+															<col class="col-xs-1" style="background-color: #fff;">
+															<col class="col-xs-1" style="background-color: #fff;">
+															<col class="col-xs-1" style="background-color: #fff;">
+															<col class="col-xs-1" style="background-color: #fff;">
+															<col class="col-xs-1" style="background-color: #fff;">
+															<col class="col-xs-1" style="background-color: #fff;">
+															<col class="col-xs-1" style="background-color: #fff;">
+															<col class="col-xs-1" style="background-color: #fff;">
+															<col class="col-xs-1" style="background-color: #fff;">
+															<col class="col-xs-1" style="background-color: #fff;">
+															<col class="col-xs-1" style="background-color: #fff;">
+														</colgroup>
+													<thead>
+														<tr>
+															<th class="line-number" rowspan="3" style="background-color: rgb(234, 241, 247);">No</th>
+															<th colspan="4" style="background-color: rgb(234, 241, 247);"><span class="" >振込先銀行</span></th>
+															<th colspan="4" style="background-color: rgb(234, 241, 247);"><span class="">振込先支店</span></th>
+															<th colspan="4" style="background-color: rgb(234, 241, 247);"><span class="">振込先口座種別</span></th>
+														</tr>
+														<tr>
+															<th colspan="2" style="background-color: rgb(234, 241, 247);"><span class="">振込先口座番号</span></th>
+															<th colspan="4" style="background-color: rgb(234, 241, 247);"><span class="">振込先口座名</span></th>
+															<th colspan="6" style="background-color: rgb(234, 241, 247);"><span class="">振込先口座名（半角ｶﾅ）</span></th>
+														</tr>
+														<tr>
+															<th colspan="3" style="background-color: rgb(234, 241, 247);"><span class="">振込手数料負担区分</span></th>
+															<th colspan="3" style="background-color: rgb(234, 241, 247);"><span class="">休日処理区分</span></th>
+															<th colspan="2" style="background-color: rgb(234, 241, 247);"><span class="">振込先銀行口座コード（SuperStream）</span></th>
+															<th colspan="4" style="background-color: rgb(234, 241, 247);"><span class="">振込元銀行口座</span></th>
+														</tr>
+													</thead>
+													<tbody id="results"></tbody>
+
+													<tfoot class="template hide">
+														<tr>
+															<th class="line-number" rowspan="3">
+																<article class="no"></article>
+															</th>
+															<td colspan="4" style="background-color: #fff;">
+																<article class="bnkCd parts col-xs-12 col-sm-4 col-md-3 col-lg-3 inputable"></article>
+																<article class="bnkNm parts col-xs-12 col-sm-8 col-md-9 col-lg-9 inputable"></article>
+															</td>
+															<td colspan="4" style="background-color: #fff;">
+																<article class="bnkbrcCd parts col-xs-12 col-sm-4 col-md-3 col-lg-3 inputable"></article>
+																<article class="bnkbrcNm parts col-xs-12 col-sm-8 col-md-9 col-lg-9 inputable"></article>
+															</td>
+															<td colspan="4" style="background-color: #fff;">
+																<article class="bnkaccTp parts inputable col-xs-12"></article>
+															</td>
+														</tr>
+														<tr>
+															<td colspan="2" style="background-color: #fff;">
+																<article class="bnkaccNo parts col-xs-12 inputable"></article>
+															</td>
+															<td colspan="4" style="background-color: #fff;">
+																<article class="bnkaccNm parts col-xs-12 inputable"></article>
+															</td>
+															<td colspan="6" style="background-color: #fff;">
+																<article class="bnkaccNmKn parts col-xs-12 inputable"></article>
+															</td>
+														</tr>
+														<tr>
+															<td colspan="3" style="background-color: #fff;">
+																<article class="payCmmOblTp parts col-xs-12 inputable"></article>
+															</td>
+															<td colspan="3" style="background-color: #fff;">
+																<article class="hldTrtTp parts col-xs-12 inputable"></article>
+															</td>
+															<td colspan="2" style="background-color: #fff;">
+																<article class="payeeBnkaccCdSs parts col-xs-12 inputable"></article>
+															</td>
+															<td colspan="4" style="background-color: #fff;">
+																<article class="srcBnkaccNm parts col-xs-12 inputable"></article>
+															</td>
+														</tr>
+													</tfoot>
+												</table>
+											</div>
+											<!-- ページ制御 -->
+											<div class="fixed-table-pagination">
+												<div class="pull-left col-sm-4 col-lg-3">
+													<span class="pagination-info">9999件中 9990 - 9999件目表示</span>
+												</div>
+												<div class="pull-left col-sm-8 col-lg-6 text-center">
+													<ul class="pagination"></ul>
+												</div>
+												<div class="pull-right pagination-detail col-sm-12 col-lg-3">
+													<span data-i18n="rowCountPerPage">1ページの行数</span> <select class="pageSize"></select>
+												</div>
+											</div>
+										</article>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</article>
+				</article>
+			</div>
+		</div>
+
+		<div class="form-group" style="padding-bottom:50px;">
+			<div class="text-center">
+				<div class="row">
+					<div class="form-group text-center">
+						<button class="btn btn-primary default-enabled" id="btnUpdate">
+							<i class="glyphicon glyphicon-ok-sign"> </i>
+							<span data-i18n="btnUpdate">更新 </span>
+						</button>
+						<button class="btn btn-default default-enabled" id="btnChangeMode">
+							<i class="glyphicon glyphicon-edit"></i>
+							<span data-i18n="btnEdit">編集 </span>
+						</button>
+						<button class="btn btn-default default-enabled" id="btnBack">
+							<i class="glyphicon glyphicon-share-alt"> </i>
+							<span data-i18n="btnBack">戻る </span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Information -->
+		<div class="modal fade" id="md0011Information">
+			<div class="modal-dialog dialog-sm center-modal">
+				<div class="modal-content">
+					<div class="modal-body lead">
+						<i class="glyphicon glyphicon-question-sign orange"></i>
+						<span id="md0011InformationContents" class="modal-body"></span>
+					</div>
+					<div class="modal-footer">
+						<div class="form-group text-center">
+							<button class="btn btn-primary" data-dismiss="modal">
+								<i class="glyphicon glyphicon-ok"></i>
+								<span>OK</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

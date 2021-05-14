@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="../../assets/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+<link rel="stylesheet"
+	href="../../assets/font-awesome/font-awesome.min.css" />
+<link rel="stylesheet" href="../../assets/nci/styles.css" />
+<link rel="stylesheet" href="../../assets/nci/original.css" />
+<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+<style type="text/css">
+</style>
+<!-- コンテナ固有のカスタムCSSスタイル -->
+<style type="text/css" id="customCssStyleTag"></style>
+<script src="../../assets/jquery/jquery.min.js"></script>
+<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+<script
+	src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="../../assets/nci/NCI.js"></script>
+<script src="../../assets/nci/codeBook.js"></script>
+<script src="../../assets/nci/validate.js"></script>
+<script id="outside-javascript"></script>
+<!-- 外部Javascript読み込み用SCRIPTタグ -->
+<script src='../../endpoint/javascript/static/enabledEvaluate.js'></script>
+<script src="../../assets/nci/enabledCondition.js"></script>
+<script src="../../assets/nci/calculate.js"></script>
+<script src="../../assets/nci/parts.js"></script>
+<script src="../../assets/nci/suggestion.js"></script><!-- サジェスチョン関数 -->
+<!-- パーツ共通関数 -->
+<script src="./vd0115.js"></script>
+<title>#{VD0115 プレビュー}</title>
+</head>
+<body>
+	<header></header>
+
+	<section class="container">
+		<article class="row">
+			<h1 class="page-header">プレビュー</h1>
+			<label data-i18n="MSG0189">コンテナのプレビューでは「画面に紐付いている有効条件や計算式」が読み込まれないため、一部機能が動作しません。その場合は画面のプレビューで動作確認してください。</label>
+		</article>
+		<!--/.row-->
+
+		<div class="row panel panel-default">
+			<!-- 検索結果サブタイトル -->
+			<div class="panel-heading" data-i18n="preview">#{プレビュー}</div>
+
+			<div id="editArea" class="col-xs-12"></div>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row text-center">
+			<button id="btnValidateClient" class="btn btn-primary" disabled>
+				<i class="glyphicon glyphicon-check"></i> <span
+					data-i18n="btnValidateClient">バリデーション(クライアント)</span>
+			</button>
+			<button id="btnValidateServer" class="btn btn-primary" disabled>
+				<i class="glyphicon glyphicon-check"></i> <span
+					data-i18n="btnValidateServer">バリデーション(サーバー)</span>
+			</button>
+			<button id="btnDispBusinessInfo" class="btn btn-primary" disabled>
+				<i class="glyphicon glyphicon-check"></i> <span
+					data-i18n="btnDispBusinessInfo">業務管理項目の表示</span>
+			</button>
+			<button id="btnClose" class="btn btn-default">
+				<i class="glyphicon glyphicon-ok-circle"></i> <span
+					data-i18n="btnClose">閉じる</span>
+			</button>
+		</div>
+	</section>
+
+	<!-- 業務管理項目エリア -->
+	<div id="businessInfoArea" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header sub-title">
+					<span data-i18n="businessInfoName"></span>
+				</div>
+				<div class="modal-body">
+					<dl id="businessInfo"></dl>
+				</div>
+				<div class="modal-footer text-center">
+					<button class="btn btn-default" data-dismiss="modal">
+						<i class="glyphicon glyphicon-ok-circle"></i> <span
+							data-i18n="btnClose">閉じる</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

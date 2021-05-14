@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<link rel="stylesheet" href="./vd0170.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/jsPlumb/jsplumb.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="./vd0170.js"></script>
+	<title> {VD0170 承認状況}</title>
+</head>
+<body>
+	<header></header>
+
+	<section class="col-xs-12">
+		<article class="row">
+			<h1 class="page-header">承認状況</h1>
+		</article><!--/.row-->
+
+		<article class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix"><span id="processDefName">#{プロセス定義名}</span></div>
+
+				<div id="route"></div>
+			</div>
+		</article><!--/.row-->
+	</section>
+
+	<section class="container">
+		<div class="row form-group text-center">
+			<button id="btnClose" class="btn btn-default" data-close>
+				<i class="glyphicon glyphicon-share-alt"></i>
+				<span data-i18n="btnClose">#{閉じる}</span>
+			</button>
+		</div>
+	</section>
+</body>
+</html>

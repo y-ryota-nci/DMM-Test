@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+<link rel="stylesheet" href="../../assets/nci/app.css" />
+<style type="text/css">
+</style>
+<script src="../../assets/jquery/jquery.min.js"></script>
+<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="../../assets/nci/NCI.js"></script>
+<script src="../../assets/nci/validate.js"></script>
+<script src="./mm0309.js"></script>
+<title>#{MM0309 アクション機能作成}</title>
+</head>
+<body>
+<header></header>
+<section id="inputed" class="container">
+	<div>
+		<span class="screen-name">#{MM0309}</span>
+		<label class="sub-title" data-i18n="functionSetting"></label>
+		<div class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-3 control-label required" data-i18n="function">#{ファンクション}</label>
+				<div class="col-sm-5">
+					<div class="input-group">
+						<span id="corporationCode" class="hide">#{corporationCode}</span>
+						<span id="processDefCode" class="hide">#{processDefCode}</span>
+						<span id="processDefDetailCode" class="hide">#{processDefDetailCode}</span>
+						<span id="activityDefCode" class="hide">#{activityDefCode}</span>
+						<span id="seqNoActionDef" class="hide">#{seqNoActionDef}</span>
+						<select id="functionCode" class="form-control required"></select>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label required" data-i18n="executionTimingType">#{前後処理}</label>
+				<div class="col-sm-7"><select id="executionTimingType" class="form-control"></select></div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label" data-i18n="functionExecutionOrder">#{実行順序}</label>
+				<div class="col-sm-7"><span id="functionExecutionOrder" class="form-control">#{functionExecutionOrder}</span></div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label" data-i18n="sortOrder">#{並び順}</label>
+				<div class="col-sm-7"><input id="sortOrder" type="text" class="form-control" maxlength="5" data-validate='{"pattern" : "integer", "min": 1, "max" : 99999 }' /></div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label" data-i18n="functionParameter">#{アクション機能パラメーター}</label>
+				<div class="col-sm-7">
+					<input type="text" data-field="functionParameter01" class="form-control" maxlength="300" />
+					<input type="text" data-field="functionParameter02" class="form-control" maxlength="300" />
+					<input type="text" data-field="functionParameter03" class="form-control" maxlength="300" />
+					<input type="text" data-field="functionParameter04" class="form-control" maxlength="300" />
+					<input type="text" data-field="functionParameter05" class="form-control" maxlength="300" />
+					<input type="text" data-field="functionParameter06" class="form-control" maxlength="300" />
+					<input type="text" data-field="functionParameter07" class="form-control" maxlength="300" />
+					<input type="text" data-field="functionParameter08" class="form-control" maxlength="300" />
+					<input type="text" data-field="functionParameter09" class="form-control" maxlength="300" />
+					<input type="text" data-field="functionParameter10" class="form-control" maxlength="300" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label" data-i18n="functionSkipFlag" for="functionSkipFlag">#{スキップ時機能実行}</label>
+				<div class="col-sm-7"><span class="form-control"><input type="checkbox" id="functionSkipFlag" value="1"></span></div>
+			</div>
+			<div class="form-group text-center">
+				<button id="btnCreate" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnAdd">#{追加}</span>
+				</button>
+				<button id="btnClose" class="btn btn-default">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</section>
+</body>
+</html>

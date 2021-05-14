@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+<link rel="stylesheet" href="../../assets/nci/app.css" />
+<link rel="stylesheet" href="./mm0302.css" />
+<style type="text/css">
+</style>
+<script src="../../assets/jquery/jquery.min.js"></script>
+<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../assets/jsPlumb/jsplumb.min.js"></script>
+<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="../../assets/nci/NCI.js"></script>
+<script src="../../assets/nci/validate.js"></script>
+<script src="./mm0302.js"></script>
+<title>#{MM0302 ルート編集}</title>
+</head>
+<body>
+<header class="container-fluid">
+	<div id="nav"></div>
+</header>
+<section class="container">
+	<div>
+		<span class="screen-name">#{MM0302}</span>
+	</div>
+	<div>
+		<div class="inline-group sub-title">
+			<div class="col-xs-6 col-md-6 text-left"><label data-i18n="routeDesigner">#{ルートデザイナ}</label></div>
+			<div class="col-xs-6 col-md-6 text-right pull-right">
+				<button class="btn btn-default btn-sm btn-back">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnBack">#{戻る}</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</section>
+<section id="contents-body" class="container hide">
+	<div id="designArea" class="panel panel-default col-md-9 disable-select">
+		<div id="componentArea" class="row panel-heading"></div>
+		<div id="routeArea" class="row panel-body"></div>
+		<div id="connectionMenu" class="modal fade" role="dialog">
+			<div class="modal-dialog modal-sm">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-body">
+						<span id="conditionDefUniqueKey" class="hide"></span>
+						<ul class="nav nav-pills nav-stacked">
+							<li class="dropdown">
+								<a id="expressionDefSelectMenu" href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span data-i18n="conditionalExpressionSetting">#{条件式設定}</span><span class="caret"></span></a>
+								<ul id="expressionDefItems" class="dropdown-menu" aria-labelledby="expressionDefSelectMenu"></ul>
+							</li>
+							<li><a href="javascript:void(0)" class="btn-update" data-i18n="conditionalExpressionRemove">#{条件式削除}</a></li>
+							<li class="dropdown">
+								<a id="businessProcessStatusSelectMenu" href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span data-i18n="businessProcessStatus">#{遷移状態}</span><span class="caret"></span></a>
+								<ul id="businessProcessStatusItems" class="dropdown-menu" aria-labelledby="businessProcessStatusSelectMenu"></ul>
+							</li>
+							<li><a href="javascript:void(0)" class="btn-remove" data-i18n="transitionDestinationRemove">#{遷移先削除}</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="propertyArea" class="panel panel-info col-md-3 disable-select">
+		<div class="row panel-heading">
+			<article class="ac-container">
+				<input id="processDefInfo" type="checkbox" class="ac-trigger" checked="checked"/>
+				<label for="processDefInfo" class="disable-select ac-label sub-title" style="margin-top: 0px;">
+					<i class="glyphicon glyphicon-plus-sign"></i>
+					<span data-i18n="processInfo">#{プロセス情報}</span>
+					<i class="glyphicon glyphicon-chevron-up arrow-up"></i>
+					<i class="glyphicon glyphicon-chevron-down arrow-down"></i>
+				</label>
+				<div class="ac-contents">
+					<div id="processDefContents">
+						<form id="processDef" class="row">
+							<table class="col-sm-12 form-horizontal">
+								<colgroup>
+									<col class="col-sm-4">
+									<col class="col-sm-8">
+								</colgroup>
+								<tbody>
+									<tr class="form-group-sm">
+										<td class="control-label text-left"><span data-i18n="universalCode">#{コード}</span></td>
+										<td class="form-control-static"><span data-field="corporationCode" class="hide"></span><span data-field="processDefCode">#{processDefCode}</span><span>-</span><span data-field="processDefDetailCode">#{processDefDetailCode}</span></td>
+									</tr>
+									<tr class="form-group-sm">
+										<td class="control-label"><span data-i18n="universalName">#{名称}</span></td>
+										<td class="control-input"><input type="text" data-field="processDefName" class="form-control input-sm required" maxlength="30" data-validate='{"maxLength" : 30}' /></td>
+									</tr>
+								</tbody>
+							</table>
+							<table class="col-sm-12 form-horizontal">
+								<colgroup>
+									<col class="col-sm-6">
+									<col class="col-sm-6">
+								</colgroup>
+								<tbody>
+									<tr class="form-group-sm">
+										<td>
+											<button type="button" class="btn btn-success btn-xs btn-update"><i class="glyphicon glyphicon-ok-sign"></i><span data-i18n="btnUpdate">#{更新}</span></button>
+											<button type="button" class="btn btn-danger btn-xs btn-remove"><i class="glyphicon glyphicon-trash"></i><span data-i18n="btnDelete">#{削除}</span></button>
+										</td>
+										<td class="text-right">
+											<button type="button" class="btn btn-default btn-xs btn-detail" data-toggle="collapse" data-target="#processDef div.collapse"><i class="glyphicon glyphicon-collapse-down"></i><span data-i18n="btnDetail">#{詳細情報}</span></button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="collapse">
+								<table class="col-sm-12 form-horizontal">
+									<colgroup>
+										<col class="col-sm-4">
+										<col class="col-sm-8">
+									</colgroup>
+									<tbody>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="description">#{説明}</span></td>
+											<td class="control-input"><textarea data-field="description" class="form-control input-sm" rows="2" data-validate='{"maxByteUtf8": 1000}' maxlength="1000"></textarea></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="sortOrder">#{並び順}</span></td>
+											<td class="control-input"><input type="text" data-field="sortOrder" class="form-control input-sm" maxlength="5" data-validate='{"pattern" : "integer", "min": 1, "max" : 99999 }' /></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="startDate">#{開始日}</span></td>
+											<td class="control-input">
+												<div class="has-feedback">
+													<input type="text" data-field="validStartDate" class="form-control input-sm ymdPicker required" data-validate='{"to" : "#processDef input[data-field=validEndDate]", "pattern" : "date" }'/>
+													<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+												</div>
+											</td>
+
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="endDate">#{終了日}</span></td>
+											<td class="control-input">
+												<div class="has-feedback">
+													<input type="text" data-field="validEndDate" class="form-control input-sm ymdPicker required" data-validate='{"from" : "#processDef input[data-field=validStartDate]" , "pattern" : "date"}'/>
+													<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+												</div>
+											</td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="executionTerm">#{実行期間}</span></td>
+											<td class="control-input form-inline">
+												<select data-field="executionTermUnitType" class="form-control input-sm required"></select>
+												<input type="text" data-field="executionTerm" class="form-control input-sm text-right" maxlength="3" data-validate='{"pattern" : "integer", "min": 1, "max" : 999 }' />
+											</td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="processOpeType">#{操作区分}</span></td>
+											<td class="control-input"><select data-field="processOpeType" class="form-control input-sm required"></select></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label" colspan="2"><label class="control-label"><input type="checkbox" data-field="batchProcessingFlag" value="1"><span data-i18n="batchProcessingFlag">#{一括処理可能フラグ}</span></label></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label" colspan="2"><label class="control-label"><input type="checkbox" data-field="commentDisplayFlag" value="1"><span data-i18n="commentDisplayFlag">#{コメント表示フラグ}</span></label></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</form>
+					</div>
+				</div>
+			</article>
+			<article class="ac-container">
+				<input id="expressionDefInfo" type="checkbox" class="ac-trigger" checked="checked"/>
+				<label for="expressionDefInfo" class="disable-select ac-label sub-title" style="margin-top: 0px;">
+					<i class="glyphicon glyphicon-plus-sign"></i>
+					<span data-i18n="expressionInfo">#{比較条件式情報}</span>
+					<i class="glyphicon glyphicon-chevron-up arrow-up"></i>
+					<i class="glyphicon glyphicon-chevron-down arrow-down"></i>
+				</label>
+				<div class="ac-contents">
+					<div id="expressionDefContents">
+						<form id="expressionDef" class="row">
+							<div id="expressionDefs">
+								<table class="col-sm-12 form-horizontal table responsive">
+									<colgroup>
+										<col class="col-sm-12">
+									</colgroup>
+									<thead>
+										<tr class="form-group-sm">
+											<th class="control-label"><span data-i18n="universalName">#{名称}</span></th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+									<tfoot class="template hide">
+										<tr class="form-group-sm">
+											<td class="control-label"><a href="javascript:void(0)" data-field="conditionExpressionAll"></a></td>
+											<td class="hide"><span data-field="uniqueKey">#{uniqueKey}</span></td>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+							<table class="col-sm-12 form-horizontal">
+								<colgroup>
+									<col class="col-sm-8">
+									<col class="col-sm-4">
+								</colgroup>
+								<tbody>
+									<tr class="form-group-sm">
+										<td>
+											<button type="button" class="btn btn-success btn-xs btn-create"><i class="glyphicon glyphicon-ok-sign"></i><span data-i18n="btnAdd">#{追加}</span></button>
+											<button type="button" class="btn btn-success btn-xs btn-update"><i class="glyphicon glyphicon-ok-sign"></i><span data-i18n="btnUpdate">#{更新}</span></button>
+											<button type="button" class="btn btn-danger btn-xs btn-remove"><i class="glyphicon glyphicon-trash"></i><span data-i18n="btnDelete">#{削除}</span></button>
+										</td>
+										<td class="text-right">
+											<button type="button" class="btn btn-default btn-xs btn-detail" data-toggle="collapse" data-target="#expressionDef div.collapse"><i class="glyphicon glyphicon-collapse-down"></i><span data-i18n="btnDetail">#{詳細情報}</span></button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="collapse">
+								<table class="col-sm-12 form-horizontal">
+									<colgroup>
+										<col class="col-sm-4">
+										<col class="col-sm-8">
+									</colgroup>
+									<tbody>
+										<tr class="form-group-sm">
+											<td class="control-input text-left" colspan="2">
+												<label class="control-label radio-inline"><input type="radio" name="expressionLeftType" data-field="expressionLeftType" value="1"><span data-i18n="variable">#{変数}</span></label>
+												<label class="control-label radio-inline"><input type="radio" name="expressionLeftType" data-field="expressionLeftType" value="2"><span data-i18n="condExpression">#{条件式}</span></label>
+											</td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="condition1">#{条件1}</span></td>
+											<td class="control-input text-left">
+												<select data-field="conditionExpressionLeft" class="form-control input-sm required"></select>
+											</td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="operatorType">#{比較式}</span></td>
+											<td class="control-input text-left"><select data-field="operatorType" class="form-control input-sm required"></select></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-input text-left" colspan="2">
+												<label class="control-label radio-inline"><input type="radio" name="expressionRightType" data-field="expressionRightType" value="1"><span data-i18n="variable">#{変数}</span></label>
+												<label class="control-label radio-inline"><input type="radio" name="expressionRightType" data-field="expressionRightType" value="9"><span data-i18n="inputValue">#{入力値}</span></label>
+												<label class="control-label radio-inline hide"><input type="radio" name="expressionRightType" data-field="expressionRightType" value="2" disabled="disabled"><span data-i18n="condExpression">#{条件式}</span></label>
+											</td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="condition2">#{条件2}</span></td>
+											<td class="control-input text-left">
+												<select data-field="conditionExpressionRight" class="form-control input-sm required"></select>
+												<input type="text" data-field="conditionExpressionRight" class="form-control input-sm required" maxlength="30" data-validate='{"maxByteUtf8" : 2000}' />
+											</td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="expressionName">#{条件名}</span></td>
+											<td class="control-input text-left"><input type="text" data-field="conditionExpressionAll" class="form-control input-sm" maxlength="650" data-validate='{"maxByteUtf8" : 2000}' /></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</form>
+					</div>
+				</div>
+			</article>
+			<article class="ac-container">
+				<input id="activityDefInfo" type="checkbox" class="ac-trigger" checked="checked"/>
+				<label for="activityDefInfo" class="disable-select ac-label sub-title" style="margin-top: 0px;">
+					<i class="glyphicon glyphicon-plus-sign"></i>
+					<span data-i18n="activityInfo">#{アクティビティ情報}</span>
+					<i class="glyphicon glyphicon-chevron-up arrow-up"></i>
+					<i class="glyphicon glyphicon-chevron-down arrow-down"></i>
+				</label>
+				<div class="ac-contents">
+					<div class="row message alert alert-warning"><i class="glyphicon glyphicon-info-sign"></i><span data-i18n="selectAnActivity">#{アクティビティを選択してください。}</span></div>
+					<div id="activityDefContents" class="hide">
+						<form id="activityDef" class="row">
+							<table class="col-sm-12 form-horizontal">
+								<colgroup>
+									<col class="col-sm-4">
+									<col class="col-sm-8">
+								</colgroup>
+								<tbody>
+									<tr class="form-group-sm">
+										<td class="control-label text-left"><span data-i18n="universalCode">#{コード}</span></td>
+										<td class="form-control-static">
+											<span data-field="corporationCode" class="hide"></span>
+											<span data-field="processDefCode" class="hide">#{processDefCode}</span>
+											<span data-field="processDefDetailCode" class="hide">#{processDefDetailCode}</span>
+											<span data-field="activityDefCode">#{activityDefCode}</span>
+										</td>
+									</tr>
+									<tr class="form-group-sm">
+										<td class="control-label"><span data-i18n="universalName">#{名称}</span></td>
+										<td class="control-input"><input type="text" data-field="activityDefName" class="form-control input-sm required" maxlength="30" data-validate='{"maxLength" : 30}' /></td>
+									</tr>
+								</tbody>
+							</table>
+							<table class="col-sm-12 form-horizontal">
+								<colgroup>
+									<col class="col-sm-6">
+									<col class="col-sm-6">
+								</colgroup>
+								<tbody>
+									<tr class="form-group-sm">
+										<td>
+											<button type="button" class="btn btn-success btn-xs btn-update"><i class="glyphicon glyphicon-ok-sign"></i><span data-i18n="btnUpdate">#{更新}</span></button>
+											<button type="button" class="btn btn-danger btn-xs btn-remove"><i class="glyphicon glyphicon-trash"></i><span data-i18n="btnDelete">#{削除}</span></button>
+										</td>
+										<td class="text-right">
+											<button type="button" class="btn btn-default btn-xs btn-detail" data-toggle="collapse" data-target="#activityDef div.collapse"><i class="glyphicon glyphicon-collapse-down"></i><span data-i18n="btnDetail">#{詳細情報}</span></button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="collapse">
+								<table class="col-sm-12 form-horizontal">
+									<colgroup>
+										<col class="col-sm-4">
+										<col class="col-sm-8">
+									</colgroup>
+									<tbody>
+										<tr class="form-group-sm parallel_hide">
+											<td class="control-label text-left" colspan="2"><span data-i18n="skipRuleType">#{スキップルール区分}</span></td>
+										</tr>
+										<tr class="form-group-sm parallel_hide">
+											<td class="control-input text-left" colspan="2"><select data-field="skipRuleType" class="form-control input-sm required"></select></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="description">#{説明}</span></td>
+											<td class="control-input"><textarea data-field="description" class="form-control input-sm" rows="2" data-validate='{"maxByteUtf8": 1000}' maxlength="1000"></textarea></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="activityType">#{属性}</span></td>
+											<td class="control-input"><select data-field="activityType" class="form-control input-sm required"></select></td>
+										</tr>
+										<tr class="form-group-sm parallel_hide">
+											<td class="control-label"><span data-i18n="classification">#{種別}</span></td>
+											<td class="control-input"><select data-field="activityKindType" class="form-control input-sm required"></select></td>
+										</tr>
+										<tr class="form-group-sm parallel_hide">
+											<td class="control-label"><span data-i18n="activityEndType">#{形式}</span></td>
+											<td class="control-input form-inline">
+												<select data-field="activityEndType" class="form-control input-sm required"></select>
+												<input type="text" data-field="activityEndValue" class="form-control input-sm text-right" maxlength="3" data-validate='{"pattern" : "integer", "min": 1, "max" : 999 }' />
+											</td>
+										</tr>
+										<tr class="form-group-sm parallel_hide">
+											<td class="control-label"><span data-i18n="displayCondition">#{表示条件}</span></td>
+											<td class="control-input"><select data-field="dcId" class="form-control input-sm"></select></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="waitType">#{待合区分}</span></td>
+											<td class="control-input"><select data-field="waitType" class="form-control input-sm required"></select></td>
+										</tr>
+										<tr class="form-group-sm parallel_hide">
+											<td class="control-label"><span data-i18n="executionTerm">#{実行期間}</span></td>
+											<td class="control-input form-inline">
+												<select data-field="executionTermUnitType" class="form-control input-sm required"></select>
+												<input type="text" data-field="executionTerm" class="form-control input-sm text-right" maxlength="3" data-validate='{"pattern" : "integer", "min": 1, "max" : 999 }' />
+											</td>
+										</tr>
+										<tr class="form-group-sm parallel_hide">
+											<td class="control-label"><span data-i18n="numberingCode">#{採番コード}</span></td>
+											<td class="control-input"><input type='text' data-field="numberingCode" class="form-control input-sm" maxlength="300" data-validate='{ "pattern" : "alphaSymbolNumber" }' /></td>
+										</tr>
+										<tr class="form-group-sm parallel_hide">
+											<td class="control-label"><span data-i18n="stampCode">#{スタンプコード}</span></td>
+											<td class="control-input"><input type='text' data-field="stampCode" class="form-control input-sm" maxlength="300" data-validate='{ "pattern" : "alphaSymbolNumber" }' /></td>
+										</tr>
+										<tr class="form-group-sm parallel_hide">
+											<td class="control-label" colspan="2"><label class="control-label"><input type="checkbox" data-field="pullbackFlag" value="1"><span data-i18n="pullbackFlag">#{引戻対象フラグ}</span></label></td>
+										</tr>
+										<tr class="form-group-sm parallel_hide">
+											<td class="control-label" colspan="2"><label class="control-label"><input type="checkbox" data-field="pullforwardFlag" value="1"><span data-i18n="pullforwardFlag">#{引上対象フラグ}</span></label></td>
+										</tr>
+										<tr class="form-group-sm parallel_hide">
+											<td class="control-label" colspan="2"><label class="control-label"><input type="checkbox" data-field="pullforwardControlType" value="1"><span data-i18n="pullforwardControlType">#{引上管理区分}</span></label></td>
+										</tr>
+										<tr class="form-group-sm parallel_hide">
+											<td class="control-label" colspan="2"><label class="control-label"><input type="checkbox" data-field="proxyProcessibleFlag" value="1"><span data-i18n="proxyProcessibleFlag">#{代理処理可能フラグ}</span></label></td>
+										</tr>
+										<tr class="form-group-sm parallel_hide">
+											<td class="control-label" colspan="2"><label class="control-label"><input type="checkbox" data-field="batchProcessingFlag" value="1"><span data-i18n="batchProcessingFlag">#{一括処理可能フラグ}</span></label></td>
+										</tr>
+										<tr class="form-group-sm parallel_hide">
+											<td class="control-label" colspan="2"><label class="control-label"><input type="checkbox" data-field="commentDisplayFlag" value="1"><span data-i18n="commentDisplayFlag">#{コメント表示フラグ}</span></label></td>
+										</tr>
+										<tr class="form-group-sm parallel_hide">
+											<td class="control-label" colspan="2"><label class="control-label"><input type="checkbox" data-field="attachedDocumentFlag" value="1"><span data-i18n="attachedDocumentFlag">#{ドキュメント添付可否フラグ}</span></label></td>
+										</tr>
+										<tr class="form-group-sm parallel_hide">
+											<td class="control-label" colspan="2"><label class="control-label"><input type="checkbox" data-field="changeAssignedFlag" value="1"><span data-i18n="changeAssignedFlag">#{参加者変更可能フラグ}</span></label></td>
+										</tr>
+										<tr class="form-group-sm parallel_hide">
+											<td class="control-label" colspan="2"><label class="control-label"><input type="checkbox" data-field="deletableActivityFlag" value="1"><span data-i18n="deletableActivityFlag">#{削除可能アクティビティフラグ}</span></label></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</form>
+					</div>
+				</div>
+			</article>
+			<article class="ac-container parallel_hide">
+				<input id="assignRoleInfo" type="checkbox" class="ac-trigger" checked="checked"/>
+				<label for="assignRoleInfo" class="disable-select ac-label sub-title" style="margin-top: 0px;">
+					<i class="glyphicon glyphicon-plus-sign"></i>
+					<span data-i18n="assignRoleInfo">#{参加者ロール情報}</span>
+					<i class="glyphicon glyphicon-chevron-up arrow-up"></i>
+					<i class="glyphicon glyphicon-chevron-down arrow-down"></i>
+				</label>
+				<div class="ac-contents">
+					<div class="row message alert alert-warning"><i class="glyphicon glyphicon-info-sign"></i><span data-i18n="selectAnActivity">#{アクティビティを選択してください。}</span></div>
+					<div id="assignRoleContents" class="hide">
+						<h5 class="row"><span data-i18n="assigned">#{参加者}</span></h5>
+						<form id="assignedDef" class="row">
+							<div id="assignedDefs">
+								<table class="col-sm-12 form-horizontal table responsive">
+									<colgroup>
+										<col class="col-sm-12">
+									</colgroup>
+									<thead>
+										<tr class="form-group-sm">
+											<th class="control-label"><span data-i18n="universalName">#{名称}</span></th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+									<tfoot class="template hide">
+										<tr class="form-group-sm">
+											<td class="control-label"><a href="javascript:void(0)" data-field="assignRoleName"></a></td>
+											<td class="hide"><span data-field="uniqueKey">#{uniqueKey}</span></td>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+							<table class="col-sm-12 form-horizontal">
+								<colgroup>
+									<col class="col-sm-8">
+									<col class="col-sm-4">
+								</colgroup>
+								<tbody>
+									<tr class="form-group-sm">
+										<td>
+											<button type="button" class="btn btn-success btn-xs btn-create"><i class="glyphicon glyphicon-ok-sign"></i><span data-i18n="btnAdd">#{追加}</span></button>
+											<button type="button" class="btn btn-success btn-xs btn-update"><i class="glyphicon glyphicon-ok-sign"></i><span data-i18n="btnUpdate">#{更新}</span></button>
+											<button type="button" class="btn btn-danger btn-xs btn-remove"><i class="glyphicon glyphicon-trash"></i><span data-i18n="btnDelete">#{削除}</span></button>
+										</td>
+										<td class="text-right">
+											<button type="button" class="btn btn-default btn-xs btn-detail" data-toggle="collapse" data-target="#assignedDef div.collapse"><i class="glyphicon glyphicon-collapse-down"></i><span data-i18n="btnDetail">#{詳細情報}</span></button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="collapse">
+								<table class="col-sm-12 form-horizontal">
+									<colgroup>
+										<col class="col-sm-4">
+										<col class="col-sm-8">
+									</colgroup>
+									<tbody>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="universalName">#{名称}</span></td>
+											<td class="control-input"><select data-field="assignRoleCode" class="form-control input-sm required"></select></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="conditionalExpression">#{比較条件式}</span></td>
+											<td class="control-input"><select data-field="expressionDefCode" class="form-control input-sm"></select></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="sortOrder">#{並び順}</span></td>
+											<td class="control-input"><input type="text" data-field="sortOrder" class="form-control input-sm" maxlength="5" data-validate='{"pattern" : "integer", "min": 1, "max" : 99999 }' /></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="startDate">#{開始日}</span></td>
+											<td class="control-input">
+												<div class="has-feedback">
+													<input type="text" data-field="validStartDate" class="form-control input-sm ymdPicker required" data-validate='{"to" : "#processDef input[data-field=validEndDate]", "pattern" : "date" }'/>
+													<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+												</div>
+											</td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="endDate">#{終了日}</span></td>
+											<td class="control-input">
+												<div class="has-feedback">
+													<input type="text" data-field="validEndDate" class="form-control input-sm ymdPicker required" data-validate='{"from" : "#processDef input[data-field=validStartDate]" , "pattern" : "date"}'/>
+													<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</form>
+
+						<h5 class="row"><span data-i18n="assignChange">#{参加者変更}</span></h5>
+						<form id="changeDef" class="row">
+							<div id="changeDefs">
+								<table class="col-sm-12 form-horizontal table responsive">
+									<colgroup>
+										<col class="col-sm-12">
+									</colgroup>
+									<thead>
+										<tr class="form-group-sm">
+											<th class="control-label"><span data-i18n="universalName">#{名称}</span></th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+									<tfoot class="template hide">
+										<tr class="form-group-sm">
+											<td class="control-label"><a href="javascript:void(0)" data-field="changeRoleName"></a></td>
+											<td class="hide"><span data-field="uniqueKey">#{uniqueKey}</span></td>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+							<table class="col-sm-12 form-horizontal">
+								<colgroup>
+									<col class="col-sm-8">
+									<col class="col-sm-4">
+								</colgroup>
+								<tbody>
+									<tr class="form-group-sm">
+										<td>
+											<button type="button" class="btn btn-success btn-xs btn-create"><i class="glyphicon glyphicon-ok-sign"></i><span data-i18n="btnAdd">#{追加}</span></button>
+											<button type="button" class="btn btn-success btn-xs btn-update"><i class="glyphicon glyphicon-ok-sign"></i><span data-i18n="btnUpdate">#{更新}</span></button>
+											<button type="button" class="btn btn-danger btn-xs btn-remove"><i class="glyphicon glyphicon-trash"></i><span data-i18n="btnDelete">#{削除}</span></button>
+										</td>
+										<td class="text-right">
+											<button type="button" class="btn btn-default btn-xs btn-detail" data-toggle="collapse" data-target="#changeDef div.collapse"><i class="glyphicon glyphicon-collapse-down"></i><span data-i18n="btnDetail">#{詳細情報}</span></button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="collapse">
+								<table class="col-sm-12 form-horizontal">
+									<colgroup>
+										<col class="col-sm-4">
+										<col class="col-sm-8">
+									</colgroup>
+									<tbody>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="universalName">#{名称}</span></td>
+											<td class="control-input"><select data-field="changeRoleCode" class="form-control input-sm required"></select></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="conditionalExpression">#{比較条件式}</span></td>
+											<td class="control-input"><select data-field="expressionDefCode" class="form-control input-sm"></select></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="sortOrder">#{並び順}</span></td>
+											<td class="control-input"><input type="text" data-field="sortOrder" class="form-control input-sm" maxlength="5" data-validate='{"pattern" : "integer", "min": 1, "max" : 99999 }' /></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="startDate">#{開始日}</span></td>
+											<td class="control-input">
+												<div class="has-feedback">
+													<input type="text" data-field="validStartDate" class="form-control input-sm ymdPicker required" data-validate='{"to" : "#processDef input[data-field=validEndDate]", "pattern" : "date" }'/>
+													<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+												</div>
+											</td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="endDate">#{終了日}</span></td>
+											<td class="control-input">
+												<div class="has-feedback">
+													<input type="text" data-field="validEndDate" class="form-control input-sm ymdPicker required" data-validate='{"from" : "#processDef input[data-field=validStartDate]" , "pattern" : "date"}'/>
+													<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</form>
+					</div>
+				</div>
+			</article>
+			<article class="ac-container">
+				<input id="actionDefInfo" type="checkbox" class="ac-trigger" checked="checked"/>
+				<label for="actionDefInfo" class="disable-select ac-label sub-title" style="margin-top: 0px;">
+					<i class="glyphicon glyphicon-plus-sign"></i>
+					<span data-i18n="actionInfo">#{アクション情報}</span>
+					<i class="glyphicon glyphicon-chevron-up arrow-up"></i>
+					<i class="glyphicon glyphicon-chevron-down arrow-down"></i>
+				</label>
+				<div class="ac-contents">
+					<div class="row message alert alert-warning"><i class="glyphicon glyphicon-info-sign"></i><span data-i18n="selectAnActivity">#{アクティビティを選択してください。}</span></div>
+					<div id="actionDefContents" class="hide">
+						<h5 class="row"><span data-i18n="action">#{アクション}</span></h5>
+						<form id="actionDef" class="row">
+							<div id="actionDefs">
+								<table class="col-sm-12 form-horizontal table responsive">
+									<colgroup>
+										<col class="col-sm-4">
+										<col class="col-sm-8">
+									</colgroup>
+									<thead>
+										<tr class="form-group-sm">
+											<th class="control-label text-center"><span>Default</span></th>
+											<th class="control-label"><span data-i18n="universalName">#{名称}</span></th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+									<tfoot class="template hide">
+										<tr class="form-group-sm">
+											<td class="text-center control-input"><input type="radio" name="defaultFlag" value="1" class="required" data-field="defaultFlag" /></td>
+											<td class="control-label"><a href="javascript:void(0)" data-field="actionName"></a></td>
+											<td class="hide">
+												<span data-field="actionType">#{actionType}</span>
+												<span data-field="uniqueKey">#{uniqueKey}</span>
+											</td>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+							<table class="col-sm-12 form-horizontal">
+								<colgroup>
+									<col class="col-sm-8">
+									<col class="col-sm-4">
+								</colgroup>
+								<tbody>
+									<tr class="form-group-sm">
+										<td>
+											<button type="button" class="btn btn-success btn-xs btn-create"><i class="glyphicon glyphicon-ok-sign"></i><span data-i18n="btnAdd">#{追加}</span></button>
+											<button type="button" class="btn btn-success btn-xs btn-update"><i class="glyphicon glyphicon-ok-sign"></i><span data-i18n="btnUpdate">#{更新}</span></button>
+											<button type="button" class="btn btn-danger btn-xs btn-remove"><i class="glyphicon glyphicon-trash"></i><span data-i18n="btnDelete">#{削除}</span></button>
+										</td>
+										<td class="text-right">
+											<button type="button" class="btn btn-default btn-xs btn-detail" data-toggle="collapse" data-target="#actionDef div.collapse"><i class="glyphicon glyphicon-collapse-down"></i><span data-i18n="btnDetail">#{詳細情報}</span></button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="collapse">
+								<table class="col-sm-12 form-horizontal">
+									<colgroup>
+										<col class="col-sm-4">
+										<col class="col-sm-8">
+									</colgroup>
+									<tbody>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="universalName">#{名称}</span></td>
+											<td class="control-input"><select data-field="actionCode" class="form-control input-sm required"></select></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="actionDefType">#{定義区分}</span></td>
+											<td class="control-input"><select data-field="actionDefType" class="form-control input-sm required"></select></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="sortOrder">#{並び順}</span></td>
+											<td class="control-input"><input type="text" data-field="sortOrder" class="form-control input-sm" maxlength="5" data-validate='{"pattern" : "integer", "min": 1, "max" : 99999 }' /></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label" colspan="2"><label class="control-label"><input type="checkbox" data-field="functionSkipFlag" value="1"><span data-i18n="functionSkipFlag">#{スキップ時機能実行}</span></label></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</form>
+						<h5 class="row"><span data-i18n="transitionDestination">#{遷移先}</span></h5>
+						<form id="conditionDef" class="row">
+							<div id="conditionDefs">
+								<table class="col-sm-12 form-horizontal table responsive">
+									<colgroup>
+										<col class="col-sm-12">
+									</colgroup>
+									<thead>
+										<tr class="form-group-sm">
+											<th class="control-label"><span data-i18n="transitionDestination">#{遷移先}</span></th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+									<tfoot class="template hide">
+										<tr class="form-group-sm">
+											<td class="control-label"><a href="javascript:void(0)" data-field="activityDefCodeTransitName"></a></td>
+											<td class="hide">
+												<span data-field="uniqueKey">#{uniqueKey}</span>
+											</td>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+							<table class="col-sm-12 form-horizontal">
+								<colgroup>
+									<col class="col-sm-8">
+									<col class="col-sm-4">
+								</colgroup>
+								<tbody>
+									<tr class="form-group-sm">
+										<td>
+											<button type="button" class="btn btn-success btn-xs btn-create"><i class="glyphicon glyphicon-ok-sign"></i><span data-i18n="btnAdd">#{追加}</span></button>
+											<button type="button" class="btn btn-success btn-xs btn-update"><i class="glyphicon glyphicon-ok-sign"></i><span data-i18n="btnUpdate">#{更新}</span></button>
+											<button type="button" class="btn btn-danger btn-xs btn-remove"><i class="glyphicon glyphicon-trash"></i><span data-i18n="btnDelete">#{削除}</span></button>
+										</td>
+										<td class="text-right">
+											<button type="button" class="btn btn-default btn-xs btn-detail" data-toggle="collapse" data-target="#conditionDef div.collapse"><i class="glyphicon glyphicon-collapse-down"></i><span data-i18n="btnDetail">#{詳細情報}</span></button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="collapse">
+								<table class="col-sm-12 form-horizontal">
+									<colgroup>
+										<col class="col-sm-4">
+										<col class="col-sm-8">
+									</colgroup>
+									<tbody>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="transitionDestination">#{遷移先}</span></td>
+											<td class="control-input"><select data-field="transitUniqueKey" class="form-control input-sm required"></select></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="businessProcessStatus">#{遷移状態}</span></td>
+											<td class="control-input"><select data-field="businessProcessStatus" class="form-control input-sm required"></select></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="businessActivityStatus">#{遷移元状態}</span></td>
+											<td class="control-input"><select data-field="businessActivityStatus" class="form-control input-sm required"></select></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="businessActivityStatusPre">#{遷移先状態}</span></td>
+											<td class="control-input"><select data-field="businessActivityStatusPre" class="form-control input-sm required"></select></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="conditionalExpression">#{比較条件式}</span></td>
+											<td class="control-input"><select data-field="expressionDefCode" class="form-control input-sm"></select></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="sortOrder">#{並び順}</span></td>
+											<td class="control-input"><input type="text" data-field="sortOrder" class="form-control input-sm" maxlength="5" data-validate='{"pattern" : "integer", "min": 1, "max" : 99999 }' /></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label" colspan="2"><label class="control-label"><input type="checkbox" data-field="defaultFlag" value="1"><span data-i18n="defaultFlag">#{デフォルトフラグ}</span></label></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label" colspan="2"><label class="control-label"><input type="checkbox" data-field="displayFlag" value="1"><span data-i18n="displayFlag">#{矢印表示フラグ}</span></label></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label" colspan="2"><label class="control-label"><input type="checkbox" data-field="transitCorporationType" value="1"><span data-i18n="transitCorporationType">#{遷移先会社指定区分}</span></label></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</form>
+						<h5 class="row"><span data-i18n="function">#{アクション機能}</span></h5>
+						<form id="functionDef" class="row">
+							<div id="functionDefs">
+								<table class="col-sm-12 form-horizontal table responsive">
+									<colgroup>
+										<col class="col-sm-12">
+									</colgroup>
+									<thead>
+										<tr class="form-group-sm">
+											<th class="control-label"><span data-i18n="universalName">#{名称}</span></th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+									<tfoot class="template hide">
+										<tr class="form-group-sm">
+											<td class="control-label"><a href="javascript:void(0)" data-field="functionName"></a></td>
+											<td class="hide">
+												<span data-field="uniqueKey">#{uniqueKey}</span>
+											</td>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+							<table class="col-sm-12 form-horizontal">
+								<colgroup>
+									<col class="col-sm-8">
+									<col class="col-sm-4">
+								</colgroup>
+								<tbody>
+									<tr class="form-group-sm">
+										<td>
+											<button type="button" class="btn btn-success btn-xs btn-create"><i class="glyphicon glyphicon-ok-sign"></i><span data-i18n="btnAdd">#{追加}</span></button>
+											<button type="button" class="btn btn-success btn-xs btn-update"><i class="glyphicon glyphicon-ok-sign"></i><span data-i18n="btnUpdate">#{更新}</span></button>
+											<button type="button" class="btn btn-danger btn-xs btn-remove"><i class="glyphicon glyphicon-trash"></i><span data-i18n="btnDelete">#{削除}</span></button>
+										</td>
+										<td class="text-right">
+											<button type="button" class="btn btn-default btn-xs btn-detail" data-toggle="collapse" data-target="#functionDef div.collapse"><i class="glyphicon glyphicon-collapse-down"></i><span data-i18n="btnDetail">#{詳細情報}</span></button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="collapse">
+								<table class="col-sm-12 form-horizontal">
+									<colgroup>
+										<col class="col-sm-4">
+										<col class="col-sm-8">
+									</colgroup>
+									<tbody>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="universalName">#{名称}</span></td>
+											<td class="control-input"><select data-field="functionCode" class="form-control input-sm required"></select></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="executionTimingType">#{前後処理}</span></td>
+											<td class="control-input"><select data-field="executionTimingType" class="form-control input-sm required"></select></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="functionExecutionOrder">#{実行順序}</span></td>
+											<td class="control-input"><input type="text" data-field="functionExecutionOrder" class="form-control input-sm required" maxlength="5" data-validate='{"pattern" : "integer", "min": 1, "max" : 99999 }' /></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label"><span data-i18n="sortOrder">#{並び順}</span></td>
+											<td class="control-input"><input type="text" data-field="sortOrder" class="form-control input-sm" maxlength="5" data-validate='{"pattern" : "integer", "min": 1, "max" : 99999 }' /></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label" colspan="2"><label class="control-label"><input type="checkbox" data-field="functionSkipFlag" value="1"><span data-i18n="functionSkipFlag">#{スキップ時機能実行フラグ}</span></label></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-label text-left" colspan="2"><span data-i18n="functionParameter">#{アクション機能パラメーター}</span></td>
+										</tr>
+										<tr class="form-group-sm">
+											<td class="control-input text-left" colspan="2">
+												<input type="text" data-field="functionParameter01" class="form-control input-sm" maxlength="300" />
+												<input type="text" data-field="functionParameter02" class="form-control input-sm" maxlength="300" />
+												<input type="text" data-field="functionParameter03" class="form-control input-sm" maxlength="300" />
+												<input type="text" data-field="functionParameter04" class="form-control input-sm" maxlength="300" />
+												<input type="text" data-field="functionParameter05" class="form-control input-sm" maxlength="300" />
+												<input type="text" data-field="functionParameter06" class="form-control input-sm" maxlength="300" />
+												<input type="text" data-field="functionParameter07" class="form-control input-sm" maxlength="300" />
+												<input type="text" data-field="functionParameter08" class="form-control input-sm" maxlength="300" />
+												<input type="text" data-field="functionParameter09" class="form-control input-sm" maxlength="300" />
+												<input type="text" data-field="functionParameter10" class="form-control input-sm" maxlength="300" />
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</form>
+					</div>
+				</div>
+			</article>
+		</div>
+	</div>
+</section>
+</body>
+</html>

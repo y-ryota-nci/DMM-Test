@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<link rel="stylesheet" href="../../assets/whhg-font/css/whhg.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./vd0031.js"></script>
+	<title>#{VD0031 画面設定}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="container">
+		<div class="row">
+			<span class="screen-name">#{VD0031}</span>
+
+			<label class="sub-title">
+				<span  data-i18n="screenSettings"></span>
+			</label>
+
+			<form class="form-horizontal" id="inputed">
+				<div class="form-group">
+					<label class="col-sm-4 control-label required" data-i18n="screenCode">#{画面コード}</label>
+					<div class="col-sm-8">
+						<input type="text" id="screenCode" class="form-control required" disabled />
+						<input type="hidden" id="screenId" />
+						<input type="hidden" id="version" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-4 control-label required" data-i18n="screenName">#{画面名}</label>
+					<div class="col-sm-8">
+						<input type="text" id="screenName" class="form-control required" maxlength="30" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-4 control-label required" data-i18n="scratchFlag">#{スクラッチ区分}</label>
+					<div class="col-sm-8">
+						<select id="scratchFlag" class="form-control required"></select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-4 control-label" data-i18n="containerInfo">#{コンテナ}</label>
+					<div class="col-sm-8">
+						<select id="containerId" class="form-control"></select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-4 control-label" data-i18n="screenCustomClass">画面カスタムクラス</label>
+					<div class="col-sm-8">
+						<input type="text" id="screenCustomClass" class="form-control" maxlength="300"
+								data-validate='{ "pattern" : "alphaSymbolNumber" }' />
+					</div>
+				</div>
+				<fieldset class="fieldset">
+					<legend data-i18n="event">イベント</legend>
+
+					<div class='form-group'>
+						<label class="col-sm-4 control-label" data-i18n='submitFuncName'>Submit時の関数名</label>
+						<div class="col-sm-8">
+							<input type='text' id='submitFuncName' class='form-control' maxlength='90'
+									data-validate='{ "pattern" : "alphaSymbolNumber" }' />
+						</div>
+					</div>
+					<div class='form-group'>
+						<label class="col-sm-4 control-label" data-i18n='submitFuncParam'>Submit時のパラメータ</label>
+						<div class="col-sm-8">
+							<input type='text' id='submitFuncParam' class='form-control' maxlength='100' />
+						</div>
+					</div>
+
+					<div class='form-group'>
+						<label class="col-sm-4 control-label" data-i18n='loadFuncName'>ロード時の関数名</label>
+						<div class="col-sm-8">
+							<input type='text' id='loadFuncName' class='form-control' maxlength='90'
+									data-validate='{ "pattern" : "alphaSymbolNumber" }' />
+						</div>
+					</div>
+					<div class='form-group'>
+						<label class="col-sm-4 control-label" data-i18n='loadFuncParam'>ロード時のパラメータ</label>
+						<div class="col-sm-8">
+							<input type='text' id='loadFuncParam' class='form-control' maxlength='100' />
+						</div>
+					</div>
+
+					<div class='form-group'>
+						<label class="col-sm-4 control-label" data-i18n='changeStartUserFuncName'>起案担当者変更時の関数名</label>
+						<div class="col-sm-8">
+							<input type='text' id='changeStartUserFuncName' class='form-control' maxlength='90'
+									data-validate='{ "pattern" : "alphaSymbolNumber" }' />
+						</div>
+					</div>
+					<div class='form-group'>
+						<label class="col-sm-4 control-label" data-i18n='changeStartUserFuncParam'>起案担当者変更時のパラメータ</label>
+						<div class="col-sm-8">
+							<input type='text' id='changeStartUserFuncParam' class='form-control' maxlength='100' />
+						</div>
+					</div>
+				</fieldset>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label" data-i18n="preview">#{プレビュー}</label>
+					<div class="col-sm-8">
+						<label>
+							<span data-i18n="displayCondition">表示条件</span>
+							<select id="dcId"></select>
+						</label>
+						<label>
+							<span data-i18n="trayType">トレイタイプ</span>
+							<select id="trayType"></select>
+						</label>
+						<button id="btnPreview" class="btn btn-info btn-sm" disabled>
+							<i class="glyphicon glyphicon-eye-open"></i>
+							<span data-i18n="btnPreview">プレビュー</span>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<div class="col-xs-5 text-left">
+				<button id='btnEC' class='btn btn-success btn-sm' disabled>
+					<i class='glyphicon glyphicon-briefcase'></i>
+					<span data-i18n='btnSetCondition'>条件設定</span>
+				</button>
+				<button id='btnCalc' class='btn btn-success btn-sm' disabled>
+					<i class='glyphicon glyphicon-usd'></i>
+					<span data-i18n='btnCalc'>計算式</span>
+				</button>
+				<button id="btnOutsideJavascript" class="btn btn-success btn-sm" disabled>
+					<i class='icon-scriptalt'></i>
+					<span data-i18n='btnJavascript'>JavaScript設定</span>
+				</button>
+				<button id="btnCopyProperty" class="btn btn-success btn-sm" disabled>
+					<i class='glyphicon glyphicon-book'></i>
+					<span data-i18n='btnCopyProperty'>パーツ属性のコピー</span>
+				</button>
+			</div>
+			<div class="col-xs-4 text-center">
+				<button id="btnUpdate" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnUpdate">#{更新}</span>
+				</button>
+				<button id="btnBack" class="btn btn-default">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnBack">#{戻る}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+
+	<div id="conds"></div>
+	<div id="calcs"></div>
+	<div id="scripts"></div>
+</body>
+</html>

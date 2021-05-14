@@ -1,0 +1,26 @@
+[${SITE_NAME}] Notice of delegating agent ${STAGING_ENV_STRING}
+
+Hi {TAGGET_USER_NAME} (Login ID: ${TARGET_USER_ID})
+
+Thank you for using ${SITE_NAME}.
+We are pleased to announce that you have left the agent for ${SOURCE_USER_NAME}.
+
+  Delegate from: ${SOURCE_USER_NAME}
+  Document type: ${PROCESS_DEF_NAME}
+  Duration: ${VALID_START_DATE} ~ ${VALID_END_DATE}
+
+
+━ About mail delivery ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+■ This e-mail is sent from a dedicated e-mail address.
+Even if you reply, we can not answer, so please be forewarned.
+■ If the link of the mail URL is broken, in the address column of your browser
+Please copy and paste and access.
+■ For personal information handling, please refer to the "Personal Information Protection Policy" page.
+  ${PRIVACY_POLICY_URL}
+
+[Contact Information]
+${CONTACT_NAME}
+${CONTACT_ZIPCODE}
+${CONTACT_ADDRESS}
+TEL ${CONTACT_TEL}
+Fax ${CONTACT_FAX}

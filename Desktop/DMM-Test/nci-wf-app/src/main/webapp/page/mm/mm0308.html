@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+<link rel="stylesheet" href="../../assets/nci/app.css" />
+<style type="text/css">
+</style>
+<script src="../../assets/jquery/jquery.min.js"></script>
+<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="../../assets/nci/NCI.js"></script>
+<script src="../../assets/nci/validate.js"></script>
+<script src="./mm0308.js"></script>
+<title>#{MM0308 遷移先作成}</title>
+</head>
+<body>
+<header></header>
+<section id="inputed" class="container">
+	<div>
+		<span class="screen-name">#{MM0308}</span>
+		<label class="sub-title" data-i18n="conditionSetting"></label>
+		<div class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-3 control-label required" data-i18n="transitionDestination">#{遷移先}</label>
+				<div class="col-sm-5">
+					<div class="input-group">
+						<span id="corporationCode" class="hide">#{corporationCode}</span>
+						<span id="processDefCode" class="hide">#{processDefCode}</span>
+						<span id="processDefDetailCode" class="hide">#{processDefDetailCode}</span>
+						<span id="activityDefCode" class="hide">#{activityDefCode}</span>
+						<span id="seqNoActionDef" class="hide">#{seqNoActionDef}</span>
+						<select id="transitUniqueKey" class="form-control required"></select>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label required" data-i18n="businessProcessStatus">#{遷移状態}</label>
+				<div class="col-sm-7"><select id="businessProcessStatus" class="form-control"></select></div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label required" data-i18n="businessActivityStatus">#{遷移元状態}</label>
+				<div class="col-sm-7"><select id="businessActivityStatus" class="form-control"></select></div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label required" data-i18n="businessActivityStatusPre">#{遷移先状態}</label>
+				<div class="col-sm-7"><select id="businessActivityStatusPre" class="form-control"></select></div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label" data-i18n="conditionalExpression">#{比較条件式}</label>
+				<div class="col-sm-7"><select id="expressionDefCode" class="form-control"></select></div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label" data-i18n="sortOrder">#{並び順}</label>
+				<div class="col-sm-7"><input id="sortOrder" type="text" class="form-control" maxlength="5" data-validate='{"pattern" : "integer", "min": 1, "max" : 99999 }' /></div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label" data-i18n="defaultFlag" for="defaultFlag">#{デフォルトフラグ}</label>
+				<div class="col-sm-7"><span class="form-control"><input type="checkbox" id="defaultFlag" value="1"></span></div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label" data-i18n="displayFlag" for="displayFlag">#{矢印表示フラグ}</label>
+				<div class="col-sm-7"><span class="form-control"><input type="checkbox" id="displayFlag" value="1"></span></div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label" data-i18n="transitCorporationType" for="transitCorporationType">#{遷移先会社指定区分}</label>
+				<div class="col-sm-7"><span class="form-control"><input type="checkbox" id="transitCorporationType" value="1"></span></div>
+			</div>
+			<div class="form-group hide">
+				<span id="conditionType"></span>
+				<span id="transitCorporationType"></span>
+			</div>
+			<div class="form-group text-center">
+				<button id="btnCreate" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnAdd">#{追加}</span>
+				</button>
+				<button id="btnClose" class="btn btn-default">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</section>
+</body>
+</html>

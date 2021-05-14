@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	#remarks:before {
+		content : " (";
+	}
+	#remarks:after {
+		content : ")";
+	}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./mm0121.js"></script>
+	<title>#{MM0121 お知らせ一覧}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="container">
+		<div id="inputedHeader" class="row">
+			<span class="screen-name">#{MM0120}</span>
+
+			<label class="sub-title">
+				<span  data-i18n="informationSetting"></span>
+			</label>
+
+			<dl class="dl-horizontal">
+				<dt class="form-control-static"><span class="form-control-static required" data-i18n="publishTo">公開先</span></dt>
+				<dd class="form-control-static">
+						<select id="corporationCode" class="form-control required"></select>
+						<span data-field="announcementId" class="hide"></span>
+						<span data-field="version" class="hide"></span>
+				</dd>
+
+				<dt class="form-control-static"><span class="form-control-static required" data-i18n="validTerm">有効期間</span></dt>
+				<dd class="form-control-static">
+					<div class="row">
+						<div class="col-sm-3">
+							<div class="has-feedback">
+								<input id="ymdStart" type="text" class="form-control ymdPicker required" maxlength="10"
+										data-validate='{"to" : "#ymdEnd", "pattern" : "date" }'/>
+								<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+							</div>
+						</div>
+						<div class="col-sm-2">
+							<input id="hhmmStart" class="form-control required" maxlength="5"
+								data-validate='{"from" : "#hhmmEnd", "pattern" : "time" }' />
+						</div>
+						<div class="col-sm-1 form-control-static text-center">～</div>
+						<div class="col-sm-3">
+							<div class="has-feedback">
+								<input id="ymdEnd" type="text" class="form-control ymdPicker required col-sm-6" maxlength="10"
+										data-validate='{"from" : "#ymdStart", "pattern" : "date" }'/>
+								<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+							</div>
+						</div>
+						<div class="col-sm-2">
+							<input id="hhmmEnd" class="form-control required col-sm-4" maxlength="5"
+								data-validate='{"from" : "#hhmmStart", "pattern" : "time" }' />
+						</div>
+					</div>
+				</dd>
+			</dl>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<!-- タブUI -->
+			<ul id="tabUI" class="nav nav-tabs"></ul>
+
+			<!-- タブのコンテンツ-->
+			<div id="tabContents" class="tab-content col-sm-12"></div>
+
+			<!-- タブのコンテンツのテンプレート-->
+			<div id="tabTemplate" class="hide">
+				<div class="tab-pane">
+					<dl class="dl-horizontal">
+						<dt class="form-control-static"><span class="required" data-i18n="title">#{件名}</span></dt>
+						<dd class="form-control-static">
+							<input data-field="subject" type="text" class="form-control" maxlength="100" />
+							<span data-field="localeCode" class="hide"></span>
+						</dd>
+
+						<dt class="form-control-static"><span class="required" data-i18n="contents">#{内容}</span></dt>
+						<dd class="form-control-static">
+							<textarea id="contents" class="form-control" rows="3" maxlength="1000"></textarea>
+						</dd>
+
+						<dt class="form-control-static"><span data-i18n="linkTitle">リンクのタイトル</span></dt>
+						<dd class="form-control-static">
+							<input type="text" class="form-control" id="linkTitle" maxlength="100" />
+						</dd>
+
+						<dt class="form-control-static"><span data-i18n="linkUrl">リンクのURL</span></dt>
+						<dd class="form-control-static">
+							<input type="text" class="form-control" id="linkUrl" maxlength="300" />
+						</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<div class="text-center">
+				<button id="btnRegister" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnRegister">#{登録}</span>
+				</button>
+				<button id="btnUpdate" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnUpdate">#{更新}</span>
+				</button>
+				<button id="btnBack" class="btn btn-default">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnBack">#{戻る}</span>
+				</button>
+				<button id="btnPreview" class="btn btn-info" disabled>
+					<i class="glyphicon glyphicon-eye-open"></i>
+					<span data-i18n="btnPreview">#{プレビュー}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+
+	<div id="divPreview" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<span data-field="subject"></span>
+						</div>
+						<div class="panel-body">
+							<div data-field="contents"></div>
+							<div class="text-right">
+								<a data-field="linkTitle" target="_blank"></a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer text-center">
+					<button class="btn btn-default" data-dismiss="modal">
+						<i class="glyphicon glyphicon-ok-sign"></i>
+						<span data-i18n="btnClose">#{btnClose}</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

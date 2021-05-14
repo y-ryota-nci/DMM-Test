@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./rm0510.js"></script>
+	<title>#{RM0510 利用者メニュー設定}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<div class="nonSideSearchArea">
+	<section id="inputed" class="container">
+		<div class='row'>
+			<span class="screen-name">#{RM0510}</span>
+			<label class="sub-title" data-i18n="menuRole">利用者ロール</label>
+
+			<div class="searchStyle ac-contents">
+				<div class="form-group searchConditionArea">
+					<label class="col-sm-3 control-label searchConditionTh" data-i18n="menuRoleCode">#{メニューロールコード}</label>
+					<div class="col-sm-7 searchConditionTd">
+						<input id="menuRoleCode" type="text" class="form-control required searchCond searchConditionText" maxlength="10" disabled />
+					</div>
+				</div>
+				<div class="form-group searchConditionArea">
+					<label class="col-sm-3 control-label searchConditionTh" data-i18n="menuRoleName">#{メニューロール名称}</label>
+					<div class="col-sm-7 searchConditionTd">
+						<input id="menuRoleName" type="text" class="form-control required searchCond searchConditionText" maxlength="100" disabled />
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="container">
+		<div id='searchResult' class='row'>
+			<label class="sub-title" data-i18n="accessibleMenu">#{利用者メニュー}</label>
+
+			<table id='tblAccessibleMenus' class='table table-hover table-striped table-condensed responsive'>
+				<colgroup>
+					<col class="col-md-1" />
+					<col class="col-md-4" />
+					<col class="col-md-3" />
+					<col class="col-md-2" />
+				</colgroup>
+
+				<thead>
+					<tr>
+						<th data-i18n='permission'>#{許可}</th>
+						<th data-i18n='menuName'>#{メニュー名称}</th>
+						<th data-i18n='setterName'>#{設定者}</th>
+						<th data-i18n='settingDate'>#{設定日}</th>
+					</tr>
+				</thead>
+
+				<tbody></tbody>
+
+				<tfoot class='hide template'>
+					<tr>
+						<td class="text-center"><input type="checkbox" class="selectable" data-field="exist" value="TRUE"/></td>
+						<td class="text-left" data-field="name">#{メニュー名称}</td>
+						<td class="text-left" data-field="userNameCreated">#{設定者}</td>
+						<td class="text-left" data-field="timestampCreated">#{設定日}</td>
+						<td class="hide" data-field="menuId"></td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</section>
+
+	<section class="container searchButtonArea">
+		<div class="row text-center">
+			<button id="btnUpdate" class="btn btn-primary searchButton">
+				<i class="glyphicon glyphicon-plus-sign"></i>
+				<span data-i18n="btnUpdate">#{更新}</span>
+			</button>
+			<button id="btnBack" class="btn btn-default searchButton">
+				<i class="glyphicon glyphicon-share-alt"></i>
+				<span data-i18n="btnBack">#{戻る}</span>
+			</button>
+		</div>
+	</section>
+	</div>
+</body>
+</html>

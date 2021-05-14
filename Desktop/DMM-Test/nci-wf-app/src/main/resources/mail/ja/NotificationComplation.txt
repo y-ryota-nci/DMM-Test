@@ -1,0 +1,23 @@
+[完了通知] ${SUBJECT}${STAGING_ENV_STRING}
+
+${TO_USER_NAME} 様${STAGING_ENV_STRING}
+
+標題のワークフローの処理が完了しました。
+
+申請番号	：${APPLICATION_NO}
+件　　名	：${SUBJECT}
+文書種別	：${PROCESS_DEF_NAME}
+起案担当	：${USER_NAME_OPERATION_START}
+起案部門	：${ORGANIZATION_NAME_START}
+
+処理の結果は、この案件のワークフローで詳細をご確認ください。
+
+※この案件のワークフローのリンクは以下の通りです。
+${DOMAIN_URL}/page/vd/vd0310.html?corporationCode=${CORPORATION_CODE}&processId=${PROCESS_ID}&activityId=${ACTIVITY_ID}&trayType=ALL&timestampUpdated=${TIMESTAMP}&from=mail
+
+[お問い合わせ先]
+${CONTACT_NAME}
+${CONTACT_ZIPCODE}
+${CONTACT_ADDRESS}
+TEL ${CONTACT_TEL}
+FAX ${CONTACT_FAX}

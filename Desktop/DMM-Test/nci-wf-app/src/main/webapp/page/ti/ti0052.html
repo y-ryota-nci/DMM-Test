@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	@media (min-width: 768px) {
+		.dl-horizontal dt {
+			width : 180px
+		}
+		.dl-horizontal dd {
+			margin-left : 200px
+		}
+	}
+	dl.dl-horizontal dd,
+	dl.dl-horizontal dt {
+		margin-bottom : 5px;
+	}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./ti0052.js"></script>
+	<title>#{TI0052汎用テーブル検索カラム設定}</title>
+</head>
+<body>
+	<section class="container">
+		<div class="row">
+			<span class="screen-name">#{}</span>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row" id="divRow">
+			<!-- テーブル定義 -->
+			<span class="sub-title" data-i18n="tableDef"></span>
+			<dl class="dl-horizontal">
+				<dt><span data-i18n="logicalColumnName" class="form-control-static">#{論理カラム名}</span></dt>
+				<dd><input id="logicaColumnName" type="text" class="form-control" maxlength="100" /></dd>
+
+				<dt><span data-i18n="dbColumnName" class="form-control-static">#{カラム名}</span></dt>
+				<dd><span data-field="columnName" class="form-control-static"></span>
+
+				<dt><span data-i18n="dbColumnType" class="form-control-static required">#{カラム型区分}</span></dt>
+				<dd><select id="searchColumnType" class="form-control required"></select></dd>
+			</dl>
+
+			<div class="text-center">
+				<button id="btnInput" class="btn btn-primary default-enabled" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnInput">#{入力}</span>
+				</button>
+				<button id="btnClose" class="btn btn-default default-enabled">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+
+			<!-- 検索条件 -->
+			<span class="sub-title" data-i18n="searchCondition"></span>
+			<dl class="dl-horizontal">
+				<dt><span data-i18n="displayType" class="form-control-static required">#{表示条件区分}</span></dt>
+				<dd><select id="conditionDisplayType" class="form-control required"></select></dd>
+
+				<dt><span data-i18n="displayPosition" class="form-control-static required">#{表示位置}</span></dt>
+				<dd><select id="conditionDisplayPosition" class="form-control required" disabled></select></dd>
+
+				<dt><span data-i18n="matchType" class="form-control-static required">#{一致区分}</span></dt>
+				<dd>
+					<div class="row">
+						<div class="col-sm-6">
+							<select id="conditionMatchType" class="form-control required" disabled></select>
+						</div>
+						<div class="col-sm-6">
+							<select id="conditionOptionId" class="col-sm-6 form-control required hide controlled-by-match-type" disabled></select>
+						</div>
+					</div>
+				</dd>
+
+				<dt><span data-i18n="initType" class="form-control-static required">#{初期値区分}</span></dt>
+				<dd>
+					<div class="row">
+						<div class="col-sm-6">
+							<select id="conditionInitType1" class="col-sm-6 form-control required" disabled></select>
+						</div>
+						<div class="col-sm-6">
+							<input  id="conditionInitValue1" class="col-sm-6 form-control required hide controlled-by-match-type" class="required" maxlength="30" disabled />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<span id="fromTo" class="form-control-static controlled-by-match-type">～</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<select id="conditionInitType2" class="col-sm-6 form-control hide controlled-by-match-type" disabled></select>
+						</div>
+						<div class="col-sm-6">
+							<input  id="conditionInitValue2" class="col-sm-6 form-control required hide controlled-by-match-type" class="required" maxlength="30" disabled />
+						</div>
+					</div>
+				</dd>
+
+				<dt><span data-i18n="removeHalfWidthSpace" class="form-control-static required">#{半角スペースの除去}</span></dt>
+				<dd><select id="conditionTrimFlag" class="form-control required" disabled></select></dd>
+
+				<dt><span data-i18n="kanaConvert" class="form-control-static required">#{カナ変換}</span></dt>
+				<dd><select id="conditionKanaConvertType" class="form-control required" disabled></select></dd>
+
+				<dt><span data-i18n="howToHandleBlank" class="form-control-static required">#{ブランク区分}</span></dt>
+				<dd><select id="conditionBlankType" class="form-control required" disabled></select></dd>
+			</dl>
+
+			<!-- 検索結果 -->
+			<span class="sub-title" data-i18n="searchResult"></span>
+			<dl class="dl-horizontal" id="dlResult">
+				<dt><span data-i18n="displayType" class="form-control-static required">#{表示区分}</span></dt>
+				<dd><select id="resultDisplayType" class="form-control required"></select></dd>
+
+				<dt><span data-i18n="displayPosition" class="form-control-static required">#{表示位置}</span></dt>
+				<dd><select id="resultDisplayPosition" class="form-control required enable-when-display" disabled></select></dd>
+
+				<dt><span data-i18n="columnWidth" class="form-control-static required">#{列幅}</span>
+				<dd><select id="resultDisplayWidth" class="form-control required enable-when-display" disabled></select></dd>
+
+				<dt><span data-i18n="alignType" class="form-control-static required">#{表示位置揃え区分}</span></dt>
+				<dd><select id="resultAlignType" class="form-control required enable-when-display" disabled></select></dd>
+
+				<dt><span data-i18n="defaultOrderPosition" class="form-control-static">#{デフォルトソート位置}</span></dt>
+				<dd><select id="resultOrderByPosition" class="form-control enable-when-hidden" disabled></select></dd>
+
+				<dt><span data-i18n="defaultOrderDirection" class="form-control-static">#{デフォルトソート方向}</span></dt>
+				<dd><select id="resultOrderByDirection" class="form-control enable-when-hidden" disabled></select></dd>
+
+			</dl>
+		</div>
+	</section>
+</body>
+</html>

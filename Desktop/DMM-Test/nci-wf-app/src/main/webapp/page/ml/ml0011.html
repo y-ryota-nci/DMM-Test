@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	#remarks:before {
+		content : " (";
+	}
+	#remarks:after {
+		content : ")";
+	}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./ml0011.js"></script>
+	<title>#{ML0011 メールテンプレート編集}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="container">
+		<div class="row">
+			<span class="screen-name">#{ML0011}</span>
+
+			<label class="sub-title">
+				<span  data-i18n="mailTemplate"></span>
+			</label>
+
+			<form id="frmHeader" class="form-horizontal" id="inputed">
+				<div class="form-group col-sm-12">
+					<label class="col-sm-2 control-label" data-i18n="fileName">#{ファイル名}</label>
+					<div class="col-sm-10">
+						<label class="form-control-static">
+							<a id="mailTemplateFilename" href="#"></a>
+							<span id="remarks"></span>
+						</label>
+
+						<input type="hidden" id="mailTemplateHeaderId" />
+						<input type="hidden" id="mailTemplateFileId" />
+						<input type="hidden" id="corporationCode" />
+						<input type="hidden" id="version" />
+						<input type="hidden" id="mailTemplateFileVersion" />
+					</div>
+				</div>
+				<div class="form-group col-sm-6">
+					<label class="col-sm-4 control-label" data-i18n="sendToExt">#{宛先}</label>
+					<div class="col-sm-8">
+						<input type="text" id="sendTo" class="form-control"
+								data-validate='{ "pattern" : "mail" }' maxlength="100" />
+					</div>
+				</div>
+				<div class="form-group col-sm-6">
+					<label class="col-sm-4 control-label" data-i18n="sendCcExt">#{CC送信先}</label>
+					<div class="col-sm-8">
+						<input type="text" id="sendCc" class="form-control"
+								data-validate='{ "pattern" : "mail" }' maxlength="100" />
+					</div>
+				</div>
+				<div class="form-group col-sm-6">
+					<label class="col-sm-4 control-label" data-i18n="sendBccExt">#{BCC送信先}</label>
+					<div class="col-sm-8">
+						<input type="text" id="sendBcc" class="form-control"
+								data-validate='{ "pattern" : "mail" }' maxlength="100" />
+					</div>
+				</div>
+				<div class="form-group col-sm-6">
+					<label class="col-sm-4 control-label" data-i18n="senderAddress">#{差出人アドレス}</label>
+					<div class="col-sm-8">
+						<input type="text" id="sendFrom" class="form-control"
+								data-validate='{ "pattern" : "mail" }' maxlength="100" />
+					</div>
+				</div>
+				<div class="form-group col-sm-6">
+					<label class="col-sm-4 control-label" data-i18n="returnTo">#{返信先}</label>
+					<div class="col-sm-8">
+						<input type="text" id="returnTo" class="form-control"
+								data-validate='{ "pattern" : "mail" }' maxlength="100" />
+					</div>
+				</div>
+				<div class="form-group col-sm-6">
+					<label class="col-sm-4 control-label" data-i18n="senderName">#{差出人名}</label>
+					<div class="col-sm-8">
+						<input type="text" id="sendFromPersonal" class="form-control" maxlength="100"/>
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<div class="text-center">
+				<button id="btnUpdate" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnUpdate">#{更新}</span>
+				</button>
+				<button id="btnBack" class="btn btn-default">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnBack">#{戻る}</span>
+				</button>
+				<button id="btnBackToStandard" class="btn btn-warning" disabled>
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnBackToStandard">#{標準へ戻す}</span>
+				</button>
+				<button id="btnPreview" class="btn btn-info" disabled>
+					<i class="glyphicon glyphicon-eye-open"></i>
+					<span data-i18n="btnPreview">#{プレビュー}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<!-- タブUI -->
+			<ul id="tabUI" class="nav nav-tabs"></ul>
+
+			<!-- タブのコンテンツ-->
+			<div>
+				<div id="tabContents" class="tab-content col-sm-9"></div>
+				<div id="buttonContents" class="col-sm-3"><span data-i18n="mailVariable"></span></div>
+			</div>
+
+			<!-- タブのコンテンツのテンプレート-->
+			<div id="tabTemplate" class="hide">
+				<div class="tab-pane">
+					<dl class="dl-horizontal">
+						<dt class="form-control-static"><span data-i18n="mailSubject"></span></dt>
+						<dd class="form-control-static">
+							<input data-field="mailSubject" type="text" class="form-control insertable-text" maxlength="100" />
+							<span data-field="mailTemplateBodyId" class="hide"></span>
+							<span data-field="localeCode" class="hide"></span>
+							<span data-field="localeName" class="hide"></span>
+							<span data-field="mailTemplateHeaderId" class="hide"></span>
+							<span data-field="version" class="hide"></span>
+						</dd>
+
+						<dt class="form-control-static"><span data-i18n="mailBody"></span></dt>
+						<dd class="form-control-static">
+							<textarea data-field="mailBody" class="form-control insertable-text"
+									rows="10" maxlength="3000"></textarea>
+						</dd>
+					</dl>
+				</div>
+			</div>
+			<ul id="dropdownContents" class="dropdown-menu" role="menu">
+				<li><a href="#" data-i18n="mailSubject" data-field="mailSubject">#{mailSubject}</a></li>
+				<li><a href="#" data-i18n="mailBody" data-field="mailBody">#{mailBody}</a></li>
+			</ul>
+		</div>
+	</section>
+
+	<div id="divPreview" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header sub-title" data-i18n="preview"></div>
+				<dl class="modal-body">
+					<dt data-i18n="mailSubject"></dt>
+					<dd><input type="text" data-field="mailSubject" class="form-control" readonly></dd>
+					<dt data-i18n="mailBody"></dt>
+					<dd><textarea data-field="mailBody" class="form-control" rows="8" readonly></textarea></dd>
+				</dl>
+				<div class="modal-footer text-center">
+					<button class="btn btn-default" data-dismiss="modal">
+						<i class="glyphicon glyphicon-ok-sign"></i>
+						<span data-i18n="btnClose">#{btnClose}</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

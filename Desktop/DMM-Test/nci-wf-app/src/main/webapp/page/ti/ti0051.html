@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	#divColumns {
+		height : 400px;
+		font-size : smaller;
+	}
+	tr.ui-selected>td, tr.ui-selected>th {
+		background-color : royalblue;
+		color : white;
+	}
+	tr.ui-selected a {
+		color : cyan;
+	}
+	#divColumns {
+		height: calc(100vh - 350px);
+	}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./ti0051.js"></script>
+	<title>#{TI0051汎用テーブル検索設定一覧}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="container screen-name">
+		<div class="row">
+			<span class="screen-name">#{}</span>
+		</div>
+	</section>
+
+	<section class="container section-table">
+		<div class="row">
+			<span class="sub-title" data-i18n="searchCondition"></span>
+
+			<div id="divTable">
+				<table class="table table-hover table-striped table-condensed responsive">
+					<colgroup>
+						<col class="col-xs-2" />
+						<col class="col-xs-4" />
+						<col class="col-xs-2" />
+						<col class="col-xs-4" />
+					</colgroup>
+					<tbody>
+					<tr>
+						<th data-i18n="tableName" class="form-control-static"></th>
+						<td><span id="tableName" class="form-control-static"></span>
+							<span id="corporationCode" class="hide"></span>
+							<span id="tableId" class="hide"></span>
+							<span id="tableSearchId" class="hide"></span>
+							<span id="deleteFlag" class="hide"></span>
+							<span id="version" class="hide"></span>
+						<th data-i18n="logicalTableName" class="form-control-static"></th>
+						<td>
+							<span data-field="entityTypeNameTable" class="label label-warning"></span>
+							<span data-field="entityTypeNameView" class="label label-success"></span>
+							<span id="logicalTableName"></span>
+						</td>
+					<tr>
+						<th><span data-i18n="selectConditionCode" class="form-control-static required"></span></th>
+						<td><input id="tableSearchCode" type="text" class="form-control required" maxlength="90"
+								data-validate='{"pattern" : "alphaSymbolNumber" }' disabled />
+						<th><span data-i18n="selectConditionName" class="form-control-static required"></span></th>
+						<td><input id="tableSearchName" type="text" class="form-control required" maxlength="30" />
+					<tr>
+						<th><span data-i18n="userDisplayName" class="form-control-static">表示名</span></th>
+						<td><input id="displayName" type="text" class="form-control" maxlength="30" />
+						<th><span data-i18n="defaultSearchFlag" class="form-control-static"></span></th>
+						<td><input id="defaultSearchFlag" type="checkbox" value="1" />
+					<tr>
+						<th><span data-i18n="deleteFlag" class="form-control-static"></span></th>
+						<td colspan="3"><span data-field="deleteFlagName" class="form-control-static"></span></td>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="form-group text-center">
+				<button id="btnUpdate" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnUpdate">#{更新}</span>
+				</button>
+				<button id="btnBack" class="btn btn-default">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnBack">#{戻る}</span>
+				</button>
+				<button id="btnPreview" class="btn btn-info" disabled>
+					<i class="glyphicon glyphicon-eye-open"></i>
+					<span data-i18n="btnPreview">プレビュー</span>
+					(<span data-i18n="byFixedContents">確定内容で</span>)
+				</button>
+			</div>
+		</div>
+		<div id="divColumns" class="row table-responsive">
+
+			<table id="tblColumns" class="table table-bordered table-hover table-striped table-condensed responsive" style="width:2000px; max-width:none;">
+				<col style="width:40px;" />
+				<col style="width:300px;" />
+				<col style="width:250px;" />
+
+				<thead>
+				<tr>
+					<th rowspan="2">No.
+					<th rowspan="2" data-i18n="dbColumnName">#{カラム名}
+					<th rowspan="2" data-i18n="logicalColumnName">#{論理カラム名}
+					<th rowspan="2" data-i18n="dbColumnType">#{論理カラム名}
+
+					<th rowspan="1" colspan="8" data-i18n="searchCondition">#{検索条件}
+					<th rowspan="1" colspan="6" data-i18n="searchResult">#{検索結果}
+				<tr>
+					<th data-i18n="displayType">#{検索条件表示区分}
+					<th data-i18n="displayPosition">#{検索条件表示位置}
+					<th data-i18n="initType">#{検索条件初期値区分1}
+					<th data-i18n="initValue">#{検索条件初期値1}
+					<th data-i18n="matchType">#{検索条件一致区分}
+					<th data-i18n="removeHalfWidthSpace">#{スペースを除去}
+					<th data-i18n="kanaConvert">#{カナ変換}
+					<th data-i18n="howToHandleBlank">#{検索条件ブランク区分}
+
+					<th data-i18n="displayType">#{検索結果表示分}
+					<th data-i18n="displayPosition">#{検索結果表示位置}
+					<th data-i18n="columnWidth">#{列幅}
+					<th data-i18n="alignType">#{検索結果位置揃え区分}
+					<th data-i18n="defaultOrderPosition">#{検索結果デフォルトソート順}
+					<th data-i18n="defaultOrderDirection">#{検索結果デフォルトソート方向}
+				</thead>
+
+				<tbody></tbody>
+
+				<tfoot class="template hide">
+				<tr>
+					<th data-field="sortOrder" class="text-center">
+					<th><a data-field="columnName" href="#" >#{カラム名}</a>
+					<td data-field="logicaColumnName">#{論理カラム名}
+					<td data-field="searchColumnTypeName">#{カラム型区分}
+
+					<td data-field="conditionDisplayTypeName">#{検索条件表示区分}
+					<td data-field="conditionDisplayPosition">#{検索条件表示位置}
+					<td data-field="conditionInitTypeName1">#{検索条件初期値区分1}
+					<td data-field="conditionInitValue1">#{検索条件初期値1}
+					<td data-field="conditionMatchTypeName">#{検索条件一致区分}
+					<td data-field="conditionTrimFlagName">#{スペースを除去}
+					<td data-field="conditionKanaConvertTypeName">#{カナ変換}
+					<td data-field="conditionBlankTypeName">#{検索条件ブランク区分}
+
+					<td data-field="resultDisplayTypeName">#{検索結果表示分}
+					<td data-field="resultDisplayPosition">#{検索結果表示位置}
+					<td data-field="resultDisplayWidth">#{列幅}
+					<td data-field="resultAlignTypeName">#{検索結果位置揃え区分}
+					<td data-field="resultOrderByPosition">#{検索結果デフォルトソート順}
+					<td data-field="resultOrderByDirectionName">#{検索結果デフォルトソート方向}
+
+					<!-- 隠し項目 -->
+					<td class="hide">
+						<span data-field="searchColumnType" class="hide">#{カラム型区分}</span>
+						<span data-field="tableSearchColumnId" class="hide">#{テーブル検索カラムＩＤ}</span>
+						<span data-field="sortOrder" class="hide">#{並び順}</span>
+						<span data-field="conditionDisplayType" class="hide">#{検索条件表示区分}</span>
+						<span data-field="conditionInitType1" class="hide">#{検索条件初期値区分1}</span>
+						<span data-field="conditionInitType2" class="hide">#{検索条件初期値区分2}</span>
+						<span data-field="conditionInitTypeName2" class="hide">#{検索条件初期値区分名2}</span>
+						<span data-field="conditionInitValue2" class="hide">#{検索条件初期値1}</span>
+						<span data-field="conditionOptionId" class="hide">#{検索条件選択肢ＩＤ}</span>
+						<span data-field="conditionMatchType" class="hide">#{検索条件一致区分}</span>
+						<span data-field="conditionBlankType" class="hide">#{検索条件ブランク区分}</span>
+						<span data-field="conditionTrimFlag" class="hide">#{半角スペースを除去}</span>
+						<span data-field="conditionKanaConvertType" class="hide">#{カナ変換}</span>
+						<span data-field="resultDisplayType" class="hide">#{検索結果表示区分}</span>
+						<span data-field="resultAlignType" class="hide">#{検索結果表示位置区分}</span>
+						<span data-field="resultOrderByDirection" class="hide">#{検索結果デフォルトソート方向}</span>
+						<span data-field="deleteFlag" class="hide">#{削除ｋ分}</span>
+						<span data-field="version" class="hide">#{バージョン}</span>
+				</tfoot>
+			</table>
+		</div>
+	</section>
+</body>
+</html>

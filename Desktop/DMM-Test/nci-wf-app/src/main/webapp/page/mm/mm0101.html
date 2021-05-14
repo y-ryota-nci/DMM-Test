@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+<link rel="stylesheet" href="../../assets/nci/app.css" />
+<style type="text/css">
+</style>
+<script src="../../assets/jquery/jquery.min.js"></script>
+<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="../../assets/nci/NCI.js"></script>
+<script src="../../assets/nci/validate.js"></script>
+<script src="./mm0101.js"></script>
+<title>#{MM0101 情報共有者定義登録}</title>
+</head>
+<body>
+<header></header>
+<section class="container">
+	<div>
+		<span class="screen-name">#{MM0101}</span>
+		<!-- javascript不要なアコーディオン -->
+		<article class="ac-container">
+			<input id="ac-1" type="checkbox" class="ac-trigger"/>
+			<label for="ac-1" class="ac-label sub-title">
+				<i class="glyphicon glyphicon-plus-sign"></i>
+				<span data-i18n="filterCondition">#{絞り込み条件を設定する}</span>
+				<i class="glyphicon glyphicon-chevron-up arrow-up"></i>
+				<i class="glyphicon glyphicon-chevron-down arrow-down"></i>
+			</label>
+			<form id="formCondition" class="ac-contents">
+				<div class="form-group col-sm-4 col-md-3">
+					<label data-i18n="assignRoleCode">#{assignRoleCode}</label>
+					<input type="text" id="assignRoleCode" class="form-control" />
+				</div>
+				<div class="form-group col-sm-6 col-md-6">
+					<label data-i18n="assignRoleName">#{assignRoleName}</label>
+					<input type="text" id="assignRoleName" class="form-control" />
+				</div>
+				<div class="form-group col-sm-6 col-md-6">
+					<label data-i18n="validTerm">#{有効期限}</label>
+					<div class="input-group">
+						<div class="has-feedback">
+							<input type="text" value="" class="form-control ymdPicker" id="validStartDate" data-validate='{"to" : "#validEndDate", "pattern" : "date" }'/>
+							<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+						</div>
+						<span class="input-group-addon">～</span>
+						<div class="has-feedback">
+							<input type="text" value="" class="form-control ymdPicker" id="validEndDate" data-validate='{"from" : "#validStartDate" , "pattern" : "date"}'/>
+							<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+						</div>
+					</div>
+				</div>
+			</form>
+		</article>
+		<div class="form-group text-center">
+			<button id="btnSearch" class="btn btn-primary">
+				<i class="glyphicon glyphicon-search"></i>
+				<span data-i18n="btnFilter">#{btnFilter}</span>
+			</button>
+			<button id="btnReset" class="btn btn-default">
+				<i class="glyphicon glyphicon-refresh"></i>
+				<span data-i18n="btnReset">#{btnReset}</span>
+			</button>
+			<button class="btn btn-default btnClose">
+				<i class="glyphicon glyphicon-share-alt"></i>
+				<span data-i18n="btnClose">#{閉じる}</span>
+			</button>
+		</div>
+	</div>
+</section>
+<section id="seach-result" class="container hide">
+	<div>
+		<!-- 検索結果サブタイトル -->
+		<div class="inline-group sub-title">
+			<div class="col-xs-4 col-md-2 text-left">
+				<i class="glyphicon glyphicon-info-sign"></i>
+				<span data-i18n="searchResult">#{検索結果}</span>
+			</div>
+
+			<div class="col-xs-4 col-md-8 text-center">
+				<span>
+					<span data-i18n="pageCount">PAGE</span>:
+					<span class="page-no">#{page-no}</span>
+					 /
+					 <span class="page-count">#{page-count}</span>
+				</span>
+				<span class="hidden-xs">
+					&nbsp;&nbsp;
+					<span data-i18n="totalCount">#{総件数}</span>:
+					<span class="all-count">#{all-count}</span>
+				</span>
+			</div>
+
+			<!-- 設定アイコン -->
+			<div class="col-xs-4 col-md-2 pull-right text-right dropdown">
+				<i class="glyphicon glyphicon-cog dropdown-toggle clickable" data-toggle="dropdown"></i>
+
+				<!-- 設定アイコン押下時のエリア -->
+				<div class="dropdown-menu pageSizeConfig">
+		 			<label data-i18n="rowCountPerPage">#{１ページの行数}</label>
+					<select class="pageSize" class="form-control"></select>
+				</div>
+			</div>
+		</div>
+
+		<div class="text-center">
+			<ul class="pagination"></ul>
+		</div>
+
+		<table class="table table-hover table-striped table-condensed responsive">
+			<colgroup>
+				<col class="col-sm-1" />
+				<col class="col-sm-2" />
+				<col class="col-sm-4" />
+				<col class="col-sm-3" />
+				<col class="col-sm-1" />
+				<col class="col-sm-1" />
+			</colgroup>
+			<thead>
+			<tr>
+				<th data-i18n="choice">#{選択}</th>
+				<th><a href="#" data-i18n="assignRoleCode" data-sort="ASSIGN_ROLE_CODE, ID">#{assignRoleCode}</a>
+				<th><a href="#" data-i18n="assignRoleName" data-sort="ASSIGN_ROLE_NAME, ID">#{assignRoleName}</a>
+				<th><a href="#" data-i18n="validTerm" data-sort="VALID_START_DATE, VALID_END_DATE, ID">#{validTerm}</a>
+				<th data-i18n="sharerFlag">#{共有区分}</th>
+				<th data-i18n="display">#{表示}</th>
+			</thead>
+
+			<tbody></tbody>
+
+			<tfoot class="template hide">
+			<tr>
+				<td class="text-center"><input type="checkbox" class="selectable" value="1"/></td>
+				<th class="text-left"><span data-field="assignRoleCode">#{assignRoleCode}</span></th>
+				<td class="text-left"><span data-field="assignRoleName">#{assignRoleName}</span></td>
+				<td class="text-left">
+					<span data-field="validStartDate"></span>
+					～
+					<span data-field="validEndDate"></span></td>
+				<td class="text-left"><select class="form-control input-sm informationSharerType"></select></td>
+				<td class="text-center"><input type="checkbox" class="displayFlag" value="1"/></td>
+				<td class="hide"><span data-field="corporationCode"></span></td>
+			</tfoot>
+		</table>
+
+		<div class="text-center">
+			<ul class="pagination"></ul>
+		</div>
+	</div>
+	<div class="form-group text-center">
+		<button id="btnCreate" class="btn btn-primary" disabled>
+			<i class="glyphicon glyphicon-ok-sign"></i>
+			<span data-i18n="btnAdd">#{追加}</span>
+		</button>
+		<button class="btn btn-default btnClose">
+			<i class="glyphicon glyphicon-share-alt"></i>
+			<span data-i18n="btnClose">#{閉じる}</span>
+		</button>
+	</div>
+</section>
+</body>
+</html>

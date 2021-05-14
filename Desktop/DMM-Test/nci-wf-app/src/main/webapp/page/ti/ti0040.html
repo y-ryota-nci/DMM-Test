@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	span[data-field=decimalPoint]:empty {
+		display: none;
+	}
+	span[data-field=decimalPoint]:before {
+		content : ", ";
+	}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./ti0040.js"></script>
+	<title>#{TI0040汎用テーブル定義画面}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="container">
+		<div class="row">
+			<span id="header" class="screen-name">#{TI0040}</span>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row" id="divTable">
+			<div class="sub-title" data-i18n="tableDef">#{"tableDef"}</div>
+
+			<table class="table table-striped table-condensed responsive">
+				<col class="col-xs-2">
+				<col class="col-xs-4">
+				<col class="col-xs-2">
+				<col class="col-xs-4">
+				<tbody>
+					<tr>
+						<th data-i18n="phigicalTableName"></th>
+						<td>
+							<span data-field="tableName"></span>
+							<span data-field="tableId" class="hide"></span>
+							<span data-field="version" class="hide"></span>
+						</td>
+						<th data-i18n="logicalTableName"></th>
+						<td>
+							<span data-field='entityTypeNameTable' class='label label-warning'></span>
+							<span data-field='entityTypeNameView' class='label label-success'></span>
+							<span data-field="logicalTableName"></span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div class="text-center">
+				<button id="btnBack" class="btn btn-default default-enabled">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnBack">#{戻る}</span>
+				</button>
+			</div>
+		</div>
+
+		<div class="row" id="divColumn">
+			<div class="sub-title" data-i18n="columnDef">#{"columnDef"}</div>
+
+			<table class="table table-hover table-striped table-condensed responsive categories">
+				<colgroup>
+					<col style="width:30px;" />
+					<col class="col-xs-3" />
+					<col class="col-xs-3" />
+					<col class="col-xs-2" />
+					<col class="col-xs-1" />
+					<col class="col-xs-1" />
+					<col class="col-xs-1" />
+				</colgroup>
+				<thead>
+				<tr>
+					<th class="text-center">No.</th>
+					<th data-i18n="logicalColumnName">
+					<th data-i18n="phigicalColumnName">
+					<th data-i18n=dbColumnType>
+					<th data-i18n="dbColumnSize" class="text-right">
+					<th class="text-center">PK
+					<th class="text-center">NOT NULL
+
+					<th data-i18n="tableColumnId" class="hide">
+					<th data-i18n="sortOrder" class="hide">
+				</thead>
+
+				<tbody></tbody>
+
+				<tfoot class="template hide">
+				<tr>
+					<th data-field="sortOrder" class="text-center"></th>
+					<td data-field="comment">
+					<td data-field="columnName">
+					<td data-field="columnType">
+					<td class="text-right">
+						<span data-field="columnSize"></span><span data-field="decimalPoint"></span>
+					<td data-field="primaryKeyFlagName" class="text-center">
+					<td data-field="notNullFlagName" class="text-center">
+
+					<td data-field="tableColumnId" class="hide">
+					<td data-field="sortOrder" class="hide">
+				</tr>
+				</tfoot>
+			</table>
+		</div>
+	</section>
+</body>
+</html>

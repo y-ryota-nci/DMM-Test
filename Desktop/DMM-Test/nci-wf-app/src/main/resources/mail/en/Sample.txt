@@ -1,0 +1,20 @@
+[Information] Sample mail for ${SITE_NAME}  ${STAGING_ENV_STRING}
+from@test.jp
+${STAGING_ENV_STRING} Dear ${LOGIN_USER_NAME}.
+
+This is test mail in development.
+Please check whether the following characters are garbled.
+(You need japanese font for displaying those charactors.)
+
+  ①Ⅱⅲ森鷗外𠮟る森鴎外叱る
+
+This mail includes few attached files, please confirm them.
+
+  Attachment files : ${ATTACH_FILE}
+
+[Contact]
+${CONTACT_NAME}
+${CONTACT_ZIPCODE}
+${CONTACT_ADDRESS}
+TEL ${CONTACT_TEL}
+FAX ${CONTACT_FAX}

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/jsTree/themes/default/style.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./rm0720.js"></script>
+	<title>#{RM0720 利用者ロール設定}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<div class="nonSideSearchArea">
+	<section id="inputed" class="container">
+		<div class="row">
+			<span class="screen-name">#{RM0720}</span>
+
+			<label class="sub-title" data-i18n="menuRole"></label>
+
+			<div class="searchStyle">
+			<form id="formCondition" class="ac-contents">
+				<div class="form-group searchConditionArea">
+					<label class="col-sm-3 control-label searchConditionTh" data-i18n="corporationCode">#{企業コード}</label>
+					<div class="col-sm-7 searchConditionTd">
+						<input id="corporationCode" type="text" class="form-control required searchCond searchConditionText" maxlength="10" disabled />
+					</div>
+				</div>
+				<div class="form-group searchConditionArea">
+					<label class="col-sm-3 control-label required searchConditionTh" data-i18n="menuRoleCode">#{利用者ロールコード}</label>
+					<div class="col-sm-7 searchConditionTd">
+						<input id="menuRoleCode" type="text" class="form-control required searchCond searchConditionText" maxlength="10" />
+					</div>
+				</div>
+				<div class="form-group searchConditionArea">
+					<label class="col-sm-3 control-label required searchConditionTh" data-i18n="menuRoleName">#{利用者ロール名称}</label>
+					<div class="col-sm-7 searchConditionTd">
+						<input id="menuRoleName" type="text" class="form-control required searchConditionText" maxlength="100" />
+					</div>
+				</div>
+				<div class="form-group searchConditionArea">
+					<label class="col-sm-3 control-label required searchConditionTh" data-i18n="validTerm" class="required">#有効期間#</label>
+					<div class="col-sm-7 searchConditionTd">
+						<div class="input-group">
+							<div class="has-feedback">
+								<input type="text" class="form-control ymdPicker required searchConditionText" id="validStartDate" data-validate='{"to" : "#validEndDate", "pattern" : "date" }'/>
+								<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+							</div>
+							<span class="input-group-addon">～</span>
+							<div class="has-feedback">
+								<input type="text" class="form-control ymdPicker required searchConditionText" id="validEndDate" data-validate='{"from" : "#validStartDate" , "pattern" : "date"}'/>
+								<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group searchConditionArea">
+					<label class="col-sm-3 control-label searchConditionTh" data-i18n="deleteFlag">#{deleteFlag}</label>
+					<div class="col-sm-7 searchConditionTd">
+						<select id="deleteFlag" class="required form-control searchConditionText"></select>
+					</div>
+				</div>
+			</form>
+
+			<div class="form-group text-center searchButtonArea">
+				<button id="btnUpdate" class="btn btn-primary searchButton" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnUpdate">#{更新}</span>
+				</button>
+				<button id="btnBack" class="btn btn-default searchButton">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnBack">#{戻る}</span>
+				</button>
+			</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="seach-result" class="container hide">
+		<div class="row" >
+			<div class="searchResultStyle">
+			<div class="text-center">
+				<div class="hidden-xs searchCount">
+					&nbsp;&nbsp;
+					<span class="all-count">#{all-count}</span>
+					<span>件</span>
+				</div>
+				<div class="pageArea">
+					<ul class="pagination"></ul>
+				</div>
+				<div class="pageSizeConfig">
+					<label data-i18n="rowCountPerPage" class="pageTextColor">#{１ページの行数}</label>
+					<select class="pageSize"></select>
+				</div>
+			</div>
+
+			<table class="table table-hover table-striped table-condensed responsive">
+				<colgroup>
+					<col class="col-sm-1" />
+					<col class="col-sm-2" />
+					<col class="col-sm-2" />
+					<col class="col-sm-2" />
+					<col class="col-sm-2" />
+					<col class="col-sm-2" />
+					<col class="col-sm-1" />
+					<col class="col-sm-1" />
+				</colgroup>
+				<thead>
+				<tr>
+					<th class="text-center" data-i18n="choice">#{選択}</th>
+					<th><a href="#" data-i18n="menuRoleAssignmentType" data-sort="a.CORPORATION_CODE, a.MENU_ROLE_CODE, a.MENU_ROLE_ASSIGNMENT_TYPE" >#{menuRoleAssignmentType}</a>
+					<th><a href="#" data-i18n="corporationName" data-sort="a.CORPORATION_CODE, a.MENU_ROLE_CODE, d.CORPORATION_NAME" >#{corporationName}</a>
+					<th><a href="#" data-i18n="organizationName" data-sort="a.CORPORATION_CODE, a.MENU_ROLE_CODE, e.ORGANIZATION_NAME" >#{organizationName}</a>
+					<th><a href="#" data-i18n="postName" data-sort="a.CORPORATION_CODE, a.MENU_ROLE_CODE, p.POST_NAME" >#{postName}</a>
+					<th><a href="#" data-i18n="userName" data-sort="a.CORPORATION_CODE, a.MENU_ROLE_CODE, u.USER_NAME" >#{userName}</a>
+					<th><a href="#" data-i18n="validTerm" data-sort="a.CORPORATION_CODE, a.MENU_ROLE_CODE, a.VALID_START_DATE, a.VALID_END_DATE">#{validTerm}</a></th>
+					<th><a href="#" data-i18n="deleteFlag" data-sort="a.CORPORATION_CODE, a.MENU_ROLE_CODE, a.DELETE_FLAG" >#{削除フラグ}</a>
+				</thead>
+
+				<tbody></tbody>
+
+				<tfoot class="template hide">
+				<tr>
+					<th class="text-center"><input type="checkbox" class="selectable" /></th>
+					<th class="text-left"><a href="#" data-field="menuRoleAssignmentTypeName">#{menuRoleAssignmentTypeName}</a></th>
+					<td class="text-left"><a href="#" data-field="corporationNameAccess">#{corporationNameAccess}</a></td>
+					<td class="text-left"><a href="#" data-field="organizationNameAccess">#{organizationNameAccess}</a></td>
+					<td class="text-left"><a href="#" data-field="postNameAccess">#{postNameAccess}</a></td>
+					<td class="text-left"><a href="#" data-field="userNameAccess">#{userNameAccess}</a></td>
+					<td class="text-left">
+						<span data-field="validStartDate"></span>
+						～
+						<span data-field="validEndDate"></span>
+					</td>
+					<td class="text-left"><a href="#" data-field="deleteFlagName">#{削除フラグ}</a></td>
+					<td class="hide" data-field="corporationCode"></td>
+					<td class="hide" data-field="menuRoleCode"></td>
+					<td class="hide" data-field="seqNoMenuRoleDetail"></td>
+				</tfoot>
+			</table>
+			</div>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row searchButtonArea">
+			<button id="btnAdd" class="btn btn-primary searchButton" disabled>
+				<i class="glyphicon glyphicon-plus-sign"></i>
+				<span data-i18n="btnAdd">#{追加}</span>
+			</button>
+			<button id="btnDelete" class="btn btn-default searchButton" disabled>
+				<i class="glyphicon glyphicon-plus-sign"></i>
+				<span data-i18n="btnDelete">#{削除}</span>
+			</button>
+		</div>
+	</section>
+
+	</div>
+</body>
+</html>

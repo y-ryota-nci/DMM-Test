@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/jsTree/themes/default/style.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./mm0052.js"></script>
+	<title>#{MM0052 通し番号一覧}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<div class="nonSideSearchArea">
+		<section class="container">
+			<div class="row">
+				<span class="screen-name">#{MM0052}</span>
+
+				<!-- javascript不要なアコーディオン -->
+				<div class="searchStyle">
+					<form id="formCondition" class="ac-contents">
+						<div class="form-group col-sm-6 searchConditionArea">
+							<label data-i18n="corporation" class="searchConditionTh">#{corporation}</label>
+							<div class="searchConditionTd">
+								<select id="corporationCode" class="form-control searchConditionText"></select>
+							</div>
+						</div>
+						<div class="form-group col-sm-6 searchConditionArea">
+							<label data-i18n="sequenceCode" class="searchConditionTh">#{通し番号コード}</label>
+							<div class="searchConditionTd">
+								<input type="text" id="partsSequenceSpecCode"  class="form-control searchConditionText"  />
+							</div>
+						</div>
+						<div class="form-group col-sm-6 searchConditionArea">
+							<label data-i18n="sequenceName" class="searchConditionTh">#{通し番号名称}</label>
+							<div class="searchConditionTd">
+								<input type="text" id="partsSequenceSpecName"  class="form-control searchConditionText"  />
+							</div>
+						</div>
+						<div class="form-group col-sm-6 searchConditionArea">
+							<label data-i18n="deleteFlag" class="searchConditionTh">#{deleteFlag}</label>
+							<div class="searchConditionTd">
+								<select id="deleteFlag" class="form-control searchConditionText" ></select>
+							</div>
+						</div>
+					</form>
+					<div class="column button-group text-center searchButtonArea">
+						<button id="btnSearch" class="btn btn-primary searchButton">
+							<i class="glyphicon glyphicon-search"></i>
+							<span data-i18n="btnFilter">#{btnFilter}</span>
+						</button>
+						<button id="btnReset" class="btn btn-default searchButton">
+							<i class="glyphicon glyphicon-refresh"></i>
+							<span data-i18n="btnReset">#{btnReset}</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="seach-result" class="container hide">
+			<div class="row" >
+				<div class="searchResultStyle">
+					<div class="text-center">
+						<div class="hidden-xs searchCount">
+							&nbsp;&nbsp;
+							<span class="all-count">#{all-count}</span>
+							<span>件</span>
+						</div>
+						<div class="pageArea">
+							<ul class="pagination"></ul>
+						</div>
+						<div class="pageSizeConfig">
+							<label data-i18n="rowCountPerPage" class="pageTextColor">#{１ページの行数}</label>
+							<select class="pageSize"></select>
+						</div>
+					</div>
+
+					<table class="table table-hover table-striped table-condensed responsive resultTable">
+						<colgroup>
+							<col class="col-sm-2" />
+							<col class="col-sm-5" />
+							<col class="col-sm-2" />
+							<col class="col-sm-3" />
+							<col class="col-sm-2" />
+						</colgroup>
+						<thead>
+						<tr>
+							<th><a href="#" data-i18n="sequenceCode" data-sort="PARTS_SEQUENCE_SPEC_CODE, PARTS_SEQUENCE_SPEC_ID">#{通し番号コード}</a>
+							<th><a href="#" data-i18n="sequenceName" data-sort="PARTS_SEQUENCE_SPEC_NAME, PARTS_SEQUENCE_SPEC_ID">#{通し番号名称}</a>
+							<th class="text-center"><a href="#" data-i18n="sequenceLength" data-sort="SEQUENCE_LENGTH, PARTS_SEQUENCE_SPEC_ID">#{桁数}</a>
+							<th><a href="#" data-i18n="resetType" data-sort="RESET_TYPE, PARTS_SEQUENCE_SPEC_ID">#{リセット区分}</a>
+							<th><a href="#" data-i18n="deleteFlag" data-sort="DELETE_FLAG, PARTS_SEQUENCE_SPEC_CODE, PARTS_SEQUENCE_SPEC_ID">#{deleteFlag}</a></th>
+						</thead>
+
+						<tbody></tbody>
+
+						<tfoot class="template hide">
+							<tr>
+								<th class="text-left"><a href="#" data-field="partsSequenceSpecCode">#{通し番号コード}</a></th>
+								<td class="text-left"><a href="#" data-field="partsSequenceSpecName">#{通し番号名称}</a></td>
+								<td class="text-center" data-field="sequenceLength">#{桁数}</td>
+								<td class="text-left" data-field="resetTypeName">#{リセット区分}</td>
+								<td class="text-left" data-field="deleteFlagName">#{deleteFlagName}</td>
+								<td class="hide" data-field="corporationCode"></td>
+								<td class="hide" data-field="version"></td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<section class="container underButton">
+			<div class="col-sm-4 text-left">
+				<button id="btnAdd" class="btn btn-primary searchButton" disabled>
+					<i class="glyphicon glyphicon-plus-sign"></i>
+					<span data-i18n="btnAdd">#{追加}</span>
+				</button>
+			</div>
+			<div class="col-sm-4 text-center">
+				<button id="btnClose" class="btn btn-default searchButton">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnClose">閉じる</span>
+				</button>
+			</div>
+		</section>
+	</div>
+</body>
+</html>

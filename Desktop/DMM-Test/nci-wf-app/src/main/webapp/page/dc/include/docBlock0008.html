@@ -1,0 +1,41 @@
+<!-- メモ情報ブロック -->
+<article id="docBlock0008">
+	<div class="panel panel-default">
+		<div id="a1" class="panel-heading clearfix">
+			<span id="docBlock0008_expansion" class="collapse_btn collapsed" role="button" data-toggle="collapse" data-target="#docBlock0008_contents">
+				<i class="fa fa-chevron-down"></i><span data-field="blockName">#{メモ情報ブロック }</span>
+			</span>
+			<div class="topend_btn">
+				<a href="#pageend" class="pageend">END</a>
+			</div>
+			<div class="topend_btn">
+				<a href="#pagetop" class="pagetop">TOP</a>
+			</div>
+		</div>
+
+		<div id="docBlock0008_contents" class="panel-body panel-collapse collapse">
+			<div class="form-group">
+				<button id="btnNewMemo" class="btn btn-default btn-sm hide">
+					<i class="fa fa-plus-circle"></i>
+					<span data-i18n="btnAdd">#{追加}</span>
+				</button>
+			</div>
+
+			<div id="bl0008-noRecord" data-i18n="noRecord" class="form-group">#{該当する結果はありませんでした}</div>
+			<div id="bl0008-hasRecord" class="replies hide form-group"></div>
+
+			<div class="hide">
+				<div id="bl0008-template" class="media">
+					<div class="media-body">
+						<h4 class="media-heading">
+							<span data-field="userNameAppended">#{投稿者}</span>
+							<small><i data-field="appendedDate">%{YYYY/MM/DD HH:mm:ss}%</i></small>
+							<i data-field="labelNew" class="label label-success">#{NEW}</i>
+						</h4>
+						<span data-field="memo">#{メモ}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</article>

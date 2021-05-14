@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./mm0440.js"></script>
+	<title>{MM0440 ユーザ一覧}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="container">
+		<div class="row">
+			<span class="screen-name">#{MM0440}</span>
+
+			<!-- javascript不要なアコーディオン -->
+			<article class="ac-container">
+				<input id="ac-1" type="checkbox" class="ac-trigger"/>
+				<label for="ac-1" class="ac-label sub-title">
+					<i class="glyphicon glyphicon-plus-sign"></i>
+					<span data-i18n="filterCondition">#{絞り込み条件を設定する}</span>
+					<i class="glyphicon glyphicon-chevron-up arrow-up"></i>
+					<i class="glyphicon glyphicon-chevron-down arrow-down"></i>
+				</label>
+				<form id="formCondition" class="ac-contents">
+					<div class="form-group col-sm-4 col-md-3">
+						<label data-i18n="corporation">#{corporation}</label>
+						<select id="corporationCode" class="form-control corporationCode"></select>
+					</div>
+					<div class="form-group col-sm-4 col-md-3">
+						<label data-i18n="userAddedInfo">#{userAddedInfo}</label>
+						<input type="text" id="userAddedInfo" class="form-control" maxlength="50" data-validate='{ "pettern" : "alphaSymbolNumber" }'/>
+					</div>
+					<div class="form-group col-sm-4 col-md-3">
+						<label data-i18n="language" class="">#{言語}</label>
+						<select id="defaultLocaleCode" class="form-control"></select>
+					</div>
+					<div class="form-group col-sm-6">
+						<label data-i18n="userName">#{userName}</label>
+						<input type="text" id="userName" class="form-control" maxlength="100" />
+					</div>
+					<div class="form-group col-sm-6">
+						<label data-i18n="mailAddress">#{mailAddress}</label>
+						<input type="text" id="mailAddress" class="form-control" maxlength="100" data-validate='{"pattern" : "mail" }' />
+					</div>
+					<div class="form-group col-sm-4 col-md-3">
+						<label data-i18n="telNum">#{telNum}</label>
+						<input type="text" id="telNum" class="form-control" maxlength="20" data-validate='{"pattern" : "tel" }' />
+					</div>
+					<div class="form-group col-sm-4 col-md-3">
+						<label data-i18n="telNumCel">#{telNumCel}</label>
+						<input type="text" id="telNumCel" class="form-control" maxlength="20" data-validate='{"pattern" : "tel" }' />
+					</div>
+					<div class="form-group col-sm-4 col-md-3">
+						<label data-i18n="deleteFlag">#{削除区分}</label>
+						<select id="deleteFlag" class="form-control"></select>
+					</div>
+					<div class="form-group col-sm-6 col-md-6">
+						<label data-i18n="validTerm" class="">#{有効期間}</label>
+						<div class="input-group">
+							<div class="has-feedback">
+								<input id="validStartDate" type="text" class="form-control ymdPicker" maxlength="10" data-validate='{"pattern" : "date", "to" : "#validEndDate" }' />
+								<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+							</div>
+							<label class="input-group-addon">～</label>
+							<div class="has-feedback">
+								<input id="validEndDate" type="text" class="form-control ymdPicker" maxlength="10" data-validate='{"pattern" : "date", "from" : "#validStartDate" }' />
+								<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+							</div>
+						</div>
+					</div>
+				</form>
+			</article>
+			<div class="form-group text-center">
+				<button id="btnSearch" class="btn btn-primary">
+					<i class="glyphicon glyphicon-search"></i>
+					<span data-i18n="btnFilter">#{btnFilter}</span>
+				</button>
+				<button id="btnReset" class="btn btn-default">
+					<i class="glyphicon glyphicon-refresh"></i>
+					<span data-i18n="btnReset">#{btnReset}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+
+	<section id="seach-result" class="container hide">
+		<div class="row" >
+			<!-- 検索結果サブタイトル -->
+			<div class="inline-group sub-title">
+				<div class="col-xs-3 text-left">
+					<i class="glyphicon glyphicon-info-sign"></i>
+					<span class="hidden-xs" data-i18n="searchResult">#{検索結果}</span>
+				</div>
+
+				<div class="col-xs-7 text-center">
+					<span>
+						<span data-i18n="pageCount">PAGE</span>:
+						<span class="page-no">#{page-no}</span>
+						 /
+						 <span class="page-count">#{page-count}</span>
+					</span>
+					<span class="hidden-xs">
+						&nbsp;&nbsp;
+						<span data-i18n="totalCount">#{総件数}</span>:
+						<span class="all-count">#{all-count}</span>
+					</span>
+				</div>
+
+				<!-- 設定アイコン -->
+				<div class="col-xs-2 pull-right text-right dropdown">
+					<i class="glyphicon glyphicon-cog dropdown-toggle clickable" data-toggle="dropdown"></i>
+
+					<!-- 設定アイコン押下時のエリア -->
+					<div class="dropdown-menu pageSizeConfig">
+			 			<label data-i18n="rowCountPerPage">{１ページの行数}</label>
+						<select class="pageSize" class="form-control"></select>
+					</div>
+				</div>
+			</div>
+
+			<div class="text-center">
+				<ul class="pagination"></ul>
+			</div>
+
+			<table class="table table-hover table-striped table-condensed responsive">
+				<colgroup>
+					<col class="col-sm-3" />
+					<col class="col-sm-3" />
+					<col class="col-sm-5" />
+					<col class="col-sm-1" />
+				</colgroup>
+				<thead>
+				<tr>
+					<th><a href="#" data-i18n="userAddedInfo" data-sort="A.USER_ADDED_INFO, A.ID">#{containerCode}</a>
+					<th><a href="#" data-i18n="userName" data-sort="A.USER_NAME, A.USER_ADDED_INFO, A.ID">#{containerName}</a>
+					<th><a href="#" data-i18n="validTerm" data-sort="A.VALID_START_DATE, A.VALID_END_DATE, A.USER_ADDED_INFO, A.ID">#{tableName}</a>
+					<th><a href="#" data-i18n="deleteFlag" data-sort="A.DELETE_FLAG, A.USER_ADDED_INFO, A.ID">#{deleteFlag}</a>
+				</thead>
+
+				<tbody></tbody>
+
+				<tfoot class="template hide">
+				<tr>
+					<th class="text-left">
+						<input type="radio" name="selectable" class="selectable" disabled="disabled" />
+						<a href="#" data-field="userAddedInfo">#{userAddedInfo}</a>
+						<span class="hide" data-field="corporationCode">#{corporationCode}</span>
+						<span class="hide" data-field="userCode">#{userCode}</span>
+						<span class="hide" data-field="timestampUpdated">#{timestampUpdated}</span>
+					<td class="text-left"><a href="#" data-field="userName">#{userName}</a></td>
+					<td class="text-left">
+						<span data-field="validStartDate"></span>
+						～
+						<span data-field="validEndDate"></span></td>
+					<td class="text-left"><span data-field="deleteFlagName">#{deleteFlagName}</span></td>
+				</tfoot>
+			</table>
+
+			<div class="text-center">
+				<ul class="pagination"></ul>
+			</div>
+		</div>
+	</section>
+	<section class="container">
+		<div class="row">
+			<button id="btnAdd" class="btn btn-primary" disabled>
+				<i class="glyphicon glyphicon-plus-sign"></i>
+				<span data-i18n="btnAdd">#{追加}</span>
+			</button>
+			<button id="btnDelete" class="btn btn-danger" disabled>
+				<i class="glyphicon glyphicon-trash"></i>
+				<span data-i18n="btnDelete">#{削除}</span>
+			</button>
+		</div>
+	</section>
+</body>
+</html>

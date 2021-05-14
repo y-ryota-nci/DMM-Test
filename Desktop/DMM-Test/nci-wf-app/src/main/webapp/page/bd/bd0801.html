@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<style type="text/css">
+	section.main-contents {
+		padding-bottom:25px;
+	}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src='../../assets/nci/tray.js'></script>
+	<script src="./bd0801.js"></script>
+	<title>BD0801 予算入力</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="col-xs-12 main-contents">
+		<article class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">予算入力</h1>
+			</div>
+		</article><!--/.row-->
+
+		<article class="row mB40 mB40_sp">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#condition-contents"><i class="fa fa-chevron-up"></i><span data-i18n="searchCondition">検索条件</span></div>
+					<div id="condition-contents" class="panel-collapse collapse in">
+						<div class="panel-body">
+							<form id="formCondition" class="tableBox col-sm-12">
+								<div class="">
+									<div class="tr">
+										<div class="th col-sm-2"><span class="required">年度</span></div>
+										<div class="td col-sm-4"><select id="yrCd" class="form-control required"></select></div>
+										<div class="th col-sm-2"><span class="required">費用基準/支払基準</span></div>
+										<div class="td col-sm-4"><select id="rcvCostPayTp" class="form-control required"></select></div>
+									</div>
+									<div class="tr">
+										<div class="th col-sm-2"><span class="required">本部</span></div>
+										<div class="td col-sm-4"><select id="organizationCodeLv2" class="form-control required"></select></div>
+										<div class="th col-sm-2"><span class="required">部・室</span></div>
+										<div class="td col-sm-4"><select id="organizationCodeLv3" class="form-control required"></select></div>
+									</div>
+									<div class="tr">
+										<div class="th col-sm-2"><span class="required">B/S / P/L</span></div>
+										<div class="td col-sm-4"><select id="bsplTp" class="form-control required"></select></div>
+									</div>
+
+
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-xs-4">
+						</div>
+						<div class="col-xs-3 text-center">
+							<button id="btnSearch" class="btn btn-primary btn-wide"><i class="fa fa-search"></i><span data-i18n="btnSearch">検索</span></button>
+							<button id="btnReset" class="btn btn-default btn-wide"><i class="fa fa-refresh"></i><span data-i18n="btnReset">リセット</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article><!--/.row-->
+
+		<article id="seach-result" class="row hide">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#result-contents"><i class="fa fa-chevron-up"></i><span data-i18n="searchResult">検索結果</span></div>
+					<div id="result-contents" class="panel-body panel-collapse collapse in">
+						<div class="table-responsive">
+							<table class="table table-bordered table-hover table-striped responsive">
+								<colgroup>
+									<col style="width:180px" />
+									<col span="12" style="width:150px" />
+
+								<thead>
+									<tr>
+										<th style="text-align:center">予算科目
+										<th style="text-align:center">3月
+										<th style="text-align:center">4月
+										<th style="text-align:center">5月
+										<th style="text-align:center">6月
+										<th style="text-align:center">7月
+										<th style="text-align:center">8月
+										<th style="text-align:center">9月
+										<th style="text-align:center">10月
+										<th style="text-align:center">11月
+										<th style="text-align:center">12月
+										<th style="text-align:center">1月
+										<th style="text-align:center">2月
+
+								<tbody></tbody>
+
+								<tfoot class="template hide">
+									<tr>
+										<td>
+											<span data-field="bgtItmNm"></span>
+											<span class="hide" data-field="yrCd"></span>
+											<span class="hide" data-field="organizationCode"></span>
+											<span class="hide" data-field="bgtItmCd"></span>
+											<span class="hide" data-field="rcvCostPayTp"></span>
+											<span class="hide" data-field="timestampUpdated"></span>
+											<span class="hide" data-field="id"></span>
+										<td><input type="text" data-field="bgtAmt03" class="form-control text-right" readonly
+												data-validate='{"pattern" : "integer" , "min": 0, "max" : 999999999999999 }' maxlength="20" />
+										<td><input type="text" data-field="bgtAmt04" class="form-control text-right" readonly
+												data-validate='{"pattern" : "integer" , "min": 0, "max" : 999999999999999 }' maxlength="20" />
+										<td><input type="text" data-field="bgtAmt05" class="form-control text-right" readonly
+												data-validate='{"pattern" : "integer" , "min": 0, "max" : 999999999999999 }' maxlength="20" />
+										<td><input type="text" data-field="bgtAmt06" class="form-control text-right" readonly
+												data-validate='{"pattern" : "integer" , "min": 0, "max" : 999999999999999 }' maxlength="20" />
+										<td><input type="text" data-field="bgtAmt07" class="form-control text-right" readonly
+												data-validate='{"pattern" : "integer" , "min": 0, "max" : 999999999999999 }' maxlength="20" />
+										<td><input type="text" data-field="bgtAmt08" class="form-control text-right" readonly
+												data-validate='{"pattern" : "integer" , "min": 0, "max" : 999999999999999 }' maxlength="20" />
+										<td><input type="text" data-field="bgtAmt09" class="form-control text-right" readonly
+												data-validate='{"pattern" : "integer" , "min": 0, "max" : 999999999999999 }' maxlength="20" />
+										<td><input type="text" data-field="bgtAmt10" class="form-control text-right" readonly
+												data-validate='{"pattern" : "integer" , "min": 0, "max" : 999999999999999 }' maxlength="20" />
+										<td><input type="text" data-field="bgtAmt11" class="form-control text-right" readonly
+												data-validate='{"pattern" : "integer" , "min": 0, "max" : 999999999999999 }' maxlength="20" />
+										<td><input type="text" data-field="bgtAmt12" class="form-control text-right" readonly
+												data-validate='{"pattern" : "integer" , "min": 0, "max" : 999999999999999 }' maxlength="20" />
+
+										<td><input type="text" data-field="bgtAmt01" class="form-control text-right" readonly
+												data-validate='{"pattern" : "integer" , "min": 0, "max" : 999999999999999 }' maxlength="20" />
+										<td><input type="text" data-field="bgtAmt02" class="form-control text-right" readonly
+												data-validate='{"pattern" : "integer" , "min": 0, "max" : 999999999999999 }' maxlength="20" />
+								</tfoot>
+							 </table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article><!--/.row-->
+
+		<article class="row">
+			<div class="col-xs-3 text-right">
+				<button id="btnSave" type="button" class="btn btn-primary wide" disabled><i class="fa fa-save"></i><span>保存</span></button>
+			</div>
+			<div class="col-xs-1"></div>
+			<div class="col-xs-6 text-center">
+				<button id="btnCreateHistory" type="button" class="btn btn-primary wide" disabled><i class="fa fa-camera"></i><span>履歴取得</span></button>
+				<button id="btnEditHistory" type="button" class="btn btn-primary wide" disabled><i class="fa fa-wrench"></i><span>履歴メンテナンス</span></button>
+			</div>
+		</article><!--/.row-->
+	</section>	<!--/.main-->
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<style type="text/css">
+		td.bold-red {
+			font-weight : bold;
+			color : red;
+		}
+	</style>
+
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src='../../assets/nci/tray.js'></script>
+	<script src="./bd0806.js"></script>
+	<title>BD0806 実績推移</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="col-xs-12">
+		<article class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">BD0806 実績推移</h1>
+			</div>
+		</article><!--/.row-->
+
+		<article class="row mB40 mB40_sp">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#condition-contents"><i class="fa fa-chevron-up"></i><span data-i18n="searchCondition">分析対象年度・組織選択</span></div>
+					<div id="condition-contents" class="panel-collapse collapse in">
+						<div class="panel-body">
+							<form id="formCondition" class="tableBox col-sm-12">
+								<div class="">
+									<div class="tr">
+										<div class="th col-sm-2"><span class="required">年度</span></div>
+										<div class="td col-sm-4"><select id="yrCd" class="form-control required"></select></div>
+										<div class="th col-sm-2"><span class="required">費用基準/支払基準（税込）</span></div>
+										<div class="td col-sm-4"><select id="rcvCostPayTp" class="form-control required"></select></div>
+									</div>
+									<div class="tr">
+										<div class="th col-sm-2"><span class="required">本部</span></div>
+										<div class="td col-sm-4"><select id="organizationCodeLv2" class="form-control required"></select></div>
+										<div class="th col-sm-2"><span id="organizationCodeLv3Title">部・室</span></div>
+										<div class="td col-sm-4"><select id="organizationCodeLv3" class="form-control"></select></div>
+									</div>
+									<div class="tr">
+										<div class="th col-sm-2"><span class="">予算科目</span></div>
+										<div class="td col-sm-4"><select id="bgtItmCd" class="form-control"></select></div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-xs-4">
+						</div>
+						<div class="col-xs-3 text-center">
+							<button id="btnSearch" class="btn btn-primary btn-wide"><i class="fa fa-search"></i><span data-i18n="btnSearch">検索</span></button>
+							<button id="btnReset" class="btn btn-default btn-wide"><i class="fa fa-refresh"></i><span data-i18n="btnReset">リセット</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article><!--/.row-->
+
+		<article id="search-result" class="row hide">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#result-contents"><i class="fa fa-chevron-up"></i><span data-i18n="searchResult">予算・実績分析</span></div>
+					<div id="result-contents" class="panel-body panel-collapse collapse in">
+						<div class="table-responsive">
+							<table class="table table-bordered table-hover table-striped responsive">
+								<colgroup>
+									<col style="width:180px" class="hide" />
+									<col style="width:80px" />
+									<col style="width:180px" />
+									<col span="13" style="width:110px" />
+								<thead>
+									<tr>
+										<th style="text-align:center" class="hide">組織
+										<th style="text-align:center" class="hide">合計行フラグ
+										<th style="text-align:center" class="hide">BSPL区分
+										<th style="text-align:center">コード
+										<th style="text-align:center">予算科目
+										<th style="text-align:center">3月
+										<th style="text-align:center">4月
+										<th style="text-align:center">5月
+										<th style="text-align:center">6月
+										<th style="text-align:center">7月
+										<th style="text-align:center">8月
+										<th style="text-align:center">9月
+										<th style="text-align:center">10月
+										<th style="text-align:center">11月
+										<th style="text-align:center">12月
+										<th style="text-align:center">1月
+										<th style="text-align:center">2月
+										<th style="text-align:center">年計
+
+								<tbody></tbody>
+
+								<tfoot class="template hide">
+									<tr>
+										<td data-field="organizationNameLv3" class="hide">
+										<td data-field="totalLineFlag" class="hide">
+										<td data-field="bsPlTp" class="hide">
+										<td data-field="bgtItmCd">
+										<td data-field="bgtItmNm">
+										<span data-field="organizationCodeLv3" class="hide"></span>
+										<td class="text-right">
+											<a href="#" data-field="pfmAmt03" class="com"></a>
+											<span data-field="pfmAmt03" class="com"></span>
+										</td>
+										<td class="text-right">
+											<a href="#" data-field="pfmAmt04" class="com"></a>
+											<span data-field="pfmAmt04" class="com"></span>
+										</td>
+										<td class="text-right">
+											<a href="#" data-field="pfmAmt05" class="com"></a>
+											<span data-field="pfmAmt05" class="com"></span>
+										</td>
+										<td class="text-right">
+											<a href="#" data-field="pfmAmt06" class="com"></a>
+											<span data-field="pfmAmt06" class="com"></span>
+										</td>
+										<td class="text-right">
+											<a href="#" data-field="pfmAmt07" class="com"></a>
+											<span data-field="pfmAmt07" class="com"></span>
+										</td>
+										<td class="text-right">
+											<a href="#" data-field="pfmAmt08" class="com"></a>
+											<span data-field="pfmAmt08" class="com"></span>
+										</td>
+										<td class="text-right">
+											<a href="#" data-field="pfmAmt09" class="com"></a>
+											<span data-field="pfmAmt09" class="com"></span>
+										</td>
+										<td class="text-right">
+											<a href="#" data-field="pfmAmt10" class="com"></a>
+											<span data-field="pfmAmt10" class="com"></span>
+										</td>
+										<td class="text-right">
+											<a href="#" data-field="pfmAmt11" class="com"></a>
+											<span data-field="pfmAmt11" class="com"></span>
+										</td>
+										<td class="text-right">
+											<a href="#" data-field="pfmAmt12" class="com"></a>
+											<span data-field="pfmAmt12" class="com"></span>
+										</td>
+										<td class="text-right">
+											<a href="#" data-field="pfmAmt01" class="com"></a>
+											<span data-field="pfmAmt01" class="com"></span>
+										</td>
+										<td class="text-right">
+											<a href="#" data-field="pfmAmt02" class="com"></a>
+											<span data-field="pfmAmt02" class="com"></span>
+										</td>
+										<td class="text-right" style="width:110px;">
+											<a href="#" data-field="pfmAmtTtl" class="com"></a>
+											<span data-field="pfmAmtTtl" class="com"></span>
+										</td>
+								</tfoot>
+							 </table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article><!--/.row-->
+	</section>	<!--/.main-->
+
+</body>
+</html>

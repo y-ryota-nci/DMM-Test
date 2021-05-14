@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<link rel="stylesheet" href="../../assets/codemirror/lib/codemirror.css" />
+	<link rel="stylesheet" href="../../assets/codemirror/theme/eclipse.css" />
+	<link rel="stylesheet" href="../../assets/codemirror/addon/hint/show-hint.css">
+	<style type="text/css">
+	tr.ui-selected>td {
+		background-color : lightskyblue;
+		color : white;
+	}
+	#tblResult>thead>tr>th {
+		font-weight : bold;
+		background-color: palegoldenrod;
+	}
+	div.CodeMirror {
+		height: 20vh;
+	}
+	.table-responsive {
+		height: 60vh;
+		overflow: scroll;
+	}
+	</style>
+
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src="../../assets/codemirror/lib/codemirror.js"></script>
+	<script src="../../assets/codemirror/mode/sql/sql.js"></script>
+	<script src="../../assets/codemirror/addon/selection/active-line.js"></script>
+	<script src="../../assets/codemirror/addon/edit/matchbrackets.js"></script>
+	<script src="../../assets/codemirror/addon/edit/closebrackets.js"></script>
+	<script src="../../assets/codemirror/addon/comment/continuecomment.js"></script>
+	<script src="../../assets/codemirror/addon/comment/comment.js"></script>
+	<script src="../../assets/codemirror/addon/hint/show-hint.js"></script>
+	<script src="../../assets/codemirror/addon/hint/sql-hint.js"></script>
+	<script src="./sandboxSql.js"></script>
+
+	<title>SQLツール</title>
+
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="container">
+		<article class="row">
+			<div style="border:1px solid blue">
+				<textarea id="editor" rows="5" cols="50">select * from WFM_CORPORATION</textarea>
+			</div>
+			<span data-i18n="maxRowCount">最大行数</span>:<input id="maxCount" value="100" type="text" class="required" data-validate='{"pattern" : "integer", "min" : 0, "max" : 99999999 }' maxlength="10" />
+			<button id="btnExecSql" class="btn btn-primary"><i class="fa fa-exclamation-triangle"></i><span data-i18n="btnExecSql">SQL実行</span></button>
+			<button id="btnDownloadCsv" class="btn btn-success"><i class="fa fa-download"></i><span data-i18n="btnDownloadCsv">CSVダウンロード</span></button>
+		</article>
+		<br />
+
+		<article class="row">
+			<div id="divResult" class="table-responsive">
+				<table id="tblResult" class="table table-bordered table-hover table-striped table-condensed responsive">
+					<colgroup></colgroup>
+					<thead><tr></thead>
+					<tbody></tbody>
+					<tfoot class="template hide">
+						<tr></tr>
+					</tfoot>
+				</table>
+			</div>
+		</article>
+	</section>
+</body>
+</html>

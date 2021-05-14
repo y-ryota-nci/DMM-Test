@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+
+	<link rel="stylesheet" href="../../assets/codemirror/lib/codemirror.css" />
+	<link rel="stylesheet" href="../../assets/codemirror/theme/eclipse.css" />
+	<link rel="stylesheet" href="../../assets/codemirror/addon/hint/show-hint.css">
+
+	<style type="text/css">
+	#preview {
+		border : 1px solid silver;
+		width : 100%;
+		min-height : 300px;
+	}
+	#preview aside.forBgHtml {
+		color : pink;
+		font-weight : bold;
+		text-align : center;
+		display : block;
+	}
+	.codemirror-box {
+		border : 1px solid #ddd;
+	}
+	#div-customCssStyle div.CodeMirror.cm-s-eclipse {
+		height: 300px;
+	}
+	#div-bgHtml div.CodeMirror.cm-s-eclipse {
+		height: 300px;
+	}
+	table.responsive th:empty,
+	table.responsive td:empty {
+		display: table-cell;
+	}
+	section.container-footer {
+		background-color: #ffffff;
+		padding: 10px 25px;
+		overflow: hidden;
+		position: fixed;
+		z-index: 1000;
+		width: 100%;
+		bottom: 0;
+	}
+	body {
+		margin-bottom: 110px;
+	}
+	</style>
+	<style type='text/css' id='customCssStyleTag'></style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+
+	<script src="../../assets/codemirror/lib/codemirror.js"></script>
+	<script src="../../assets/codemirror/mode/xml/xml.js"></script>
+	<script src="../../assets/codemirror/mode/css/css.js"></script>
+	<script src="../../assets/codemirror/mode/javascript/javascript.js"></script>
+	<script src="../../assets/codemirror/mode/css/css.js"></script>
+	<script src="../../assets/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+	<script src="../../assets/codemirror/addon/selection/active-line.js"></script>
+	<script src="../../assets/codemirror/addon/edit/matchbrackets.js"></script>
+	<script src="../../assets/codemirror/addon/edit/closebrackets.js"></script>
+	<script src="../../assets/codemirror/addon/edit/closetag.js"></script>
+	<script src="../../assets/codemirror/addon/fold/xml-fold.js"></script>
+	<script src="../../assets/codemirror/addon/comment/continuecomment.js"></script>
+	<script src="../../assets/codemirror/addon/comment/comment.js"></script>
+	<script src="../../assets/codemirror/addon/hint/show-hint.js"></script>
+	<script src="../../assets/codemirror/addon/hint/css-hint.js"></script>
+	<script src="../../assets/codemirror/addon/hint/xml-hint.js"></script>
+	<script src="../../assets/codemirror/addon/hint/html-hint.js"></script>
+	<script src="./vd0161.js"></script>
+	<title>#{VD0161 背景HTML設定}</title>
+</head>
+<body>
+	<header></header>
+
+	<section class="container">
+
+		<div class="row">
+			<span class="screen-name">#{VD0161}</span>
+
+			<article class="ac-container">
+				<input id="ac-cssStyle" type="checkbox" class="ac-trigger"/>
+				<label for="ac-cssStyle" class="ac-label sub-title">
+					<i class="glyphicon glyphicon-plus-sign"></i>
+					<span data-i18n="cssStyle">#{CSSスタイル}</span>
+					<i class="glyphicon glyphicon-chevron-up arrow-up"></i>
+					<i class="glyphicon glyphicon-chevron-down arrow-down"></i>
+				</label>
+
+				<!-- javascriptでac-contentsを追加 -->
+				<div id='div-customCssStyle' class='col-xs-10 codemirror-box'>
+					<textarea id="customCssStyle" class='form-control' rows='3'></textarea>
+				</div>
+			</article>
+
+
+			<article class="ac-container">
+				<input id="ac-bgHtml" type="checkbox" class="ac-trigger"/>
+				<label for="ac-bgHtml" class="ac-label sub-title">
+					<i class="glyphicon glyphicon-plus-sign"></i>
+					<span data-i18n="bgHtml">#{背景HTML}</span>
+					<i class="glyphicon glyphicon-chevron-up arrow-up"></i>
+					<i class="glyphicon glyphicon-chevron-down arrow-down"></i>
+				</label>
+
+				<!-- javascriptでac-contentsを追加 -->
+				<div id='div-bgHtml' class='col-xs-10 codemirror-box'>
+					<textarea id="bgHtml" class='form-control' rows='5'></textarea>
+				</div>
+			</article>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class='row form-group'>
+			<div class='col-xs-12 button-group'>
+				<button id='btnOpenTableDialog' class='btn btn-default btn-sm' data-toggle="modal" data-target="#tableDialog">
+					<i class='glyphicon glyphicon-plus-sign'></i>
+					<span data-i18n='btnAddBlankTable'>#{空テーブルを追加}</span>
+				</button>
+				<button id='btnFillCellNo' class='btn btn-default btn-sm'>
+					<i class='glyphicon glyphicon-sort-by-order'></i>
+					<span data-i18n='btnFillCellNo'>#{セル番号を付与}</span>
+				</button>
+				<button id='btnResetCellNo' class='btn btn-default btn-sm'>
+					<i class='glyphicon glyphicon-refresh'></i>
+					<span data-i18n='btnResetCellNo'>#{セル番号をリセット}</span>
+				</button>
+			</div>
+			<div class="col-xs-4"></div>
+			<div class="col-xs-4 text-center">
+				<button id='btnOK' class='btn btn-primary' disabled>
+					<i class='glyphicon glyphicon-ok-sign'></i>
+					<span data-i18n='btnOK'>#{OK}</span>
+				</button>
+				<button id='btnClose' class='btn btn-default'>
+					<i class='glyphicon glyphicon-share-alt'></i>
+					<span data-i18n='btnClose'>#{閉じる}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+
+	<section class='container'>
+		<!-- プレビュー領域 -->
+		<div class='row'>
+			<label class="sub-title" data-i18n="preview">プレビュー</label>
+			<div id='preview'></div>
+		</div>
+
+		<!-- 空テーブル生成用の設定ダイアログ -->
+<div id="tableDialog" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<span data-i18n="tableDef">#{テーブル定義}</span>
+			</div>
+			<div class="modal-body">
+				<dl class="dl-horizontal">
+					<dt data-i18n="colCount">#{列数}</dt>
+					<dd><input type="text" id="colCount" class="form-control required"
+							maxlength="2" data-validate='{"pattern" : "integer", "min" : 1, "max" : 99 }'> </dd>
+					<dt data-i18n="rowCount">#{行数}</dt>
+					<dd><input type="text" id="rowCount" class="form-control required"
+							maxlength="2" data-validate='{"pattern" : "integer", "min" : 1, "max" : 99 }'> </dd>
+				</dl>
+			</div>
+			<div class="modal-footer text-center">
+				<button id="btnAddEmptyTable" class="btn btn-success" data-dismiss="modal">
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnAdd">#{追加}</span>
+				</button>
+				<button id="btnCancel" class="btn btn-default" data-dismiss="modal">
+					<i class='glyphicon glyphicon-share-alt'></i>
+					<span data-i18n="btnCancel">#{キャンセル}</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+	</section>
+</body>
+</html>

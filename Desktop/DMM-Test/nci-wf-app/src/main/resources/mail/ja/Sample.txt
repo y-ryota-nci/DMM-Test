@@ -1,0 +1,19 @@
+【ご連絡】${SITE_NAME}へのサンプルメール　${STAGING_ENV_STRING}
+from@test.jp
+${LOGIN_USER_NAME}様${STAGING_ENV_STRING}
+
+システム開発中に伴う試験メール送信です。
+以下の文字が化けていないかを確認ください。
+
+　　①Ⅱⅲ森鷗外𠮟る森鴎外叱る
+
+添付ファイルが付いておりますので、内容をご確認ください。
+
+　　添付ファイル：${ATTACH_FILE}
+
+[お問い合わせ先]
+${CONTACT_NAME}
+${CONTACT_ZIPCODE}
+${CONTACT_ADDRESS}
+TEL ${CONTACT_TEL}
+FAX ${CONTACT_FAX}

@@ -1,0 +1,43 @@
+<!-- 業務文書ブロック -->
+<article id="docBlock0001">
+	<div class="panel panel-default">
+		<div id="a1" class="panel-heading clearfix">
+			<span id="docBlock0001_expansion" class="collapse_btn collapsed" role="button" data-toggle="collapse" data-target="#docBlock0001_contents">
+				<i class="fa fa-chevron-down"></i><span data-field="blockName">#{業務文書}</span>
+			</span>
+			<div class="topend_btn">
+				<a href="#pageend" class="pageend">END</a>
+			</div>
+			<div class="topend_btn">
+				<a href="#pagetop" class="pagetop">TOP</a>
+			</div>
+		</div>
+		<div id="docBlock0001_contents" class="panel-body panel-collapse collapse">
+			<div>
+				<table class="table table-bordered table-hover table-striped">
+					<colgroup>
+						<col class="col-sm-2 col-xs-4" />
+						<col class="col-sm-10 col-xs-8" />
+					</colgroup>
+					<tbody>
+						<tr>
+							<th><span class="required" data-i18n="bizDocName">#{業務文書名}</span></th>
+							<td>
+								<span data-field="title" class="form-control-static hide"></span>
+								<input type="text" id="title" class="form-control required hide" data-field="title" maxlength="100" data-validate='{"maxlength":100,"pattern":"all"}' />
+								<span data-field="corporationCode" class="form-control-static hide"></span>
+							</td>
+						</tr>
+						<tr>
+							<th data-i18n="comment">#{コメント}</th>
+							<td>
+								<span data-field="comments" class="hide" data-html-escaped="true"></span>
+								<textarea id="comments" rows="3" class="form-control hide" data-field="comments" data-validate='{"maxByteUtf8":4000}'></textarea>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</article>

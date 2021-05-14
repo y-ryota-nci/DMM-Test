@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+	<context-param>
+		<description>
+		CDI(Weld)でのデバッグモード。Weldの仕様として、デバッグモード中は
+		リモートマシンからのアクセスを拒否する(ログにメッセージ「PROBE-00017」が出力される)
+		</description>
+		<param-name>org.jboss.weld.development</param-name>
+		<param-value>false</param-value>
+	</context-param>
+
+	<session-config>
+		<!-- セッションタイムアウトまでの時間(分) -->
+		<session-timeout>60</session-timeout>
+
+		<cookie-config>
+			<!-- セッションIDのクッキー名（標準のJSESSIONIDから変更） -->
+			<name>NCI-WF-APP</name>
+
+			<!-- Servlet3.0(Tomcat7以降)：JavaScriptでSessionIDを取得できないようにする -->
+			<http-only>true</http-only>
+		</cookie-config>
+
+		<!-- Servlet3.0(Tomcat7以降)：セッション維持の方法にCookieのみを用いる(＝URLRewritingの無効化) -->
+		<tracking-mode>COOKIE</tracking-mode>
+	</session-config>
+
+	<listener>
+		<description>APPの初期化用リスナー</description>
+		<listener-class>jp.co.nci.iwf.servlet.listener.NciWfAppInitializer</listener-class>
+	</listener>
+
+	<filter>
+		<description>キャッシュ制御用のHTTPヘッダを書き込むフィルター</description>
+		<filter-name>CacheControlFilter</filter-name>
+		<filter-class>jp.co.nci.iwf.servlet.filter.CacheControlFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>CacheControlFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<description>セキュリティ関連のパラメータをヘッダへ埋め込むためのフィルター</description>
+		<filter-name>SecurityFilter</filter-name>
+		<filter-class>jp.co.nci.iwf.servlet.filter.SecurityFilter</filter-class>
+		<init-param>
+			<description>X-Frame-Optionsヘッダー(クリックジャッキング対策)</description>
+			<param-name>X-FRAME-OPTIONS</param-name>
+			<param-value>SAMEORIGIN</param-value>
+		</init-param>
+		<init-param>
+			<description>IE互換モードで描画するURI(カンマ区切り)</description>
+			<param-name>Compatible-IE-URI</param-name>
+			<param-value></param-value>
+		</init-param>
+		<init-param>
+			<description>「IE互換モードで描画するURI 」に該当した場合に適用するIEドキュメントモード</description>
+			<param-name>Default-X-UA-Compatible</param-name>
+			<param-value></param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>SecurityFilter</filter-name>
+		<url-pattern>*.html</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<description>OpenIdConnectフィルタ</description>
+		<filter-name>OpenIdConnectFilter</filter-name>
+		<filter-class>jp.co.nci.iwf.servlet.filter.OpenIdConnectFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>OpenIdConnectFilter</filter-name>
+		<url-pattern>/oidc/*</url-pattern>
+		<url-pattern>*.html</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<description>URL遷移先解決フィルタ</description>
+		<filter-name>UrlResolverFilter</filter-name>
+		<filter-class>jp.co.nci.iwf.servlet.filter.UrlResolverFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>UrlResolverFilter</filter-name>
+		<url-pattern>*.html</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<description>Endpointへのアクセスログを記録するためのフィルタ</description>
+		<filter-name>accessLogFilter</filter-name>
+		<filter-class>jp.co.nci.iwf.servlet.filter.AccessLogFilter</filter-class>
+		<init-param>
+			<description>無視するURL</description>
+			<param-name>ignoreURL</param-name>
+			<param-value>/endpoint/menu/init,/endpoint/download-monitor/watch,</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>accessLogFilter</filter-name>
+		<url-pattern>/endpoint/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+
+	<servlet>
+		<description>welcomeファイル代わりのServlet。URLでコンテキストルートを指定されたときに適切なURLへフォワードする</description>
+		<servlet-name>directoryIndexServlet</servlet-name>
+		<servlet-class>jp.co.nci.iwf.servlet.DirectoryIndexServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>directoryIndexServlet</servlet-name>
+		<url-pattern>/directoryIndexServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>getCssChangeFlagServlet</servlet-name>
+		<servlet-class>jp.co.nci.iwf.servlet.GetCssChangeFlagServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>getCssChangeFlagServlet</servlet-name>
+		<url-pattern>/getCssChangeFlagServlet</url-pattern>
+	</servlet-mapping>
+
+	<resource-ref>
+		<description>JDBC DataSource</description>
+		<res-ref-name>jdbc/MyDataSource</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+	</resource-ref>
+
+	<!-- welcomeファイルはサーブレットである。Eclipseのweb.xmlエディタは警告を出すが、これで正しい定義なのだ -->
+	<welcome-file-list>
+		<welcome-file>directoryIndexServlet</welcome-file>
+	</welcome-file-list>
+
+	<error-page>
+		<error-code>401</error-code>
+		<location>/page/error/error401.html</location>
+	</error-page>
+	<error-page>
+		<error-code>403</error-code>
+		<location>/page/error/error403.html</location>
+	</error-page>
+</web-app>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+		.scrollable {
+			max-height: 350px;
+			padding-bottom: 15px;
+		}
+		.blue {
+			color : blue !important;
+			font-weight : bold;
+		}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./al0011.js"></script>
+	<title>#{AL0011 アクセスログ詳細}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section id="accessLog" class="container">
+		<div class="row">
+			<span class="screen-name">#{AL0011}</span>
+			<span data-i18n="accessLog" class="sub-title">#{accessLog}</span>
+
+			<dl class="dl-horizontal">
+				<dt data-i18n="corporation">#{企業}</dt>
+				<dd data-field="opeCorporationName"></dd>
+
+				<dt data-i18n="accessDateTime">#{アクセス日時}</dt>
+				<dd data-field="accessTime">#{accessTime}</dd>
+
+				<dt>URL</dt>
+				<dd data-field="uri">#{uri}</dd>
+
+				<dt data-i18n="screen">#{screen}</dt>
+				<dd><a href="#" class="screenId"><span data-field="screenId">#{screenCode}</span>&nbsp;<span data-field="screenName">#{screenName}</span></a></dd>
+
+				<dt data-i18n="operation">#{operation}</dt>
+				<dd data-field="actionName">#{actionName}</dd>
+
+				<dt data-i18n="operatedUser">#{operatedUser}</dt>
+				<dd>
+					<a href="#" class="opeUserAddedInfo">
+						<span data-field="opeUserAddedInfo">#{opeUserAddedInfo}</span>&nbsp;
+						<span data-field="opeUserName">#{opeUserName}</span>
+					</a>
+				</dd>
+
+				<dt data-i18n="spoofingUser">#{spoofingUser}</dt>
+				<dd>
+					<a href="#" class="spoofingUserAddedInfo">
+						<span data-field="spoofingCorporationCode"></span>
+						<span data-field="spoofingUserAddedInfo"></span>
+						<span data-field="spoofingUserName"></span>
+					</a>
+				</dd>
+
+				<dt data-i18n="accessLogResultType">#{accessLogResultType}</dt>
+				<dd data-field="accessLogResultTypeName">#{accessLogResultTypeName}</dd>
+
+				<dt data-i18n="opeBrowswer">#{opeBrowswer}</dt>
+				<dd data-field="userAgent">#{userAgent}</dd>
+
+				<dt data-i18n="operatorSessionId">#{operatorSessionId}</dt>
+				<dd>
+					<a href="#" class="sessionId">
+						<span data-field="sessionId">#{sessionId}</span>
+					</a>
+				</dd>
+
+				<dt data-i18n="operatorIpAddress">#{opeIpAddress}</dt>
+				<dd data-field="opeIpAddress">#{opeIpAddress}</dd>
+
+				<dt data-i18n="appVersion">#{appVersion}</dt>
+				<dd data-field="appVersion">#{appVersion}</dd>
+
+				<dt data-i18n="dbDestination">#{dbDestination}</dt>
+				<dd data-field="dbConnectString">#{dbConnectString}</dd>
+
+				<dt data-i18n="hostIpAddr">#{hostIpAddr}</dt>
+				<dd><span data-field="hostIpAddress">#{hostIpAddress}</span>:<span data-field="hostPort">#{hostPort}</span></dd>
+
+				<dt data-i18n="hostPort">#{hostPort}</dt>
+				<dd><span data-field="hostPort">#{hostPort}</span></dd>
+
+				<dt data-i18n="threadName">#{threadName}</dt>
+				<dd data-field="threadName">#{threadName}</dd>
+			</dl>
+		</div>
+	</section>
+
+	<section id="accessLogDetail" class="container hide">
+		<div class="row">
+			<span data-i18n="accessLogDetail" class="sub-title">#{accessLogDetail}</span>
+
+			<table class="table table-hover table-striped table-condensed responsive">
+				<colgroup>
+					<col class="col-xs-2" />
+					<col class="col-xs-10" />
+				</colgroup>
+				<thead>
+				<tr>
+					<th data-i18n="accessTime">#{accessTime}</th>
+					<th data-i18n="accessLogDetail">#{accessLogDetail}</th>
+				</thead>
+
+				<tbody></tbody>
+
+				<tfoot class="template hide">
+				<tr>
+					<th data-field="accessTime">#{accessTime}</th>
+					<td><pre data-field="keyValue" class="pre-scrollable">#{keyValue}</pre></td>
+				</tfoot>
+			</table>
+		</div>
+	</section>
+	<section class="container">
+		<div class="col-xs-12 text-center">
+			<button id="btnBack" class="btn btn-default">
+				<i class="glyphicon glyphicon-share-alt"></i>
+				<span data-i18n="btnBack">#{戻る}</span>
+			</button>
+		</div>
+	</section>
+</body>
+</html>

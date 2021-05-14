@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/jsPlumb/jsplumb.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./cm0170.js"></script>
+	<title>#{CM0170 要説明入力}</title>
+</head>
+<body>
+	<header></header>
+
+	<section class="col-xs-12">
+		<article class="row">
+			<h1 class="page-header">要説明入力</h1>
+		</article><!--/.row-->
+
+		<article class="row">
+			<div class="panel panel-default col-xs-12">
+				<div class="panel-heading clearfix"><span data-i18n="processBbs">#{要説明}</span></div>
+				<div class="panel-body">
+					<dl class="dl-horizontal" id="inputed">
+						<dt class="form-control-static"><span data-18n="affiliation" class="form-control-static required">所属</span></dt>
+						<dd class="form-control-static"><select id="belong" class="form-control required"></select></dd>
+
+						<dt class="form-control-static hide"><span data-i18n="notificationMethod" class="form-control-static required">通知方法</span></dt>
+						<dd class="form-control-static hide"><select id="processBbsMailType" class="form-control required"></select></dd>
+
+						<dt class="form-control-static"><span data-i18n="contents" class="form-control-static required">内容</span></dt>
+						<dd class="form-control-static"><textarea id="contents" rows="5" class="form-control required" maxlength="1000"></textarea></dd>
+					</dl>
+				</div>
+			</div>
+		</article>
+		<article class="row">
+			<div id="uploadArea" class="panel panel-default col-xs-12">
+				<div class="panel-heading clearfix"><span>添付ファイルのアップロード</span></div>
+				<div class="panel-body">
+					<div class="form-group col-xs-12 dragZone" data-i18n="dragAndDrop">{ここにドラッグ＆ドロップすることでファイルアップロードが行われます}</div>
+					<div class="form-group col-xs-12 row">
+						<button id="updFile" class="btn btn-default btn-sm"><i class="fa fa-file"></i><span data-i18n="btnFileUpload">ファイルを選択...</span></button>
+						<input type="file" class="hide" multiple />
+					</div>
+					<div class="form-group col-xs-12 row">
+						<div class="h6">
+							<strong>【<span data-i18n="attachFile">添付ファイル</span>】</strong>
+						</div>
+						<div id="attachFiles" class="mB10"></div>
+					</div>
+					<div id="template" class="hide">
+						<a class="text-center" style="display: inline-block; width: 100px; vertical-align: top;">
+							<span class="file-icon fa" style="display: block; font-size: 24px;"></span>
+							<span data-field="fileName" style="width: 100px; display: block; word-break: break-all;">ファイル名.xlsx</span>
+							<span data-field="bbsAttachFileWfId" class="hide">#{bbsAttachFileWfId}</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</article>
+		<article class="row">
+			<div class="form-group text-center">
+				<button id="btnOK" class="btn btn-primary">
+					<i class="glyphicon glyphicon-plus-sign"></i>
+					<span data-i18n="btnOK">#{btnOK}</span>
+				</button>
+				<button id="btnClose" class="btn btn-default" data-close>
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+		</article>
+	</section>
+</body>
+</html>

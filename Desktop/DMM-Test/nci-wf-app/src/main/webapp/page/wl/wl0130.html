@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../assets/nci/app.css" />
+		<script src="../../assets/jquery/jquery.min.js"></script>
+		<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+		<script src="../../assets/nci/NCI.js"></script>
+		<script src="./wl0130.js"></script>
+
+		<style type="text/css">
+		<!--
+			.mini-submenu{
+				display:none;
+				background-color: rgba(0, 0, 0, 0);
+				border: 1px solid rgba(0, 0, 0, 0.9);
+				border-radius: 4px;
+				padding: 9px;
+				/*position: relative;*/
+				width: 42px;
+			}
+
+			.mini-submenu:hover{
+				cursor: pointer;
+			}
+
+			.mini-submenu .icon-bar {
+				border-radius: 1px;
+				display: block;
+				height: 2px;
+				width: 22px;
+				margin-top: 3px;
+			}
+
+			.mini-submenu .icon-bar {
+				background-color: #000;
+			}
+
+			#slide-submenu{
+				background: rgba(0, 0, 0, 0.45);
+				display: inline-block;
+				padding: 0 8px;
+				border-radius: 4px;
+				cursor: pointer;
+			}
+
+			#woklistLink,
+			#ownProjectsListLink,
+			#generalProjectsListLink,
+			#sideMenuToggle{
+				cursor: pointer;
+			}
+
+			ol, ul {
+				list-style: none;
+			}
+
+			.contents_left{
+				float: left;
+				height: 100%;
+				padding-bottom: 50px;
+				width: 200px;
+			}
+
+			.contents_left.fadeIn{
+				margin-left: 0;
+				-webkit-transition: all 0.5s ease;
+				transition: all 0.5s ease;
+			}
+
+			.contents_left.fadeOut{
+				margin-left: -200px;
+				-webkit-transition: all 0.5s ease;
+				transition: all 0.5s ease;
+			}
+
+			.contents_left .lv1{
+				margin-bottom: 20px;
+				background: #212b2e;
+				padding:0;
+				font-size:12px;
+			}
+
+			.contents_left .lv1 > li{
+				padding: 20px 10px;
+				color: #fff;
+				position: relative;
+				border-bottom: 1px solid #3a4244;
+				cursor: pointer;
+				text-indent: 15px;
+			}
+
+			.contents_left .lv1.on > li{
+				padding-bottom: 10px;
+			}
+
+			.contents_left .lv1 > .child_lv2.on{
+				background: #114069;
+			}
+
+			.contents_left .lv1 > li a{
+				display: block;
+				padding: 0;
+			}
+
+			.contents_left .lv1 > li:after{
+				content: "";
+				width: 6px;
+				height: 6px;
+				margin-top: -3px;
+				position: absolute;
+				top: 25px;
+				right: 15px;
+				border-right: 1px solid #fff;
+				border-bottom: 1px solid #fff;
+				transform: rotate(-45deg);
+			}
+
+			.contents_left .lv1 > li.on:after{
+				border-right: 1px solid #fff;
+				border-bottom: 1px solid #fff;
+				transform: rotate(45deg);
+			}
+
+			.contents_left .lv1 > li > .lv2{
+				margin-top: 20px;
+			}
+
+			.contents_left .lv2{
+				display: none;
+				padding:0;
+				font-size:12px;
+			}
+
+			.contents_left .lv2 > li{
+				border-bottom: 1px dotted #fff;
+				text-indent: 0;
+				padding: 0;
+			}
+
+			.contents_left .lv2 > li:last-child{
+				border-bottom: none;
+			}
+
+			.contents_left .lv2 > li a{
+				padding: 10px 5px 10px 30px;
+				background: url(../../assets/nci/images/ico_folder-off.png) no-repeat 8px center #cfdce7;
+				display: block;
+				color: #212b2e;
+			}
+
+			.contents_left .lv2 > li a.active,
+			.contents_left .lv2 > li a:hover{
+				background: url(../../assets/nci/images/ico_folder-on.png) no-repeat 8px center #3b81bc;
+				color: #fff;
+			}
+
+			.contents_left p{
+				width: 190px;
+				margin: 0 auto;
+				text-align: center;
+				font-size: 14px;
+			}
+
+			.contents_left p a{
+				border-radius:5px;
+				text-decoration:none;
+				font-size:13px;
+				width:190px;
+				display: block;
+				color: #000;
+				border: 1px solid #d3d3d3;
+				padding: 6px 10px 6px 20px;
+				background: url(../../assets/nci/images/ico_search-side.png), linear-gradient(#fff, #f2f2f2);;
+				background-repeat: no-repeat;
+				background-position: 6% center;
+			}
+
+		-->
+		</style>
+
+		<script type="text/javascript">
+			$(function(){
+				$('#slide-submenu').on('click',function() {
+					$(this).closest('.list-group').fadeOut('slide',function(){
+						$('.mini-submenu').fadeIn();
+					});
+
+				});
+
+				$('.mini-submenu').on('click',function(){
+					$(this).next('.list-group').toggle('slide');
+					$('.mini-submenu').hide();
+				})
+			})
+
+			$(document).ready(function() {
+				// サイドメニュー表示
+				//$("#sideMenuArea").css({marginLeft:"10px"})
+				//$("#searchArea").css({marginLeft:"250px"})
+			})
+
+		</script>
+
+		<title>#{WL0130 案件一覧}</title>
+
+	</head>
+	<body>
+
+		<header class="container-fluid">
+			<div id="nav"></div>
+		</header>
+
+		<div id="sideMenuArea" class="row sideMenuArea hidden-xs" style="float:left;">
+
+		</div>
+
+		<!-- サイドメニュートグルボタン -->
+		<div id="sideMenuToggle" class="hidden-xs" style="float:left; width:14px ;height:30px; margin-top:0x;"><img src="../../assets/nci/images/arrow.png" /></div>
+
+		<div id="searchArea" class="searchArea">
+			<section class="container">
+				<div class="row">
+					<span class="screen-name">#{WL0030}</span>
+
+					<div class="searchStyle">
+
+						<input type="hidden" id="trayType" value=""/>
+						<input type="hidden" id="userDisplayId" value=""/>
+
+						<form id="formCondition" class="ac-contents">
+<!--
+							<div class="form-group col-sm-6 searchConditionArea">
+								<label data-i18n="processDefCode" class="searchConditionTh">#{processDefCode}</label>
+								<div class="searchConditionTd">
+									<select id="processDefCode" class="form-control searchConditionSelect"></select>
+								</div>
+							</div>
+							<div class="form-group col-sm-6 searchConditionArea">
+								<label data-i18n="title" class="searchConditionTh">#{title}</label>
+								<div class="searchConditionTd">
+									<input type="text" id="processBusinessInfo02" class="form-control searchConditionText" />
+								</div>
+							</div>
+							<div class="form-group col-sm-6 searchConditionArea">
+								<label data-i18n="" class="searchConditionTh">#{something}</label>
+								<div class="searchConditionTd">
+									<input type="text" id="" class="form-control searchConditionText" />
+								</div>
+							</div>
+							<div class="form-group col-sm-6 searchConditionArea">
+								<label data-i18n="" class="searchConditionTh">#{something}</label>
+								<div class="searchConditionTd">
+									<input type="text" id="" class="form-control searchConditionText" />
+								</div>
+							</div>
+							<div class="form-group col-sm-6 searchConditionArea">
+								<label data-i18n="" class="searchConditionTh">#{something}</label>
+								<div class="searchConditionTd">
+									<input type="text" id="" class="form-control searchConditionText" />
+								</div>
+							</div>
+							<div class="form-group col-sm-6 searchConditionArea">
+								<label data-i18n="" class="searchConditionTh">#{something}</label>
+								<div class="searchConditionTd">
+									<input type="text" id="" class="form-control searchConditionText" />
+								</div>
+							</div>
+							<div class="form-group col-sm-6 searchConditionArea">
+								<label data-i18n="" class="searchConditionTh">#{something}</label>
+								<div class="searchConditionTd">
+									<input type="text" id="" class="form-control searchConditionText" />
+								</div>
+							</div>
+							<div class="form-group col-sm-6 searchConditionArea">
+								<label data-i18n="" class="searchConditionTh">#{something}</label>
+								<div class="searchConditionTd">
+									<input type="text" id="" class="form-control searchConditionText" />
+								</div>
+							</div>
+							<div class="form-group col-sm-6 searchConditionArea">
+								<label data-i18n="" class="searchConditionTh">#{something}</label>
+								<div class="searchConditionTd">
+									<input type="text" id="" class="form-control searchConditionText" />
+								</div>
+							</div>
+							<div class="form-group col-sm-6 searchConditionArea">
+								<label data-i18n="" class="searchConditionTh">#{something}</label>
+								<div class="searchConditionTd">
+									<input type="text" id="" class="form-control searchConditionText" />
+								</div>
+							</div>
+							<div class="form-group col-sm-12 searchConditionArea">
+								<label data-i18n="" class="searchConditionTh">#{something}</label>
+								<div class="searchConditionTd">
+									<input type="text" id="" class="form-control searchConditionText" />
+								</div>
+							</div>
+ -->
+						</form>
+
+						<div class="searchButtonArea text-center">
+							<button id="btnSearch" class="btn btn-primary searchButton"><i class="glyphicon glyphicon-search"></i><span data-i18n="btnFilter">#{btnRefineSearch}</span></button>
+							<button id="btnReset" class="btn btn-default searchButton"><i class="glyphicon glyphicon-refresh"></i><span data-i18n="btnReset">#{btnReset}</span></button>
+						</div>
+
+					</div>
+				</div>
+			</section>
+
+			<section id="seach-result" class="container">
+				<div class="row" >
+					<div class="searchResultStyle">
+						<div class="text-center">
+							<div class="hidden-xs searchCount">
+								&nbsp;&nbsp;
+								<span class="all-count">#{all-count}</span>
+								<span>件</span>
+							</div>
+							<div class="pageArea">
+								<ul class="pagination"></ul>
+							</div>
+							<div class="pageSizeConfig">
+								<label data-i18n="rowCountPerPage" class="pageTextColor">#{１ページの行数}</label>
+								<select class="pageSize"></select>
+							</div>
+						</div>
+
+						<table class="table table-hover table-striped table-condensed responsive resultTable">
+							<colgroup>
+								<col style="width:25%" />
+								<col style="width:15%" />
+								<col style="width:15%" />
+								<col style="width:15%" />
+								<col style="width:15%" />
+								<col style="width:15%" />
+							</colgroup>
+							<thead>
+							<tr>
+							</tr>
+							</thead>
+
+							<tbody></tbody>
+
+							<tfoot class="template hide">
+							<tr>
+							</tr>
+							</tfoot>
+						</table>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<footer class="container-fluid footerArea">
+			<div id="nav-footer"></div>
+		</footer>
+
+	</body>
+</html>

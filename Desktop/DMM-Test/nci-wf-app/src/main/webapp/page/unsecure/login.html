@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<style type="text/css">
+	img.dmm-logo {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		max-width: 871px;
+	}
+	img.dmm-icon{
+		display: block;
+		float:right;
+		max-width: 200px;
+	}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="./login.js"></script>
+	<title></title>
+	<base />
+</head>
+<body>
+	<header>
+	</header>
+
+	<img src="../../assets/nci/images/cowboy_black.png" class="dmm-logo" />
+
+	<section class="container mB20_sp">
+		<div class=" row login">
+			<form class="form-signin">
+				<p class="font-12" data-i18n="MSG0203">IDとパスワードを入力して「ログイン」ボタンをクリックしてください。</p>
+
+				<label for="corporationCode" class="sr-only" data-i18n="corporationCode">企業コード</label>
+				<input type="text" id="corporationCode" class="form-control" placeholder="corporationCode" autofocus value="" maxlength="10" />
+
+				<label for="userAddedInfo" class="sr-only" data-i18n="userAddedInfo">ユーザID</label>
+				<input type="text" id="userAddedInfo" class="form-control" placeholder="userAddedInfo" autofocus maxlength="50" value="" />
+
+				<label for="inputPassword" class="sr-only">パスワード</label>
+				<input type="password" id="password" class="form-control" placeholder="パスワード" maxlength="255" value="" />
+
+				<div class="pass-change"><a id="restorePassword" href="#" data-i18n="ifYouForgotPassowrd">パスワードの変更はこちら</a></div>
+				<button id="btnLogin" class="btn btn-lg submit_b" type="submit" style="width: 100%;" data-i18n="btnLogin">ログイン</button>
+			</form>
+		</div>
+	</section>
+	
+	<section class="container mB20_sp">
+    	<img src="../../assets/nci/images/DJ-background.jpg" class="dmm-icon">
+	</section>
+
+	<section class="container">
+		<div id="announcements" class="row hide col-md-offset-3 col-sm-offset-2" >
+			<label class="text-primary">
+				<i class="glyphicon glyphicon-info-sign"></i>
+				<span data-i18n="announcementOfTheDay">Announce of the day.</span>
+			</label>
+			<table class="table table-hover table-striped table-condensed responsive">
+				<colgroup>
+					<col class="col-lg-2 col-sm-3 col-xs-4" />
+					<col class="col-lg-10 col-sm-9 col-xs-8" />
+				<tbody></tbody>
+				<tfoot class="hide template">
+					<tr>
+						<th>
+							<span data-field="publicationDate"></span>
+							<i class="label label-success" data-field="labelNew"></i>
+<!--
+						<td class="dropdown">
+							<a data-field="subject" class="hyperlink" data-toggle="dropdown"></a>
+							<ul class="dropdown-menu">
+								<li>
+									<div data-field="contents"></div>
+									<div class="text-right">
+										<a data-field="linkTitle" target="_blank"></a>
+									</div>
+								</li>
+							</ul>
+-->
+						<td>
+							<span data-field="subject"></span>
+				</tbody>
+			</table>
+		</div>
+	</section>
+
+</body>
+</html>

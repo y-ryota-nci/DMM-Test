@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		section {
+			width: calc(90vw - 50px);
+			max-width: 970px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		button {
+			color: #fff;
+			background-color: #2196f3;
+			border-color: #1791f2;
+			transition-timing-function: ease;
+			transition-duration: .3s;
+			transition-property: all;
+			display: inline-block;
+			padding: 6px 12px;
+			font-size: 16px;
+			font-weight: 400;
+			text-align: center;
+			white-space: nowrap;
+			vertical-align: middle;
+			cursor: pointer;
+			user-select: none;
+			border: 1px solid transparent;
+			border-radius: 2px;
+			min-width: 100px;
+		}
+		.text-center {
+			text-align: center;
+		}
+		.debug-info {
+			position: absolute;
+			top: calc(80vh - 50px);
+		}
+	</style>
+	<script>
+	function _onload() {
+		document.getElementById('___timestamp___').textContent = new Date();
+		document.getElementById('___btnTopPage___').textContent = isPopup() ? "閉じる" : "ログイン";
+	}
+
+	function isPopup() {
+		return window !== window.parent;
+	}
+
+	function _toTopPage() {
+		if (isPopup()) {
+			// ポップアップ画面
+			parent.$('div.nci-popup:last').modal("hide").triggerHandler('callback');
+		} else {
+			// 非ポップアップ画面
+			const baseURI = document.baseURI || document.location.href;
+			let redirectURI = "unsecure/login.html";
+			if (baseURI.indexOf('/page/') >= 0) {
+				redirectURI = "../" + redirectURI;
+			} else {
+				redirectURI = baseURI + "page/" + redirectURI;
+			}
+			window.location.replace(redirectURI);
+		}
+	}
+	</script>
+	</head>
+	<body onload="javascript:_onload();">
+		<section>
+			<h1>しばらく操作が行われなかったため、ログイン情報が期限切れとなりました。</h1>
+
+			<h5>大変お手数ではございますが、再度ログインをお願いいたします。</h5>
+
+			<div class="text-center">
+				<button id="___btnTopPage___" onclick="javascript:_toTopPage();">ログイン</button>
+			</div>
+
+			<div class="debug-info">
+				<small>
+					<span id="___timestamp___"></span><br />
+					<span id="___errorText___">HTTP 401 Unauthenticated</span>
+				</small>
+			</div>
+		</section>
+	</body>
+</html>

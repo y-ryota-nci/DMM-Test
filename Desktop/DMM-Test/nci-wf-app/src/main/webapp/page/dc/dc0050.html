@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/jsTree/themes/default/style.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<style type="text/css">
+	div.dropdown {
+		display: inline-block;
+	}
+	a.jstree-anchor[data-type=file] {
+		color : green;
+	}
+	#accessibles th.text-center, #accessibles td.text-center {
+		text-align: center;
+	}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/jsTree/jstree.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./dc0050.js"></script>
+	<title>#{DC0050 文書フォルダ設定}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+	<section class="col-xs-12">
+		<article class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">文書フォルダ設定 </h1>
+			</div>
+		</article>
+		<article class="row mB40 mB40_sp">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<span data-i18n="docFolderList">#{文書フォルダ一覧}</span>
+					</div>
+					<div id="condition-contents" class="panel-collapse collapse in">
+						<div class="panel-body">
+							<div class="form-group col-lg-12">
+								<div>
+									<button id="btnAdd" class="btn btn-primary btn-sm" disabled>
+										<i class="glyphicon glyphicon-plus-sign"></i>
+										<span data-i18n="btnAdd">#{追加}</span>
+									</button>
+									<button id="btnEdit" class="btn btn-primary btn-sm" disabled>
+										<i class="glyphicon glyphicon-edit"></i>
+										<span data-i18n="btnEdit">#{編集}</span>
+									</button>
+									<!--
+									<button id="btnRemove" class="btn btn-danger btn-sm" disabled>
+										<i class="glyphicon glyphicon-remove-sign"></i>
+										<span data-i18n="btnDelete">#{削除}</span>
+									</button>
+									-->
+								</div>
+								<div id="treeDocFolder" class="alert alert-info" ></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+	</section>
+	<div id="confirmFolder" class="modal fade">
+		<div class="modal-lg modal-dialog">
+			<div class="modal-content form-group">
+				<div class="modal-header">
+					<i class="fa fa-chevron-up"></i>
+					<span data-i18n="docFolderSetting">#{フォルダ設定}</span>
+				</div>
+				<div id="folder-contents" class="modal-body">
+					<div class="tableBox col-lg-12 col-md-12 col-sm-12" id="folderInfo">
+						<div class="tr">
+							<div class="col-lg-4 col-md-4 col-sm-4 th">
+								<label class="" data-i18n="folderPath">#{フォルダパス}</label>
+							</div>
+							<div class="col-lg-8 col-md-8 col-sm-8 td">
+								<span data-field="folderPath"></span>
+							</div>
+						</div>
+						<div class="tr">
+							<div class="col-lg-4 col-md-4 col-sm-4 th">
+								<label class="" data-i18n="folderCode">#{フォルダコード}</label>
+							</div>
+							<div class="col-lg-8 col-md-8 col-sm-8 td">
+								<input type="text" id="folderCode" class="form-control required" disabled />
+								<input type="hidden" id="docFolderId" />
+								<input type="hidden" id="corporationCode" />
+								<input type="hidden" id="version" />
+								<input type="hidden" id="sortOrder" />
+								<input type="hidden" id="docFolderHierarchyId" />
+								<input type="hidden" id="parentDocFolderId" />
+							</div>
+						</div>
+						<div class="tr">
+							<div class="col-lg-4 col-md-4 col-sm-4 th">
+								<label class="required" data-i18n="folderName">#{フォルダ名称}</label>
+							</div>
+							<div class="col-lg-8 col-md-8 col-sm-8 td">
+								<input type="text" id="folderName" class="form-control required" maxlength="30" />
+							</div>
+						</div>
+						<div class="tr">
+							<div class="col-lg-4 col-md-4 col-sm-4 th">
+								<label class="" data-i18n="validTerm">#{有効期間}</label>
+							</div>
+							<div class="col-lg-8 col-md-8 col-sm-8 td">
+								<div class="input-group">
+									<div class="has-feedback">
+										<input type="text" class="form-control ymdPicker" id="validStartDate" data-validate='{"to" : "#validEndDate", "pattern" : "date" }'/>
+										<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+									</div>
+									<div class="input-group-addon">～</div>
+									<div class="has-feedback">
+										<input type="text" class="form-control ymdPicker" id="validEndDate" data-validate='{"from" : "#validStartDate" , "pattern" : "date"}'/>
+										<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tr">
+							<div class="col-lg-4 col-md-4 col-sm-4 th">
+								<label class="" data-i18n="metaTemplate">#{メタテンプレート}</label>
+							</div>
+							<div class="col-lg-8 col-md-8 col-sm-8 td">
+								<select id="metaTemplateId" class="form-control"></select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-header">
+					<i class="fa fa-chevron-up"></i>
+					<span data-i18n="authSetting">#{権限設定}</span>
+				</div>
+				<div id="accessible-contents" class="panel-body">
+					<div class="form-horizontal col-lg-12 col-md-12 col-sm-12" id="accessibleInfo">
+						<div class="form-group tr">
+						<!--
+							<div class="col-lg-6 col-md-6 col-sm-6 td">
+								<select id="roles" class="form-control"></select>
+							</div>
+						-->
+							<div class="td">
+								<div>
+								<button id="btnAddRole" class="btn btn-primary btn-sm">
+									<i class="fa fa-plus-circle"></i>
+									<span data-i18n="btnAdd">#{追加}</span>
+								</button>
+								<button id="btnDelRole" class="btn btn-default btn-sm">
+									<i class="fa fa-minus-circle"></i>
+									<span data-i18n="btnDelete">#{削除}</span>
+								</button>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<table id="accessibles" class="table table-bordered table-hover table-striped responsive">
+								<colgroup>
+									<col class="col-xs-6" />
+									<col class="col-xs-1" />
+									<col class="col-xs-1" />
+									<col class="col-xs-1" />
+									<col class="col-xs-1" />
+									<col class="col-xs-1" />
+									<col class="col-xs-1" />
+								</colgroup>
+								<thead>
+									<tr>
+										<th>
+											<span data-i18n="roleName">#{ロール名称}</span>
+										</th>
+										<th class="text-center">
+											<i class="glyphicon glyphicon-eye-open hidden-lg hidden-md hidden-sm"></i>
+											<span data-i18n="refer" class="hidden-xs">#{参照}</span>
+										</th>
+										<th class="text-center">
+											<i class="glyphicon glyphicon-download-alt hidden-lg hidden-md hidden-sm"></i>
+											<span data-i18n="download" class="hidden-xs">#{ﾀﾞｳﾝﾛｰﾄﾞ}</span>
+										</th>
+										<th class="text-center">
+											<span data-i18n="edit" class="hidden-xs">#{編集}</span>
+											<i class="glyphicon glyphicon-edit hidden-lg hidden-md hidden-sm"></i>
+										</th>
+										<th class="text-center">
+											<span data-i18n="delete" class="hidden-xs">#{削除}</span>
+											<i class="glyphicon glyphicon-remove-circle hidden-lg hidden-md hidden-sm"></i>
+										</th>
+										<th class="text-center">
+											<span data-i18n="copy" class="hidden-xs">#{コピー}</span>
+											<i class="glyphicon glyphicon-copyright-mark hidden-lg hidden-md hidden-sm"></i>
+										</th>
+										<th class="text-center">
+											<span data-i18n="move" class="hidden-xs">#{移動}</span>
+											<i class="glyphicon glyphicon-move hidden-lg hidden-md hidden-sm"></i>
+										</th>
+									</tr>
+								</thead>
+
+								<tbody></tbody>
+
+								<tfoot class="template hide">
+									<tr>
+										<td class="text-left">
+											<input type="checkbox" class="selectable" value="true" />
+											<span class="" data-field="assignRoleName">#{assignRoleName}</span>
+											<span class="hide" data-field="userName">#{userName}</span>
+											<span class="hide" data-field="docFolderAccessibleId">#{docFolderAccessibleId}</span>
+											<span class="hide" data-field="version">#{version}</span>
+											<span class="hide" data-field="corporationCode">#{corporationCode}</span>
+											<span class="hide" data-field="assignRoleCode">#{assignRoleCode}</span>
+											<span class="hide" data-field="userCode">#{userCode}</span>
+										</td>
+										<td class="text-center"><input type="checkbox" class="" value="1" data-field="authRefer"/></td>
+										<td class="text-center"><input type="checkbox" class="" value="1" data-field="authDownload" disabled/></td>
+										<td class="text-center"><input type="checkbox" class="" value="1" data-field="authEdit"/></td>
+										<td class="text-center"><input type="checkbox" class="" value="1" data-field="authDelete" disabled/></td>
+										<td class="text-center"><input type="checkbox" class="" value="1" data-field="authCopy" disabled/></td>
+										<td class="text-center"><input type="checkbox" class="" value="1" data-field="authMove" disabled/></td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer form-group text-center">
+					<button id="btnRegist" class="btn btn-primary hide">
+						<i class="fa fa-save"></i>
+						<span data-i18n="btnRegister">#{登録}</span>
+					</button>
+					<button id="btnUpdate" class="btn btn-primary hide">
+						<i class="fa fa-save"></i>
+						<span data-i18n="btnUpdate">#{更新}</span>
+					</button>
+					<button id="btnDelete" class="btn btn-danger hide">
+						<i class="fa fa-trash"></i>
+						<span data-i18n="btnDelete">#{削除}</span>
+					</button>
+					<button id="btnCancel" class="btn btn-default">
+						<i class="fa fa-reply"></i>
+						<span data-i18n="btnCancel">#{キャンセル}</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Informationダイアログ -->
+	<div id="informDlg" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+					<i class="fa fa-info-circle"></i>
+					<span id="infomsg"></span>
+				</div>
+				<div class="modal-footer text-center">
+					<button id="btnInformDlgOK" class="btn btn-primary" data-dismiss="modal">
+						<i class="fa fa-check-square"></i>
+						<span data-i18n="btnOK">#{OK}</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

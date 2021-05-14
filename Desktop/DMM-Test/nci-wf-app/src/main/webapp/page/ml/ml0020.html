@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	@media (min-width: 768px) {
+		.dl-horizontal dt {
+			width : 280px;
+		}
+		.dl-horizontal dd {
+			margin-left : 300px;
+		}
+	}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./ml0020.js"></script>
+	<title>#{ML0020 メール環境設定}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="container">
+		<div class="row">
+			<span class="screen-name">#{ML0020}</span>
+
+			<label class="sub-title">
+				<span  data-i18n="mailConfig"></span>
+			</label>
+
+			<dl id="inputs" class="dl-horizontal">
+				<dt class="form-group"><span class="required" data-i18n="mailEnv">メール環境</span></dt>
+				<dd class="form-group">
+					<label class="radio-inline">
+						<input name="mail.env" value="DEVELOP" type="radio" class="required" />
+						<span>DEVELOP</span>
+					</label>
+					<label class="radio-inline">
+						<input name="mail.env" value="STAGING" type="radio" class="required" />
+						<span class="form-group">STAGING</span>
+					</label>
+					<label class="radio-inline">
+						<input name="mail.env" value="PRODUCT" type="radio" class="required" />
+						<span>PRODUCT</span>
+					</label>
+				</dd>
+
+				<dt class="form-group"><span class="required" data-i18n="smtpHost">SMTPサーバ</span></dt>
+				<dd class="form-group"><input data-field="mail.smtp.host" class="form-control required"
+						data-validate='{"pattern":"alphaSymbolNumber"}' maxlength="90" /></dd>
+
+				<dt class="form-group"><span class="required" data-i18n="mailEncode">メールの文字エンコード</span></dt>
+				<dd class="form-group">
+					<label class="radio-inline">
+						<input name="mail.encode" value="utf-8" type="radio" class="required" />
+						<span>UTF-8</span>
+					</label>
+					<label class="radio-inline">
+						<input name="mail.encode" value="iso-2022-jp" type="radio" class="required" />
+						<span>ISO-2022-JP</span>
+					</label>
+				</dd>
+
+				<dt class="form-group"><span class="required" data-i18n="mailTransferEncoding">メール符号方式</span></dt>
+				<dd class="form-group">
+					<label class="radio-inline">
+						<input name="mail.contentTransferEncoding" value="base64" type="radio" class="required" />
+						<span>base64</span>
+					</label>
+					<label class="radio-inline">
+						<input name="mail.contentTransferEncoding" value="7bit" type="radio" class="required" />
+						<span>7bit</span>
+					</label>
+				</dd>
+
+				<dt class="form-group"><span class="required" data-i18n="connectTimeoutSecond">接続タイムアウト</span></dt>
+				<dd class="form-group">
+					<input data-field="mail.smtp.connect.timeout" class="form-control required"
+							data-validate='{"pattern":"integer", "max":65536, "min":1}' maxlength="6" />
+					<span data-field="remarks"></span>
+				</dd>
+
+				<dt class="form-group"><span class="required" data-i18n="smtpTimeoutSecond">SMTPタイムアウト</span></dt>
+				<dd class="form-group"><input data-field="mail.smtp.timeout" class="form-control required"
+						data-validate='{"pattern":"integer", "max":65536, "min":1}' maxlength="6" /></dd>
+
+				<dt class="form-group"><span class="required" data-i18n="dummySendTo">ダミー送信先</span></dt>
+				<dd class="form-group"><input data-field="mail.dummySendTo" class="form-control required"
+						data-validate='{"pattern":"mail"}' maxlength="90" /></dd>
+
+				<dt class="form-group"><span class="required" data-i18n="senderAddress">差出人アドレス</span></dt>
+				<dd class="form-group"><input data-field="mail.smtp.from" class="form-control required"
+						data-validate='{"pattern":"mail"}' maxlength="90" /></dd>
+
+				<dt class="form-group"><span data-i18n="senderName">差出人名</span></dt>
+				<dd class="form-group"><input data-field="mail.smtp.from.personal" class="form-control" maxlength="30" /></dd>
+
+				<dt class="form-group"><span class="" data-i18n="commonSendToCC">共通CC送信先</span></dt>
+				<dd class="form-group"><input data-field="mail.cc" class="form-control"
+						data-validate='{"pattern":"mail"}' maxlength="90" /></dd>
+
+				<dt class="form-group"><span class=""  data-i18n="commonSendToBCC">共通BCC送信先</span></dt>
+				<dd class="form-group"><input data-field="mail.bcc" class="form-control"
+						data-validate='{"pattern":"mail"}' maxlength="90" /></dd>
+
+				<dt class="form-group"><span class="required" data-i18n="returnTo">返信先</span></dt>
+				<dd class="form-group"><input data-field="mail.replyTo" class="form-control required"
+						data-validate='{"pattern":"mail"}' maxlength="90" /></dd>
+
+				<dt class="form-group"><span class="" data-i18n="errorMailReturnPath">メール送信エラー時の返信先</span></dt>
+				<dd class="form-group"><input data-field="mail.returnPath" class="form-control"
+						data-validate='{"pattern":"mail"}' maxlength="300" /></dd>
+
+				<dt class="form-group"><span class="" data-i18n="mailer">メーラー</span></dt>
+				<dd class="form-group"><input data-field="mail.mailer" class="form-control"
+						data-validate='{"pattern":"all"}' maxlength="300" /></dd>
+
+				<dt class="form-group"><span class="required" data-i18n="smtpAuth">SMTP認証</span></dt>
+				<dd class="form-group">
+					<label class="radio-inline">
+						<input name="mail.smtp.auth" value="TRUE" type="radio" class="required" />
+						<span>TRUE</span>
+					</label>
+					<label class="radio-inline">
+						<input name="mail.smtp.auth" value="FALSE" type="radio" class="required" />
+						<span>FALSE</span>
+					</label>
+				</dd>
+
+				<dt class="form-group"><span class="required" data-i18n="smtpAuthPort">SMTP認証ポート</span></dt>
+				<dd class="form-group"><input data-field="mail.smtp.port" class="form-control required smtpAuth"
+						data-validate='{"pattern":"integer", "max":65536, "min":1}' maxlength="6" /></dd>
+
+				<dt class="form-group"><span class="required" data-i18n="smtpAuthUser">SMTP認証ユーザID</span></dt>
+				<dd class="form-group"><input data-field="mail.smtp.user" class="form-control required smtpAuth"
+						data-validate='{"pattern":"alphaSymbolNumber"}' maxlength="30" /></dd>
+
+				<dt data-i18n="smtpAuthPassword">SMTP認証パスワード</dt>
+				<dd class="form-group"><input data-field="mail.smtp.password" class="form-control required smtpAuth"
+						data-validate='{"pattern":"alphaSymbolNumber"}' maxlength="30" /></dd>
+
+				<dt class="form-group"><span class="required" data-i18n="smtpAuthProtocol">SMTP認証プロトコル</span></dt>
+				<dd class="form-group">
+					<label class="radio-inline">
+						<input name="mail.transport.protocol" value="smtps" type="radio" class="required smtpAuth" />
+						<span>smtps</span>
+					</label>
+					<label class="radio-inline">
+						<input name="mail.transport.protocol" value="smtp" type="radio" class="required smtpAuth" />
+						<span>smtp</span>
+					</label>
+				</dd>
+
+				<dt class="form-group"><span class="required" data-i18n="enableTLS">TLS</span></dt>
+				<dd class="form-group">
+					<label class="radio-inline">
+						<input name="mail.smtp.starttls.enable" value="TRUE" type="radio" class="required smtpAuth" />
+						<span>TRUE</span>
+					</label>
+					<label class="radio-inline">
+						<input name="mail.smtp.starttls.enable" value="FALSE" type="radio" class="required smtpAuth" />
+						<span>FALSE</span>
+					</label>
+				</dd>
+
+				<dt class="form-group"><span class="required" data-i18n="enableSSL">SSL</span></dt>
+				<dd class="form-group">
+					<label class="radio-inline">
+						<input name="mail.smtp.EnableSSL.enable" value="TRUE" type="radio" class="required smtpAuth" />
+						<span>TRUE</span>
+					</label>
+					<label class="radio-inline">
+						<input name="mail.smtp.EnableSSL.enable" value="FALSE" type="radio" class="required smtpAuth" />
+						<span>FALSE</span>
+					</label>
+				</dd>
+
+				<dt class="form-group"><span class="required" data-i18n="sslSocketFactory">SSL SocketFactory</span></dt>
+				<dd class="form-group"><input data-field="mail.smtp.socketFactory.class" class="form-control required smtpAuth"
+					data-validate='{"pattern":"alphaSymbolNumber"}' maxlength="300" /></dd>
+
+				<dt class="form-group"><span class="required" data-i18n="sslSocketFactoryFallback">SSL SocketFactory fallback</span></dt>
+				<dd class="form-group">
+					<label class="radio-inline">
+						<input name="mail.smtp.socketFactory.fallback" value="TRUE" type="radio" class="required smtpAuth" />
+						<span>TRUE</span>
+					</label>
+					<label class="radio-inline">
+						<input name="mail.smtp.socketFactory.fallback" value="FALSE" type="radio" class="required smtpAuth" />
+						<span>FALSE</span>
+					</label>
+				</dd>
+
+				<dt class="form-group"><span data-i18n="sslSocketFactoryPort">SSL SocketFactory port</span></dt>
+				<dd class="form-group"><input data-field="mail.smtp.socketFactory.port" class="form-control smtpAuth" type="text"
+						data-validate='{"pattern":"integer", "max":65536, "min":1}' maxlength="6" /></dd>
+			</dl>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<div class="text-center">
+				<button id="btnUpdate" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnUpdate">#{更新}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+
+</body>
+</html>

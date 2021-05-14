@@ -1,0 +1,73 @@
+<!-- 決裁関連文書ブロック -->
+<article id="block0005">
+	<div class="panel panel-default">
+		<div id="a1" class="panel-heading clearfix">
+			<span id="block0005_expansion" class="collapse_btn collapsed" role="button" data-toggle="collapse" data-target="#block0005_contents">
+				<i class="fa fa-chevron-down"></i><span data-field="blockName">#{決裁関連文書}</span>
+			</span>
+<!-- 			<div class="topend_btn"> -->
+<!-- 				<a href="#pagetop" class="pagetop">TOP</a> -->
+<!-- 				<a href="#pageend" class="pageend">END</a> -->
+<!-- 			</div> -->
+		</div>
+
+		<div id="block0005_contents" class="panel-body panel-collapse collapse">
+			<div class="btn-group">
+				<button id="btnAddApprovalRelation" class="btn btn-default btn-sm hide">
+					<i class="fa fa-plus-circle"></i>
+					<span data-i18n="btnAdd">追加</span>
+				</button>
+				<button id="btnDeleteApprovalRelation" class="btn btn-default btn-sm hide" disabled>
+					<i class="fa fa-minus-circle"></i>
+					<span data-i18n="btnDelete">削除</span>
+				</button>
+			</div>
+
+			<div class="table-responsive">
+				<table class="table table-hover table-striped table-condensed responsive">
+					<colgroup>
+						<col class="col-md-2 col-sm-4 col-xs-6" />
+						<col class="col-md-2 col-sm-4 col-xs-6" />
+						<col class="col-md-1 col-sm-2 hidden-xs" />
+						<col class="col-md-2 col-sm-2 hidden-xs" />
+						<col class="col-md-1 hidden-sm hidden-xs" />
+						<col class="col-md-2 hidden-sm hidden-xs" />
+						<col class="col-md-2 hidden-sm hidden-xs" />
+					<thead>
+						<tr>
+							<th data-i18n="applicationNo">申請番号
+							<th data-i18n="title">件名
+							<th data-i18n="businessStatus" class="hidden-xs">業務ステータス
+							<th data-i18n="processDefName" class="hidden-xs">文書種別
+							<th data-i18n="applicationDate" class="hidden-sm hidden-xs">申請日
+							<th data-i18n="organizationNameProcess" class="hidden-sm hidden-xs">起案組織
+							<th data-i18n="userNameProxyProcess" class="hidden-sm hidden-xs">起案者
+					<tbody></tbody>
+					<tfoot class="hide template">
+						<tr>
+							<th>
+								<input type="radio" name="rdoApprovalRelation" data-field="processRelationId" disabled="disabled" />
+								<span data-field="applicationNo" class="form-control-static"></span>
+								<span data-field="corporationCode" class="hide"></span>
+								<span data-field="processId" class="hide"></span>
+								<span data-field="processRelationType" class="hide"></span>
+								<span data-field="corporationCodeRelation" class="hide"></span>
+								<span data-field="processIdRelation" class="hide"></span>
+								<span data-field="timestampUpdatedProcessLong" class="hide"></span>
+							<td>
+								<a data-field="subject" class="form-control-static clickable"></a>
+							<td class="hidden-xs">
+								<a data-field="businessProcessStatusName" class="form-control-static clickable"></a>
+							<td class="hidden-xs">
+								<a data-field="processDefName" class="form-control-static clickable"></a>
+							<td class="hidden-sm hidden-xs">
+								<span data-field="applicationDate" class="form-control-static"></span>
+							<td class="hidden-sm hidden-xs">
+								<span data-field="organizationNameProcess" class="form-control-static"></span>
+							<td class="hidden-sm hidden-xs">
+								<span data-field="userNameProxyProcess" class="form-control-static"></span>
+				</table>
+			</div>
+		</div>
+	</div>
+</article>

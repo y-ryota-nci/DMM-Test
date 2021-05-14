@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+<link rel="stylesheet" href="../../assets/nci/app.css" />
+<style type="text/css">
+.form-horizontal .radio-inline {
+	padding-top: 0px;
+}
+.nowrap {
+	white-space: nowrap;
+}
+</style>
+<script src="../../assets/jquery/jquery.min.js"></script>
+<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="../../assets/nci/NCI.js"></script>
+<script src="../../assets/nci/validate.js"></script>
+<script src="./mm0311.js"></script>
+<title>#{MM0311 比較条件式作成}</title>
+</head>
+<body>
+<header></header>
+<section id="inputed" class="container">
+	<div>
+		<span class="screen-name">#{MM0311}</span>
+		<label class="sub-title" data-i18n="expressionSetting">#{比較条件式設定}</label>
+		<div class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-3 control-label required" data-i18n="condition1">#{条件1}</label>
+				<div class="col-sm-7 form-inline">
+					<div class="input-group">
+						<span id="corporationCode" class="hide">#{corporationCode}</span>
+						<span id="processDefCode" class="hide">#{processDefCode}</span>
+						<span id="processDefDetailCode" class="hide">#{processDefDetailCode}</span>
+						<span class="form-control nowrap">
+							<label class="radio-inline"><input type="radio" name="expressionLeftType" id="expressionLeftType1" value="1"><span data-i18n="variable">#{変数}</span></label>
+							<label class="radio-inline"><input type="radio" name="expressionLeftType" id="expressionLeftType2" value="2"><span data-i18n="condExpression">#{条件式}</span></label>
+						</span>
+						<span class="input-group-addon"></span>
+						<select id="conditionExpressionLeft" class="form-control required"></select>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label required" data-i18n="operatorType">#{比較式}</label>
+				<div class="col-sm-7"><select id="operatorType" class="form-control required"></select></div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label required" data-i18n="condition2" class="required">#{条件2}</label>
+				<div class="col-sm-7 form-inline">
+					<div class="input-group">
+						<span class="form-control nowrap">
+							<label class="control-label radio-inline"><input type="radio" name="expressionRightType" data-field="expressionRightType" value="1"><span data-i18n="variable">#{変数}</span></label>
+							<label class="control-label radio-inline"><input type="radio" name="expressionRightType" data-field="expressionRightType" value="9"><span data-i18n="inputValue">#{入力値}</span></label>
+							<label class="control-label radio-inline hide"><input type="radio" name="expressionRightType" data-field="expressionRightType" value="2" disabled="disabled"><span data-i18n="condExpression">#{条件式}</span></label>
+						</span>
+						<span class="input-group-addon"></span>
+						<select data-field="conditionExpressionRight" class="form-control required"></select>
+						<input type="text" data-field="conditionExpressionRight" class="form-control required hide" maxlength="650" data-validate='{"maxByteUtf8" : 2000}' />
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label" data-i18n="expressionName">#{条件名}</label>
+				<div class="col-sm-7"><input type="text" data-field="conditionExpressionAll" class="form-control" maxlength="650" data-validate='{"maxByteUtf8" : 2000}' /></div>
+			</div>
+			<div class="form-group text-center">
+				<button id="btnCreate" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnAdd">#{追加}</span>
+				</button>
+				<button id="btnClose" class="btn btn-default">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</section>
+</body>
+</html>

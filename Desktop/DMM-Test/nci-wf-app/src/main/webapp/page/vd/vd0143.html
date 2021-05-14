@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/jsTree/themes/default/style.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./vd0143.js"></script>
+	<title>#{VD0143 計算式定義一覧}</title>
+</head>
+<body>
+	<header></header>
+
+	<section class="container">
+		<div class="row">
+			<span class="screen-name">#{VD0143}</span>
+		</div>
+	</section>
+
+	<section id="seach-result" class="container hide">
+		<div class="row">
+			<span data-i18n="MSG0145" style="color:red;">#{※デフォルトの計算式には計算条件は設定できません。}</span><br/>
+			<span data-i18n="MSG0146" style="color:red;">#{※並び順が上位のものから計算条件を判定し、有効な計算式に基づいて計算処理を行います。計算条件がない場合は常に有効となります。}</span><br/>
+			<span data-i18n="MSG0147" style="color:red;">#{※有効な計算式が見つからない場合、計算処理は行いません。}</span><br/>
+		</div>
+		<div class="row" >
+			<label class="sub-title" data-i18n="calcList">#{計算式一覧}</label>
+
+			<table id="tblCalcList" class="table table-hover table-striped table-condensed responsive">
+				<colgroup>
+					<col class="col-xs-6" />
+					<col class="col-xs-3" />
+					<col class="col-xs-1" />
+					<col class="col-xs-2" />
+				</colgroup>
+				<thead>
+					<tr>
+						<th data-i18n="calcName">#{計算式名}</th>
+						<th data-i18n="callbackFunction">#{コールバック関数}</th>
+						<th data-i18n="defaultPhrase">#{デフォルト}</th>
+						<th data-i18n="calcEc">#{計算条件}</th>
+					</tr>
+				</thead>
+
+				<tbody></tbody>
+
+				<tfoot class="template hide">
+					<tr>
+						<th>
+							<i class='glyphicon glyphicon-align-justify clickable'></i>
+							<input type="checkbox" class="selectable" value="true"/>
+							<a href="#" data-field="partsCalcName">#{partsCalcName}</a>
+							<span class="hide" data-field="version">#{version}</span>
+						</th>
+						<td>
+							<span data-field="callbackFunction"></span>
+						</td>
+						<td>
+							<input type="checkbox" class="defaultFlag" value="1" data-field="defaultFlag"/>
+						</td>
+						<td>
+							<button class="btn btn-default btnEditEc">
+								<i class="glyphicon glyphicon-cog"></i>
+								<span data-i18n="btnEdit">#{編集}</span>
+							</button>
+							<button class="btn btn-danger btnDelEc" disabled>
+								<i class="glyphicon glyphicon-trash"></i>
+								<span data-i18n="btnDelete">#{削除}</span>
+							</button>
+						</td>
+						<td class="hide" data-field="partsCalcId"></td>
+						<td class="hide" data-field="index"></td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<div class="col-xs-4">
+				<button id="btnAdd" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-plus-sign"></i>
+					<span data-i18n="btnAdd">#{追加}</span>
+				</button>
+				<button id="btnDelete" class="btn btn-danger" disabled>
+					<i class="glyphicon glyphicon-trash"></i>
+					<span data-i18n="btnDelete">#{削除}</span>
+				</button>
+			</div>
+			<div class="col-xs-4 text-center">
+				<button id="btnUpdate" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnOK">#{更新}</span>
+				</button>
+				<button id="btnClose" class="btn btn-default">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

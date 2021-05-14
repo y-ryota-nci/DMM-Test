@@ -1,0 +1,1424 @@
+#新規契約情報⇒契約マスタINSERT
+CO0000_01: |+
+   insert into /* CO0000_01 */ CNTRCT_INF(
+      COMPANY_CD,
+      CNTRCT_NO,
+      CNTRCT_STS,
+      CNTRCT_NM,
+      CNTRCTR_CD,
+      CNTRCTR_DPT_CD,
+      CNTRCTR_DPT_NM,
+      CNTRCT_PRD_S_DT,
+      CNTRCT_PRD_E_DT,
+      CNTRCT_TP,
+      CNTRCTSHT_FRMT,
+      CNTRCT_DT,
+      SBMTR_CD,
+      SBMT_DPT_CD,
+      SBMT_DPT_NM,
+      SBMT_DPT_DT,
+      RTN_PAY_TP,
+      RTN_PAY_NO,
+      CNTRCT_DTLCND,
+      CMPN_OCC_PRS,
+      TRD_EST_AMT_EXCTAX,
+      TRD_EST_AMT_RMK,
+      PAY_CYC_PLN_TP,
+      PAY_CYC_PLN_RMK,
+      RNW_PRS,
+      RNW_DTLCND,
+      BKBND_CHG_TP,
+      STMP_APP_TP,
+      RMK,
+      LGLR_CD,
+      CNTRCT_SHT_NM,
+      CNTRCT_CNCL_DT,
+      CNTRCT_DT_S,
+      CNTRCT_DT_E,
+      RVNSTMP_PRS,
+      RVNSTMP_AMT,
+      RNW_MTH_TP_AUTO,
+      RNW_MTH_TP_AUTO_INF_MT,
+      RNW_MTH_TP_AUTO_PSTP_MT,
+      RNW_MTH_TP_NEGO,
+      RNW_MTH_TP_NEGO_INF_MT,
+      RNW_MTH_TP_EXPR,
+      RNW_MTH_TP_INDF,
+      LGL_RMK,
+      PAY_SITE_CD,
+      MNY_CD,
+      N_CMPT_OBLG_TP,
+      TO_APPRV_RMK,
+      CNTRCTSHT_RQST_TP,
+      TO_ADR,
+      RNW_MTH_TP,
+      MAIL_TP,
+      MAIL_RMK,
+      SHT_TO_ZIP_CD,
+      SHT_ADR_PRF_CD,
+      SHT_ADR_PRF,
+      SHT_ADR1,
+      SHT_ADR2,
+      SHT_ADR3,
+      SHT_PIC_NM,
+      SHT_DPT_NM,
+      SHT_MLADR,
+      SHT_TEL_NO,
+      BUMON_CD,
+      DLT_FG,
+      CORPORATION_CODE_CREATED,
+      USER_CODE_CREATED,
+      IP_CREATED,
+      TIMESTAMP_CREATED,
+      CORPORATION_CODE_UPDATED,
+      USER_CODE_UPDATED,
+      IP_UPDATED,
+      TIMESTAMP_UPDATED,
+      ORGNZ_CD
+   )
+   select
+      A.COMPANY_CD,
+      A.CNTRCT_NO,
+      '1', /* CNTRCT_TP */
+      A.CNTRCT_NM,
+      NULL as CNTRCTR_CD,
+      NULL as CNTRCT_DPT_CD, /* CNTRCTR_DPT_CD */
+      NULL as CNTRCT_DPT_NM, /* CNTRCTR_DPT_NM */
+      A.CNTRCT_PRD_S_DT,
+      A.CNTRCT_PRD_E_DT,
+      NULL,
+      A.CNTRCTSHT_FRMT,
+      A.CNTRCT_DT,
+      A.SBMTR_CD,
+      A.SBMT_DPT_CD,
+      A.SBMT_DPT_NM,
+      A.SBMT_DPT_DT,
+      NVL(A.PAY_FLG, '0'), /* RTN_PAY_TP */
+      ?, /* RTN_PAY_NO */
+      A.CNTRCT_DTLCND,
+      NULL, /* CMPN_OCC_PRS */
+      A.TRD_EST_AMT_EXCTAX,
+      A.TRD_EST_AMT_RMK,
+      A.PAY_CYC_PLN_TP,
+      A.PAY_CYC_PLN_RMK,
+      NULL, /* RNW_PRS */
+      NULL, /* RNW_DTLCND */
+      A.BKBND_CHG_TP,
+      NULL, /* STMP_APP_TP */
+      NULL, /* RMK */
+      A.LGLR_CD,
+      A.CNTRCT_SHT_NM,
+      NULL, /* A.CNTRCT_CNCL_DT */
+      NULL, /* CNTRCT_DT_S */
+      NULL, /* CNTRCT_DT_E */
+      NULL as RVNSTMP_PRS,
+      A.RVNSTMP_AMT,
+      A.RNW_MTH_TP_AUTO,
+      A.RNW_MTH_TP_AUTO_INF_MT,
+      A.RNW_MTH_TP_AUTO_PSTP_MT,
+      A.RNW_MTH_TP_NEGO,
+      A.RNW_MTH_TP_NEGO_INF_MT,
+      NULL as RNW_MTH_TP_EXPR,
+      NULL as RNW_MTH_TP_INDF,
+      A.LGL_RMK,
+      NULL, /* PAY_SITE_CD */
+      NULL, /* MNY_CD */
+      A.N_CMPT_OBLG_TP,
+      A.TO_APPRV_RMK,
+      NULL as CNTRCTSHT_RQST_TP,
+      NULL as TO_ADR,
+      A.RNW_MTH_TP,
+      A.MAIL_TP,
+      A.MAIL_RMK,
+      A.SHT_TO_ZIP_CD,
+      A.SHT_ADR_PRF_CD,
+      A.SHT_ADR_PRF,
+      A.SHT_ADR1,
+      A.SHT_ADR2,
+      A.SHT_ADR3,
+      A.SHT_PIC_NM,
+      A.SHT_DPT_NM,
+      A.SHT_MLADR,
+      A.SHT_TEL_NO,
+      A.BUMON_CD,
+      '0', ?, ?, ?, ?, ?, ?, ?, ?, ?
+   from MWT_CNTRCT_REQUEST A
+   where A.RUNTIME_ID = ?
+
+#新規契約情報⇒契約先マスタINSERT
+CO0000_02: |+
+   insert into /* CO0000_02 */ CNTRCT_SPLR_INF(
+      COMPANY_CD,
+      CNTRCT_NO,
+      SQNO,
+      SPLR_CD,
+      SPLR_NM_KJ,
+      SPLR_NM_KN,
+      CPTL,
+      SUB_CNTRCT_TP,
+      SPLR_PIC_NM,
+      SPLR_PST_NM,
+      SPLR_DPT_NM,
+      DLT_FG,
+      CORPORATION_CODE_CREATED,
+      USER_CODE_CREATED,
+      IP_CREATED,
+      TIMESTAMP_CREATED,
+      CORPORATION_CODE_UPDATED,
+      USER_CODE_UPDATED,
+      IP_UPDATED,
+      TIMESTAMP_UPDATED
+   )
+   select
+      B.COMPANY_CD,
+      B.CNTRCT_NO,
+      (
+         select NVL(MAX(SQNO)+1,1) from CNTRCT_SPLR_INF CSI where CSI.COMPANY_CD = B.COMPANY_CD and CSI.CNTRCT_NO = B.CNTRCT_NO
+      ), /* SQNO */
+      A.SPLR_CD,
+      A.SPLR_NM_KJ,
+      A.SPLR_NM_KN,
+      NULL, /* CPTL */
+      NULL, /* SUB_CNTRCT_TP */
+      NULL, /* SPLR_PIC_NM */
+      NULL, /* SPLR_PST_NM */
+      NULL, /* SPLR_DPT_NM */
+      '0', ?, ?, ?, ?, ?, ?, ?, ?
+   from MWT_CNTRCT_SPLR_DETAIL A
+   left join MWT_CNTRCT_REQUEST B
+   on A.CORPORATION_CODE = B.CORPORATION_CODE
+   and A.PROCESS_ID = B.PROCESS_ID
+   where A.RUNTIME_ID = ?
+
+#新規契約情報⇒経常支払マスタINSERT
+CO0000_03: |+
+   insert into /* CO0000_03 */ RTN_PAY_MST(
+      COMPANY_CD,
+      RTN_PAY_NO,
+      CNTRCT_NO,
+      SBMTR_CD,
+      SBMT_DPT_CD,
+      SBMT_DPT_NM,
+      SPLR_CD,
+      SPLR_NM_KJ,
+      SPLR_NM_KN,
+      CRP_PRS_TP,
+      DMS_ABR_TP,
+      RTN_PAY_TP,
+      RTN_PAY_DAY,
+      RTN_PAY_MTH,
+      PAYEE_BNKACC_CD,
+      BNKACC_CD,
+      PAYEE_BNK_CD,
+      PAYEE_BNKBRC_CD,
+      PAYEE_BNKACC_TP,
+      PAYEE_BNKACC_NO,
+      PAYEE_BNKACC_NM,
+      PAYEE_BNKACC_NM_KN,
+      ML_ADD_TP,
+      PAY_START_TIME,
+      PAY_END_TIME,
+      RTN_PAY_AMT_JPY,
+      RTN_PAY_AMT_EXCTAX,
+      RTN_PAY_AMT_INCTAX,
+      RTN_PAY_AMT_FC_EXCTAX,
+      RTN_PAY_AMT_FC_INCTAX,
+      PAY_SITE_CD,
+      RTN_PAY_SITE,
+      RTN_PAY_SITE_N,
+      MNY_TP,
+      MNY_CD,
+      ORGNZ_CD,
+      ADD_RTO,
+      RTN_PAY_AMT_FC,
+      PAY_APPL_CD,
+      ADVPAY_TP,
+      TAX_UNT,
+      TAX_FG,
+      TAX_CD,
+      HLDTAX_TP,
+      HLDTAX_RTO,
+      HLDTAX_SBJ_AMT,
+      HLDTAX_AMT,
+      IMP_TAX_TP,
+      CHRG_BNKACC_CD,
+      PAY_APPL_TP,
+      PAY_CMM_OBL_TP,
+      TAX_SBJ_TP,
+      TAX_KND_CD,
+      TAX_FG_CHG,
+      TTLAMT_EXCTAX1,
+      TTLAMT_TAX1,
+      TTLAMT_INCTAX1,
+      TTLAMT_EXCTAX2,
+      TTLAMT_TAX2,
+      TTLAMT_INCTAX2,
+      TTLAMT_EXCTAX3,
+      TTLAMT_TAX3,
+      TTLAMT_INCTAX3,
+      TTLAMT_FC_EXCTAX1,
+      TTLAMT_FC_TAX1,
+      TTLAMT_FC_INCTAX1,
+      TTLAMT_FC_EXCTAX3,
+      TTLAMT_FC_TAX3,
+      TTLAMT_FC_INCTAX3,
+      DLT_FG,
+      CORPORATION_CODE_CREATED,
+      USER_CODE_CREATED,
+      IP_CREATED,
+      TIMESTAMP_CREATED,
+      CORPORATION_CODE_UPDATED,
+      USER_CODE_UPDATED,
+      IP_UPDATED,
+      TIMESTAMP_UPDATED
+   )
+   select
+      A.COMPANY_CD,
+      ?, /* RTN_PAY_NO */
+      B.CNTRCT_NO,
+      B.SBMTR_CD,
+      B.SBMT_DPT_CD,
+      B.SBMT_DPT_NM,
+      ?, /* SPLR_CD */
+      ?, /* SPLR_NM_KJ */
+      ?, /* SPLR_NM_KN */
+      ?, /* CRP_PRS_TP */
+      ?, /* DMS_ABR_TP */
+      A.RTN_PAY_TP,
+      NULL, /* RTN_PAY_DAY */
+      A.RTN_PAY_MTH,
+      A.PAYEE_BNKACC_CD,
+      A.BNKACC_CD,
+      A.PAYEE_BNK_CD,
+      A.PAYEE_BNKBRC_CD,
+      A.PAYEE_BNKACC_TP,
+      A.PAYEE_BNKACC_NO,
+      A.PAYEE_BNKACC_NM,
+      A.PAYEE_BNKACC_NM_KN,
+      NULL, /* ML_ADD_TP */
+      TO_CHAR(A.PAY_START_TIME, 'YYYYMM'),
+      TO_CHAR(A.PAY_END_TIME, 'YYYYMM'),
+      CASE /* RTN_PAY_AMT_JPY */
+       WHEN A.MNY_CD IS NULL OR A.MNY_CD = 'JPY' THEN A.RTN_PAY_AMT
+       ELSE NULL END,
+      decode(A.MNY_CD, 'JPY', A.RTN_PAY_AMT_EXCTAX, null),
+      decode(A.MNY_CD, 'JPY', A.RTN_PAY_AMT_INCTAX, null),
+      decode(A.MNY_CD, 'JPY', null, A.RTN_PAY_AMT_EXCTAX),
+      decode(A.MNY_CD, 'JPY', null, A.RTN_PAY_AMT_INCTAX),
+      A.PAY_SITE_CD,
+      NULL, /* RTN_PAY_SITE */
+      NULL, /* RTN_PAY_SITE_N */
+      CASE /* MNY_TP */
+       WHEN A.MNY_CD IS NULL THEN NULL
+       WHEN A.MNY_CD = 'JPY' THEN '1'
+       ELSE '2' END,
+      A.MNY_CD,
+      B.SBMT_DPT_CD, /* ORGNZ_CD */
+      A.ADD_RTO,
+      CASE /* RTN_PAY_AMT_FC */
+       WHEN A.MNY_CD IS NOT NULL AND A.MNY_CD <> 'JPY' THEN A.RTN_PAY_AMT
+       ELSE NULL END,
+      A.PAY_APPL_CD,
+      A.ADVPAY_TP,
+      A.TAX_UNT,
+      A.TAX_FG,
+      A.TAX_CD,
+      A.HLDTAX_TP,
+      A.HLDTAX_RTO,
+      A.HLDTAX_SBJ_AMT,
+      A.HLDTAX_AMT,
+      NULL, /* IMP_TAX_TP */
+      A.CHRG_BNKACC_CD,
+      A.PAY_APPL_TP,
+      A.PAY_CMM_OBL_TP,
+      A.TAX_SBJ_TP,
+      A.TAX_KND_CD,
+      A.TAX_FG_CHG,
+      decode(A.MNY_CD, 'JPY', A.TTLAMT_EXCTAX1, null), decode(A.MNY_CD, 'JPY', A.TTLAMT_TAX1, null), decode(A.MNY_CD, 'JPY', A.TTLAMT_INCTAX1, null),
+      decode(A.MNY_CD, 'JPY', A.TTLAMT_EXCTAX2, null), decode(A.MNY_CD, 'JPY', A.TTLAMT_TAX2, null), decode(A.MNY_CD, 'JPY', A.TTLAMT_INCTAX2, null),
+      decode(A.MNY_CD, 'JPY', A.TTLAMT_EXCTAX3, null), decode(A.MNY_CD, 'JPY', A.TTLAMT_TAX3, null), decode(A.MNY_CD, 'JPY', A.TTLAMT_INCTAX3, null),
+      decode(A.MNY_CD, 'JPY', null, A.TTLAMT_EXCTAX1), decode(A.MNY_CD, 'JPY', null, A.TTLAMT_TAX1), decode(A.MNY_CD, 'JPY', null, A.TTLAMT_INCTAX1),
+      decode(A.MNY_CD, 'JPY', null, A.TTLAMT_EXCTAX3), decode(A.MNY_CD, 'JPY', null, A.TTLAMT_TAX3), decode(A.MNY_CD, 'JPY', null, A.TTLAMT_INCTAX3),
+      '0', ?, ?, ?, ?, ?, ?, ?, ?
+   from MWT_CNTRCT_RTN_PAY A
+   left join MWT_CNTRCT_REQUEST B
+   on A.CORPORATION_CODE = B.CORPORATION_CODE
+   and A.PROCESS_ID = B.PROCESS_ID
+   where A.RUNTIME_ID = ?
+
+#新規契約情報⇒経常支払明細マスタINSERT
+CO0000_04: |+
+   insert into /* CO0000_04 */ RTN_PAYDTL_MST(
+      COMPANY_CD,
+      RTN_PAY_NO,
+      RTN_PAY_DTL_NO,
+      JRNSLP_NO,
+      JRNSLP_DTL_NO,
+      ORGNZ_CD,
+      COM_CHG_ORGNZ_CD,
+      ITMEXPS_CD1,
+      ITMEXPS_CD2,
+      ITM_CD,
+      ITM_NM,
+      BUMON_CD,
+      ANLYS_CD,
+      ASST_TP,
+      PAY_AMT_JPY,
+      PAY_AMT_JPY_INCTAX,
+      MNY_CD,
+      ADD_RTO,
+      PAY_AMT_FC,
+      ADVPAY_APLY_AMT_FC,
+      TAX_FG,
+      TAX_CD,
+      PAY_SMRY,
+      APPL_CONT,
+      CTRCT_TP,
+      BRKDWN_TP,
+      APPL_PRD_S_DT,
+      APPL_PRD_E_DT,
+      CRDCRD_TP,
+      CRDCRD_IN_NO,
+      ADVPAY_NO,
+      INV_COMPANY_CD,
+      TAX_SBJ_TP,
+      TAX_KND_CD,
+      TAX_FG_CHG,
+      DLT_FG,
+      CORPORATION_CODE_CREATED,
+      USER_CODE_CREATED,
+      IP_CREATED,
+      TIMESTAMP_CREATED,
+      CORPORATION_CODE_UPDATED,
+      USER_CODE_UPDATED,
+      IP_UPDATED,
+      TIMESTAMP_UPDATED
+   )
+   select
+      b.COMPANY_CD,
+      ?,
+      (
+         select NVL(MAX(RTN_PAY_DTL_NO)+1,1) from RTN_PAYDTL_MST RPM where RPM.COMPANY_CD = B.COMPANY_CD and RPM.RTN_PAY_NO = ?
+      ),  /* CNTRCT_DTL_NO */
+      NULL, /* JRNSLP_NO */
+      NULL, /* JRNSLP_DTL_NO */
+      a.ORGNZ_CD,
+      NULL, /* COM_CHG_ORGNZ_CD */
+      a.ITMEXPS_CD1,
+      a.ITMEXPS_CD2,
+      a.ITM_CD,
+      a.ITM_NM,
+      a.BUMON_CD,
+      a.ANLYS_CD,
+      a.ASST_TP,
+      CASE /* PAY_AMT_JPY */
+       WHEN C.MNY_CD IS NULL OR c.MNY_CD = 'JPY' THEN a.PAY_AMT_INPUT
+       ELSE NULL END,
+      a.PAY_AMT_TAXIN,
+      c.MNY_CD,
+      c.ADD_RTO,
+      CASE /* PAY_AMT_FC */
+       WHEN C.MNY_CD IS NOT NULL AND c.MNY_CD <> 'JPY' THEN a.PAY_AMT_INPUT
+       ELSE NULL END,
+      a.ADVPAY_APLY_AMT,
+      case /** TAX_FG **/
+       when c.TAX_UNT = '2' and tm.TAX_TP = '1' then '2'
+       when c.TAX_UNT = '2' and tm.TAX_TP = '2' then '1'
+       when c.TAX_UNT = '2' then '0'
+       else a.TAX_FG end,
+      case /** TAX_CD **/
+       when C.TAX_UNT = '2' then c.TAX_CD
+       else a.TAX_CD end,
+      a.RMK, /* PAY_SMRY */
+      NULL, /* APPL_CONT */
+      NULL, /* CTRCT_TP */
+      NULL, /* BRKDWN_TP */
+      b.CNTRCT_PRD_S_DT,  /* APPL_PRD_S_DT */
+      b.CNTRCT_PRD_E_DT,  /* APPL_PRD_E_DT */
+      NULL, /* CRDCRD_TP */
+      NULL, /* CRDCRD_IN_NO */
+      a.ADVPAY_NO,
+      a.INV_COMPANY_CD,
+      a.TAX_SBJ_TP,
+      a.TAX_KND_CD,
+      a.TAX_FG_CHG,
+      '0', ?, ?, ?, ?, ?, ?, ?, ?
+   from MWT_CNTRCT_RTN_PAY_DETAIL a
+   left join MWT_CNTRCT_REQUEST b
+     on a.CORPORATION_CODE = b.CORPORATION_CODE
+     and a.PROCESS_ID = b.PROCESS_ID
+   left join MWT_CNTRCT_RTN_PAY c
+     on a.CORPORATION_CODE = c.CORPORATION_CODE
+     and a.PROCESS_ID = c.PROCESS_ID
+   left join TAX_MST tm
+     on c.CORPORATION_CODE = tm.COMPANY_CD
+     and c.TAX_CD = tm.TAX_CD
+     and trunc(sysdate) between tm.VD_DT_S and tm.VD_DT_E
+     and DLT_FG = '0'
+   where a.RUNTIME_ID = ?
+
+
+#契約情報マスタ修正⇒契約先マスタINSERT
+CO0000_05: |+
+   insert into /* CO0000_05 */ CNTRCT_SPLR_INF(
+     COMPANY_CD, CNTRCT_NO, SQNO, SPLR_CD, SPLR_NM_KJ, SPLR_NM_KN, CPTL, SUB_CNTRCT_TP, SPLR_PIC_NM, SPLR_PST_NM, SPLR_DPT_NM,
+     DLT_FG, CORPORATION_CODE_CREATED, USER_CODE_CREATED, IP_CREATED, TIMESTAMP_CREATED,
+     CORPORATION_CODE_UPDATED, USER_CODE_UPDATED, IP_UPDATED, TIMESTAMP_UPDATED
+   )
+   values (
+      ?, ?,
+      (
+         select NVL(MAX(SQNO)+1,1) from CNTRCT_SPLR_INF CS2 where CS2.COMPANY_CD = CS.TXT0305 and CS2.CNTRCT_NO = CS.NMB0002
+      ),
+      ?, ?, ?, ?, ?, ?, ?, ?,
+     '0', ?, ?, ?, ?, ?, ?, ?, ?
+   );
+
+#契約情報.契約NoをWF支払予約情報へ転写
+CO0000_06: |+
+ update /* CO0000_06 */ MWT_CNTRCT_RTN_PAY R
+ set R.CNTRCT_NO = ?
+ where R.PROCESS_ID = ? and R.CNTRCT_NO is null
+
+#経常支払予定マスタを生成
+CO0000_07: |+
+ insert into /* CO0000_07 */ RTN_PAY_PLN_MST(
+  COMPANY_CD, RTN_PAY_NO, SQNO,
+  PURORD_BTCH_TP, PURORD_BTCH_PLN_DT,
+  RCVINSP_BTCH_TP, RCVINSP_BTCH_PLN_DT,
+  PAYSBMT_BTCH_TP, PAYSBMT_BTCH_PLN_DT,
+  DLT_FG,
+  CORPORATION_CODE_CREATED, USER_CODE_CREATED, IP_CREATED, TIMESTAMP_CREATED,
+  CORPORATION_CODE_UPDATED, USER_CODE_UPDATED, IP_UPDATED, TIMESTAMP_UPDATED
+ )
+ select
+  COMPANY_CD, RTN_PAY_NO, ? as SQNO,
+  '0' as PURORD_BTCH_TP, ? as PURORD_BTCH_PLN_DT,
+  '0' as RCVINSP_BTCH_TP, ? as RCVINSP_BTCH_PLN_DT,
+  '0' as PAYSBMT_BTCH_TP, ? as PAYSBMT_BTCH_PLN_DT,
+  '0' as DLT_FG,
+  ?, ?, ?, sysdate,
+  ?, ?, ?, sysdate
+ from CNTRCT_INF C
+ where COMPANY_CD = ? and CNTRCT_NO = ?
+
+#経常支払予定マスタ抽出
+CO0000_08: |+
+ select /* CO0000_08 */ *
+ from RTN_PAY_PLN_MST
+ where COMPANY_CD = ? and RTN_PAY_NO = ?
+ order by SQNO asc
+
+#契約情報マスタ情報⇒UPDATE
+CO0001_01: |+
+   update /* CO0001_01 */ CNTRCT_INF set
+      CNTRCT_STS = ?,
+      CNTRCT_NM = ?,
+      CNTRCTR_CD = ?,
+      CNTRCTR_DPT_CD = ?,
+      CNTRCTR_DPT_NM = ?,
+      CNTRCT_PRD_S_DT = ?,
+      CNTRCT_PRD_E_DT = ?,
+      CNTRCT_TP = ?,
+      CNTRCTSHT_FRMT = ?,
+      CNTRCT_DT = ?,
+      SBMTR_CD = ?,
+      SBMT_DPT_CD = ?,
+      SBMT_DPT_NM = ?,
+      SBMT_DPT_DT = ?,
+      RTN_PAY_TP = ?,
+      RTN_PAY_NO = ?,
+      CNTRCT_DTLCND = ?,
+      CMPN_OCC_PRS = ?,
+      TRD_EST_AMT_EXCTAX = ?,
+      TRD_EST_AMT_RMK = ?,
+      PAY_CYC_PLN_TP = ?,
+      PAY_CYC_PLN_RMK = ?,
+      RNW_PRS = ?,
+      RNW_DTLCND = ?,
+      BKBND_CHG_TP = ?,
+      STMP_APP_TP = ?,
+      RMK = ?,
+      LGLR_CD = ?,
+      CNTRCT_SHT_NM = ?,
+      CNTRCT_CNCL_DT = ?,
+      CNTRCT_DT_S = ?,
+      CNTRCT_DT_E = ?,
+      RVNSTMP_PRS = ?,
+      RVNSTMP_AMT = ?,
+      RNW_MTH_TP_AUTO = ?,
+      RNW_MTH_TP_AUTO_INF_MT = ?,
+      RNW_MTH_TP_AUTO_PSTP_MT = ?,
+      RNW_MTH_TP_NEGO = ?,
+      RNW_MTH_TP_NEGO_INF_MT = ?,
+      RNW_MTH_TP_EXPR = ?,
+      RNW_MTH_TP_INDF = ?,
+      RNW_MTH_TP = ?,
+      LGL_RMK = ?,
+      PAY_SITE_CD = ?,
+      MNY_CD = ?,
+      N_CMPT_OBLG_TP = ?,
+      TO_APPRV_RMK = ?,
+      CNTRCTSHT_RQST_TP = ?,
+      MAIL_TP = ?,
+      MAIL_RMK = ?,
+      TO_ADR = ?,
+      SHT_TO_ZIP_CD = ?,
+      SHT_ADR_PRF_CD = ?,
+      SHT_ADR_PRF = ?,
+      SHT_ADR1 = ?,
+      SHT_ADR2 = ?,
+      SHT_ADR3 = ?,
+      SHT_PIC_NM = ?,
+      SHT_DPT_NM = ?,
+      SHT_MLADR = ?,
+      SHT_TEL_NO = ?,
+      BUMON_CD = ?,
+      DLT_FG = ?,
+      CORPORATION_CODE_UPDATED = ?,
+      USER_CODE_UPDATED = ?,
+      IP_UPDATED = ?,
+      TIMESTAMP_UPDATED = ?,
+      ORGNZ_CD = ?
+   where COMPANY_CD = ?
+   and CNTRCT_NO = ?
+   and DLT_FG = '0'
+
+
+#契約情報マスタ情報⇒契約先マスUPDATE（論理削除）
+CO0001_02: |+
+   update /* CO0001_02 */ CNTRCT_SPLR_INF set
+      DLT_FG = '1'
+   where COMPANY_CD = ?
+   and CNTRCT_NO = ?
+   and DLT_FG = '0'
+
+#契約情報マスタ情報⇒経常支払マスタDELETE
+CO0002_01: |+
+   delete from  /* CO0002_01 */ RTN_PAY_MST
+   where COMPANY_CD = ?
+   and CNTRCT_NO = ?
+
+#契約情報マスタ情報⇒経常支払明細マスタDELETE
+CO0002_02: |+
+   delete from  /* CO0002_02 */ RTN_PAYDTL_MST
+   where COMPANY_CD = ?
+   and RTN_PAY_NO = ?
+
+#契約一覧
+CO0010_01: |+
+   select /* CO0010_01 */
+      c.COMPANY_CD,
+      c.CNTRCT_NO,
+      c.CNTRCT_NM,
+      c.CNTRCT_PRD_S_DT,
+      c.CNTRCT_PRD_E_DT,
+      c.CNTRCTSHT_FRMT,
+      c.TRD_EST_AMT_EXCTAX,
+      case c.CNTRCTSHT_FRMT
+       when '1' then '法務依頼 有（レビュー）'
+       when '2' then '法務依頼 有（新規作成）'
+       when '3' then '法務依頼 無（ひな型利用）'
+       else '' end as CNTRCTSHT_FRMT_NM,
+      c.RTN_PAY_NO,
+      cs.SPLR_CD,
+      cs.SPLR_NM_KJ
+   from CNTRCT_INF c
+   left join CNTRCT_SPLR_INF cs
+      on c.COMPANY_CD = cs.COMPANY_CD
+      and c.CNTRCT_NO = cs.CNTRCT_NO
+      and cs.DLT_FG = '0'
+      and cs.SQNO =  (
+         select MIN(cs2.SQNO) from CNTRCT_SPLR_INF cs2
+         where cs2.COMPANY_CD = cs.COMPANY_CD
+         and cs2.CNTRCT_NO = cs.CNTRCT_NO
+         and cs2.DLT_FG = '0'
+      )
+   where c.DLT_FG = '0'
+
+#申請中の変更契約申請の存在チェック
+CO0010_02: |+
+   select /* CO0010_02 */ count(*)
+   from MWT_CNTRCT_REQUEST C
+   inner join WFT_PROCESS P
+     on P.CORPORATION_CODE = C.CORPORATION_CODE
+     and P.PROCESS_ID = C.PROCESS_ID
+     and P.PROCESS_STATUS in ('start', 'wait', 'run')
+   where C.CORPORATION_CODE = ?
+     and C.CNTRCT_NO = ?
+
+#経常支払No採番
+CO0020_01: |+
+   select /* CO0020_01 */ NVL(MAX(RTN_PAY_NO)+1,1)
+   from RTN_PAY_MST where COMPANY_CD = ?
+
+#経常支払一覧
+CO0020_02: |+
+   select /* CO0020_02 */
+      distinct (pm.RTN_PAY_NO),
+      pm.COMPANY_CD,
+      pm.CNTRCT_NO,
+      pm.SBMTR_CD,
+      wu.USER_NAME as SBMTR_NM,
+      pm.SBMT_DPT_CD,
+      pm.SBMT_DPT_NM,
+      pm.SPLR_CD,
+      pm.SPLR_NM_KJ,
+      pm.SPLR_NM_KN,
+      pm.RTN_PAY_TP,
+      pm.RTN_PAY_MTH,
+      pm.PAYEE_BNKACC_CD,
+      pm.BNKACC_CD,
+      bm1.BNKACC_NM,
+      pm.CHRG_BNKACC_CD,
+      bm2.BNKACC_NM as CHRG_BNKACC_NM,
+      pm.PAY_START_TIME,
+      pm.PAY_END_TIME,
+      pm.RTN_PAY_AMT_JPY,
+      pm.PAY_SITE_CD,
+      psm.PAY_SITE_NM AS RTN_PAY_SITE_NM,
+      pm.MNY_TP,
+      pm.MNY_CD,
+      pmm.MNY_NM as PAYEE_MNY_NM,
+      pm.ORGNZ_CD,
+      wo.ORGANIZATION_NAME AS ORGNZ_NM,
+      pm.ADD_RTO,
+      pm.RTN_PAY_AMT_FC,
+      pm.PAY_APPL_CD,
+      pam.PAY_APPL_NM,
+      pm.TAX_UNT,
+      opi2.LABEL as TAX_UNT_NM,
+      pm.TAX_CD,
+      tm.TAX_NM,
+      tm.TAX_RTO,
+      tm.FRC_UNT,
+      tm.FRC_TP,
+      pm.HLDTAX_TP,
+      hm.HLDTAX_NM,
+      pm.HLDTAX_RTO,
+      pm.HLDTAX_SBJ_AMT,
+      pm.HLDTAX_AMT,
+      pm.IMP_TAX_TP,
+      pm.DLT_FG,
+      pbm.BNK_CD as PAYEE_BNK_CD,
+      bm.BNK_NM as PAYEE_BNK_NM,
+      pbm.BNKBRC_CD as PAYEE_BNKBRC_CD,
+      brm.BNKBRC_NM as PAYEE_BNKBRC_NM,
+      pbm.BNKACC_TP as PAYEE_BNKACC_TP,
+      opi1.LABEL as PAYEE_BNKACC_TP_NM,
+      pbm.BNKACC_NO as PAYEE_BNKACC_NO,
+      pbm.BNKACC_NM as PAYEE_BNKACC_NM,
+      pbm.PAY_CMM_OBL_TP,
+      pbm.HLD_TRT_TP,
+      c.CNTRCT_NM,
+      c.CNTRCTR_DPT_CD,
+      wo2.ORGANIZATION_NAME AS CNTRCTR_DPT_NM,
+      c.SBMT_DPT_DT,
+      pm.ADVPAY_TP,
+      pm.PAY_APPL_TP,
+      pm.CRP_PRS_TP,
+      pm.DMS_ABR_TP
+   from RTN_PAY_MST pm
+   left join MNY_MST_V pmm
+      on pm.COMPANY_CD = pmm.COMPANY_CD
+      and pm.MNY_CD = pmm.MNY_CD
+      and trunc(sysdate) BETWEEN pmm.VD_DT_S AND pmm.VD_DT_E
+   left join WFM_ORGANIZATION_V wo
+      on pm.COMPANY_CD = wo.CORPORATION_CODE
+      and pm.ORGNZ_CD = wo.ORGANIZATION_CODE
+      and wo.LOCALE_CODE = ?
+      and wo.DELETE_FLAG = '0'
+   left join PAYEE_BNKACC_MST pbm
+      on pbm.COMPANY_CD = pm.COMPANY_CD
+      and pbm.PAYEE_BNKACC_CD = pm.PAYEE_BNKACC_CD
+      and pbm.DLT_FG = '0'
+   left join BNK_MST bm
+      on bm.COMPANY_CD = pbm.COMPANY_CD
+      and bm.BNK_CD = pbm.BNK_CD
+      and bm.DLT_FG = '0'
+   left join BNKBRC_MST brm
+      on brm.COMPANY_CD = pbm.COMPANY_CD
+      and brm.BNK_CD = pbm.BNK_CD
+      and brm.BNKBRC_CD = pbm.BNKBRC_CD
+      and brm.DLT_FG = '0'
+   left join MWM_OPTION op1
+      on op1.CORPORATION_CODE = pbm.COMPANY_CD
+      and op1.OPTION_CODE = 'KbnSplrAccountTp'
+      and op1.DELETE_FLAG = '0'
+   left join MWM_OPTION_ITEM opi1
+      on opi1.OPTION_ID = op1.OPTION_ID
+      and opi1.CODE = pbm.BNKACC_TP
+      and opi1.DELETE_FLAG = '0'
+   left join PAY_SITE_MST psm
+      on psm.COMPANY_CD = pm.COMPANY_CD
+      and psm.PAY_SITE_CD = pm.PAY_SITE_CD
+      and psm.DLT_FG = '0'
+   left join MWM_OPTION op2
+      on op2.CORPORATION_CODE = pm.COMPANY_CD
+      and op2.OPTION_CODE = 'TaxUnit'
+      and op2.DELETE_FLAG = '0'
+   left join MWM_OPTION_ITEM opi2
+      on opi2.OPTION_ID = op2.OPTION_ID
+      and opi2.CODE = pm.TAX_UNT
+      and opi2.DELETE_FLAG = '0'
+   left join PAY_APPL_MST pam
+      on pm.COMPANY_CD = pam.COMPANY_CD
+      and pm.PAY_APPL_CD = pam.PAY_APPL_CD
+      and pam.DLT_FG = '0'
+   left join TAX_MST tm
+      on pm.COMPANY_CD = tm.COMPANY_CD
+      and pm.TAX_CD = tm.TAX_CD
+      and tm.DLT_FG = '0'
+   left join HLDTAX_MST hm
+      on pm.COMPANY_CD = hm.COMPANY_CD
+      and pm.HLDTAX_TP = hm.HLDTAX_TP
+      and hm.DLT_FG = '0'
+   left join BNKACC_MST bm1
+      on pm.COMPANY_CD = bm1.COMPANY_CD
+      and pm.BNKACC_CD = bm1.BNKACC_CD
+      and bm1.DLT_FG = '0'
+   left join BNKACC_MST bm2
+      on pm.COMPANY_CD = bm2.COMPANY_CD
+      and pm.CHRG_BNKACC_CD = bm2.BNKACC_CD
+      and bm2.DLT_FG = '0'
+   left join CNTRCT_INF c
+      on pm.COMPANY_CD = c.COMPANY_CD
+      and pm.CNTRCT_NO = c.CNTRCT_NO
+      and c.DLT_FG = '0'
+   left join WFM_ORGANIZATION_V wo2
+      on wo2.CORPORATION_CODE = c.COMPANY_CD
+      and wo2.ORGANIZATION_CODE = c.SBMT_DPT_CD
+      and wo2.LOCALE_CODE = ?
+      and wo2.DELETE_FLAG = '0'
+   left join WFM_USER_V wu
+      on wu.CORPORATION_CODE = pm.COMPANY_CD
+      and wu.USER_CODE = pm.SBMTR_CD
+      and wu.LOCALE_CODE = ?
+      and wu.DELETE_FLAG = '0'
+   left join RTN_PAYDTL_MST rpm
+      on rpm.COMPANY_CD = pm.COMPANY_CD
+      and rpm.RTN_PAY_NO = pm.RTN_PAY_NO
+      and rpm.DLT_FG = '0'
+   where
+      exists (
+        select 'x' from (%SUBQUERY%) PS where pm.COMPANY_CD = PS.CORPORATION_CODE and pm.CNTRCT_NO = PS.APPLICATION_NO
+      )
+
+#契約取引先一覧
+CO0020_03: |+
+   select /* CO0020_03 */
+   ROWNUM as SPLR_NO,
+   csi.COMPANY_CD,
+   csi.CNTRCT_NO,
+   csi.SQNO,
+   csi.SPLR_CD,
+   csi.SPLR_NM_KJ,
+   csi.SPLR_NM_KN,
+   csi.DLT_FG,
+   csi.SQNO as CNTRCT_SPLR_SQNO
+   from CNTRCT_SPLR_INF csi
+   where DLT_FG = '0'
+   and csi.SPLR_CD is not null
+
+#経常支払明細一覧
+CO0020_04: |+
+   select /* CO0020_04 */
+      ROWNUM as RTN_PAY_DTL_DISP_NO,
+      pdm.COMPANY_CD,
+      pdm.RTN_PAY_NO,
+      pdm.RTN_PAY_DTL_NO,
+      pdm.JRNSLP_NO,
+      pdm.JRNSLP_DTL_NO,
+      pdm.ORGNZ_CD,
+      pdm.COM_CHG_ORGNZ_CD,
+      pdm.ITMEXPS_CD1,
+      im1.ITMEXPS_NM as ITMEXPS_NM1,
+      pdm.ITMEXPS_CD2,
+      im2.ITMEXPS_NM as ITMEXPS_NM2,
+      pdm.ITM_CD,
+      pdm.ITM_NM,
+      pdm.BUMON_CD,
+      bm.BUMON_NM,
+      pdm.ANLYS_CD,
+      pdm.ASST_TP,
+      opi1.LABEL as ASST_TP_NM,
+      pdm.PAY_AMT_JPY,
+      pdm.MNY_CD,
+      mm.MNY_NM,
+      pdm.ADD_RTO,
+      pdm.PAY_AMT_FC,
+      pdm.TAX_FG,
+      opi2.LABEL as TAX_FG_NM,
+      pdm.TAX_CD,
+      tm.TAX_NM,
+      pdm.PAY_SMRY,
+      pdm.APPL_CONT,
+      pdm.CTRCT_TP,
+      opi2.LABEL as CTRCT_TP_NM,
+      pdm.BRKDWN_TP,
+      opi2.LABEL as BRKDWN_TP_NM,
+      pdm.APPL_PRD_S_DT,
+      pdm.APPL_PRD_E_DT,
+      pdm.CRDCRD_TP,
+      pdm.CRDCRD_IN_NO,
+      pdm.ADVPAY_NO,
+      pdm.PAY_AMT_JPY_INCTAX,
+      pdm.ADVPAY_APLY_AMT_FC,
+      pdm.INV_COMPANY_CD,
+      pdm.DLT_FG
+   from RTN_PAYDTL_MST pdm
+   left join ITMEXPS_MST im1
+      on pdm.COMPANY_CD = im1.COMPANY_CD
+      and pdm.ITMEXPS_CD1 = im1.ITMEXPS_CD
+      and im1.DLT_FG = '0'
+   left join ITMEXPS_MST im2
+      on pdm.COMPANY_CD = im2.COMPANY_CD
+      and pdm.ITMEXPS_CD2 = im2.ITMEXPS_CD
+      and im2.DLT_FG = '0'
+   left join BUMON_MST bm
+      on pdm.COMPANY_CD = bm.COMPANY_CD
+      and pdm.BUMON_CD = bm.BUMON_CD
+      and bm.DLT_FG = '0'
+   left join MWM_OPTION op1
+      on  op1.CORPORATION_CODE = pdm.COMPANY_CD
+      and op1.OPTION_CODE = 'kbnAsst'
+      and op1.DELETE_FLAG = '0'
+   left join MWM_OPTION_ITEM opi1
+      on opi1.OPTION_ID = op1.OPTION_ID
+      and opi1.CODE = pdm.ASST_TP
+      and opi1.DELETE_FLAG = '0'
+   left join MNY_MST_V mm
+      on pdm.COMPANY_CD = mm.COMPANY_CD
+      and pdm.MNY_CD = mm.MNY_CD
+      and trunc(sysdate) BETWEEN mm.VD_DT_S AND mm.VD_DT_E
+   left join MWM_OPTION op2
+      on  op2.CORPORATION_CODE = pdm.COMPANY_CD
+      and op2.OPTION_CODE = 'TAX_FG'
+      and op2.DELETE_FLAG = '0'
+   left join MWM_OPTION_ITEM opi2
+      on opi2.OPTION_ID = op2.OPTION_ID
+      and opi2.CODE = pdm.TAX_FG
+      and opi2.DELETE_FLAG = '0'
+   left join TAX_MST tm
+      on pdm.COMPANY_CD = tm.COMPANY_CD
+      and pdm.TAX_CD = tm.TAX_CD
+      and tm.DLT_FG = '0'
+   left join MWM_OPTION op3
+      on  op3.CORPORATION_CODE = pdm.COMPANY_CD
+      and op3.OPTION_CODE = 'kbnCntrctTp'
+      and op3.DELETE_FLAG = '0'
+   left join MWM_OPTION_ITEM opi3
+      on opi3.OPTION_ID = op3.OPTION_ID
+      and opi3.CODE = pdm.CTRCT_TP
+      and opi3.DELETE_FLAG = '0'
+   left join MWM_OPTION op4
+      on  op4.CORPORATION_CODE = pdm.COMPANY_CD
+      and op4.OPTION_CODE = 'KbnUchiwake'
+      and op4.DELETE_FLAG = '0'
+   left join MWM_OPTION_ITEM opi4
+      on opi4.OPTION_ID = op4.OPTION_ID
+      and opi4.CODE = pdm.BRKDWN_TP
+      and opi4.DELETE_FLAG = '0'
+   where pdm.DLT_FG = '0'
+
+#画面プロセスID取得
+CO0020_06: |+
+   select /* CO0020_06 */
+     max(SCREEN_PROCESS_ID)
+   from MWM_SCREEN_PROCESS_DEF
+   where CORPORATION_CODE = ?
+   and PROCESS_DEF_CODE = ?
+   and PROCESS_DEF_DETAIL_CODE = ?
+   and DELETE_FLAG = '0'
+   and trunc(SYSDATE) BETWEEN VALID_START_DATE and VALID_END_DATE
+
+#契約申請
+CO0020_07: |+
+   select /* CO0020_07 */
+      c.COMPANY_CD,
+      c.CNTRCT_NO,
+      c.CNTRCT_NM,
+      c.COMPANY_CD as CNTRCT_COMPANY_CD,
+      c.CNTRCTR_DPT_CD as CNTRCT_DPT_CD,
+      c.CNTRCTR_DPT_NM as CNTRCT_DPT_NM,
+      wo.ORGANIZATION_ADDED_INFO as CNTRCT_DPT_ADDED_INFO,
+      c.COMPANY_CD as CNTRCTR_COMPANY_CD,
+      c.CNTRCTR_CD,
+      wu2.USER_NAME as CNTRCTR_NM,
+      c.CNTRCT_PRD_S_DT,
+      c.CNTRCT_PRD_E_DT,
+      c.CNTRCTSHT_FRMT,
+      c.CNTRCT_DT,
+      c.SBMTR_CD,
+      L2.LOOKUP_NAME as SBMTR_ADDR,
+      wu.USER_NAME as SBMTR_NM,
+      c.SBMT_DPT_CD,
+      c.SBMT_DPT_NM,
+      c.SBMT_DPT_DT,
+      c.RTN_PAY_TP as PAY_FLG,
+      CNTRCT_DTLCND,
+      TRD_EST_AMT_EXCTAX,
+      TRD_EST_AMT_RMK,
+      PAY_CYC_PLN_TP,
+      PAY_CYC_PLN_RMK,
+      BKBND_CHG_TP,
+      RNW_DTLCND,
+      RMK,
+      LGLR_CD,
+      '00053' as LGLR_COMPANY_CD,
+      wu3.USER_NAME as LGLR_NM,
+      CNTRCT_SHT_NM,
+      RVNSTMP_PRS,
+      RVNSTMP_AMT,
+      RNW_MTH_TP_AUTO,
+      RNW_MTH_TP_AUTO_INF_MT,
+      RNW_MTH_TP_AUTO_PSTP_MT,
+      RNW_MTH_TP_NEGO,
+      RNW_MTH_TP_NEGO_INF_MT,
+      RNW_MTH_TP,
+      TO_CHAR(RNW_MTH_TP_EXPR) as RNW_MTH_TP_EXPR,
+      TO_CHAR(RNW_MTH_TP_INDF) as RNW_MTH_TP_INDF,
+      LGL_RMK,
+      N_CMPT_OBLG_TP,
+      TO_APPRV_RMK,
+      CNTRCTSHT_RQST_TP,
+      TO_ADR,
+      MAIL_TP,
+      MAIL_RMK,
+      SHT_TO_ZIP_CD,
+      SHT_ADR_PRF_CD,
+      SHT_ADR_PRF,
+      SHT_ADR1,
+      SHT_ADR2,
+      SHT_ADR3,
+      SHT_PIC_NM,
+      SHT_DPT_NM,
+      SHT_MLADR,
+      SHT_TEL_NO,
+      case when rpm.RTN_PAY_NO is null then '0' else '1' end as PAY_RESERVE_FG,
+      c.BUMON_CD,
+      bm.BUMON_NM,
+      c.ORGNZ_CD
+   from CNTRCT_INF c
+   left join WFM_USER_V wu
+      on wu.CORPORATION_CODE = c.COMPANY_CD
+      and wu.USER_CODE = c.SBMTR_CD
+      and wu.LOCALE_CODE = ?
+      and wu.DELETE_FLAG = '0'
+   left join WFM_USER_V wu2
+      on wu2.CORPORATION_CODE = c.COMPANY_CD
+      and wu2.USER_CODE = c.CNTRCTR_CD
+      and wu2.LOCALE_CODE = ?
+      and wu2.DELETE_FLAG = '0'
+   left join WFM_USER_V wu3
+      on wu3.CORPORATION_CODE = '00053'
+      and wu3.USER_CODE = c.LGLR_CD
+      and wu3.LOCALE_CODE = ?
+      and wu3.DELETE_FLAG = '0'
+   left join WFM_ORGANIZATION_V wo
+      on wo.CORPORATION_CODE = c.COMPANY_CD
+      and wo.ORGANIZATION_CODE = c.CNTRCTR_DPT_CD
+      and wo.LOCALE_CODE = ?
+      and wo.DELETE_FLAG = '0'
+   left join MWM_LOOKUP L2
+      on L2.CORPORATION_CODE = wu.CORPORATION_CODE
+      and L2.LOOKUP_GROUP_ID = 'USER_LOCATION'
+      and L2.LOOKUP_ID = wu.EXTENDED_INFO_01
+      and L2.LOCALE_CODE = 'ja'
+   left join RTN_PAY_MST rpm
+      on rpm.COMPANY_CD = c.COMPANY_CD
+      and rpm.RTN_PAY_NO = c.RTN_PAY_NO
+      and rpm.CNTRCT_NO = c.CNTRCT_NO
+   left join BUMON_MST bm
+      on c.COMPANY_CD = bm.COMPANY_CD
+      and c.BUMON_CD = bm.BUMON_CD
+      and bm.DLT_FG = '0'
+   where c.COMPANY_CD = ?
+   and c.CNTRCT_NO = ?
+
+#契約申請 - 取引先明細
+CO0020_08: |+
+   select /* CO0020_08 */
+      csi.COMPANY_CD,
+      csi.SPLR_CD,
+      csi.SPLR_NM_KJ,
+      csi.SPLR_NM_KN,
+      sm.ZIP_CD || NVL(sm.ADR_PRF_CD, '') || NVL(sm.ADR1, '') || NVL(sm.ADR2, '') || NVL(sm.ADR3, '') as ADR,
+      sm.CRP_PRS_TP,
+      sm.DMS_ABR_TP,
+      sm.SPLR_PIC_NM,
+      sm.SPLR_DPT_NM
+   from CNTRCT_SPLR_INF csi
+   left join SPLR_MST sm
+    on csi.COMPANY_CD = sm.COMPANY_CD
+    and csi.SPLR_CD = sm.SPLR_CD
+    and sm.DLT_FG = '0'
+    and trunc(sysdate) BETWEEN sm.VD_DT_S AND sm.VD_DT_E
+   where csi.COMPANY_CD = ?
+   and csi.CNTRCT_NO = ?
+   and csi.DLT_FG = '0'
+
+#契約申請 - 経常支払
+CO0020_09: |+
+   select /* CO0020_09 */
+      rpm.COMPANY_CD,
+      rpm.RTN_PAY_NO,
+      rpm.CNTRCT_NO,
+      c.CNTRCT_NM,
+      cs.SPLR_CD,
+      cs.SPLR_NM_KJ,
+      rpm.CRP_PRS_TP,
+      rpm.DMS_ABR_TP,
+      rpm.PAYEE_BNKACC_CD,
+      pbm.BNK_CD as PAYEE_BNK_CD,
+      bm.BNK_NM as PAYEE_BNK_NM,
+      pbm.BNKBRC_CD as PAYEE_BNKBRC_CD,
+      brm.BNKBRC_NM as PAYEE_BNKBRC_NM,
+      opi1.LABEL as PAYEE_BNKACC_TP_NM,
+      pbm.BNKACC_NO as PAYEE_BNKACC_NO,
+      pbm.BNKACC_NM as PAYEE_BNKACC_NM,
+      pbm.BNKACC_NM_KN as PAYEE_BNKACC_NM_KN,
+      pbm.PAY_CMM_OBL_TP,
+      opi2.LABEL as PAY_CMM_OBL_TP_NM,
+      pbm.HLD_TRT_TP,
+      opi3.LABEL as HLD_TRT_TP_NM,
+      rpm.BNKACC_CD,
+      bm1.BNKACC_NM,
+      rpm.CHRG_BNKACC_CD,
+      bm2.BNKACC_NM as CHRG_BNKACC_NM,
+      rpm.RTN_PAY_TP,
+      opi4.LABEL as RTN_PAY_TP_NM,
+      to_date(rpm.PAY_START_TIME, 'YYYYMM') as PAY_START_TIME,
+      to_date(rpm.PAY_END_TIME, 'YYYYMM') as PAY_END_TIME,
+      rpm.RTN_PAY_MTH,
+      opi5.LABEL as RTN_PAY_MTH_NM,
+      rpm.MNY_CD,
+      mm.MNY_NM,
+      rpm.ADD_RTO,
+      mm.RDXPNT_GDT,
+      rpm.PAY_SITE_CD,
+      psm.PAY_SITE_NM,
+      rpm.PAY_APPL_CD,
+      pam.PAY_APPL_NM,
+      wu.USER_NAME as SBMTR_NM,
+      L2.LOOKUP_NAME as SBMTR_ADDR,
+      rpm.SBMT_DPT_NM,
+      rpm.TAX_UNT,
+      opi6.LABEL as TAX_UNT_NM,
+      rpm.TAX_CD,
+      tm.TAX_NM,
+      tm.TAX_TP,
+      tm.TAX_RTO,
+      decode(rpm.MNY_CD, 'JPY', rpm.RTN_PAY_AMT_EXCTAX, rpm.RTN_PAY_AMT_FC_EXCTAX) as RTN_PAY_AMT_EXCTAX,
+      decode(rpm.MNY_CD, 'JPY', rpm.RTN_PAY_AMT_INCTAX, rpm.RTN_PAY_AMT_FC_INCTAX) as RTN_PAY_AMT_INCTAX,
+      decode(rpm.MNY_CD, 'JPY', rpm.RTN_PAY_AMT_INCTAX, rpm.RTN_PAY_AMT_FC_INCTAX) - decode(rpm.MNY_CD, 'JPY', rpm.RTN_PAY_AMT_EXCTAX, rpm.RTN_PAY_AMT_FC_EXCTAX) as RTN_PAY_AMT_TAX,
+      rpm.HLDTAX_TP,
+      hm.HLDTAX_NM as HLDTAX_TP_NM,
+      hm.HLDTAX_RTO1 as HLDTAX_RTO,
+      hm.HLDTAX_RTO2,
+      rpm.HLDTAX_SBJ_AMT,
+      rpm.HLDTAX_AMT,
+      (decode(rpm.MNY_CD, 'JPY', rpm.RTN_PAY_AMT_INCTAX, rpm.RTN_PAY_AMT_FC_INCTAX) - nvl(HLDTAX_AMT, 0)) as RTN_PAY_AMT,
+      rpm.ADVPAY_TP,
+      rpm.PAY_APPL_TP,
+      rpm.ORGNZ_CD,
+      c.SBMT_DPT_DT,
+      rpm.TAX_SBJ_TP,
+      rpm.TAX_KND_CD,
+      rpm.TAX_FG_CHG,
+      tm.TAX_FG_CHG_NM,
+      decode(rpm.MNY_CD, 'JPY', rpm.TTLAMT_EXCTAX1, rpm.TTLAMT_FC_EXCTAX1) as TTLAMT_EXCTAX1,
+      decode(rpm.MNY_CD, 'JPY', rpm.TTLAMT_TAX1, rpm.TTLAMT_FC_TAX1) as TTLAMT_TAX1,
+      decode(rpm.MNY_CD, 'JPY', rpm.TTLAMT_INCTAX1, rpm.TTLAMT_FC_INCTAX1) as TTLAMT_INCTAX1,
+      decode(rpm.MNY_CD, 'JPY', rpm.TTLAMT_EXCTAX2, null) as TTLAMT_EXCTAX2,
+      decode(rpm.MNY_CD, 'JPY', rpm.TTLAMT_TAX2, null) as TTLAMT_TAX2,
+      decode(rpm.MNY_CD, 'JPY', rpm.TTLAMT_INCTAX2, null) as TTLAMT_INCTAX2,
+      decode(rpm.MNY_CD, 'JPY', rpm.TTLAMT_EXCTAX3, rpm.TTLAMT_FC_EXCTAX3) as TTLAMT_EXCTAX3,
+      decode(rpm.MNY_CD, 'JPY', rpm.TTLAMT_TAX3, rpm.TTLAMT_FC_TAX3) as TTLAMT_TAX3,
+      decode(rpm.MNY_CD, 'JPY', rpm.TTLAMT_INCTAX3, rpm.TTLAMT_FC_INCTAX3) as TTLAMT_INCTAX3,
+      case when rpm.TAX_UNT = '3' AND pdm.TTLAMT_EXCTAX1_FG_COUNT > 0 then '1' else '0' end as TTLAMT_EXCTAX1_FG,
+      case when rpm.TAX_UNT = '3' AND pdm.TTLAMT_EXCTAX2_FG_COUNT > 0 then '1' else '0' end as TTLAMT_EXCTAX2_FG,
+      case when rpm.TAX_UNT = '3' AND pdm.TTLAMT_EXCTAX3_FG_COUNT > 0 then '1' else '0' end as TTLAMT_EXCTAX3_FG
+   from RTN_PAY_MST rpm
+   inner join (
+     select
+       COMPANY_CD, RTN_PAY_NO
+       , sum(case TAX_FG_CHG when '4' then 1 else 0 end) as TTLAMT_EXCTAX1_FG_COUNT
+       , sum(case TAX_FG_CHG when '5' then 1 else 0 end) as TTLAMT_EXCTAX2_FG_COUNT
+       , sum(case TAX_FG_CHG when '6' then 1 else 0 end) as TTLAMT_EXCTAX3_FG_COUNT
+     from
+       RTN_PAYDTL_MST
+     where
+       DLT_FG = '0'
+     group by
+       COMPANY_CD, RTN_PAY_NO
+   ) pdm
+      on pdm.COMPANY_CD = rpm.COMPANY_CD
+      and pdm.RTN_PAY_NO = rpm.RTN_PAY_NO
+   left join CNTRCT_INF c
+      on rpm.COMPANY_CD = c.COMPANY_CD
+      and rpm.CNTRCT_NO = c.CNTRCT_NO
+      and c.DLT_FG = '0'
+   left join CNTRCT_SPLR_INF cs
+      on c.COMPANY_CD = cs.COMPANY_CD
+      and c.CNTRCT_NO = cs.CNTRCT_NO
+      and cs.DLT_FG = '0'
+      and cs.SQNO =  (
+         select MIN(cs2.SQNO) from CNTRCT_SPLR_INF cs2
+         where cs2.COMPANY_CD = cs.COMPANY_CD
+         and cs2.CNTRCT_NO = cs.CNTRCT_NO
+         and cs2.DLT_FG = '0'
+      )
+   left join PAYEE_BNKACC_MST pbm
+      on pbm.COMPANY_CD = rpm.COMPANY_CD
+      and pbm.PAYEE_BNKACC_CD = rpm.PAYEE_BNKACC_CD
+      and pbm.DLT_FG = '0'
+   left join BNK_MST bm
+      on bm.COMPANY_CD = pbm.COMPANY_CD
+      and bm.BNK_CD = pbm.BNK_CD
+      and bm.DLT_FG = '0'
+   left join BNKBRC_MST brm
+      on brm.COMPANY_CD = pbm.COMPANY_CD
+      and brm.BNK_CD = pbm.BNK_CD
+      and brm.BNKBRC_CD = pbm.BNKBRC_CD
+      and brm.DLT_FG = '0'
+   left join MWM_OPTION op1
+      on op1.CORPORATION_CODE = pbm.COMPANY_CD
+      and op1.OPTION_CODE = 'KbnSplrAccountTp'
+      and op1.DELETE_FLAG = '0'
+   left join MWM_OPTION_ITEM opi1
+      on opi1.OPTION_ID = op1.OPTION_ID
+      and opi1.CODE = pbm.BNKACC_TP
+      and opi1.DELETE_FLAG = '0'
+   left join MWM_OPTION op2
+      on op2.CORPORATION_CODE = pbm.COMPANY_CD
+      and op2.OPTION_CODE = 'KbnSplrFeeCharge'
+      and op2.DELETE_FLAG = '0'
+   left join MWM_OPTION_ITEM opi2
+      on opi2.OPTION_ID = op2.OPTION_ID
+      and opi2.CODE = pbm.PAY_CMM_OBL_TP
+      and opi2.DELETE_FLAG = '0'
+   left join MWM_OPTION op3
+      on op3.CORPORATION_CODE = pbm.COMPANY_CD
+      and op3.OPTION_CODE = 'KbnSplrHoliday'
+      and op3.DELETE_FLAG = '0'
+   left join MWM_OPTION_ITEM opi3
+      on opi3.OPTION_ID = op3.OPTION_ID
+      and opi3.CODE = pbm.HLD_TRT_TP
+      and opi3.DELETE_FLAG = '0'
+   left join BNKACC_MST bm1
+      on rpm.COMPANY_CD = bm1.COMPANY_CD
+      and rpm.BNKACC_CD = bm1.BNKACC_CD
+      and bm1.DLT_FG = '0'
+   left join BNKACC_MST bm2
+      on rpm.COMPANY_CD = bm2.COMPANY_CD
+      and rpm.CHRG_BNKACC_CD = bm2.BNKACC_CD
+      and bm2.DLT_FG = '0'
+   left join MWM_OPTION op4
+      on op4.CORPORATION_CODE = rpm.COMPANY_CD
+      and op4.OPTION_CODE = 'kbnPayPattern'
+      and op4.DELETE_FLAG = '0'
+   left join MWM_OPTION_ITEM opi4
+      on opi4.OPTION_ID = op4.OPTION_ID
+      and opi4.CODE = rpm.RTN_PAY_TP
+      and opi4.DELETE_FLAG = '0'
+   left join MWM_OPTION op5
+      on op5.CORPORATION_CODE = rpm.COMPANY_CD
+      and op5.OPTION_CODE = 'kbnPayOrdinary'
+      and op5.DELETE_FLAG = '0'
+   left join MWM_OPTION_ITEM opi5
+      on opi5.OPTION_ID = op5.OPTION_ID
+      and opi5.CODE = rpm.RTN_PAY_MTH
+      and opi5.DELETE_FLAG = '0'
+   left join MNY_MST_V mm
+      on rpm.COMPANY_CD = mm.COMPANY_CD
+      and rpm.MNY_CD = mm.MNY_CD
+      and trunc(sysdate) BETWEEN mm.VD_DT_S AND mm.VD_DT_E
+   left join PAY_SITE_MST psm
+      on psm.COMPANY_CD = rpm.COMPANY_CD
+      and psm.PAY_SITE_CD = rpm.PAY_SITE_CD
+      and psm.DLT_FG = '0'
+   left join PAY_APPL_MST pam
+      on rpm.COMPANY_CD = pam.COMPANY_CD
+      and rpm.PAY_APPL_CD = pam.PAY_APPL_CD
+      and pam.DLT_FG = '0'
+   left join WFM_USER_V wu
+      on wu.CORPORATION_CODE = rpm.COMPANY_CD
+      and wu.USER_CODE = rpm.SBMTR_CD
+      and wu.LOCALE_CODE = ?
+      and wu.DELETE_FLAG = '0'
+   left join MWM_OPTION op6
+      on op6.CORPORATION_CODE = rpm.COMPANY_CD
+      and op6.OPTION_CODE = 'TaxUnit'
+      and op6.DELETE_FLAG = '0'
+   left join MWM_OPTION_ITEM opi6
+      on opi6.OPTION_ID = op6.OPTION_ID
+      and opi6.CODE = rpm.TAX_UNT
+      and opi6.DELETE_FLAG = '0'
+   left join V_TAX_FG_CHG tm
+     on rpm.COMPANY_CD = tm.COMPANY_CD
+     and rpm.TAX_SBJ_TP = tm.TAX_SBJ_TP
+     and rpm.TAX_KND_CD = tm.TAX_KND_CD
+     and rpm.TAX_FG_CHG = tm.TAX_FG_CHG
+     and trunc(sysdate) between tm.VD_DT_S and tm.VD_DT_E
+     and tm.LOCALE_CODE = 'ja'
+     and rpm.MNY_TP = tm.MNY_TP
+   left join HLDTAX_MST hm
+      on rpm.COMPANY_CD = hm.COMPANY_CD
+      and rpm.HLDTAX_TP = hm.HLDTAX_TP
+      and hm.DLT_FG = '0'
+   left join MWM_LOOKUP L2
+      on L2.CORPORATION_CODE = wu.CORPORATION_CODE
+      and L2.LOOKUP_GROUP_ID = 'USER_LOCATION'
+      and L2.LOOKUP_ID = wu.EXTENDED_INFO_01
+      and L2.LOCALE_CODE = 'ja'
+   where rpm.COMPANY_CD = ?
+   and rpm.RTN_PAY_NO = ?
+   and rpm.CNTRCT_NO = ?
+
+#契約申請 - 経常支払明細
+CO0020_10: |+
+   select /* CO0020_10 */
+      pdm.COMPANY_CD,
+      pdm.ORGNZ_CD,
+      pdm.ITMEXPS_CD1,
+      im1.ITMEXPS_NM as ITMEXPS_NM1,
+      pdm.ITMEXPS_CD2,
+      im2.ITMEXPS_NM as ITMEXPS_NM2,
+      pdm.ITM_CD,
+      CASE
+       WHEN pdm.ITM_CD = '99999999999999999999' THEN pdm.ITM_NM
+       ELSE vim.ITM_NM END AS ITM_NM,
+      pdm.BUMON_CD,
+      bm.BUMON_NM,
+      pdm.ANLYS_CD,
+      CASE
+       WHEN pdm.MNY_CD IS NULL OR pdm.MNY_CD = 'JPY' THEN pdm.PAY_AMT_JPY
+       ELSE pdm.PAY_AMT_FC END as PAY_AMT_INPUT,
+      CASE
+       WHEN pdm.MNY_CD IS NULL OR pdm.MNY_CD = 'JPY' THEN pdm.PAY_AMT_JPY
+       ELSE pdm.PAY_AMT_FC END as PAY_AMT,
+      pdm.PAY_AMT_JPY_INCTAX as PAY_AMT_TAXIN,
+      pdm.TAX_CD,
+      tm.TAX_NM,
+      tm.TAX_TP,
+      tm.TAX_RTO,
+      pdm.APPL_CONT as RMK,
+      pdm.ASST_TP,
+      ic.SLP_GRP_GL,
+      ic.CST_TP,
+      vim.IPT_NM_FG,
+      pdm.PAY_SMRY as RMK,
+      pdm.INV_COMPANY_CD,
+      pdm.ADVPAY_NO,
+      pdm.ADVPAY_APLY_AMT_FC as ADVPAY_APLY_AMT,
+      rpm.SPLR_CD,
+      pdm.TAX_SBJ_TP,
+      pdm.TAX_KND_CD,
+      pdm.TAX_FG_CHG,
+      tm.TAX_FG_CHG_NM,
+      rpm.MNY_CD,
+      rpm.MNY_TP
+   from RTN_PAYDTL_MST pdm
+   left join RTN_PAY_MST rpm
+      on pdm.COMPANY_CD = rpm.COMPANY_CD
+      and pdm.RTN_PAY_NO = rpm.RTN_PAY_NO
+   left join ITMEXPS_MST im1
+      on pdm.COMPANY_CD = im1.COMPANY_CD
+      and pdm.ITMEXPS_CD1 = im1.ITMEXPS_CD
+      and im1.DLT_FG = '0'
+   left join ITMEXPS_MST im2
+      on pdm.COMPANY_CD = im2.COMPANY_CD
+      and pdm.ITMEXPS_CD2 = im2.ITMEXPS_CD
+      and im2.DLT_FG = '0'
+   left join V_TAX_FG_CHG tm
+     on pdm.COMPANY_CD = tm.COMPANY_CD
+     and pdm.TAX_SBJ_TP = tm.TAX_SBJ_TP
+     and pdm.TAX_KND_CD = tm.TAX_KND_CD
+     and pdm.TAX_FG_CHG = tm.TAX_FG_CHG
+     and trunc(sysdate) between tm.VD_DT_S and tm.VD_DT_E
+     and tm.LOCALE_CODE = 'ja'
+     and rpm.MNY_TP = tm.MNY_TP
+   left join ITMEXPS_CHRMST_V ic
+      on pdm.COMPANY_CD = ic.COMPANY_CD
+      and pdm.ITMEXPS_CD1 = ic.ITMEXPS_CD1
+      and pdm.ITMEXPS_CD2 = ic.ITMEXPS_CD2
+      and pdm.ORGNZ_CD = ic.ORGNZ_CD_SRCH
+      and ic.DLT_FG = '0'
+   left join V_ITM_MST vim
+      on pdm.COMPANY_CD = vim.COMPANY_CD
+      and pdm.ITM_CD = vim.ITM_CD
+      and pdm.ORGNZ_CD = vim.ORGNZ_CD_SRCH
+      and vim.DLT_FG = '0'
+   left join BUMON_MST bm
+      on pdm.COMPANY_CD = bm.COMPANY_CD
+      and pdm.BUMON_CD = bm.BUMON_CD
+      and bm.DLT_FG = '0'
+   where pdm.COMPANY_CD = ?
+   and pdm.RTN_PAY_NO = ?
+   and pdm.DLT_FG = '0'
+   order by pdm.RTN_PAY_DTL_NO
+
+#文書ID取得
+CO0020_11: |+
+   select /* CO0020_11 */
+      DOC_ID,
+      MAJOR_VERSION,
+      MINOR_VERSION
+   from WFT_PROCESS
+   where PROCESS_DEF_CODE in ('201807131905', '201807131906')
+   and DOC_ID is not null
+   and APPLICATION_NO = ?
+   and END_DATE is not null
+   and PROCESS_STATUS = 'end'
+   and BUSINESS_PROCESS_STATUS = '3'
+   order by DOC_ID desc, MAJOR_VERSION desc, MINOR_VERSION desc
+
+#契約申請 - 経常支払予定マスタ
+CO0020_12: |+
+   select /* CO0020_12 */
+      rppm.COMPANY_CD,
+      rppm.RTN_PAY_NO,
+      rppm.SQNO,
+      rppm.PURORD_BTCH_TP,
+      rppm.PURORD_BTCH_PLN_DT,
+      rppm.PURORD_BTCH_RSLT_DT,
+      rppm.PURORD_NO,
+      rppm.RCVINSP_BTCH_TP,
+      rppm.RCVINSP_BTCH_PLN_DT,
+      rppm.RCVINSP_BTCH_RSLT_DT,
+      rppm.RCVINSP_NO,
+      rppm.PAYSBMT_BTCH_TP,
+      rppm.PAYSBMT_BTCH_PLN_DT,
+      rppm.PAYSBMT_BTCH_RSLT_DT,
+      rppm.PAY_NO
+   from RTN_PAY_PLN_MST rppm
+   where rppm.COMPANY_CD = ?
+   and rppm.RTN_PAY_NO = ?
+   and rppm.DLT_FG = '0'
+   order by SQNO asc
+
+#契約申請 - 経常支払予定マスタ(変更申請時用)
+CO0020_13: |+
+   select /* CO0020_13 */
+      rppm.COMPANY_CD,
+      rppm.RTN_PAY_NO,
+      rppm.SQNO,
+      '1' as PURORD_BTCH_TP,
+      rppm.PURORD_BTCH_PLN_DT,
+      rppm.PURORD_BTCH_RSLT_DT,
+      rppm.PURORD_NO,
+      '1' as RCVINSP_BTCH_TP,
+      rppm.RCVINSP_BTCH_PLN_DT,
+      rppm.RCVINSP_BTCH_RSLT_DT,
+      rppm.RCVINSP_NO,
+      '1' as PAYSBMT_BTCH_TP,
+      rppm.PAYSBMT_BTCH_PLN_DT,
+      rppm.PAYSBMT_BTCH_RSLT_DT,
+      rppm.PAY_NO
+   from RTN_PAY_PLN_MST rppm
+   where rppm.COMPANY_CD = ?
+   and rppm.RTN_PAY_NO = ?
+   and rppm.DLT_FG = '0'
+   order by SQNO asc
+   offset 0 rows fetch first 3 rows only

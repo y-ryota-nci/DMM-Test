@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+<link rel="stylesheet" href="../../assets/jsTree/themes/default/style.min.css" />
+<link rel="stylesheet" href="../../assets/nci/styles.css" />
+<link rel="stylesheet" href="../../assets/nci/original.css" />
+<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+<style type="text/css">
+a.jstree-anchor[data-type=file] {
+	color : green;
+}
+a.jstree-anchor[data-type=file]>span.label {
+	vertical-align: 1px;
+}
+#newDocList {
+	padding-left: 0px;
+	padding-right: 0px;
+	margin-bottom: 0px;
+}
+#newDocList .alert {
+	padding: 10px;
+	margin-bottom: 0px;
+}
+</style>
+<script src="../../assets/jquery/jquery.min.js"></script>
+<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../assets/jsTree/jstree.js"></script>
+<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="../../assets/nci/NCI.js"></script>
+<script src="../../assets/nci/validate.js"></script>
+<script src="./dc0030.js"></script>
+<title>#{DC0030 文書登録}</title>
+</head>
+<body>
+<header class="container-fluid">
+	<div id="nav"></div>
+</header>
+<section class="col-xs-12">
+	<article class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">#{DC0030}</h1>
+		</div>
+	</article>
+	<article class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading" data-i18n="newDocList">#{新規文書一覧}</div>
+				<div id="condition-contents" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<div id="newDocList" class="form-group col-lg-12">
+							<div id="treeScreenDocLevel" class="alert alert-info"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</article>
+</section>
+</body>
+</html>

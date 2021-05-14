@@ -1,0 +1,106 @@
+<!-- 権限設定ブロック -->
+<article id="docBlock0004">
+	<div class="panel panel-default">
+		<div id="a1" class="panel-heading clearfix">
+			<span id="docBlock0004_expansion" class="collapse_btn collapsed" role="button" data-toggle="collapse" data-target="#docBlock0004_contents">
+				<i class="fa fa-chevron-down"></i><span data-field="blockName">#{文書内容}</span>
+			</span>
+			<div class="topend_btn">
+				<a href="#pageend" class="pageend">END</a>
+			</div>
+			<div class="topend_btn">
+				<a href="#pagetop" class="pagetop">TOP</a>
+			</div>
+		</div>
+
+		<div id="docBlock0004_contents" class="panel-body panel-collapse collapse">
+			<div class="form-horizontal col-lg-12 col-md-12 col-sm-12" >
+				<div id="accessibleInfo" class="form-group tr hide">
+					<!--
+					<div class="col-lg-6 col-md-6 col-sm-6 td">
+						<select id="roles" class="form-control"></select>
+					</div>
+					-->
+					<div class="td">
+						<div>
+						<button id="btnAddRole" class="btn btn-primary btn-sm">
+							<i class="fa fa-plus-circle"></i>
+							<span data-i18n="btnAdd">#{追加}</span>
+						</button>
+						<button id="btnDelRole" class="btn btn-default btn-sm">
+							<i class="fa fa-minus-circle"></i>
+							<span data-i18n="btnDelete">#{削除}</span>
+						</button>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<table id="accessibles" class="table table-bordered table-hover table-striped responsive">
+						<colgroup>
+							<col class="col-xs-6" />
+							<col class="col-xs-1" />
+							<col class="col-xs-1" />
+							<col class="col-xs-1" />
+							<col class="col-xs-1" />
+							<col class="col-xs-1" />
+							<col class="col-xs-1" />
+						</colgroup>
+						<thead>
+							<tr>
+								<th>
+									<span data-i18n="roleName">#{ロール名称}</span>
+								</th>
+								<th style="text-align:center;">
+									<i class="fa fa-fw fa-lg fa-eye hidden-lg hidden-md hidden-sm"></i>
+									<span data-i18n="refer" class="hidden-xs">#{参照}</span>
+								</th>
+								<th style="text-align:center;">
+									<i class="fa fa-fw fa-lg fa-download hidden-lg hidden-md hidden-sm"></i>
+									<span data-i18n="download" class="hidden-xs">#{ﾀﾞｳﾝﾛｰﾄﾞ}</span>
+								</th>
+								<th style="text-align:center;">
+									<i class="fa fa-fw fa-lg fa-edit hidden-lg hidden-md hidden-sm"></i>
+									<span data-i18n="edit" class="hidden-xs">#{編集}</span>
+								</th>
+								<th style="text-align:center;">
+									<i class="fa fa-fw fa-lg fa-trash hidden-lg hidden-md hidden-sm"></i>
+									<span data-i18n="delete" class="hidden-xs">#{削除}</span>
+								</th>
+								<th style="text-align:center;">
+									<i class="fa fa-fw fa-lg fa-copy hidden-lg hidden-md hidden-sm"></i>
+									<span data-i18n="copy" class="hidden-xs">#{コピー}</span>
+								</th>
+								<th style="text-align:center;">
+									<i class="fa fa-fw fa-lg fa-arrows hidden-lg hidden-md hidden-sm"></i>
+									<span data-i18n="move" class="hidden-xs">#{移動}</span>
+								</th>
+							</tr>
+						</thead>
+
+						<tbody></tbody>
+
+						<tfoot class="template hide">
+							<tr>
+								<td class="text-left">
+									<input type="checkbox" class="selectable" value="true" />
+									<span class="hide" data-field="roleName" ></span>
+									<span class="hide" data-field="userName" ></span>
+									<span class="hide" data-field="docAccessibleId">#{docAccessibleId}</span>
+									<span class="hide" data-field="corporationCode">#{corporationCode}</span>
+									<span class="hide" data-field="roleCode">#{roleCode}</span>
+									<span class="hide" data-field="userCode">#{userCode}</span>
+								</td>
+								<td style="text-align:center;"><input type="checkbox" class="inputable" value="1" data-field="authRefer" /></td>
+								<td style="text-align:center;"><input type="checkbox" class="" value="1" data-field="authDownload" disabled/></td>
+								<td style="text-align:center;"><input type="checkbox" class="inputable" value="1" data-field="authEdit" /></td>
+								<td style="text-align:center;"><input type="checkbox" class="" value="1" data-field="authDelete" disabled/></td>
+								<td style="text-align:center;"><input type="checkbox" class="" value="1" data-field="authCopy" disabled/></td>
+								<td style="text-align:center;"><input type="checkbox" class="" value="1" data-field="authMove" disabled/></td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</article>

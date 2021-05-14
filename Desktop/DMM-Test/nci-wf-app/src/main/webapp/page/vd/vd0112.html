@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='UTF-8'>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel='stylesheet' href='../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css' />
+	<link rel='stylesheet' href='../../assets/nci/app.css' />
+	<style type='text/css'>
+	</style>
+	<script src='../../assets/jquery/jquery.min.js'></script>
+	<script src='../../assets/jquery-ui/jquery-ui.min.js'></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src='../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js'></script>
+	<script src='../../assets/nci/NCI.js'></script>
+	<script src='../../assets/nci/codeBook.js'></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src='./vd0112.js'></script>
+	<title>#{VD0112 条件設定}</title>
+</head>
+<body>
+	<header></header>
+	<section class="container">
+		<div class="row">
+			<span class="screen-name">#{VD0112}</span>
+		</div>
+		<div class="row">
+			<span data-i18n="MSG0272" style="color:red;">#{※コールバック関数を設定すると条件判定後に設定した関数を呼び出します。}</span><br/>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<label id="subTitle1" class="sub-title hide" data-i18n="enabledCondition">#{有効条件設定}</label>
+			<label id="subTitle2" class="sub-title hide" data-i18n="visibilityCondition">#{可視条件設定}</label>
+			<label id="subTitle3" class="sub-title hide" data-i18n="readonlyCondition">#{読取専用条件設定}</label>
+
+			<table class="table-bordered table-condensed col-xs-12">
+				<colgroup>
+					<col class="col-xs-3" />
+					<col class="col-xs-9" />
+				</colgroup>
+				<tr>
+					<td valign="top">
+						<div class="col-xs-12">
+							<table class="table-condensed">
+								<colgroup>
+									<col class="col-xs-4" />
+									<col class="col-xs-4" />
+									<col class="col-xs-4" />
+								</colgroup>
+
+								<tbody>
+									<tr class="hide">
+										<td colspan="3">
+											<select id="container" class="form-control">
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="3">
+											<button id="btnAndParts" class="btn btn-default">
+												<span data-i18n="btnPartsSpecify">#{パーツ指定}</span>
+											</button>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<button id="btnAnd" class="btn btn-default" value="&&">
+												<span data-i18n="btnAnd">#{AND}</span>
+											</button>
+										</td>
+										<td>
+											<button id="btnOr" class="btn btn-default" value="||">
+												&nbsp;<span data-i18n="btnOr">#{OR}</span>&nbsp;
+											</button>
+										</td>
+										<td>
+											<button id="btnNot" class="btn btn-default" value="!">
+												<span data-i18n="btnNot">#{NOT}</span>
+											</button>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<button id="btnOpenParenthesis" class="btn btn-default" value="(">
+												&nbsp;&nbsp;<span data-i18n="btnOpenBrackets">#{(}</span>&nbsp;&nbsp;
+											</button>
+										</td>
+										<td>
+											<button id="btnCloseParenthesis" class="btn btn-default" value=")">
+												&nbsp;&nbsp;<span data-i18n="btnCloseBrackets">#{)}</span>&nbsp;&nbsp;
+											</button>
+										</td>
+										<td class="hide"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div style="padding-top:30px;" class="col-xs-12">
+							<table class="table-condensed">
+								<colgroup>
+									<col class="col-xs-4" />
+									<col class="col-xs-4" />
+									<col class="col-xs-4" />
+								</colgroup>
+								<tbody>
+									<tr>
+									<td>
+										<button id="btnRegist" class="btn btn-primary" disabled>
+											<i class="glyphicon glyphicon-cog"></i>
+											<span data-i18n="btnRegister">#{登録}</span>
+										</button>
+									</td>
+									<td>
+										<button id="btnDelete" class="btn btn-danger">
+											<i class="glyphicon glyphicon-trash"></i>
+											<span data-i18n="btnDelete">#{削除}</span>
+										</button>
+									</td>
+									<td>
+										<button id="btnClose" class="btn btn-default">
+											<i class="glyphicon glyphicon-share-alt"></i>
+											<span data-i18n="btnClose">#{閉じる}</span>
+										</button>
+									</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</td>
+					<td valign="top">
+						<div>
+							<table class="table-condensed" style="width:100%;">
+								<colgroup>
+									<col class="col-xs-3" />
+									<col class="col-xs-9" />
+								</colgroup>
+								<tr>
+									<th data-i18n="callbackFunction">#{コールバック関数}：</th>
+									<th>
+										<input id="callbackFunction" class="form-control" type="text" value="" maxlength='90' />
+									</th>
+								</tr>
+								<tr>
+									<th data-i18n="condExpression">#{条件式}：</th>
+									<th><span id="expression"></span></th>
+								</tr>
+							</table>
+
+						</div>
+						<div id="setting">
+							<table id="tblCondItems" class="table-striped table-bordered table-condensed responsive" style="width:100%;">
+								<colgroup>
+									<col class="col-xs-2" />
+									<col class="col-xs-3" />
+									<col class="col-xs-2" />
+									<col class="col-xs-3" />
+									<col class="col-xs-1" />
+									<col class="col-xs-1" />
+								</colgroup>
+
+								<thead>
+									<tr>
+										<th data-i18n="classification">#{種別}</th>
+										<th data-i18n="typeValue">#{区分値}</th>
+										<th data-i18n="operator">#{演算子}</th>
+										<th data-i18n="compareCondition">#{比較条件}</th>
+										<th data-i18n="judgeNum">#{数値}</th>
+										<th></th>
+									</tr>
+								</thead>
+
+								<tbody>
+								</tbody>
+
+								<tfoot class="template hide">
+									<!-- 以下、論理演算子用のTRタグ -->
+									<tr>
+										<td><i class='glyphicon glyphicon-align-justify clickable'></i><span data-i18n="operator">#{演算子}</span></td>
+										<td><span data-field="dispCondType"></span></td>
+										<td class="hidden-xs"></td>
+										<td class="hidden-xs"></td>
+										<td class="hidden-xs"></td>
+										<td class="text-center">
+											<button class="btn btn-sm btn-danger btnDelItem">
+												<i class="glyphicon glyphicon-minus-sign"></i>
+											</button>
+										</td>
+										<td class="hide" data-field="partsCondId"></td>
+										<td class="hide" data-field="itemClass"></td>
+										<td class="hide" data-field="condType"></td>
+										<td class="hide" data-field="sortOrder"></td>
+									</tr>
+									<!-- 以下、括弧用のTRタグ -->
+									<tr>
+										<td><i class='glyphicon glyphicon-align-justify clickable'></i><span data-i18n="brackets">#{カッコ}</span></td>
+										<td><span data-field="dispCondType"></span></td>
+										<td class="hidden-xs"></td>
+										<td class="hidden-xs"></td>
+										<td class="hidden-xs"></td>
+										<td class="text-center">
+											<button class="btn btn-sm btn-danger btnDelItem">
+												<i class="glyphicon glyphicon-minus-sign"></i>
+											</button>
+										</td>
+										<td class="hide" data-field="partsCondId"></td>
+										<td class="hide" data-field="itemClass"></td>
+										<td class="hide" data-field="condType"></td>
+										<td class="hide" data-field="sortOrder"></td>
+									</tr>
+									<!-- 以下、パーツ用のTRタグ -->
+									<tr>
+										<td><i class='glyphicon glyphicon-align-justify clickable'></i><span data-i18n="parts">#{パーツ}</span></td>
+										<td>
+											<select data-field="condType" class="condType form-control required">
+												<option value="" label=""/>
+											</select>
+										</td>
+										<td>
+											<select data-field="operator" class="operator form-control required">
+												<option value="" label=""/>
+											</select>
+										</td>
+										<td>
+											<div class="input-group">
+												<input data-field="targetLiteralVal" class="form-control targetLiteralVal" type="text" value=""/>
+												<span class="hide" data-field="targetPartsId"></span>
+												<!--
+												<span class="input-group-btn">
+													<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+														<span class="caret"></span>
+													</button>
+													<ul class="dropdown-menu" role="menu">
+														<li><a href="#"><span></span></a></li>
+													</ul>
+												</span>
+												-->
+											</div>
+										</td>
+										<td class="text-center">
+											<input type="checkbox" data-field="numericFlag" value="1" />
+										</td>
+										<td class="text-center">
+											<button class="btn btn-sm btn-danger btnDelItem">
+												<i class="glyphicon glyphicon-minus-sign"></i>
+											</button>
+										</td>
+										<td class="hide" data-field="partsCondId"></td>
+										<td class="hide" data-field="itemClass"></td>
+										<td class="hide" data-field="sortOrder"></td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</section>
+</body>
+</html>

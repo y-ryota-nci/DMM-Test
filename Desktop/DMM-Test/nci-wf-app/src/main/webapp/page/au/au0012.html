@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./au0012.js"></script>
+	<script src="./pswd-strength.js"></script>
+	<title>#{AU0012 パスワード設定}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+
+	<section class="col-xs-12">
+		<article class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">パスワード変更</h1>
+			</div>
+		</article><!--/.row-->
+
+		<article class="row mB40 mB40_sp">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#condition-contents"><i class="fa fa-chevron-up"></i><span data-i18n="newPassword">新パスワード</span></div>
+					<div id="condition-contents" class="panel-collapse collapse in">
+						<div class="panel-body">
+
+			<div class="form-group col-sm-6">
+				<label data-i18n="newPassword">#{新パスワード}</label>
+				<div class="input-group">
+					<input id="newPassword1" type="password" class="form-control required" maxlength="30"  />
+					<span id="password-strength" class="input-group-addon" data-i18n="passwordStrength">#{パスワード強度}</span>
+				</div>
+			</div>
+			<div class="form-group col-sm-6">
+				<label data-i18n="newPassword2">#{確認パスワード}</label>
+				<input id="newPassword2" type="password" maxlength="30" class="form-control required" autocomplete="off" />
+			</div>
+			<ul id="corpProperties" class="form-group col-xs-12">
+				<li><span class="">#{パスワードの最低桁数}</span> : <span class="">8</span></li>
+				<li><span class="">#{パスワードには３種類以上の文字を含む}</span> : <span class="">はい</span></li>
+				<li><span class="">#{同一パスワード禁止世代数}</span> : <span class="">0</span></li>
+				<li><span class="">#{ログインＩＤを含むパスワードを許可}</span> : <span class="">はい</span></li>
+				<li><span class="">#{パスワードの有効日数}</span> : <span class="">90</span></li>
+			</ul>
+			<div class="form-group text-center">
+				<button id="btnChangePassword" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnChangePassword">#{パスワード変更}</span>
+				</button>
+								<button id="btnChangePasswordRequest" class="btn btn-primary" disabled>
+									<i class="glyphicon glyphicon-ok-sign"></i>
+									<span data-i18n="btnChangePasswordRequest">#{パスワード変更要求}</span>
+								</button>
+								<button id="btnResetPassword" class="btn btn-primary" disabled>
+									<i class="glyphicon glyphicon-ok-sign"></i>
+									<span data-i18n="btnResetPassword">#{パスワードリセット}</span>
+								</button>
+								<button id="btnLockAccount" class="btn btn-primary" disabled>
+									<i class="glyphicon glyphicon-ok-sign"></i>
+									<span data-i18n="btnLockAccount">#{アカウントロック}</span>
+								</button>
+								<button id="btnUnlockAccount" class="btn btn-primary" disabled>
+									<i class="glyphicon glyphicon-ok-sign"></i>
+									<span data-i18n="btnUnlockAccount">#{アカウントロック解除}</span>
+								</button>
+				<button id="btnBack" class="btn btn-default">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnBack">#{戻る}</span>
+				</button>
+			</div>
+		</div>
+					</div>
+				</div>
+			</div>
+		</article>
+
+		<article class="row mB40 mB40_sp" id="current">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#condition-contents"><i class="fa fa-chevron-up"></i><span data-i18n="currentPasswordInfo">#{現在のパスワード情報}</span></div>
+					<div id="condition-contents" class="panel-collapse collapse in">
+						<div class="panel-body">
+
+			<div class="form-group col-sm-3">
+				<label data-i18n="corporation"></label>
+				<input id="corporationCode" type="hidden" />
+				<input id="userCode" type="hidden" />
+				<input id="corporationName" type="text" class="form-control" readonly />
+			</div>
+			<div class="form-group col-sm-3">
+				<label data-i18n="userAddedInfo"></label>
+				<input id="userAddedInfo" type="text" class="form-control" readonly>
+			</div>
+			<div class="form-group col-sm-3">
+				<label data-i18n="user">#{ユーザ}</label>
+				<input id="userName" type="text" class="form-control" readonly>
+			</div>
+			<div class="form-group col-sm-3">
+				<label data-i18n="validStartDate">#{有効期限開始日}</label>
+				<input id="validStartDate" type="text" class="form-control" readonly>
+			</div>
+			<div class="form-group col-sm-3">
+				<label data-i18n="passwordStatus">#{パスワード状況}</label>
+				<input id="existPasswordFlagName" type="text" class="form-control" readonly>
+			</div>
+			<div class="form-group col-sm-3">
+				<label data-i18n="passwordChangeRequest">#{パスワード変更要求}</label>
+				<input id="changeRequestFlagName" type="text" class="form-control" readonly>
+			</div>
+			<div class="form-group col-sm-3">
+				<label data-i18n="accountLock">#{アカウントロック}</label>
+				<input id="lockFlagName" type="text" class="form-control" readonly>
+			</div>
+			<div class="form-group col-sm-3">
+				<label data-i18n="loginNgCount">#{ログイン失敗回数}</label>
+				<input id="loginNgCount" type="text" class="form-control" readonly>
+			</div>
+			<div class="form-group col-sm-3">
+				<label data-i18n="loginTimestampPrev">#{前回ログイン日時}</label>
+				<input id="loginTimestampPrev" type="text" class="form-control" readonly>
+			</div>
+		</div>
+					</div>
+				</div>
+			</div>
+		</article>
+
+		<article class="row mB40 mB40_sp" id="history-info">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#condition-contents"><i class="fa fa-chevron-up"></i><span data-i18n="changeHistory">#{変更履歴}</span></div>
+					<div id="condition-contents" class="panel-collapse collapse in">
+						<div class="panel-body">
+			<table class="table table-hover table-striped table-condensed responsive">
+				<colgroup>
+									<col style="width:35px" />
+									<col class="col-xs-4 col-sm-2" />
+									<col class="col-xs-4 col-sm-2" />
+									<col class="col-xs-4 col-sm-2" />
+									<col class="hidden-xs col-sm-6" />
+				</colgroup>
+				<thead>
+					<tr>
+										<th></th>
+						<th data-i18n="validStartDate">#{有効期限開始日}</th>
+						<th data-i18n="loginNgCount">#{ログイン失敗回数}</th>
+						<th data-i18n="passwordChangeRequest">#{パスワード変更要求}</th>
+										<th data-i18n="passwordStatus" class="hidden-xs">#{パスワード状況}</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+				<tfoot class="template hide">
+					<tr>
+						<th data-field="rowNo">#{1}</th>
+						<td data-field="validStartDate">#{2015/08/04 00:00:00}</td>
+						<td data-field="loginNgCount">#{0}</td>
+						<td data-field="passwordChangeRequest">#{あり}</td>
+										<td data-field="passwordStatus" class="hidden-xs">#{設定済}</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+					</div>
+				</div>
+			</div>
+		</article>
+	</section>
+</body>
+</html>

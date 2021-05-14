@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='UTF-8'>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel='stylesheet' href='../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css' />
+	<link rel='stylesheet' href='../../assets/jquery-minicolors/jquery.minicolors.css' />
+	<link rel='stylesheet' href='../../assets/nci/app.css' />
+	<style type='text/css'>
+	tr.vd0114_15_bottom_line > td {
+		border-bottom-color: #00529c;
+		border-bottom-style: solid;
+	}
+	</style>
+	<script src='../../assets/jquery/jquery.min.js'></script>
+	<script src='../../assets/jquery-ui/jquery-ui.min.js'></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src='../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js'></script>
+	<script src='../../assets/jquery-minicolors/jquery.minicolors.min.js'></script>
+	<script src='../../assets/nci/NCI.js'></script>
+	<script src="../../assets/nci/codeBook.js"></script>
+	<script src="../../assets/nci/parts.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src='./vd0114.js'></script>
+	<title>#{VD0114 パーツプロパティ設定}</title>
+</head>
+<body>
+	<header></header>
+
+	<section id="inputed" class="container">
+		<!-- 全パーツの共通プロパティ -->
+		<div id="commonItem" class="row">
+			<span class="screen-name">#{VD0114}</span>
+
+			<label class="sub-title" data-i18n="commonItem">共通項目</label>
+
+			<div class='col-sm-4 col-sm-2'>
+				<span data-i18n='partsCode' class='required'>パーツコード</span>
+				<div class="input-group">
+					<input id='partsCode' type='text' class='input-group-field form-control required' maxlength='10' readonly />
+					<span class="input-group-btn">
+						<button id="btnChangePartsCode" class="btn btn-default" data-i18n="btnChange">変更</button>
+					</span>
+				</div>
+
+				<input id='partsId' type='hidden' />
+				<input id='partsType' type='hidden' />
+				<input id='containerId' type='hidden' />
+				<input id='parentPartsId' type='hidden' />
+				<input id='version' type='hidden' />
+			</div>
+
+			<div class='form-group col-sm-8 col-md-4'>
+				<span data-i18n='designCode' class='required'>デザインコード</span>
+				<input id='designCode' type='text' class='form-control required' maxlength='100' readonly />
+			</div>
+
+			<div class='form-group col-sm-12 col-md-4'>
+				<span data-i18n='description'>説明</span>
+				<textarea id='description' class='form-control' maxlength='300' rows="1"></textarea>
+			</div>
+
+			<div class='form-group col-sm-6 col-md-6'>
+				<span data-i18n='innerText' class="required">内部ラベル</span>
+				<input id='labelText' type='text' maxlength='100' class="form-control required" />
+			</div>
+
+			<div class='form-group col-sm-3 col-md-3'>
+				<span data-i18n='bgHtmlCellNo' class="">背景HTMLのセル番号</span>
+				<input id='bgHtmlCellNo' type='text' class="form-control text-right" maxlength='5'
+						data-validate='{ "pattern" : "integer", "min" : 1, "max" : 9999 }' />
+			</div>
+
+			<div class='form-group col-sm-3 col-md-3'>
+				<span class='required' data-i18n='sortOrder'>並び順</span>
+				<input id='sortOrder' type='text' class='form-control text-right required' maxlength='5'
+						data-validate='{ "pattern" : "integer", "min" : 0, "max" : 9999 }' />
+			</div>
+
+			<div class='form-group col-sm-6 col-md-6'>
+				<span data-i18n='businessInfo'>業務管理項目</span>
+				<select id='businessInfoCode' class='form-control'></select>
+			</div>
+
+			<div class='form-group col-sm-6 col-md-6'>
+				<span data-i18n='docBusinessInfo'>文書管理項目</span>
+				<select id='docBusinessInfoCode' class='form-control'></select>
+			</div>
+
+			<div class='form-group col-sm-6 col-md-6'>
+				<span data-i18n='renderingMethod' class='required'>レンダリング方法</span>
+				<select id='renderingMethod' class='form-control required'></select>
+			</div>
+
+			<div class='form-group col-sm-2 col-md-2'>
+				<input id='grantTabIndexFlag' type='checkbox' value='true' />
+				<label for='grantTabIndexFlag' data-i18n='grantTabIndex'>タブ順を付与</label>
+			</div>
+
+			<div class='form-group col-sm-1 col-md-1'>
+				<input id='requiredFlag' type='checkbox' value='true' />
+				<label for='requiredFlag' data-i18n='required'>必須</label>
+			</div>
+
+			<div class='form-group col-sm-3 col-md-3'>
+				<input id='copyTargetFlag' type='checkbox' value="true" />
+				<label for='copyTargetFlag' data-i18n='copyTarget'>コピー起案の対象</label>
+			</div>
+
+			<fieldset class='form-group fieldset'>
+				<legend data-i18n='partsBodySettings'>本体側設定</legend>
+
+				<div class="clearfix">
+					<div class='form-group col-sm-6 col-md-6'>
+						<span data-i18n='cssClass'>CSSクラス</span>
+						<input id='cssClass' type='text' class='form-control' maxlength="100" />
+					</div>
+
+					<div class='form-group col-sm-6 col-md-6'>
+						<span data-i18n='htmlStyle'>HTMLスタイル</span>
+						<input id='cssStyle' type='text' class='form-control' maxlength="300" />
+					</div>
+
+					<div class='form-group col-sm-6 col-md-3'>
+						<span data-i18n='fontSize'>フォントサイズ</span>
+						<select id='fontSize' class='form-control fontSize'></select>
+					</div>
+
+					<div class='form-group col-sm-3 col-md-2'>
+						<span data-i18n='fontColor'>フォント色</span>
+						<input id='fontColor' type='text' maxlength='7' class='form-control color-picker'
+								data-validate='{ "pattern" : "alphaNumberSymbol" }' />
+					</div>
+
+					<div class='form-group col-sm-2 col-md-2'>
+						<input id='fontBold' type='checkbox' value='true' />
+						<label for='fontBold' data-i18n='bold'>太字</label>
+					</div>
+				</div>
+				<div class="clearfix">
+					<div class='form-group col-sm-3 col-md-2'>
+						<span data-i18n='bgColorInInput'>入力時の背景色</span>
+						<input id='bgColorInput' type='text' maxlength='7' class='form-control color-picker'
+								data-validate='{ "pattern" : "alphaNumberSymbol" }'/>
+					</div>
+					<div class='form-group col-sm-3 col-md-2'>
+						<span data-i18n='bgColorInRefer'>参照時の背景色</span>
+						<input id='bgColorRefer' type='text' maxlength='7' class='form-control color-picker'
+								data-validate='{ "pattern" : "alphaNumberSymbol" }'/>
+					</div>
+					<div class='form-group col-sm-3 col-md-2'>
+						<input id='bgTransparentFlag' type='checkbox' value='true' />
+						<label for='bgTransparentFlag' data-i18n='bgTransparent'>背景は透明</label>
+					</div>
+
+					<div class='form-group col-sm-4 col-md-3'>
+						<input id='mobileInvisibleFlag' type='checkbox' value='true' />
+						<label for='mobileInvisibleFlag' data-i18n='mobileInvisibleFlag'>モバイル端末なら非表示</label>
+					</div>
+				</div>
+				<div class="clearfix">
+<!-- モバイル時(col-xs-*)は全幅固定でレンダリングするようになったので、不要である
+					<div class='form-group col-sm-4 col-md-3'>
+						<span data-i18n='width'>幅</span>:
+						<span data-i18n='colXs'>最少画面</span>
+						<select id='colXs' class='form-control columnSize'></select>
+					</div>
+-->
+					<div class='form-group col-sm-4 col-md-3'>
+						<span data-i18n='width'>幅</span>:
+						<span data-i18n='colSm'>小画面</span>
+						<select id='colSm' class='form-control columnSize'></select>
+					</div>
+
+					<div class='form-group col-sm-4 col-md-3'>
+						<span data-i18n='width'>幅</span>:
+						<span data-i18n='colMd'>中画面</span>
+						<select id='colMd' class='form-control columnSize'></select>
+					</div>
+
+					<div class='form-group col-sm-4 col-md-3'>
+						<span data-i18n='width'>幅</span>:
+						<span data-i18n='colLg'>大画面</span>
+						<select id='colLg' class='form-control columnSize'></select>
+					</div>
+
+				</div>
+			</fieldset>
+		</div>
+
+		<!-- 各パーツの固有プロパティ -->
+		<div id="specificItem" class="row form-group"></div>
+
+		<div class="row">
+			<div class="col-sm-4 text-left">
+				<button id='btnEC' class='btn btn-success btn-sm' disabled>
+					<i class='glyphicon glyphicon-briefcase'></i>
+					<span data-i18n='btnSetCondition'>条件設定</span>
+				</button>
+				<button id='btnCalc' class='btn btn-success btn-sm' disabled>
+					<i class='glyphicon glyphicon-usd'></i>
+					<span data-i18n='btnCalc'>計算式</span>
+				</button>
+				<button id='btnEvent' class='btn btn-success btn-sm' disabled>
+					<i class='glyphicon glyphicon-flash'></i>
+					<span data-i18n='btnEvent'>イベント</span>
+				</button>
+			</div>
+
+			<div class="col-sm-4 text-center">
+				<button id='btnOK' class='btn btn-primary' disabled>
+					<i class='glyphicon glyphicon-ok-sign'></i>
+					<span data-i18n='btnOK'>#{OK}</span>
+				</button>
+				<button id='btnClose' class='btn btn-default'>
+					<i class='glyphicon glyphicon-share-alt'></i>
+					<span data-i18n='btnClose'>#{閉じる}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

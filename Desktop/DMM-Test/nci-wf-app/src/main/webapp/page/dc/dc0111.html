@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+<link rel="stylesheet" href="../../assets/nci/styles.css" />
+<link rel="stylesheet" href="../../assets/nci/original.css" />
+<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+<style type="text/css">
+</style>
+<script src="../../assets/jquery/jquery.min.js"></script>
+<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="../../assets/nci/NCI.js"></script>
+<script src="../../assets/nci/validate.js"></script>
+<script src="./dc0111.js"></script>
+<title>#{DC0111 画面文書定義設定}</title>
+</head>
+<body>
+<header class="container-fluid">
+	<div id="nav"></div>
+</header>
+
+<section class="col-xs-12">
+	<article class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">画面文書定義設定</h1>
+		</div>
+	</article><!--/.row-->
+	<article class="row mB40 mB40_sp">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix"><span data-i18n="screenDocSettings"></span></div>
+				<div class="panel-body">
+					<form class="form-horizontal" id="inputed">
+						<div class="form-group">
+							<label class="col-sm-3 control-label required" data-i18n="screenDocCode">#{画面文書コード}</label>
+							<div class="col-sm-2">
+								<input type="text" id="screenDocCode" class="form-control readonly required" maxlength="10" data-validate='{"pattern" : "alphaNumber" }' readonly />
+								<input type="hidden" id="screenDocId" />
+								<input type="hidden" id="corporationCode" />
+								<input type="hidden" id="version" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label required" data-i18n="screenDocName">#{画面文書名}</label>
+							<div class="col-sm-5">
+								<input type="text" id="screenDocName" class="form-control required" maxlength="100" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label required" data-i18n="validTerm">有効期間</label>
+							<div class="col-sm-8 col-md-5">
+								<div class="input-group">
+									<div class="has-feedback">
+										<input type="text" class="form-control ymdPicker required" id="validStartDate" data-validate='{"to" : "#validEndDate", "pattern" : "date" }'/>
+										<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+									</div>
+									<div class="input-group-addon">
+									～
+									</div>
+									<div class="has-feedback">
+										<input type="text" class="form-control ymdPicker required" id="validEndDate" data-validate='{"from" : "#validStartDate" , "pattern" : "date"}'/>
+										<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label required" data-i18n="screen">#{画面}</label>
+							<div class="col-sm-5">
+								<select id="screenId" class="form-control required"></select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label" data-i18n="docFolder">#{文書フォルダ}</label>
+							<div class="col-sm-5">
+								<div class="input-group">
+									<input type="text" id="folderPath" class="form-control" readonly/>
+									<input type="hidden" id="folderCode" />
+									<span class="input-group-btn">
+										<button id="btnSelectDocFolder" type="button" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-info-sign"></i></button>
+									</span>
+									<span class="input-group-btn">
+										<button id="btnClearDocFolder" type="button" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-remove-circle"></i></button>
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label" data-i18n="wfCooperateTo">#{WF連携先}</label>
+							<div class="col-sm-8">
+								<select id="screenProcessCode" class="form-control"></select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label" data-i18n="description">#{説明}</label>
+							<div class="col-sm-8">
+								<textarea id="description" rows="2" class="form-control" maxlength="300"></textarea>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</article>
+	<article class="row mB40 mB40_sp">
+		<div class="col-lg-12 text-center">
+			<div class="form-group">
+				<button id="btnUpdate" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnUpdate">#{更新}</span>
+				</button>
+				<button id="btnBack" class="btn btn-default">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnBack">#{戻る}</span>
+				</button>
+			</div>
+		</div>
+	</article>
+</section>
+</body>
+</html>

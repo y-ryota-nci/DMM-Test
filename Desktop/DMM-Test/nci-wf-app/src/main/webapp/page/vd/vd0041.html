@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./vd0041.js"></script>
+	<title>#{VD0041 画面設定}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="container">
+		<div class="row">
+			<span class="screen-name">#{VD0041}</span>
+
+			<label class="sub-title">
+				<span  data-i18n="screenProcessSettings"></span>
+			</label>
+
+			<form class="form-horizontal" id="inputed">
+				<div class="form-group">
+					<label class="col-sm-3 control-label required" data-i18n="screenProcessCode">#{画面プロセスコード}</label>
+					<div class="col-sm-9">
+						<input type="text" id="screenProcessCode" class="form-control required" disabled />
+						<input type="hidden" id="screenProcessId" />
+						<input type="hidden" id="corporationCode" />
+						<input type="hidden" id="version" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label required" data-i18n="screenProcessName">#{画面プロセス名}</label>
+					<div class="col-sm-9">
+						<input type="text" id="screenProcessName" class="form-control required" maxlength="100" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label required" data-i18n="validTerm">有効期間</label>
+					<div class="col-sm-8 col-md-6">
+						<div class="input-group">
+							<div class="has-feedback">
+								<input type="text" class="form-control ymdPicker required" id="validStartDate" data-validate='{"to" : "#validEndDate", "pattern" : "date" }'/>
+								<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+							</div>
+							<div class="input-group-addon">
+							～
+							</div>
+							<div class="has-feedback">
+								<input type="text" class="form-control ymdPicker required" id="validEndDate" data-validate='{"from" : "#validStartDate" , "pattern" : "date"}'/>
+								<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label required" data-i18n="processDef">#{プロセス定義}</label>
+					<div class="col-sm-9">
+						<div class="input-group">
+							<select id="processDefCode" class="form-control required"></select>
+							<div class="input-group-addon">-</div>
+							<select id="processDefDetailCode" class="form-control required"></select>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label required" data-i18n="screen">#{画面}</label>
+					<div class="col-sm-9">
+						<select id="screenId" class="form-control required"></select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label" data-i18n="description">#{説明}</label>
+					<div class="col-sm-9">
+						<textarea id="description" rows="2" class="form-control" maxlength="300"></textarea>
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<div class="col-xs-12 text-center">
+				<button id="btnRegister" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnRegister">#{登録}</span>
+				</button>
+				<button id="btnUpdate" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnUpdate">#{更新}</span>
+				</button>
+				<button id="btnBack" class="btn btn-default">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnBack">#{戻る}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

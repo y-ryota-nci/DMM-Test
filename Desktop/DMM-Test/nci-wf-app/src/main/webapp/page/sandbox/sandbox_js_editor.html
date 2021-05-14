@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="../../assets/codemirror/lib/codemirror.css" />
+	<link rel="stylesheet" href="../../assets/codemirror/theme/eclipse.css" />
+	<link rel="stylesheet" href="../../assets/codemirror/addon/hint/show-hint.css">
+
+	<script src="../../assets/codemirror/lib/codemirror.js"></script>
+	<script src="../../assets/codemirror/mode/javascript/javascript.js"></script>
+	<script src="../../assets/codemirror/addon/selection/active-line.js"></script>
+	<script src="../../assets/codemirror/addon/edit/matchbrackets.js"></script>
+	<script src="../../assets/codemirror/addon/edit/closebrackets.js"></script>
+	<script src="../../assets/codemirror/addon/comment/continuecomment.js"></script>
+	<script src="../../assets/codemirror/addon/comment/comment.js"></script>
+	<script src="../../assets/codemirror/addon/hint/show-hint.js"></script>
+	<script src="../../assets/codemirror/addon/hint/javascript-hint.js"></script>
+
+	<script src="../../assets/codemirror/addon/scroll/annotatescrollbar.js"></script>
+	<script src="../../assets/codemirror/addon/search/matchesonscrollbar.js"></script>
+	<script src="../../assets/codemirror/addon/search/searchcursor.js"></script>
+	<script src="../../assets/codemirror/addon/search/match-highlighter.js"></script>
+
+<link rel="stylesheet" href="../../assets/codemirror/addon/dialog/dialog.css">
+<script src="../../assets/codemirror/addon/dialog/dialog.js"></script>
+<script src="../../assets/codemirror/addon/search/search.js"></script>
+<script src="../../assets/codemirror/addon/search/jump-to-line.js"></script>
+
+	<style type="text/css">
+	.cm-matchhighlight {background-color: lightgreen}
+	.CodeMirror-selection-highlight-scrollbar {background-color: green}
+
+	</style>
+	<script src="./sandbox_js_editor.js"></script>
+
+	<title>JavaScriptエディタ</title>
+
+</head>
+<body onload="_onload()">
+	「CTRL+/」でコメントのトグル<br />
+	「CTRL+SPACE」でオートコンプリート<br />
+	「CTRL+F」で検索開始<br />
+	「CTRL+G」次を検索<br />
+	「SHIFT+CTRL+G」前を検索<br />
+	「CTRL+Z」で編集を戻す<br />
+	「ALT+G」で指定行へジャンプ<br />
+	<div style="border:1px solid blue">
+		<textarea id="editor" rows="10" cols="50">
+$(function() {
+	var params = { messageCds : [] };	// バリデーションで必須のメッセージ群は共通関数内へ取り込んだ
+
+	NCI.init("/sandbox/init", params).done(function(res, textStatus, jqXHR) {
+		if (res &amp;&amp; res.success) {
+			// カレンダー（年月日）
+			NCI.ymdPicker($('input.ymdPicker'));
+			// カレンダー（年月）
+			NCI.ymPicker($('input.ymPicker'));
+
+			$('#mailEnv').val(res.mailEnv);
+			$('#smtpHost').val(res.smtpHost);
+			$('#dummySendTo').text(res.dummySendTo);
+			$('#mailSendTo')
+				.val(res.dummySendTo)
+				.prop('disabled', res.mailEnv != 'PRODUCT');
+		}
+	});
+
+	// 画面の幅確認用
+	$(window).on("resize", function() {
+		var w = $(window).innerWidth();
+		$('#display')
+			.toggleClass('large', 1200 &gt;= w)
+			.toggleClass('medium', 992 &lt;= w &amp;&amp; w &lt; 1200)
+			.toggleClass('small', 768 &lt;= w &amp;&amp; w &lt; 992)
+			.toggleClass('x-small', w &lt; 768);
+		$('#window-width').text(w + ' px');
+		$('#container-width').text($('.container:first').innerWidth() + ' px');
+		$('#column-width').text($('.col-xs-1:first').innerWidth() + ' px');
+	})
+	.resize();
+
+	$(document)
+	.on('click', 'button.validate', function(e){
+		// バリデーション
+		var $targets = $('input,textarea,select');
+		var $button = $(e.currentTarget);
+		var isRequired = $button.hasClass("required");
+
+		var isValid = Validator.validate($targets, isRequired);
+		if(!isValid) {
+			alert('Length : NG');
+		}
+	})
+	.on('click','[name=changeCheck]', function(e){
+		// エレメントの状態の切り替え
+		var value = $(this).val();
+		var $targets = $('input,textarea,select').not('[name=changeCheck]');
+		switch (value) {
+		case '1':
+			$targets.prop('disabled', false).prop('readonly', false);
+			break;
+		case '2':
+			$targets.prop('disabled', true).prop('readonly', false);
+			break;
+		case '3':
+			$targets.prop('disabled', false).prop('readonly', true);
+			break;
+		}
+
+		var $requiredTargets = $('.validateRequired .validateMulti').find('input,textarea,select');
+	})
+	.on('click', '#btnInitVal', function() {
+		// 初期値付与
+		$('input,textarea,select').not('[name=changeCheck]').not('[type=file]').each(function(i, elem) {
+			var type = elem.type;
+			if (type === 'radio' || type === 'checkbox')
+				elem.checked = true;
+			else if (type !== 'file')
+				elem.value = '1';
+		});
+	})
+	.on('click', '#btnClearVal', function() {
+		// 全クリア
+		$('input,textarea,select').not('[name=changeCheck]').not('[type=file]').each(function(i, elem) {
+			var type = elem.type;
+			if (type === 'radio' || type === 'checkbox')
+				elem.checked = false;
+			else if (type !== 'file')
+				elem.value = '';
+		});
+		Validator.hideBalloon();
+	})
+	.on('click', 'button.btnAllErrorCrear' ,function(e){
+		// エラーバルーンを全削除
+		Validator.hideBalloon();
+	})
+	.on('click', '#btnDownloadAccessLog', function() {
+		// CSVダウンロード
+		NCI.download('sandbox/downloadAccessLog');
+	})
+	.on('click', '#btnSelectOrg', function() {
+		// 組織選択
+		var params = null;
+		var callback = "callbackFromCm0020";
+		Popup.open("../cm/cm0020.html", callback, params);
+	})
+	.on('click', '#btnSelectPost', function() {
+		// 役職選択
+		var params = null;
+		var callback = "callbackFromCm0030";
+		Popup.open("../cm/cm0030.html", callback, params);
+	})
+	.on('click', '#btnSelectUser', function() {
+		// ユーザ選択
+		var params = null;
+		var callback = "callbackFromCm0040";
+		Popup.open("../cm/cm0040.html", callback, params);
+	})
+	.on('click', '.clear-input-group', function() {
+		// ユーザ・組織・役職のクリアボタン
+		$(this).closest('.input-group').find('input,select,textarea').val('');
+	})
+	.on('click', '#btnSendMail', function() {
+		// メール送信
+		var params = {
+			"localeCode": $('#mailLocaleCode').val(),
+			"sendTo": $('#mailSendTo').val()
+		};
+		NCI.clearMessage();
+		var res = NCI.post('/sandbox/sendMail', params, false);
+	})
+	.on('click', '#btnDialog', function() {
+		// Yes/Noダイアログ
+		NCI.confirm("Yes/Noダイアログ。コールバックを省略する事もできます",
+			function() {
+				alert("Yes！");
+			},
+			function() {
+				alert("No！");
+			})
+	});
+
+
+	// ドラッグ＆ドロップによるファイルアップロード
+	FileUploader.setup($("div.dragZone"), "/sandbox/upload", true);
+	// ファイルコントロールによるファイルアップロード
+	FileUploader.setup($('input[type=file]'), "/sandbox/upload", true);
+});
+
+/** 組織選択画面からのコールバック */
+function callbackFromCm0020(org) {
+	if (org) {
+		$('#organizationCode').val(org.organizationCode).val(org.organizationCode);
+		$('#organizationName').val(org.organizationName).val(org.organizationName);
+	}
+}
+/** 役職選択画面からのコールバック関数 */
+function callbackFromCm0030(post) {
+	if (post) {
+		$('#postCode').val(post.postCode);
+		$('#postName').val(post.postName);
+	}
+}
+/** ユーザ選択画面からのコールバック関数 */
+function callbackFromCm0040(user) {
+	if (user) {
+		$('#userCode').val(user.userCode);
+		$('#userAddedInfo').val(user.userAddedInfo);
+		$('#userName').val(user.userName);
+	}
+}
+		</textarea>
+	</div>
+</body>
+</html>

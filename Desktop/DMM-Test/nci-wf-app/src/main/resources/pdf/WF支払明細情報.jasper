@@ -1,0 +1,997 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.2.final using JasperReports Library version 6.2.2  -->
+<!-- 2020-12-05T22:13:20 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="shiharai_zeikomi" pageWidth="595" pageHeight="842" columnWidth="545" leftMargin="25" rightMargin="25" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="0a87491c-8e90-4524-9987-43afab46ed65">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="NMB0037" class="java.lang.String"/>
+	<parameter name="TXT0041" class="java.lang.String"/>
+	<parameter name="TXT0036" class="java.lang.String"/>
+	<parameter name="TXT0137" class="java.lang.String"/>
+	<parameter name="TXT0044" class="java.lang.String"/>
+	<parameter name="TXT0051" class="java.lang.String"/>
+	<parameter name="TXT0151" class="java.lang.String"/>
+	<parameter name="TXT0100" class="java.lang.String"/>
+	<parameter name="TXT0053" class="java.lang.String"/>
+	<parameter name="TXT0052" class="java.lang.String"/>
+	<parameter name="TXT0055" class="java.lang.String"/>
+	<parameter name="RAD0064" class="java.lang.String"/>
+	<parameter name="TXT0056" class="java.lang.String"/>
+	<parameter name="TXT0050" class="java.lang.String"/>
+	<parameter name="TXT0145" class="java.lang.String"/>
+	<parameter name="TXT0135" class="java.lang.String"/>
+	<parameter name="TXT0069" class="java.lang.String"/>
+	<parameter name="STAMP" class="java.awt.Image"/>
+	<parameter name="TXT0177" class="java.lang.String"/>
+	<parameter name="PAYMENT_SUM" class="java.lang.String"/>
+	<parameter name="TXT0089" class="java.lang.String"/>
+	<parameter name="TXT0204" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="TXT0206" class="java.lang.String"/>
+	<parameter name="TXT0207" class="java.lang.String"/>
+	<parameter name="TXT0208" class="java.lang.String"/>
+	<parameter name="DDL0205_label" class="java.lang.String"/>
+	<parameter name="TXT0185" class="java.lang.String"/>
+	<parameter name="RAD0045" class="java.lang.String"/>
+	<parameter name="TXT0220" class="java.lang.String"/>
+	<parameter name="TXT0222" class="java.lang.String"/>
+	<parameter name="TXT0226" class="java.lang.String"/>
+	<parameter name="TXT0228" class="java.lang.String"/>
+	<parameter name="TXT0232" class="java.lang.String"/>
+	<parameter name="TXT0234" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="GRD0080_TXT0022" class="java.lang.String"/>
+	<field name="GRD0080_TXT0038" class="java.lang.String"/>
+	<field name="GRD0080_TXT0008" class="java.lang.String"/>
+	<field name="GRD0080_TXT0032" class="java.lang.String"/>
+	<field name="GRD0080_TXT0037" class="java.lang.String"/>
+	<field name="GRD0080_MST0069_label" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="440">
+			<staticText>
+				<reportElement x="0" y="410" width="50" height="15" uuid="b4694133-88f4-4b5a-9566-505f4f7c47c6">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<printWhenExpression><![CDATA[(($V{PAGE_NUMBER} == 1 )? true: false)]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="8"/>
+				</textElement>
+				<text><![CDATA[(ご金額内訳)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="425" width="20" height="15" uuid="81d76387-1820-47cc-b688-b4ce4abf607a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<printWhenExpression><![CDATA[(($V{PAGE_NUMBER} == 1 )? true: false)]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="425" width="255" height="15" uuid="844336b0-52c5-41b2-a831-2653b11b9f9d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<printWhenExpression><![CDATA[(($V{PAGE_NUMBER} == 1 )? true: false)]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<text><![CDATA[品名]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="425" width="65" height="15" uuid="a62aac0d-bb75-4fde-a5ea-597f080381b2">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<printWhenExpression><![CDATA[(($V{PAGE_NUMBER} == 1 )? true: false)]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<text><![CDATA[金額(税抜)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="415" y="425" width="65" height="15" uuid="ec33871c-6b00-46a1-9e66-b3733e8375fa">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<printWhenExpression><![CDATA[(($V{PAGE_NUMBER} == 1 )? true: false)]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<text><![CDATA[税]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="480" y="425" width="65" height="15" uuid="13c04f9b-4743-45cf-87e0-d55cceeb2dd9">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<printWhenExpression><![CDATA[(($V{PAGE_NUMBER} == 1 )? true: false)]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<text><![CDATA[金額(税込)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="290" width="320" height="15" uuid="f2360761-405d-467e-ae54-5fdd6f7502de">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="9"/>
+				</textElement>
+				<text><![CDATA[件名]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="365" width="175" height="15" uuid="45c8e5dd-5c81-4d19-bdbb-18d73b1ee4f9">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="9"/>
+				</textElement>
+				<text><![CDATA[銀行]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="185" y="365" width="175" height="15" uuid="071832dd-88f7-4063-91d5-d5ec8865eb2d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="9"/>
+				</textElement>
+				<text><![CDATA[支店]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="380" width="175" height="15" uuid="65cc1369-97ce-40ac-bfb4-a1c21f22d702">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="9"/>
+				</textElement>
+				<text><![CDATA[口座名義]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="380" width="175" height="15" uuid="652108ff-f81c-4f83-a307-f495295f0796">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="9"/>
+				</textElement>
+				<text><![CDATA[口座種別]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="185" y="380" width="175" height="15" uuid="b1dfa031-1c21-4390-8918-8281e3134ad0">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="9"/>
+				</textElement>
+				<text><![CDATA[口座番号]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="325" y="365" width="5" height="15" uuid="d2d7b0bc-545f-46c7-a153-081e5994baa3">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="8"/>
+				</textElement>
+				<text><![CDATA[(]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="355" y="365" width="5" height="15" uuid="bd35e74c-6e61-4605-86a6-3e7e10a82e34"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="8"/>
+				</textElement>
+				<text><![CDATA[)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="135" y="365" width="5" height="15" uuid="e82e98c1-8a4e-461a-b108-9ea13bda0936">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="8"/>
+				</textElement>
+				<text><![CDATA[(]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="365" width="5" height="15" uuid="69b89c8e-3d9a-401c-90b7-0ab0b8d2790c">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="8"/>
+				</textElement>
+				<text><![CDATA[)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="75" y="290" width="245" height="15" uuid="5abc85a7-0edd-4c3e-8813-88a193b119ab"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TXT0036}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤#,##0.##;¤-#,##0.##" isBlankWhenNull="true">
+				<reportElement x="75" y="305" width="245" height="21" uuid="6717c721-47c7-4a0d-8511-f0ab0da155c5"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($V{PAGE_NUMBER} == 1 )? $P{PAYMENT_SUM}: "************")]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="60" y="350" width="115" height="15" uuid="346ac53b-a313-4825-aaba-1506983f95b9"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TXT0044}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="245" y="350" width="115" height="15" uuid="cb36d434-86c5-425c-9490-27b1370e3ac2"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(("その他(支払予約では使用不可)".equals($P{TXT0100}))? "その他": $P{TXT0100})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="420" y="350" width="125" height="15" uuid="9abb63f1-ccb1-478b-96f7-c27c4ae5937b"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{RAD0064}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="60" y="365" width="75" height="15" uuid="21593289-e2a5-4c30-bf6e-8c9846693234"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TXT0051}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="60" y="380" width="115" height="15" uuid="b8940d1d-33a3-4816-b43a-7da46708a113"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TXT0151}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="245" y="365" width="80" height="15" uuid="1651a553-636a-4bbe-a6f8-970707ae2d68"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TXT0053}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="330" y="365" width="25" height="15" uuid="bbc3c437-9e3e-4772-a910-e4db1161c61a"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TXT0052}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="245" y="380" width="115" height="15" uuid="9a63b01c-ed08-4d11-802a-b28a2b95d0cc"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TXT0055}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="420" y="380" width="125" height="15" uuid="33140876-e621-4252-a778-1fc04db70934"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TXT0056}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="140" y="365" width="30" height="15" uuid="6117a312-d4b9-4b48-b480-4a2bbd8b406e"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TXT0050}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="305" width="320" height="21" uuid="2d066268-5dff-4b7c-9f09-5592df1554ed"/>
+				<box>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="11"/>
+				</textElement>
+				<text><![CDATA[支払額]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="350" width="175" height="15" uuid="e4874d95-9754-4bd9-9568-d7bf5e8dfc72">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="9"/>
+				</textElement>
+				<text><![CDATA[支払予定日]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="185" y="350" width="175" height="15" uuid="ba6bfd83-3286-4d10-b4c5-a5782e46e922">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="9"/>
+				</textElement>
+				<text><![CDATA[支払サイト]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="350" width="175" height="15" uuid="d0e87d86-fdda-4960-870c-7a773167c4a2">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="9"/>
+				</textElement>
+				<text><![CDATA[支払方法]]></text>
+			</staticText>
+			<image>
+				<reportElement x="470" y="210" width="60" height="60" uuid="41ae7dfa-e9be-4694-be3b-32c7424046dc"/>
+				<imageExpression><![CDATA[$P{STAMP}]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="425" y="30" width="120" height="15" uuid="5cd2442c-d92c-4c4d-8cc0-ce69e012e8af"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="IPA Pゴシック" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NMB0037}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="35" y="50" width="345" height="20" uuid="5cec9625-6716-4e2f-ad03-2ebab497cb4a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="IPA Pゴシック" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.format($P{TXT0041} + (("法人".equals($P{RAD0045}))? "　　御中": "　　様"))]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="70" width="545" height="50" uuid="76328fab-9e00-4cb2-8de3-ada3605f6d29">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPA Pゴシック" size="24"/>
+				</textElement>
+				<text><![CDATA[支払通知書]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="510" y="0" width="20" height="15" uuid="4e0f0cdf-71f3-4f05-97ad-426f622efc05">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="IPA Pゴシック" size="11"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER} + " / "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" isBlankWhenNull="true">
+				<reportElement x="530" y="0" width="15" height="15" uuid="4b8994fc-7f44-4139-8dd8-77d426c51ccc">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="IPA Pゴシック" size="11"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="35" y="20" width="345" height="15" uuid="d90167b9-2614-4387-84ba-6db92f47f124">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.format((($P{TXT0204} == null )? "": "〒" +$P{TXT0204}) + " " +(($P{DDL0205_label} == null )? "": $P{DDL0205_label}) + " " + (($P{TXT0206} == null )? "": $P{TXT0206}))]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="35" y="35" width="345" height="15" uuid="dcfaca64-4af1-4ccd-ad62-7c6aa2c990df"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.format((($P{TXT0207} == null )? "": $P{TXT0207}) + " " + (($P{TXT0208} == null )? "": $P{TXT0208}))]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="15" width="165" height="15" uuid="1d496520-d203-4e05-aa63-d6f3adf7d2a1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="IPA Pゴシック" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["発行日：" + new java.text.SimpleDateFormat("y年M月d日").format(java.util.Calendar.getInstance(new java.util.Locale("ja", "JP", "JP")).getTime())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="220" width="240" height="45" uuid="ce2ce7e9-b9ae-4954-b99e-409c3ce66651">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="html">
+					<font fontName="IPA Pゴシック" size="9"/>
+				</textElement>
+				<text><![CDATA[平素は格別なるご高配を賜り厚く御礼申し上げます。<br/>以下の通りお支払のご案内となります。<br/>今後ともよろしくお願い申し上げます。]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="425" width="75" height="15" uuid="430b77d3-4911-49f8-9156-7dd6e19e3618">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<printWhenExpression><![CDATA[(($V{PAGE_NUMBER} == 1 )? true: false)]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<text><![CDATA[消費税区分]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="305" y="140" width="240" height="21" uuid="7ff3748b-0c92-4a73-8240-875919edaf44"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="IPA Pゴシック" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(("00064".equals($P{TXT0089}))? "株式会社デジタルコマース": "") + (("00020".equals($P{TXT0089}))? "合同会社DMM.com": "") + (("00053".equals($P{TXT0089}))? "株式会社DGホールディングス": "") + (("00070".equals($P{TXT0089}))? "株式会社DMM RESORTS": "") + (("00089".equals($P{TXT0089}))? "一般社団法人42Tokyo": "")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="305" y="161" width="240" height="39" uuid="9c96b7a1-4eb6-4ab9-ae2f-99154883402a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="html">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(("00064".equals($P{TXT0089}))? "〒108-0014 東京都港区芝五丁目36番7号<br/>三田ベルジュビル17階": "") + (("00020".equals($P{TXT0089}))? "〒106-6224 東京都港区六本木三丁目2番1号<br/>住友不動産六本木グランドタワー24階<br/>TEL:03-5797-8912": "") + (("00053".equals($P{TXT0089}))? "〒106-6224 東京都港区六本木三丁目2番1号<br/>住友不動産六本木グランドタワー24階": "") + (("00089".equals($P{TXT0089}))? "〒106-6224 東京都港区六本木三丁目2番1号<br/>住友不動産六本木グランドタワー24階": "") + (("00070".equals($P{TXT0089}))? "〒901-0225 沖縄県豊見城市字豊崎三丁目59番": "")]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="130" y="400" width="125" height="15" uuid="252ea90c-4110-4c59-9257-dfb30403d0ac"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TXT0056}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="415" y="0" width="65" height="15" uuid="5d075e6b-4b85-4d3b-a785-fdfeef9cf229">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.format("%,d", NumberFormat.getInstance().parse($F{GRD0080_TXT0038}).intValue() - NumberFormat.getInstance().parse($F{GRD0080_TXT0037}).intValue())]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="350" y="0" width="65" height="15" uuid="59eed01d-ee3d-4baa-84c7-b1d788bf1a76">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GRD0080_TXT0037}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="20" height="15" uuid="81a5cf32-c399-42d3-b683-a642441df2b9">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.##;¤-#,##0.##" isBlankWhenNull="true">
+				<reportElement x="480" y="0" width="65" height="15" uuid="a155674b-fc76-4741-b379-332438c7190e"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GRD0080_TXT0038}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="20" y="0" width="255" height="15" uuid="e5d75762-4459-4c9a-bb65-04708f04ccd3"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GRD0080_TXT0022}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="275" y="0" width="75" height="15" uuid="bd0e4a38-02a3-4193-a4eb-a96056d7c967"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GRD0080_MST0069_label}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="90" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="20" height="15" uuid="67821997-2aa5-4643-b792-47895102503e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="11"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="30" width="20" height="15" uuid="46481401-a72e-4bcd-a688-5dbff31ab484">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="11"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="30" width="330" height="15" uuid="411c34f5-a97b-437a-9f16-3084624cbf11">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<text><![CDATA[支払額]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="0" width="330" height="15" uuid="5aeb9bcd-bc54-4a7c-b37b-257eaaf1d27b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<text><![CDATA[合計]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="30" width="65" height="15" uuid="040c52d8-b84a-4a15-baa1-470affa189d7">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="11"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="415" y="30" width="65" height="15" uuid="0b19a64f-94b0-4d2f-937a-0b622e09b111">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="11"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField pattern="#,##0.##;¤-#,##0.##" isBlankWhenNull="true">
+				<reportElement x="350" y="0" width="65" height="15" uuid="afbf43d0-fe11-492e-8e7b-e06aaa3b3b02"/>
+				<box>
+					<topPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TXT0135}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.##;¤-#,##0.##" isBlankWhenNull="true">
+				<reportElement x="415" y="0" width="65" height="15" uuid="55c36af0-c770-47da-9bd2-2e3adbd70682"/>
+				<box>
+					<topPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.format("%,d", NumberFormat.getInstance().parse($P{TXT0137}).intValue() - NumberFormat.getInstance().parse($P{TXT0135}).intValue())]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.##;¤-#,##0.##" isBlankWhenNull="true">
+				<reportElement x="480" y="30" width="65" height="15" uuid="938d9331-3a0b-4048-a99c-e3e0717bb755"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TXT0177}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="15" width="20" height="15" uuid="10207b78-17a5-4257-8a34-f4a03b32d313">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="11"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="15" width="330" height="15" uuid="498b12c2-4220-4843-b060-69ecd999af09">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<text><![CDATA[控除(源泉額)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="15" width="65" height="15" uuid="e4cc8ee6-8951-4f88-97af-2ea59684b50e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="11"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="415" y="15" width="65" height="15" uuid="9e52b7a6-37a4-420a-b9fd-b6e6cfef849c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="11"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField pattern="#,##0.##;¤-#,##0.##" isBlankWhenNull="true">
+				<reportElement x="480" y="15" width="65" height="15" uuid="ad744bdc-ab23-4135-a37d-f3d018f26aec"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{TXT0145} == null )? "0": $P{TXT0145})]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.##;¤-#,##0.##" isBlankWhenNull="true">
+				<reportElement x="480" y="0" width="65" height="15" uuid="ddcbc37a-6c67-4e4e-8b54-f7e93e099682"/>
+				<box>
+					<topPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TXT0137}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="290" y="45" width="65" height="15" uuid="5a345fda-f082-452a-a943-08747ff88306">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<text><![CDATA[(10%対象]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="45" width="55" height="15" uuid="6d37545a-2d56-48d6-b937-99d2eac52609">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<text><![CDATA[消費税]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="540" y="45" width="5" height="15" uuid="bfc3fdb1-9e39-4640-9985-9c895044bdba"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<text><![CDATA[)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="60" width="65" height="15" uuid="26adb3d5-8d51-4cef-9fcc-a6c060401c76">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<text><![CDATA[(軽減8%対象]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="60" width="55" height="15" uuid="d7464e3f-73f9-404a-bcfb-3e10ab039cbe">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<text><![CDATA[消費税]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="540" y="60" width="5" height="15" uuid="0821204c-e9d2-4443-8345-7cb97fc3b5a4"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<text><![CDATA[)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="75" width="65" height="15" uuid="2a2bbc61-c4ff-49c1-bd2e-324176e4e6b7">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<text><![CDATA[(旧8%対象]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="75" width="55" height="15" uuid="16cfb644-2597-423c-96a3-d3ff13997f20">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<text><![CDATA[消費税]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="540" y="75" width="5" height="15" uuid="33d3886f-e5cc-4b10-a2f7-8e341cba183a"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="10"/>
+				</textElement>
+				<text><![CDATA[)]]></text>
+			</staticText>
+			<textField pattern="#,##0.##;¤-#,##0.##" isBlankWhenNull="false">
+				<reportElement x="355" y="45" width="65" height="15" uuid="2c1ab8ee-1bb2-43fa-9149-8c03ceea5436"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="10"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{TXT0220} == null )? "0": $P{TXT0220})]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.##;¤-#,##0.##" isBlankWhenNull="false">
+				<reportElement x="355" y="60" width="65" height="15" uuid="ad121c12-2bbc-4d07-9f09-a349e1b59b79"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="10"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{TXT0226} == null )? "0": $P{TXT0226})]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.##;¤-#,##0.##" isBlankWhenNull="false">
+				<reportElement x="355" y="75" width="65" height="15" uuid="a1eb62ef-ea14-4302-bbf0-c0dcec9caacf"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="10"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{TXT0232} == null )? "0": $P{TXT0232})]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.##;¤-#,##0.##" isBlankWhenNull="false">
+				<reportElement x="475" y="45" width="65" height="15" uuid="3eb250db-4f6f-40ab-8beb-809ad0331539"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="10"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{TXT0222} == null )? "0": $P{TXT0222})]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.##;¤-#,##0.##" isBlankWhenNull="false">
+				<reportElement x="475" y="60" width="65" height="15" uuid="68f13e61-ad11-44e2-ac17-c7de468f375c"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="10"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{TXT0228} == null )? "0": $P{TXT0228})]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.##;¤-#,##0.##" isBlankWhenNull="false">
+				<reportElement x="475" y="75" width="65" height="15" uuid="bdca6e34-60ce-4c8a-8c7b-8cc8a2528725"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="IPA Pゴシック" size="10"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{TXT0234} == null )? "0": $P{TXT0234})]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

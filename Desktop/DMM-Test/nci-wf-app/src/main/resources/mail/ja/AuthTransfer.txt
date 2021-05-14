@@ -1,0 +1,26 @@
+[${SITE_NAME}] 代理者就任のお知らせ　${STAGING_ENV_STRING}
+
+${STAGING_ENV_STRING}${TARGET_USER_NAME}  様 (ログインID : ${TARGET_USER_ID})
+
+${SITE_NAME}をご利用いただき、ありがとうございます。
+このたび ${SOURCE_USER_NAME} 様の代理者に下記内容で就任しましたので、お知らせいたします。
+
+　代理元 ： ${SOURCE_USER_NAME}
+　文書種別 ： ${PROCESS_DEF_NAME}
+　期間 ： ${VALID_START_DATE} ～ ${VALID_END_DATE}
+
+
+━メール配信について━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+■このメールは送信専用のメールアドレスから送信しています。
+　返信いただいても回答はできませんので、あらかじめご了承ください。
+■メールのURLのリンクが切れている場合は、お使いのブラウザのアドレス欄に
+　コピー＆ペーストしてアクセスしてください。
+■個人情報のお取り扱いについては、「個人情報保護方針」ページをご覧ください。
+  ${PRIVACY_POLICY_URL}
+
+[お問い合わせ先]
+${CONTACT_NAME}
+${CONTACT_ZIPCODE}
+${CONTACT_ADDRESS}
+TEL ${CONTACT_TEL}
+FAX ${CONTACT_FAX}

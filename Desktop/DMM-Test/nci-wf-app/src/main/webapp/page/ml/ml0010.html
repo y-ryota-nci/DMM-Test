@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./ml0010.js"></script>
+	<title>{ML0010 メールテンプレート一覧}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="container">
+		<div class="row">
+			<span class="screen-name">#{ML0010}</span>
+
+			<!-- javascript不要なアコーディオン -->
+			<article class="ac-container">
+				<input id="ac-1" type="checkbox" class="ac-trigger"/>
+				<label for="ac-1" class="ac-label sub-title">
+					<i class="glyphicon glyphicon-plus-sign"></i>
+					<span data-i18n="filterCondition">#{絞り込み条件を設定する}</span>
+					<i class="glyphicon glyphicon-chevron-up arrow-up"></i>
+					<i class="glyphicon glyphicon-chevron-down arrow-down"></i>
+				</label>
+				<form id="formCondition" class="ac-contents">
+					<div class="form-group col-sm-4 col-md-3">
+						<label data-i18n="corporation">#{企業}</label>
+						<select id="corporationCode" class="form-control"></select>
+					</div>
+					<div class="form-group col-sm-6 col-md-6">
+						<label data-i18n="fileName">#{ファイル名}</label>
+						<input type="text" id="mailTemplateFilename" class="form-control" maxlength="90" />
+					</div>
+					<div class="form-group col-sm-4 col-md-3">
+						<label data-i18n="remarks">#{備考}</label>
+						<input type="text" id="remarks" class="form-control" maxlength="100" />
+					</div>
+					<div class="form-group col-sm-4 col-md-3">
+						<label data-i18n="sender">#{送信者}</label>
+						<input type="text" id="sendFrom" class="form-control" maxlength="90" />
+					</div>
+					<div class="form-group col-sm-6 col-md-6">
+						<label data-i18n="title">#{件名}</label>
+						<input type="text" id="mailSubject" class="form-control" maxlength="100" />
+					</div>
+				</form>
+			</article>
+			<div class="form-group text-center">
+				<button id="btnSearch" class="btn btn-primary">
+					<i class="glyphicon glyphicon-search"></i>
+					<span data-i18n="btnFilter">#{btnFilter}</span>
+				</button>
+				<button id="btnReset" class="btn btn-default">
+					<i class="glyphicon glyphicon-refresh"></i>
+					<span data-i18n="btnReset">#{btnReset}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+
+	<section id="seach-result" class="container hide">
+		<div class="row" >
+			<!-- 検索結果サブタイトル -->
+			<div class="inline-group sub-title">
+				<div class="col-xs-3 text-left">
+					<i class="glyphicon glyphicon-info-sign"></i>
+					<span class="hidden-xs" data-i18n="searchResult">#{検索結果}</span>
+				</div>
+
+				<div class="col-xs-7 text-center">
+					<span>
+						<span data-i18n="pageCount">PAGE</span>:
+						<span class="page-no">#{page-no}</span>
+						 /
+						 <span class="page-count">#{page-count}</span>
+					</span>
+					<span class="hidden-xs">
+						&nbsp;&nbsp;
+						<span data-i18n="totalCount">#{総件数}</span>:
+						<span class="all-count">#{all-count}</span>
+					</span>
+				</div>
+
+				<!-- 設定アイコン -->
+				<div class="col-xs-2 pull-right text-right dropdown">
+					<i class="glyphicon glyphicon-cog dropdown-toggle clickable" data-toggle="dropdown"></i>
+
+					<!-- 設定アイコン押下時のエリア -->
+					<div class="dropdown-menu pageSizeConfig">
+			 			<label data-i18n="rowCountPerPage">#{１ページの行数}</label>
+						<select class="pageSize" class="form-control"></select>
+					</div>
+				</div>
+			</div>
+
+			<div class="text-center">
+				<ul class="pagination"></ul>
+			</div>
+
+			<table class="table table-hover table-striped table-condensed responsive">
+				<colgroup>
+					<col class="col-sm-3" />
+					<col class="col-sm-3" />
+					<col class="col-sm-2" />
+					<col class="col-sm-4" />
+				</colgroup>
+				<thead>
+				<tr>
+					<th><a href="#" data-i18n="fileName" data-sort="F.MAIL_TEMPLATE_FILENAME, F.MAIL_TEMPLATE_FILE_ID">#{mailTemplateFilename}</a>
+					<th><a href="#" data-i18n="remarks" data-sort="F.REMARKS, F.MAIL_TEMPLATE_FILE_ID">#{remarks}</a>
+					<th><a href="#" data-i18n="sender" data-sort="H.SEND_FROM, F.MAIL_TEMPLATE_FILE_ID">#{sendFrom}</a>
+					<th><a href="#" data-i18n="title" data-sort="B.MAIL_SUBJECT, F.MAIL_TEMPLATE_FILE_ID">#{mailSubject}</a>
+				</thead>
+
+				<tbody></tbody>
+
+				<tfoot class="template hide">
+				<tr>
+					<th class="text-left"><input type="radio" name="mailTemplateFileId" data-field="mailTemplateFileId" disabled="disabled" /><a href="#" data-field="mailTemplateFilename">#{mailTemplateFilename}</a></th>
+					<td class="text-left"><a href="#" data-field="remarks">#{remarks}</a></td>
+					<td class="text-left"><span data-field="sendFrom">#{sendFrom}</span> <span class='label label-warning' data-field='syncTable'></span></td>
+					<td class="text-left"><span data-field="mailSubject">#{mailSubject}</span>
+
+					<td class="hide" data-field="mailTemplateFileId">#{mailTemplateFileId}</td>
+					<td class="hide" data-field="mailTemplateHeaderId">#{mailTemplateHeaderId}</td>
+					<td class="hide" data-field="version">#{version}</td>
+				</tfoot>
+			</table>
+
+			<div class="text-center">
+				<ul class="pagination"></ul>
+			</div>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<button id="btnAdd" class="btn btn-primary" disabled>
+				<i class="glyphicon glyphicon-plus-sign"></i>
+				<span data-i18n="btnAdd">#{追加}</span>
+			</button>
+			<button id="btnDelete" class="btn btn-danger" disabled>
+				<i class="glyphicon glyphicon-trash"></i>
+				<span data-i18n="btnDelete">#{削除}</span>
+			</button>
+			<button id="btnDownload" class="btn btn-success" disabled>
+				<i class="glyphicon glyphicon-cloud-download"></i>
+				<span data-i18n="btnDownloadDefinition">#{定義のダウンロード}</span>
+			</button>
+		</div>
+	</section>
+</body>
+</html>

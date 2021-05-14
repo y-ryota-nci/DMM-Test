@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/jsTree/themes/default/style.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./mm0410.js"></script>
+	<title>#{MM0410 企業一覧}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<div class="nonSideSearchArea">
+	<section class="container">
+		<div class="row">
+		<span id="header" class="screen-name">#{MM0410}</span>
+			<div class="searchStyle">
+				<form id="formCondition" class="ac-contents">
+					<div class="form-group col-sm-12 searchConditionArea">
+						<label data-i18n="corporationCode" class="searchConditionTh">#{corporationCode}</label>
+						<div class="searchConditionTd">
+							<select id="corporationCode" class="form-control"></select>
+						</div>
+					</div>
+					<div class="form-group col-sm-12 searchConditionArea">
+						<label data-i18n="corporationName" class="searchConditionTh">#{corporationName}</label>
+						<div class="searchConditionTd">
+							<input type="text" id="corporationName"  class="form-control searchConditionText" maxlength="100" />
+						</div>
+					</div>
+					<div class="form-group col-sm-12 searchConditionArea">
+						<label data-i18n="corporationGroupName" class="searchConditionTh">#{corporationGroupName}</label>
+						<div class="searchConditionTd">
+							<select id="corporationGroupCode" class="form-control searchConditionText"></select>
+						</div>
+					</div>
+					<div class="form-group col-sm-12 searchConditionArea">
+						<label data-i18n="deleteFlag" class="searchConditionTh">#{deleteFlag}</label>
+						<div class="searchConditionTd">
+							<select id="deleteFlag" class="form-control searchConditionText" ></select>
+						</div>
+					</div>
+				</form>
+
+				<div class="column button-group text-center searchButtonArea">
+					<button id="btnSearch" class="btn btn-primary searchButton">
+						<i class="glyphicon glyphicon-search"></i>
+						<span data-i18n="btnFilter">#{btnFilter}</span>
+					</button>
+					<button id="btnReset" class="btn btn-default searchButton">
+						<i class="glyphicon glyphicon-refresh"></i>
+						<span data-i18n="btnReset">#{btnReset}</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="seach-result" class="container hide">
+		<div class="row" >
+			<div class="searchResultStyle">
+				<div class="text-center">
+					<div class="hidden-xs searchCount">
+						&nbsp;&nbsp;
+						<span class="all-count">#{all-count}</span>
+						<span>件</span>
+					</div>
+					<div class="pageArea">
+						<ul class="pagination"></ul>
+					</div>
+					<div class="pageSizeConfig">
+						<label data-i18n="rowCountPerPage" class="pageTextColor">#{１ページの行数}</label>
+						<select class="pageSize"></select>
+					</div>
+				</div>
+
+				<table class="table table-hover table-striped table-condensed responsive">
+					<colgroup>
+						<col class="col-sm-2" />
+						<col class="col-sm-4" />
+						<col class="col-sm-4" />
+						<col class="col-sm-2" />
+					</colgroup>
+					<thead>
+					<tr>
+						<th><a href="#" data-i18n="corporationCode" data-sort="CORPORATION_CODE">#{企業コード}</a></th>
+						<th><a href="#" data-i18n="corporationName" data-sort="CORPORATION_NAME">#{企業名称}</a></th>
+						<th><a href="#" data-i18n="corporationGroupName" data-sort="CORPORATION_GROUP_NAME">#{企業グループ名称}</a></th>
+						<th><a href="#" data-i18n="deleteFlag" data-sort="DELETE_FLAG">#{削除区分}</a></th>
+					</thead>
+
+					<tbody></tbody>
+
+					<tfoot class="template hide">
+					<tr>
+						<th class="text-left"><a href="#" data-field="corporationCode">#{企業コード}</a></th>
+						<td class="text-left"><a href="#" data-field="corporationName">#{企業名称}</a></td>
+						<td class="text-left"><span data-field="corporationGroupName">#{企業グループ名称}</span></td>
+						<td class="text-left">
+							<span data-field="deleteFlagName">#{削除区分}</span>
+							<span data-field="timestampUpdated" class="hide"></span>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<button id="btnAdd" class="btn btn-primary" disabled>
+				<i class="glyphicon glyphicon-plus-sign"></i>
+				<span data-i18n="btnAdd">#{追加}</span>
+			</button>
+		</div>
+	</section>
+
+	</div>
+
+
+	<div id="confirmAddCorp" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content form-group">
+				<div class="modal-header">
+					<h5 data-i18n="MSG0109" class="dialog-title">新企業の企業コードと名称を入力してください。</h5>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label data-i18n="corporationCode" class="required">企業コード</label>
+						<input id="newCorporationCode" maxlength="10" class="required form-control" data-validate='{ "pattern" : "alphaNumberUnderscore" }' />
+					</div>
+					<div class="form-group">
+						<label data-i18n="corporationName" class="required">企業名</label>
+						<input id="newCorporationName" maxlength="100" class="required form-control" />
+					</div>
+				</div>
+				<div class="moda-footer form-group text-center">
+					<button id="btnAddCorpOk" class="btn btn-primary">
+						<i class="glyphicon glyphicon-ok-sign"></i>
+						<span data-i18n="btnOK">ＯＫ</span>
+					</button>
+					<button id="btnAddCorpCancel" class="btn btn-default">
+						<i class="glyphicon glyphicon-remove-sign"></i>
+						<span data-i18n="btnCancel">キャンセル</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

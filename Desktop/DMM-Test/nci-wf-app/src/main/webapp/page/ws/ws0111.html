@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src="./ws0111.js"></script>
+	<title>%{WS0111 代理設定}%</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<input type="hidden" id="corporationCode" value=""/>
+	<input type="hidden" id="seqNoAuthTransfer" value=""/>
+	<input type="hidden" id="userCode" value=""/>
+	<input type="hidden" id="@class" value="" />
+
+	<section class="col-xs-12">
+		<article class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">代理設定</h1>
+			</div>
+		</article><!--/.row-->
+		<article id="section1" class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading" data-i18n="documentType">%{文書種別}%</div>
+					<div class="panel-body">
+						<div class="form-group hide">
+							<div class="hidden-xs">
+								<span data-i18n="MSG0113">%{代理対象とする『文書種別』を追加してください。}%</span><br/>
+								<span data-i18n="MSG0114">%{『文書種別』毎に『代理先』を分ける必要がなければ、「全ての文書種別」を追加してください。}%</span>
+							</div>
+							<div class="col-lg-4 col-md-6 col-sm-8 col-xs-8 row">
+								<select id="processDefCode" class="form-control"></select>
+							</div>
+							<div class="col-xs-4">
+								<button id="btnAddProcess" class="btn btn-default submit_white">
+									<i class="fa fa-plus-circle"></i>
+									<span data-i18n="btnAdd">#{追加}</span>
+								</button>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 form-group">
+								<span class="hide" data-field="refProcessDefName"></span>
+								<table id="tblProcess" class="table table-hover table-striped table-condensed responsive hide col-xs-12">
+									<thead></thead>
+									<tbody></tbody>
+									<tfoot class="template hide">
+										<tr>
+											<td>
+												<span data-field="processDefName">#{processDefName}</span>
+											</td>
+											<td>
+												<button class="btn btn-sm btn-default submit_black btnDeleteProcess">
+													<i class="fa fa-minus-circle"></i><span data-i18n="btnDelete">#{削除}</span>
+												</button>
+											</td>
+											<td class="hide" data-field="processDefCode"></td>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+		<article id="section3" class="row hide">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading" data-i18n="proxyUser2">%{代理先ユーザー}%</div>
+					<div class="panel-body">
+						<div class="form-group hide">
+							<div class="hidden-xs"><span data-i18n="MSG0117">%{『代理先ユーザー』(=自分の代わりに承認を行って欲しい人)を「追加」してください。}%</span></div>
+							<button id="btnAddUser" class="btn btn-default submit_white">
+								<i class="fa fa-plus-circle"></i><span data-i18n="btnAdd">#{追加}</span>
+							</button>
+						</div>
+						<div class="row">
+							<div class="col-xs-12">
+								<span class="hide" data-field="refUserNameTransfer"></span>
+								<table id="tblUser" class="table table-hover table-striped table-condensed responsive hide">
+									<thead></thead>
+									<tbody></tbody>
+									<tfoot class="template hide">
+										<tr>
+											<td class="text-left">
+												<span data-field="userName">#{userName}</span>
+											</td>
+											<td>
+												<button class="btn btn-sm btn-default submit_black btnDeleteUser">
+													<i class="fa fa-minus-circle"></i><span data-i18n="btnDelete">#{削除}</span>
+												</button>
+											</td>
+											<td class="hide" data-field="userCode"></td>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+		<article id="section4" class="row hide">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading" data-i18n="proxyValidTerm">%{代理設定を有効にする期間}%</div>
+					<div class="panel-body">
+						<div class="form-group col-sm-8 col-md-6 row">
+							<div class="input-group">
+								<div class="has-feedback">
+									<input id="validStartDate" type="text" value="" class="form-control ymdPicker required" id="validStartDate" data-validate='{"to" : "#validEndDate", "pattern" : "date" }'/>
+									<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+								</div>
+								<span class="input-group-addon">～</span>
+								<div class="has-feedback">
+									<input id="validEndDate" type="text" value="" class="form-control ymdPicker required" id="validEndDate" data-validate='{"from" : "#validStartDate" , "pattern" : "date"}'/>
+									<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+		<article class="row mB40 mB40_sp">
+			<div class="col-lg-12">
+				<div class="text-center">
+					<button id="btnRegist" class="btn btn-primary hide" disabled>
+						<i class="fa fa-save"></i><span data-i18n="btnRegister">#{登録}</span>
+					</button>
+					<button id="btnUpdate" class="btn btn-primary hide" disabled>
+						<i class="fa fa-save"></i><span data-i18n="btnUpdate">#{更新}</span>
+					</button>
+					<button id="btnBack" class="btn btn-default">
+						<i class="fa fa-reply"></i><span data-i18n="btnBack">#{戻る}</span>
+					</button>
+					<button id="btnDelete" class="btn btn-default submit_black hide" disabled>
+						<i class="fa fa-trash"></i><span data-i18n="btnDelete">#{削除}</span>
+					</button>
+				</div>
+			</div>
+		</article>
+	</section>
+
+	<!-- Informationダイアログ -->
+	<div id="informDlg" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+					<i class="fa fa-info-circle"></i>
+					<span id="infomsg"></span>
+				</div>
+				<div class="modal-footer text-center">
+					<button id="btnInformDlgOK" class="btn btn-primary" data-dismiss="modal">
+						<i class="fa fa-check-square"></i>
+						<span data-i18n="btnOK">#{OK}</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

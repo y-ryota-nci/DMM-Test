@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/jsTree/themes/default/style.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./au0010.js"></script>
+	<title>AU0010 パスワード一覧</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<div class="nonSideSearchArea">
+		<section class="container">
+			<div class="row">
+				<span class="screen-name">#{AU0010}</span>
+
+				<div class="searchStyle">
+					<form id="formCondition" class="ac-contents">
+						<div class="form-group col-sm-12 searchConditionArea">
+							<label data-i18n="corporation" class="searchConditionTh">#{corporation}</label>
+							<div class="searchConditionTd">
+								<select id="corporationCode" class="form-control searchConditionText"></select>
+							</div>
+						</div>
+						<div class="form-group col-sm-6 searchConditionArea">
+							<label data-i18n="userAddedInfo" class="searchConditionTh">#{ユーザID}</label>
+							<div class="searchConditionTd">
+								<input type="text" id="userAddedInfo"  class="form-control searchConditionText"  />
+							</div>
+						</div>
+						<div class="form-group col-sm-6 searchConditionArea">
+							<label data-i18n="userName" class="searchConditionTh">#{ユーザ名称}</label>
+							<div class="searchConditionTd">
+								<input type="text" id="userName"  class="form-control searchConditionText"  />
+							</div>
+						</div>
+						<div class="form-group col-sm-6 searchConditionArea">
+							<label data-i18n="accountLock" class="searchConditionTh">#{アカウントロック}</label>
+							<div class="searchConditionTd">
+								<input type="checkbox" id="lockFlag" value="true"  />
+							</div>
+						</div>
+						<div class="form-group col-sm-6 searchConditionArea">
+							<label data-i18n="passwordChangeRequest" class="searchConditionTh">#{パスワード変更要求}</label>
+							<div class="searchConditionTd" class="searchConditionTh">
+								<input type="checkbox" id="changeRequestFlag" value="true" />
+							</div>
+						</div>
+					</form>
+					<div class="column button-group text-center searchButtonArea">
+						<button id="btnSearch" class="btn btn-primary searchButton">
+							<i class="glyphicon glyphicon-search"></i>
+							<span data-i18n="btnFilter">#{btnFilter}</span>
+						</button>
+						<button id="btnReset" class="btn btn-default searchButton">
+							<i class="glyphicon glyphicon-refresh"></i>
+							<span data-i18n="btnReset">#{btnReset}</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="seach-result" class="container hide">
+			<div class="row" >
+				<div class="searchResultStyle">
+					<div class="text-center">
+						<div class="hidden-xs searchCount">
+							&nbsp;&nbsp;
+							<span class="all-count">#{all-count}</span>
+							<span>件</span>
+						</div>
+						<div class="pageArea">
+							<ul class="pagination"></ul>
+						</div>
+						<div class="pageSizeConfig">
+							<label data-i18n="rowCountPerPage" class="pageTextColor">#{１ページの行数}</label>
+							<select class="pageSize"></select>
+						</div>
+					</div>
+
+					<table class="table table-hover table-striped table-condensed responsive resultTable">
+						<colgroup>
+							<col class="medium-2" />
+							<col class="medium-4" />
+							<col class="medium-2" />
+							<col class="medium-2" />
+							<col class="medium-2" />
+						</colgroup>
+						<thead>
+						<tr>
+							<th><a href="#" data-i18n="userAddedInfo" data-sort="CORPORATION_CODE, USER_ADDED_INFO">#{ユーザID}</a>
+							<th><a href="#" data-i18n="userName" data-sort="USER_NAME, CORPORATION_CODE, USER_ADDED_INFO">#{ユーザ名称}</a>
+							<th><a href="#" data-i18n="passwordStatus" data-sort="EXIST_PASSWORD_FLAG, CORPORATION_CODE, USER_ADDED_INFO">#{パスワード状況}</a>
+							<th><a href="#" data-i18n="accountLock" data-sort="LOCK_FLAG, CORPORATION_CODE, USER_ADDED_INFO">#{アカウントロック}</a>
+							<th><a href="#" data-i18n="passwordChangeRequest" data-sort="CHANGE_REQUEST_FLAG, CORPORATION_CODE, USER_ADDED_INFO">#{パスワード変更要求}</a>
+						</thead>
+
+						<tbody></tbody>
+
+						<tfoot class="template hide">
+							<tr>
+								<th class="text-left"><a href="#" data-field="userAddedInfo">#{ユーザID}</a></th>
+								<td class="text-left"><a href="#" data-field="userName">#{ユーザ名称}</a></td>
+								<td class="text-left" data-field="existPasswordFlagName">#{パスワード状況}</td>
+								<td class="text-left" data-field="lockFlagName">#{アカウントロック}</td>
+								<td class="text-left" data-field="changeRequestFlagName">#{パスワード変更要求}</td>
+								<td class="hide" data-field="corporationCode"></td>
+								<td class="hide" data-field="userCode"></td>
+								<td class="hide" data-field="timestampUpdated"></td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+		</section>
+	</div>
+</body>
+</html>

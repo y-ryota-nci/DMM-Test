@@ -1,0 +1,108 @@
+#画面プロセス／メニュー連携マスタ
+AU0000_01: |+
+ select /* AU0000_01 */ * from MWM_SCREEN_PROCESS_MENU where CORPORATION_CODE = ? and DELETE_FLAG = '0'
+
+#操作者の所有している参加者ロールマスタ
+AU0000_02: |+
+ select /* AU0000_02 */ * from WFM_ASSIGN_ROLE AR
+ where
+  AR.CORPORATION_CODE = ?
+  and AR.DELETE_FLAG = '0'
+  and trunc(sysdate) between AR.VALID_START_DATE and AR.VALID_END_DATE
+  and exists (
+   select * from WFM_ASSIGN_ROLE_DETAIL X
+   where
+    AR.CORPORATION_CODE = X.CORPORATION_CODE
+    and AR.ASSIGN_ROLE_CODE = X.ASSIGN_ROLE_CODE
+    and trunc(sysdate) between X.VALID_START_DATE and X.VALID_END_DATE
+    and X.DELETE_FLAG = '0'
+    and ( ${REPLACE} )
+  )
+
+#ユーザの所有しているロール一覧
+AU0001: |+
+ select /* AU0001 */ *
+ from WFM_MENU_ROLE_DETAIL
+ where
+  DELETE_FLAG = '0'
+  and trunc(sysdate) between VALID_START_DATE and VALID_END_DATE
+  and (###REPLACE###)
+
+#アクセス可能なメニュー一覧
+AU0002: |+
+ select /* AU0002 */ M.MENU_ID, nvl(ML.VAL, M.MENU_NAME) as MENU_NAME, M.MENU_ITEM_CODE1, M.MENU_ITEM_CODE2, M.MENU_ITEM_CODE3, M.URL, M.VERSION, M.DELETE_FLAG, M.CORPORATION_CODE_CREATED, M.USER_CODE_CREATED, M.TIMESTAMP_CREATED, M.CORPORATION_CODE_UPDATED, M.USER_CODE_UPDATED, M.TIMESTAMP_UPDATED
+ from MWM_MENU M
+  left join MWM_MULTILINGUAL ML
+   on ML.TABLE_NAME = 'MWM_MENU'
+   and ML.ID = M.MENU_ID
+   and ML.COLUMN_NAME = 'MENU_NAME'
+   and ML.DELETE_FLAG = '0'
+   and ML.LOCALE_CODE = ?
+ where
+  M.DELETE_FLAG = '0'
+  and M.MENU_ID in (
+   select MENU_ID
+   from MWM_ACCESSIBLE_MENU
+   where (###REPLACE### (CORPORATION_CODE = ?
+    and MENU_ROLE_CODE in (###REPLACE###)))
+    and DELETE_FLAG = '0'
+    and trunc(sysdate) between VALID_START_DATE and VALID_END_DATE
+  )
+  order by M.MENU_ITEM_CODE1, M.MENU_ITEM_CODE2, M.MENU_ITEM_CODE3
+
+#選択可能な言語一覧（表示言語指定あり）
+AU0003: |+
+ select /* AU0003 */ * from WFM_LOCALE_V where LOCALE_CODE_LANG = ?
+ order by DEFAULT_FLAG desc, SORT_ORDER asc, LOCALE_CODE
+
+#パスワードビューから生きているレコードを抽出（生きているレコードは０～１件）
+AU0004: |+
+ select /* AU0004 */ * from WFV_USER_PASSWORD
+ where CORPORATION_CODE = ? and USER_CODE = ? and LOCALE_CODE = ? and DELETE_FLAG = '0'
+ order by SEQ_NO_USER_PASSWORD desc
+
+#パスワードビューから過去の全レコードを抽出
+AU0005: |+
+ select /* AU0005 */ * from WFV_USER_PASSWORD
+ where CORPORATION_CODE = ? and USER_CODE = ? and LOCALE_CODE = ? and VALID_START_DATE <= ?
+ order by SEQ_NO_USER_PASSWORD desc
+
+#企業属性マスタ抽出
+AU0006: |+
+ select /* AU0006 */ * from WFV_CORPORATION_PROPERTY where CORPORATION_CODE = ? and LOCALE_CODE = ?
+
+#既存パスワードを論理削除
+AU0007: |+
+ update /* AU0007 */ WFM_USER_PASSWORD
+ set DELETE_FLAG = '1'
+  , CORPORATION_CODE_UPDATED = ?
+  , USER_CODE_UPDATED = ?
+  , IP_UPDATED = ?
+  , TIMESTAMP_UPDATED = systimestamp
+ where
+  CORPORATION_CODE = ?
+  and USER_CODE = ?
+  and DELETE_FLAG = '0'
+
+#メニューIDをキーにメニュー配下画面を抽出
+AU0008: |+
+ select /* AU0008 */ * from MWM_MENU_SCREEN where
+
+#メニュー配下除外画面を抽出
+AU0009: |+
+ select /* AU0009 */ * from MWM_MENU_SCREEN_EXCLUDE
+
+#パスワード一覧
+AU0010_01: |+
+ select /* AU0010_01 */ {REPLACEMENT}
+ from WFV_USER_PASSWORD
+ where (DELETE_FLAG = '0' or DELETE_FLAG is null) and LOCALE_CODE = ?
+
+#ユーザの所有している文書管理用の参加者ロール一覧
+AU0011: |+
+ select /* AU0011 */ *
+ from WFM_ASSIGN_ROLE_DETAIL
+ where
+  DELETE_FLAG = '0'
+  and trunc(sysdate) between VALID_START_DATE and VALID_END_DATE
+  and (###REPLACE###)

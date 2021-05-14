@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='UTF-8'>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel='stylesheet' href='../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css' />
+	<link rel='stylesheet' href='../../assets/jquery-minicolors/jquery.minicolors.css' />
+	<link rel='stylesheet' href='../../assets/nci/app.css' />
+	<style type='text/css'>
+	</style>
+	<script src='../../assets/jquery/jquery.min.js'></script>
+	<script src='../../assets/jquery-ui/jquery-ui.min.js'></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src='../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js'></script>
+	<script src='../../assets/jquery-minicolors/jquery.minicolors.min.js'></script>
+	<script src='../../assets/nci/NCI.js'></script>
+	<script src="../../assets/nci/codeBook.js"></script>
+	<script src="../../assets/nci/parts.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src='./vd0180.js'></script>
+	<title>VD0180 パーツコード変更</title>
+</head>
+<body>
+	<header></header>
+
+	<!-- パーツコード変更ダイアログ -->
+	<section class="container" id="inputs">
+		<div class="row">
+			<span class="screen-name">#{VD0180}</span>
+
+			<label class="sub-title" data-i18n="changePartsCode">パーツコード変更</label>
+			<div class="col-xs-12">
+				<dl class="dl-horizontal">
+					<dt data-i18n="oldPartsCode" class="form-control-static"></dt>
+					<dd>
+						<input id="oldPartsCode" type="text" class="form-control" readonly />
+					</dd>
+
+					<dt class="form-control-static"><span data-i18n="newPartsCode" class="required"></span></dt>
+					<dd>
+						<!-- 重要：
+						パーツコードは最終的に実行時のHTML_IDの元となる。
+						したがってパーツコードの値は jQuery のセレクターとして渡す時にエスケープしなくてもよい値にする必要がある。
+						アンダースコアはパーツとパーツとの区切りに使っているので使用禁止である。
+						ハイフンはコンテナ系パーツの行の区切りに使っているので使用禁止である。
+						つまり、事実上は半角英数アルファベットぐらいしか使えない。
+						-->
+						<input id="newPartsCode" type="text" class="form-control required" maxlength="7"
+								data-validate='{ "pattern":"alphaNumber" }' />
+					</dd>
+				</dl>
+			</div>
+			<div class="col-xs-12 text-center">
+				<button id="btnUpdate" class="btn btn-primary">
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnUpdate">#{更新}</span>
+				</button>
+				<button id="btnClose" class="btn btn-default">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

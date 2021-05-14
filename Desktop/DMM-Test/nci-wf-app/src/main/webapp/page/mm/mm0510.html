@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./mm0510.js"></script>
+	<title>#{MM0100バージョン情報}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="container">
+		<div class="row" id="inputed">
+			<span class="screen-name">#{MM0510}</span>
+
+			<label class="sub-title">
+				<span  data-i18n="warAndDatabaseInfo"></span>
+			</label>
+
+		</div>
+	</section>
+
+	<section class="container">
+		<div id="inputs" class="row">
+			<table class="table responsive">
+				<colgroup>
+					<col class="col-sm-4" />
+					<col class="col-sm-8" />
+				</colgroup>
+
+				<tbody>
+<!--
+					<tr>
+						<th data-i18n="groupId">グループID
+						<td data-field="groupId">
+					<tr>
+						<th data-i18n="artifactId">アーティファクトID
+						<td data-field="artifactId">
+-->
+					<tr>
+						<th data-i18n="version">バージョン
+						<td data-field="version">
+					<tr>
+						<th data-i18n="buildBy">ビルド者
+						<td data-field="buildBy">
+					<tr>
+						<th data-i18n="buildTimestamp">ビルド日時
+						<td data-field="buildTimestamp">
+					<tr>
+						<th data-i18n="buildJdk">ビルド時のJDK
+						<td data-field="buildJdk">
+					<tr>
+						<th data-i18n="databaseURL">DB接続文字列
+						<td data-field="databaseURL">
+					<tr>
+						<th data-i18n="databaseUser">DB接続ユーザ
+						<td data-field="databaseUser">
+					<tr>
+						<th data-i18n="databaseName">DB接続インスタンス
+						<td data-field="databaseName">
+				</tbody>
+			</table>
+		</div>
+	</section>
+</body>
+</html>

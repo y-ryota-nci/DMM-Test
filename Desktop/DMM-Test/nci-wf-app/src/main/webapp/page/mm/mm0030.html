@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+		.searchResultStyle {
+			height: calc(100vh - 280px);
+			overflow-y: scroll;
+		}
+		table.table {
+			width: calc(100% - 5px);
+		}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./mm0030.js"></script>
+	<title>#{MM0030 業務管理項目名称設定}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<div class="nonSideSearchArea">
+	<section class="container">
+		<div id='searchResult' class='row'>
+			<span class="screen-name">#{MM0030}</span>
+			<label class="sub-title" data-i18n="businessInfoName">業務管理項目名称</label>
+
+			<div class="searchResultStyle">
+			<table id='tblBusinessInfoNames' class='table table-hover table-striped table-condensed responsive'>
+				<colgroup>
+					<col class="col-md-2" />
+					<col class="col-md-3" />
+					<col class="col-md-2" />
+					<col class="col-md-1" />
+					<col class="col-md-2" />
+					<col class="col-md-1" />
+					<col class="col-md-1" />
+				</colgroup>
+
+				<thead>
+					<tr>
+						<th data-i18n='businessInfoCode'>業務管理項目コード</th>
+						<th data-i18n='businessInfoName'>業務管理項目名称</th>
+						<th data-i18n='businessInfoType'>業務管理項目区分</th>
+						<th data-i18n='validFlag'>有効フラグ</th>
+						<th data-i18n='screenPartsInputFlag'>入力可否</th>
+						<th data-i18n='dataType'>データ型</th>
+						<th data-i18n='sortOrder'>ソート順</th>
+					</tr>
+				</thead>
+
+				<tbody></tbody>
+
+				<tfoot class='hide template'>
+					<tr>
+						<td class='text-left searchConditionText'><input type='text' data-field='businessInfoCode' class='required form-control' maxlength="30" disabled/></td>
+						<td class='text-left searchConditionText'><input type='text' data-field='businessInfoName' class='required form-control' maxlength="200" /></td>
+						<td class='text-left searchConditionSelect'><select data-field='businessInfoType' class='businessInfoType form-control required'></select></td>
+						<td class='text-left searchConditionSelect'><select data-field='validFlag' class='validFlag form-control required'></select></td>
+						<td class='text-left searchConditionSelect'><select data-field='screenPartsInputFlag' class='screenPartsInputFlag form-control required'></select></td>
+						<td class='text-left searchConditionSelect'><select data-field='dataType' class='dataType form-control required'></select></td>
+						<td class='text-left searchConditionText'><input type='text' data-field='sortOrder' class='form-control text-right' maxlength="3" data-validate='{"pattern" : "integer" , "min": 0, "max" : 999, "notAddComma": true }'/></td>
+						<td class="hide" data-field="businessInfoNameId"></td>
+						<td class="hide" data-field="corporationCode"></td>
+						<td class="hide" data-field="deleteFlag"></td>
+						<td class="hide" data-field="version"></td>
+						<td class="hide" data-field="corporationCodeCreated"></td>
+						<td class="hide" data-field="userCodeCreated"></td>
+						<td class="hide" data-field="timestampCreated"></td>
+						<td class="hide" data-field="corporationCodeUpdated"></td>
+						<td class="hide" data-field="userCodeUpdated"></td>
+						<td class="hide" data-field="timestampUpdated"></td>
+					</tr>
+				</tfoot>
+			</table>
+			</div>
+
+			<div class="row text-center searchButtonArea">
+				<button id="btnUpdate" class="btn btn-primary searchButton" disabled>
+					<i class="glyphicon glyphicon-plus-sign"></i>
+					<span data-i18n="btnUpdate">#{更新}</span>
+				</button>
+				<button id="btnInitialize" class="btn btn-default searchButton">
+					<i class="glyphicon glyphicon-plus-sign"></i>
+					<span data-i18n="btnInitialize">#{リセット}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+	</div>
+</body>
+</html>

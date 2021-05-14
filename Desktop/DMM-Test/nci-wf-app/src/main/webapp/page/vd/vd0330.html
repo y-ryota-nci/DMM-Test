@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+<link rel="stylesheet" href="../../assets/nci/styles.css" />
+<link rel="stylesheet" href="../../assets/nci/original.css" />
+<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+<style type="text/css">
+</style>
+<!-- コンテナ固有のカスタムCSSスタイル -->
+<style type="text/css" id="customCssStyleTag"></style>
+<script src="../../assets/jquery/jquery.min.js"></script>
+<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="../../assets/nci/NCI.js"></script>
+<script src="../../assets/nci/codeBook.js"></script>
+<script src="../../assets/nci/validate.js"></script>
+<script id="outside-javascript"></script>
+<!-- 外部Javascript読み込み用SCRIPTタグ -->
+<script src='../../endpoint/javascript/static/enabledEvaluate.js'></script>
+<script src="../../assets/nci/enabledCondition.js"></script>
+<script src="../../assets/nci/calculate.js"></script>
+<script src="../../assets/nci/parts.js"></script>
+<script src="../../assets/nci/suggestion.js"></script><!-- サジェスチョン関数 -->
+<!-- パーツ共通関数 -->
+<script src="./vd0330.js"></script>
+<title>#{VD0330 申請・承認(参照)}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<!-- 画面デザイナーエリア -->
+	<section class="col-xs-12">
+		<button class="btn btn-sm btn-default btnBack">
+			<i class="fa fa-reply"></i>
+			<span data-i18n="btnBack">戻る</span>
+		</button>
+
+		<h1 class="text-center">
+			<span id="screenName">#{画面名}</span>
+		</h1>
+
+		<div class="row panel panel-default">
+			<!-- 検索結果サブタイトル -->
+			<div class="panel-heading" id="blockName" data-i18n="block0002">#{文書内容}</div>
+
+			<div id="editArea" class="col-xs-12"></div>
+		</div>
+	</section>
+
+	<!-- ボタンエリア -->
+	<section class="container">
+		<div class="col-sm-4"></div>
+		<div class="col-sm-4"></div>
+		<div class="col-sm-4 text-right">
+			<button id="btnUpdate" class="btn btn-m btn-sm btn-primary hide" disabled>
+				<i class="fa fa-check"></i>
+				<span data-i18n="btnUpdate">#{更新}</span>
+			</button>
+		</div>
+	</section>
+</body>
+</html>

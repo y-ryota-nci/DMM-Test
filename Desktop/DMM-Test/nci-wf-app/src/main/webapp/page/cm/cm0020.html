@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<link rel="stylesheet" href="../../assets/jsTree/themes/default/style.min.css" />
+	<style type="text/css">
+	#seach-result {
+		min-height: 650px;
+	}
+	#treeOrg {
+		margin-left: 0.5rem;
+		margin-right: 0.5rem;
+	}
+	li[data-type=deleted] {
+		color : dimgray !important;
+	}
+	li[data-type=corporation] {
+		color : darkviolet;
+	}
+	li[data-type=corporation] li[data-type=organization]{
+		color : dodgerblue;
+	}
+	.margin-small {
+		margin-top : 5px;
+		margin-bottom : 5px;
+	}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/jsTree/jstree.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src="./cm0020.js"></script>
+	<title>CM0020 組織選択</title>
+</head>
+<body>
+	<header class="container-fluid"></header>
+
+	<section class="col-xs-12">
+		<article class="row">
+			<h1 class="page-header">組織選択</h1>
+		</article><!--/.row-->
+
+		<article>
+			<div class="row margin-small">
+				<div class="col-sm-2 text-right">
+					<label data-i18n="baseDate" class="form-control-static">基準日</label>
+				</div>
+				<div class="col-sm-3">
+					<div class="has-feedback">
+						<input id="baseDate" type="text" maxlength="10" class="required ymdPicker form-control" data-validate='{ "pattern": "date" }' />
+						<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+					</div>
+				</div>
+			</div>
+
+			<!-- 組織ツリー -->
+			<div id="treeOrg" class="alert alert-info"></div>
+
+			<!-- ボタン -->
+			<div class="form-group text-center">
+				<button id="btnSelect2" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnSelect">#{選択}</span>
+				</button>
+				<button class="btn btn-default btnClose" data-close>
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+		</article>
+	</section>
+</body>
+</html>

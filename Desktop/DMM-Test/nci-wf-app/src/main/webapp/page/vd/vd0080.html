@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./vd0080.js"></script>
+	<title>#{VD0080画像パーツのアップロード画面}</title>
+</head>
+<body>
+	<header class="container-fluid">
+	</header>
+
+	<section class="container">
+		<div class="row">
+			<span class="screen-name">#{VD0080}</span>
+
+			<label class="sub-title">
+				<span data-i18n="uploadImage"></span>
+			</label>
+
+			<form class="form-horizontal" id="inputed">
+				<div class="form-group dragZone" data-i18n="dragAndDrop">{ここにドラッグ＆ドロップすることでファイルアップロードが行われます}</div>
+				<div class="form-group">
+					<input type="file" />
+				</div>
+			</form>
+		</div>
+		<div id="imageArea" class="row hide">
+			<img id="sampleImage" />
+			<input type="hidden" id="partsAttachFileWfId" />
+			<input type="hidden" id="fileName" />
+		</div>
+		<div class="row">
+			<div class="text-center">
+				<button id="btnOK" class="btn btn-default hide" data-close>
+					<i class="glyphicon glyphicon-ok"></i>
+					<span data-i18n="btnOK">#{OK}</span>
+				</button>
+				<button id="btnClose" class="btn btn-default" data-close>
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

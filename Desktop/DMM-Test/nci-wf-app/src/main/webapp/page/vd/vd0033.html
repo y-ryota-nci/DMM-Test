@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./vd0033.js"></script>
+	<title>#{VD0033 外部Javascript設定}</title>
+</head>
+<body>
+	<header></header>
+
+	<section class="container">
+		<div class="row" id="inputed">
+			<span class="screen-name">#{VD0033}</span>
+
+			<label class="sub-title">
+				<span  data-i18n="javascriptReference"></span>
+			</label>
+
+			<table id="tbl" class="table table-hover table-striped table-condensed responsive">
+				<colgroup>
+					<col class='col-xs-1' />
+					<col class='col-xs-3' />
+					<col class='col-xs-7' />
+					<col class='col-xs-1' />
+				</colgroup>
+
+				<thead>
+					<tr>
+						<th data-i18n='refer'>参照
+						<th data-i18n='fileName'>ファイル名
+						<th data-i18n='remarks'>備考
+						<th data-i18n='sortOrder'>並び順
+				</thead>
+
+				<tbody></tbody>
+
+				<tfoot class='template hide'>
+					<tr>
+						<td>
+							<i class='glyphicon glyphicon-align-justify clickable'></i>
+							<input type='checkbox' data-field='selected' value='true' />
+							<span data-field='javascriptId' class='hide'></span>
+						<td><span data-field='fileName'></span>
+						<td><span data-field='remarks'></span>
+						<td><input type='text' data-field='sortOrder' class='text-right form-control' disabled />
+				</tfoot>
+			</table>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="text-center">
+			<button id='btnOK' class='btn btn-primary' disabled>
+				<i class='glyphicon glyphicon-ok-sign'></i>
+				<span data-i18n='btnOK'>#{OK}</span>
+			</button>
+			<button id='btnClose' class='btn btn-default'>
+				<i class='glyphicon glyphicon-share-alt'></i>
+				<span data-i18n='btnClose'>#{閉じる}</span>
+			</button>
+		</div>
+	</section>
+</body>
+</html>

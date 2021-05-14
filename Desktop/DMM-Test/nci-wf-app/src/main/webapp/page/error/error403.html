@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<style>
+		.debug-info {
+			position: absolute;
+			top: calc(80vh - 50px);
+		}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script>
+	$(function() {
+		$('#___timestamp___').text(new Date());
+		const params = { 'messageCds': ['btnClose', 'btnTopPage', 'MSG0186'] };
+		NCI.init('/error403/init', params).done(function(res) {
+			$('#___btnTopPage___').text(NCI.getMessage(Popup.isPopup() ? 'btnClose' : 'btnTopPage'));
+		});
+	});
+
+	function _toTopPage() {
+		if (Popup.isPopup()) {
+			// ポップアップ画面
+			Popup.close();
+		} else {
+			const uri = '../' + NCI.loginInfo.topPageUrl;
+			window.location.replace(uri);
+		}
+	}
+	</script>
+	</head>
+	<body>
+		<header></header>
+
+		<section class="container">
+			<div class="row">
+				<h1 data-i18n="MSG0220">You do not have permission to view this screen</h1>
+
+				<div class="text-center">
+					<img src="../../assets/nci/images/dont_enter.png" style="max-height: calc(85vh - 150px);" />
+				</div>
+
+				<div class="text-center">
+					<button id="___btnTopPage___" onclick="javascript:_toTopPage();" class="btn btn-primary" data-i18n="btnTopPage">TOP</button>
+				</div>
+
+				<div class="debug-info">
+					<small>
+						<span id="___timestamp___"></span><br />
+						<span id="___errorText___">HTTP 403 Forbidden</span>
+					</small>
+				</div>
+			</div>
+		</section>
+	</body>
+</html>

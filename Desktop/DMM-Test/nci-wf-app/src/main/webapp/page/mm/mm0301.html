@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+<link rel="stylesheet" href="../../assets/nci/app.css" />
+<style type="text/css">
+</style>
+<script src="../../assets/jquery/jquery.min.js"></script>
+<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="../../assets/nci/NCI.js"></script>
+<script src="../../assets/nci/validate.js"></script>
+<script src="./mm0301.js"></script>
+<title>#{MM0301 ルート作成}</title>
+</head>
+<body>
+<header class="container-fluid">
+	<div id="nav"></div>
+</header>
+<section id="inputed" class="container">
+	<div>
+		<span class="screen-name">#{MM0301}</span>
+		<label class="sub-title" data-i18n="routeSetting"></label>
+		<div class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-3 control-label required" data-i18n="processDefCode">#{プロセス定義コード}</label>
+				<div class="col-sm-5">
+					<div class="input-group">
+						<input id="processDefCode" type="text" class="form-control required" maxlength="20" data-validate='{"maxLength" : 20, "pattern": "alphaNumber"}' />
+						<span class="input-group-addon">‐</span>
+						<span id="processDefDetailCode" class="input-group-addon">00001</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label required" data-i18n="processDefName">#{プロセス定義名}</label>
+				<div class="col-sm-7">
+					<input id="processDefName" type="text" class="form-control required" maxlength="30" data-validate='{"maxLength" : 30}' />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label required" data-i18n="validTerm" class="required">#{有効期間}</label>
+				<div class="col-sm-7">
+					<div class="input-group">
+						<div class="has-feedback">
+							<input type="text" class="form-control ymdPicker required" id="validStartDate" data-validate='{"to" : "#validEndDate", "pattern" : "date" }'/>
+							<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+						</div>
+						<span class="input-group-addon">～</span>
+						<div class="has-feedback">
+							<input type="text" class="form-control ymdPicker required" id="validEndDate" data-validate='{"from" : "#validStartDate" , "pattern" : "date"}'/>
+							<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label" data-i18n="description" class="required">#{説明}</label>
+				<div class="col-sm-7">
+					<textarea id="description" class="form-control" rows="2" data-validate='{"maxByteUtf8": 1000}' maxlength="1000"></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label" data-i18n="sortOrder">#{並び順}</label>
+				<div class="col-sm-7">
+					<input id="sortOrder" type="text" class="form-control" maxlength="5" data-validate='{"pattern" : "integer", "min": 1, "max" : 99999 }' />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label required" data-i18n="executionTerm">#{実行期間}</label>
+				<div class="col-sm-7">
+					<div class="form-inline">
+						<select id="executionTermUnitType" class="form-control required"></select>
+						<input id="executionTerm" type="text" class="form-control text-right" maxlength="3" data-validate='{"pattern" : "integer", "min": 1, "max" : 999 }' />
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label" data-i18n="sourceRoute">#{コピー元ルート}</label>
+				<div class="col-sm-7">
+					<select id="sourceRoute" class="form-control"></select>
+				</div>
+			</div>
+			<div class="form-group hide">
+				<span id="corporationCode"></span>
+				<span id="processOpeType"></span>
+				<span id="skipFlag"></span>
+				<span id="batchProcessingFlag"></span>
+				<span id="commentDisplayFlag"></span>
+			</div>
+			<div class="form-group text-center">
+				<button id="btnCreate" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnRegister">#{登録}</span>
+				</button>
+				<button id="btnBack" class="btn btn-default">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnBack">#{戻る}</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</section>
+</body>
+</html>

@@ -1,0 +1,11 @@
+#部門マスタ
+SG_BUMON_01: |+
+ select /* SG_BUMON_01 */
+  ${REPLACE}
+ from BUMON_MST
+ where DLT_FG = '0' and COMPANY_CD = ?
+
+#部門マスタselect句
+SG_BUMON_02: |+
+  COMPANY_CD, BUMON_CD, ENTRP_TP_CD, ENTRP_CD, TAB_CD
+  , SITE_CD, TP_CD, AREA_CD, BUMON_NM, TAX_KND_CD, DLT_FG

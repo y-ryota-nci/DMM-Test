@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style>
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src="./mg0250.js"></script>
+	<title>mg0250 部門関連マスタ</title>
+</head>
+<body>
+
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="col-xs-12">
+		<article class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">mg0250</h1>
+			</div>
+		</article><!--/.row-->
+
+		<article class="row mB40 mB40_sp">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#condition-contents">
+						<i class="fa fa-chevron-up">
+						</i>
+						<span data-i18n="searchCondition">検索条件
+						</span>
+					</div>
+					<div class="panel-collapse sliders collapse in" id="condition-contents" aria-expanded="true">
+						<div class="panel-body">
+							<form class="tableBox col-lg-12 col-md-12 col-sm-12" id="formCondition">
+								<!-- ここにトレイ設定検索条件の定義に合わせてテンプレートが展開される-->
+								<div class="tr">
+									<div class="col-lg-2 col-md-2 col-sm-2 th">会社コード</div>
+									<div class="col-lg-4 col-md-4 col-sm-4 td">
+										<select id="companyCd" class="form-control" style="width:200px;"></select>
+									</div>
+									<div class="col-lg-2 col-md-2 col-sm-2 th">部門コード</div>
+									<div class="col-lg-4 col-md-4 col-sm-4 td">
+										<div class="input-group">
+											<input class="form-control" id="bumonNm" style="width: 180px; margin-right: 2px; float: left;" type="text" readonly="readonly">
+											<input class="form-control" id="bumonCd" type="hidden">
+											<div class="input-group">
+												<span class="input-group-btn" style="float: left;">
+													<a id="btnSelectBumon" class="btnSelectBumon btn btn-default btn-sm">
+														<i class="glyphicon glyphicon-info-sign"></i>
+													</a>
+												</span>
+												<span class="input-group-btn" style="margin-left: 34px; float: left;">
+													<a id="btnClearBumon" class="btnClearBumon btn btn-default btn-sm">
+														<i class="glyphicon glyphicon-remove-circle"></i>
+													</a>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tr">
+									<div class="col-lg-2 col-md-2 col-sm-2 th">組織コード</div>
+									<div class="col-lg-4 col-md-4 col-sm-4 td">
+										<div class="input-group">
+											<input class="form-control" id="orgnzNm" style="width: 180px; margin-right: 2px; float: left;" type="text" readonly="readonly">
+											<input class="form-control" id="orgnzCd" type="hidden">
+											<div class="input-group">
+												<span class="input-group-btn" style="float: left;">
+													<a id="btnSelectOrg" class="btnSelectOrg btn btn-default btn-sm">
+														<i class="glyphicon glyphicon-info-sign"></i>
+													</a>
+												</span>
+												<span class="input-group-btn" style="margin-left: 34px; float: left;">
+													<a id="btnClearOrg" class="btnClearOrg btn btn-default btn-sm">
+														<i class="glyphicon glyphicon-remove-circle"></i>
+													</a>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-2 col-md-2 col-sm-2 th">削除フラグ</div>
+									<div class="col-lg-4 col-md-4 col-sm-4 td">
+										<span class="inline-block">
+											<label for="dltFgOff">
+												<input type="checkbox" id="dltFgOff" value="true">有効
+											</label>
+										</span>
+										<span class="inline-block">
+											<label for="dltFgOn">
+												<input type="checkbox" id="dltFgOn" value="true">削除
+											</label>
+										</span>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="form-group" style="margin-top:5px;">
+						<div class="col-xs-12">
+						</div>
+						<div class="col-xs-12 text-center">
+							<button class="btn btn-primary btn-wide" id="btnSearch">
+								<i class="fa fa-search"></i>
+								<span data-i18n="btnSearch">検索</span>
+							</button>
+							<button class="btn btn-default" id="btnReset">
+								<i class="glyphicon glyphicon-refresh"></i>
+								<span data-i18n="btnReset">リセット</span>
+							</button>
+
+							<div style="float:right;">
+								<button id="btnUpload" class="btn btn-warning">
+									<i class="glyphicon glyphicon-cloud-upload"></i>
+									<span data-i18n="btnUpload">アップロード</span>
+								</button>
+								<button id="btnDownload" class="btn btn-success">
+									<i class="glyphicon glyphicon-cloud-download"></i>
+									<span data-i18n="btnDownload">ダウンロード</span>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+		<!--/.row-->
+		<article class="row hide" id="seach-result">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#result-contents">
+						<i class="fa fa-chevron-up">
+						</i>
+						<span data-i18n="searchResult">検索結果
+						</span>
+					</div>
+					<div class="panel-body panel-collapse collapse in" id="result-contents" >
+						<!-- ページ制御 -->
+						<div class="fixed-table-pagination row">
+							<div class="pull-left col-sm-4 col-lg-3">
+								<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+							</div>
+							<div class="pull-left col-sm-8 col-lg-6 text-center">
+								<ul class="pagination"></ul>
+							</div>
+							<div class="pull-right pagination-detail col-sm-12 col-lg-3">
+								<div class="pull-right">
+									<span data-i18n="rowCountPerPage">1ページの行数</span>
+									<select class="pageSize"></select>
+								</div>
+							</div>
+						</div>
+						<div class="table-responsive">
+							<div class="col-sm-12 col-lg-12">
+								<table class="table table-bordered table-hover table-striped responsive" style="min-width:1140px;">
+									<colgroup>
+										<col style="width: 40px;">
+										<col style="width: 90px;">
+										<col style="width: 90px;">
+										<col style="width: 150px;">
+										<col style="width: 90px;">
+										<col style="width: 150px;">
+										<col style="width: 100px;">
+									</colgroup>
+									<thead>
+										<tr>
+											<th><div style="width:30px;"></div></th>
+											<th><a href="#" data-sort="bm.COMPANY_CD">会社コード</a></th>
+											<th><a href="#" data-sort="bm.BUMON_CD">部門コード</a></th>
+											<th><a href="#" data-sort="BUMON_NM">部門名称</a></th>
+											<th><a href="#" data-sort="bm.ORGNZ_CD">組織コード</a></th>
+											<th><a href="#" data-sort="ORGNZ_NM">組織名称</a></th>
+											<th><a href="#" data-sort="DLT_FG_NM">削除フラグ</a></th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+									<tfoot class="template hide">
+										<tr>
+											<th class="first" style="text-align: center;">
+												<input class="selectable" type="checkbox"/>
+												<input class="companyCd" data-field="companyCd" type="hidden" readonly/>
+												<input class="bumonCd" data-field="bumonCd" type="hidden" readonly/>
+												<input class="orgnzCd" data-field="orgnzCd" type="hidden" readonly/>
+											</th>
+											<td>
+												<a href="#" data-field="companyCd" style="text-align:center;"></a>
+											</td>
+											<td>
+												<a href="#" data-field="bumonCd" style="text-align:center;"></a>
+											</td>
+											<td>
+												<a href="#" data-field="bumonNm" style="text-align:left;"></a>
+											</td>
+											<td>
+												<a href="#" data-field="orgnzCd" style="text-align:center;"></a>
+											</td>
+											<td>
+												<a href="#" data-field="orgnzNm" style="text-align:left;"></a>
+											</td>
+											<td>
+												<a href="#" data-field="dltFgNm" style="text-align:center;"></a>
+											</td>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+						</div>
+						<!-- ページ制御 -->
+						<div class="fixed-table-pagination row">
+							<div class="pull-left col-sm-4 col-lg-3">
+								<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+							</div>
+							<div class="pull-left col-sm-8 col-lg-6 text-center">
+								<ul class="pagination"></ul>
+							</div>
+							<div class="pull-right pagination-detail col-sm-12 col-lg-3">
+								<div class="pull-right">
+									<span data-i18n="rowCountPerPage">1ページの行数</span>
+									<select class="pageSize"></select>
+								</div>
+							</div>
+						</div>
+
+						<div style="margin-bottom:30px;">
+							<button id="btnInsert" class="btn btn-primary btn-wide">
+								<i class="glyphicon glyphicon-plus-sign"></i>
+								<span>追加</span>
+							</button>
+							<button id="btnDelete" class="btn btn-danger btn-wide" disabled="disabled">
+								<i class="glyphicon glyphicon-trash"></i>
+								<span>削除</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+
+		<!-- Information -->
+		<div class="modal fade" id="mg0250Information">
+			<div class="modal-dialog dialog-sm center-modal">
+				<div class="modal-content">
+					<div class="modal-body lead">
+						<i class="glyphicon glyphicon-question-sign orange"></i>
+						<span id="mg0250InformationContents" class="modal-body"></span>
+					</div>
+					<div class="modal-footer">
+						<div class="form-group text-center">
+							<button class="btn btn-primary" data-dismiss="modal">
+								<i class="glyphicon glyphicon-ok"></i>
+								<span>OK</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- アップロードファイル選択ポップアップ -->
+		<div class="modal fade container" id="uploadFileSelect">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+						<h4 class="modal-title">部門関連マスタアップロード</h4>
+					</div>
+					<div class="modal-body">
+						<div style="padding: 0 30px 0 30px;">
+							<div class="row">
+								<label class="sub-title" id="error-alert-message_after_sub-title">
+									<span data-i18n="uploadFileInfo">アップロードファイル情報</span>
+								</label>
+							</div>
+							<div id="dragAndDropArea" class="row">
+								<div data-i18n="dragAndDrop" class="form-group col-sm-12 dragZone">ここにドラッグ＆ドロップすることでファイルアップロードが行われます</div>
+								<div class="form-group col-sm-12">
+									<input type="file" id="file" />
+								</div>
+							</div>
+							<div id="uploadFileArea" class="row hide">
+								<input type="hidden" id="encoded" />
+
+								<table class="table table-hover table-striped table-condensed">
+									<colgroup>
+										<col class="col-sm-10" />
+										<col class="col-sm-2" />
+									</colgroup>
+									<thead>
+										<tr>
+											<th data-i18n="fileName">#{ファイル名}</th>
+											<th class="text-center">部門関連</th>
+									</thead>
+									<tbody>
+										<tr>
+											<td id="fileName">#{ファイル名}</td>
+											<td data-field="count" class="text-center">#{部門関連数}</td>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<div id="btnUploadFileSelectContainer" class="form-group text-center">
+							<button id="btnUploadRegister" class="btn btn-primary">
+								<i class="glyphicon glyphicon-ok"></i>
+								<span>登録</span>
+							</button>
+							<button id="btnUploadReset" class="btn btn-default">
+								<i class="glyphicon glyphicon-refresh"></i>
+								<span data-i18n="btnReset">#{btnReset}</span>
+							</button>
+							<button class="btn btn-default" data-dismiss="modal">
+								<i class="glyphicon glyphicon-share-alt"></i>
+								<span>閉じる</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- エラー用 -->
+	<div id="checkErrorAlert" class="modal fade">
+	    <div class="modal-dialog dialog-sm center-modal">
+	        <div class="modal-content">
+	          <div class="modal-body lead">
+	            <i class="glyphicon glyphicon-remove red"></i>
+	            <span id="checkErrorAlertBody" class="modal-body">
+	            </span>
+	          </div>
+
+	            <div id="checkErrorAlertButtonArea" class="modal-footer">
+	                <button type="button" class="btn btn-primary button-yes">
+	                  <i class="glyphicon glyphicon-ok-sign"></i>
+	                  <span class="button-yes">ＯＫ</span>
+	                </button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</body>
+</html>

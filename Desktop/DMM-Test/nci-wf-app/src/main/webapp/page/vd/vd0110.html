@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/whhg-font/css/whhg.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<link rel="stylesheet" href="./vd0110.css" />
+
+	<!-- コンテナ固有のカスタムCSSスタイル -->
+	<style type="text/css" id="customCssStyleTag"></style>
+
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="../../assets/nci/codeBook.js"></script>
+	<script src="./vd0110.js"></script>
+	<title>#{VD0110 画面デザイナー設定}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<i id="addPartsIcon" class="hide"></i>
+
+	<section class="container">
+		<div class="row">
+			<span class="screen-name">#{VD0110}</span>
+
+			<label class="sub-title" data-i18n="containerInfo">ほげ</label>
+
+			<div>
+				<article class="col-xs-3">
+					<table class="table table-hover table-striped table-condensed responsive">
+						<tr>
+							<th data-i18n="containerCode">コンテナコード</th>
+							<td id="containerCode"></td>
+						</tr>
+						<tr>
+							<th data-i18n="containerName">コンテナ名</th>
+							<td id="containerName"></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<button id="btnContainerSettings" class="btn btn-success btn-block" disabled>
+									<i class="glyphicon glyphicon-cog"></i>
+									<span data-i18n="containerSettings">コンテナ設定</span>
+								</button>
+							</td>
+						</tr>
+					</table>
+					<div class="btn-group-vertical form-group" data-toggle="buttons">
+
+						<label class="btn btn-default btn-block" data-toggle="modal" data-target="#partsBox">
+							<input type="radio" name="mode" id="modeAdd" value="1" autocomplete="off">
+							<span data-i18n="btnAddParts" class="icon-tools">パーツ配置</span>
+						</label>
+						<label class="btn btn-default btn-block">
+							<input type="radio" name="mode" id="modeEdit" value="2" autocomplete="off">
+							<span data-i18n="btnEditParts" class="glyphicon glyphicon-wrench">プロパティ編集</span>
+						</label>
+						<label class="btn btn-default btn-block">
+							<input type="radio" name="mode" id="moveParts" value="3" autocomplete="off">
+							<span data-i18n="btnMoveParts" class="glyphicon glyphicon-move">パーツ移動</span>
+						</label>
+						<label class="btn btn-default btn-block">
+							<input type="radio" name="mode" id="modeRemove" value="4" autocomplete="off">
+							<span data-i18n="btnCopyParts" class="glyphicon glyphicon-tags">パーツコピー</span>
+						</label>
+						<label class="btn btn-default btn-block">
+							<input type="radio" name="mode" id="btnRemoveParts" value="5" autocomplete="off">
+							<span data-i18n="btnRemoveParts" class="glyphicon glyphicon-trash">パーツ削除</span>
+						</label>
+					</div>
+					<div class="form-group">
+						<button id="btnOutsideJavascript" class="btn btn-default btn-block">
+							<i class='icon-scriptalt'></i>
+							<span data-i18n='btnJavascript'>JavaScript設定</span>
+						</button>
+						<button id='btnBgHtml' class="btn btn-default btn-block">
+							<i class='icon-htmlfile'></i>
+							<span data-i18n='btnBgHtml'>背景HTML</span>
+						</button>
+						<button id='btnMobileSettings' class="btn btn-default btn-block">
+							<i class='glyphicon glyphicon-phone'></i>
+							<span data-i18n='btnMobileSettings'>モバイル設定</span>
+						</button>
+						<button id='btnPartsTree' class='btn btn-default btn-block'>
+							<i class='icon-foldertree'></i>
+							<span data-i18n='btnPartsTree'>Parts TREE</span>
+						</button>
+					</div>
+					<table class="table table-hover table-striped table-condensed responsive">
+						<tr>
+							<th data-i18n="displayCondition">表示条件</th>
+							<td><select id="dcId"></select></td>
+						</tr>
+						<tr>
+							<th data-i18n="trayType">トレイタイプ</th>
+							<td><select id="trayType"></select>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<button id="btnPreview" class="btn btn-info btn-block" disabled>
+									<i class="glyphicon glyphicon-eye-open"></i>
+									<span data-i18n="btnPreview">プレビュー</span>
+								</button>
+							</td>
+						</tr>
+					</table>
+				</article>
+				<article class="col-xs-9">
+					<div class="">
+						<button id="btnUpdate" class="btn btn-primary" disabled>
+							<i class="glyphicon glyphicon-ok-sign"></i>
+							<span data-i18n="btnUpdate">#{更新}</span>
+						</button>
+						<button id="btnBack" class="btn btn-default">
+							<i class="glyphicon glyphicon-share-alt"></i>
+							<span data-i18n="btnBack">#{戻る}</span>
+						</button>
+					</div>
+				</article>
+				<article class="col-xs-9">
+					<div id="editArea" class="row droppable"></div>
+				</article>
+			</div>
+		</div>
+	</section>
+
+	<!-- 配置するパーツ一覧（モーダルWindowの中身） -->
+	<div id="partsBox" class="modal fade">
+		<div class="modal-dialog">
+    		<div class="modal-content">
+				<div class="modal-body btn-group">
+					<fieldset class="fieldset">
+						<h5 data-i18n="normalParts">通常パーツ</h5>
+						<button class="btn btn-default btn-sm col-sm-6" data-parts-type="1" data-icon="glyphicon glyphicon-pencil" data-dismiss="modal">
+							<i class='glyphicon glyphicon-pencil'></i>
+							<span data-i18n="textbox">テキストボックス</span></button>
+						<button class="btn btn-default btn-sm col-sm-6" data-parts-type="2" data-icon="glyphicon glyphicon-tag" data-dismiss="modal">
+							<i class='glyphicon glyphicon-tag'></i>
+							<span data-i18n="label">ラベル</span></button>
+						<button class="btn btn-default btn-sm col-sm-6" data-parts-type="3" data-icon="glyphicon glyphicon-check" data-dismiss="modal">
+							<i class='glyphicon glyphicon-check'></i>
+							<span data-i18n="checkbox">チェックボックス</span></button>
+						<button class="btn btn-default btn-sm col-sm-6" data-parts-type="5" data-icon="glyphicon glyphicon-record" data-dismiss="modal">
+							<i class='glyphicon glyphicon-record'></i>
+							<span data-i18n="radio">ラジオボタン</span></button>
+						<button class="btn btn-default btn-sm col-sm-6" data-parts-type="6" data-icon="glyphicon glyphicon-collapse-down" data-dismiss="modal">
+							<i class='glyphicon glyphicon-collapse-down'></i>
+							<span data-i18n="dropdown">ドロップダウン</span></button>
+						<button class="btn btn-default btn-sm col-sm-6" data-parts-type="17" data-dismiss="modal">
+							<i class='glyphicon glyphicon-link'></i>
+							<span data-i18n="hyperlink">ハイパーリンク</span></button>
+						<button class="btn btn-default btn-sm col-sm-6" data-parts-type="20" data-dismiss="modal">
+							<i class='glyphicon glyphicon-file'></i>
+							<span data-i18n="attachFile">添付ファイル</span></button>
+						<button class="btn btn-default btn-sm col-sm-6" data-parts-type="14" data-dismiss="modal">
+							<i class='glyphicon glyphicon-picture'></i>
+							<span data-i18n="picture">画像</span></button>
+						<button class="btn btn-default btn-sm col-sm-6" data-parts-type="13" data-dismiss="modal">
+							<i class='glyphicon glyphicon-flash'></i>
+							<span data-i18n="eventButton">イベントButton</span></button>
+					</fieldset>
+					<fieldset class="fieldset">
+						<h5 data-i18n="containerParts">コンテナーパーツ</h5>
+						<button class="btn btn-default btn-sm col-sm-6" data-parts-type="52" data-dismiss="modal">
+							<i class='glyphicon glyphicon-repeat'></i>
+							<span data-i18n="repeater">リピーター</span></button>
+						<button class="btn btn-default btn-sm col-sm-6" data-parts-type="15" data-dismiss="modal">
+							<i class='glyphicon glyphicon-th'></i>
+							<span data-i18n="grid">グリッド</span></button>
+						<button class="btn btn-default btn-sm col-sm-6" data-parts-type="51" data-dismiss="modal">
+							<i class='glyphicon glyphicon-new-window'></i>
+							<span data-i18n="standAloneScreen">独立画面</span></button>
+					</fieldset>
+					<fieldset class="fieldset">
+						<h5 data-i18n="specialParts">特殊パーツ</h5>
+						<button class="btn btn-default btn-sm col-sm-6" data-parts-type="7" data-dismiss="modal">
+							<i class='glyphicon icon-numberlist'></i>
+							<span data-i18n="numbering">採番</span></button>
+						<button class="btn btn-default btn-sm col-sm-6" data-parts-type="16" data-dismiss="modal">
+							<i class='glyphicon icon-rubberstamp'></i>
+							<span data-i18n="stamp">スタンプ</span></button>
+						<button class="btn btn-default btn-sm col-sm-6" data-parts-type="8" data-dismiss="modal">
+							<i class='glyphicon glyphicon-home'></i>
+							<span data-i18n="organizationSelect">組織選択</span></button>
+						<button class="btn btn-default btn-sm col-sm-6" data-parts-type="9" data-dismiss="modal">
+							<i class='glyphicon glyphicon-user'></i>
+							<span data-i18n="userSelect">ユーザ選択</span></button>
+						<button class="btn btn-default btn-sm col-sm-6" data-parts-type="12" data-dismiss="modal">
+							<i class='glyphicon glyphicon-search'></i>
+							<span data-i18n="searchButton">検索Button</span></button>
+						<button class="btn btn-default btn-sm col-sm-6" data-parts-type="50" data-dismiss="modal">
+							<i class='glyphicon glyphicon-list-alt'></i>
+							<span data-i18n="masterSelector">マスタ選択</span></button>
+					</fieldset>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

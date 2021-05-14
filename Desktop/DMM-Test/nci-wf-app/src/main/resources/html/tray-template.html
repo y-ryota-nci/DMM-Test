@@ -1,0 +1,148 @@
+<!-- トレイ設定のテンプレート -->
+	<!-- 文書種別 -->
+	<article class="template-processDefCode">
+		<select class="form-control processDefCode"></select>
+	</article>
+
+	<!-- 画面一覧 -->
+	<article class="template-screenCode">
+		<select class="form-control screenCode"></select>
+	</article>
+
+	<!-- 画面プロセス一覧 -->
+	<article class="template-screenProcessCode">
+		<select class="form-control screenProcessCode"></select>
+	</article>
+
+	<!-- コンテンツ種別(文書管理用) -->
+	<article class="template-contentsType">
+		<select class="form-control contentsTypes"></select>
+	</article>
+
+	<!-- 保存期間区分 -->
+	<article class="template-retentionTermType">
+		<select class="form-control retentionTermTypes"></select>
+	</article>
+
+	<!-- 保存期間区分 -->
+	<article class="template-publishFlag">
+		<select class="form-control publishFlags"></select>
+	</article>
+
+	<!-- プロセスステータス -->
+	<article class="template-processStatus">
+		<select class="form-control processStatus"></select>
+	</article>
+
+	<!-- 業務ステータス-->
+	<article class="template-processBusinessStatus">
+		<select class="form-control processBusinessStatus"></select>
+		<!-- レイアウト調整がめんどくさいので、差戻し状態および引き戻し状態のチェックボックスはOFFにしとく。必要なら復活させよ
+		<label class="inline-checkbox">
+			<input type="checkbox" class="sendback" value="2" />
+			<span class="sendback form-control-static" data-i18n="sendback">#{差戻し}</span>
+		</label>
+		<label class="inline-checkbox">
+			<input type="checkbox" class="pullback" value="2" />
+			<span class="pullback form-control-static" data-i18n="pullback">#{引戻し}</span>
+		</label>
+		-->
+	</article>
+
+	<!-- 範囲 -->
+	<article class="template-range">
+		<div class="input-group">
+			<div class="has-feedback">
+				<!-- <input type="text" class="form-control s-size fix display-inline from" /> -->
+				<input type="text" class="form-control from" />
+			</div>
+			<div class="input-group-addon">～</div>
+			<div class="has-feedback">
+				<!-- <input type="text" class="form-control s-size fix display-inline to" /> -->
+				<input type="text" class="form-control to" />
+			</div>
+		</div>
+	</article>
+
+	<!-- ユーザ -->
+	<article class="template-user">
+		<div class="input-group">
+			<input class="corporationCode" type="hidden" readonly />
+			<input class="userCode" type="hidden" readonly />
+			<input class="userName form-control" type="text" readonly />
+			<span class="input-group-btn">
+				<a class="btnSelectUser btn btn-default btn-sm"><i class="glyphicon glyphicon-info-sign"></i></a>
+			</span>
+			<span class="input-group-btn">
+				<a class="btnClearUser btn btn-default btn-sm"><i class="glyphicon glyphicon-remove-circle"></i></a>
+			</span>
+		</div>
+	</article>
+
+	<!-- 組織 -->
+	<article class="template-org">
+		<div class="input-group">
+			<input class="corporationCode" type="hidden" readonly />
+			<input class="organizationCode" type="hidden" readonly />
+			<input class="organizationName input-group-field form-control" type="text" readonly />
+			<span class="input-group-btn">
+				<a class="btnSelectOrg btn btn-default btn-sm"><i class="glyphicon glyphicon-info-sign"></i></a>
+			</span>
+			<span class="input-group-btn">
+				<a class="btnClearOrg btn btn-default btn-sm"><i class="glyphicon glyphicon-remove-circle"></i></a>
+			</span>
+		</div>
+	</article>
+
+	<!-- 役職 -->
+	<article class="template-post">
+		<div class="input-group">
+			<input class="corporationCode" type="hidden" readonly />
+			<input class="postCode" type="hidden" readonly />
+			<input class="postName form-control" type="text" readonly />
+			<span class="input-group-btn">
+				<a class="btnSelectPost btn btn-default btn-sm"><i class="glyphicon glyphicon-info-sign"></i></a>
+			</span>
+			<span class="input-group-btn">
+				<a class="btnClearPost btn btn-default btn-sm"><i class="glyphicon glyphicon-remove-circle"></i></a>
+			</span>
+		</div>
+	</article>
+
+	<!-- 企業 -->
+	<article class="template-corporation">
+		<div class="input-group">
+			<input class="corporationCode" type="hidden" readonly />
+			<input class="corporationName form-control" type="text" readonly />
+			<span class="input-group-btn">
+				<a class="btnSelectCorporation btn btn-default btn-sm"><i class="glyphicon glyphicon-info-sign"></i></a>
+			</span>
+			<span class="input-group-btn">
+				<a class="btnClearCorporation btn btn-default btn-sm"><i class="glyphicon glyphicon-remove-circle"></i></a>
+			</span>
+		</div>
+	</article>
+
+	<!-- チェックボックス（0:OFF、1:ON） -->
+	<article class="template-flag">
+		<input type="checkbox" value="1" class="form-check-input" />
+	</article>
+
+	<!-- チェックボックス(1:OFF、2:ON)。申請状況とか -->
+	<article class="template-status">
+		<input type="checkbox" value="2" class="form-check-input" />
+	</article>
+
+	<article class="template-payMth">
+		<div class="form-control-static payMthOptionItems"></div>
+	</article>
+
+	<!-- 通常-->
+	<article class="template-normal has-feedback">
+		<input type="text" class="form-control" />
+	</article>
+
+	<!-- 代理 -->
+	<article class="template-proxyUser">
+		<select class="form-control proxyUser"></select>
+	</article>

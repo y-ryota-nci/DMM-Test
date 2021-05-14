@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+		<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+		<link rel="stylesheet" href="../../assets/jsTree/themes/default/style.min.css" />
+		<link rel="stylesheet" href="../../assets/nci/styles.css" />
+		<link rel="stylesheet" href="../../assets/nci/original.css" />
+		<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+		<link rel="stylesheet" href="../../assets/jquery-ui/jquery-ui.min.css" />
+		<style type="text/css">
+		h4 {
+			font-weight: bold;
+		}
+		.dragZone {
+			border: 2px dotted #0B85A1;
+			color: #92AAB0;
+			text-align: left;
+			vertical-align: middle;
+			padding: 10px;
+			margin-bottom: 10px;
+			font-size: 200%;
+		}
+		.pageNavi_vd0310>li {
+			margin-left: 4px;
+		}
+		.pageNavi_vd0310 .dropdown-menu li {
+			padding: 0px;
+		}
+		#processPositionInfo {
+			margin-right: 15px;
+			margin-left: 15px;
+			font-size: large;
+		}
+		#blocks {
+			padding-bottom: 20px;
+		}
+		.person-icon {	/* 要説明ブロックのアイコン */
+			padding-top: 4px;
+		}
+		</style>
+		<style type="text/css" id="customCssStyleTag"></style><!-- コンテナ固有のカスタムCSSスタイル -->
+
+		<script src="../../assets/jquery/jquery.min.js"></script>
+		<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+		<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+		<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+		<script src="../../assets/nci/NCI.js"></script>
+		<script src='../../assets/nci/validate.js'></script>
+		<script src='../../assets/nci/tray.js'></script>
+		<script src="../../assets/nci/codeBook.js"></script>
+		<script id="outside-javascript"></script><!-- 外部Javascript読み込み用SCRIPTタグ -->
+		<script src='../../endpoint/javascript/static/enabledEvaluate.js'></script><!-- 有効条件の判定ライブラリ関数 -->
+		<script src="../../assets/nci/enabledCondition.js"></script><!-- 有効条件の共通関数 -->
+		<script src="../../assets/nci/calculate.js"></script><!-- 計算式の共通関数 -->
+		<script src="../../assets/nci/parts.js"></script><!-- パーツ共通関数 -->
+		<script src="../../assets/nci/suggestion.js"></script><!-- サジェスチョン関数 -->
+		<script src="./include/block.js"></script>
+		<script src="./vd0310.js"></script>
+
+		<title>#{VD0310 申請・承認}</title>
+	</head>
+	<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+	<section id="pagetop" class="col-xs-12">
+		<div>
+			<span class="row col-sm-3 text-left">
+				<button class="btn btn-sm btn-default btnBack">
+					<i class="fa fa-reply"></i>
+					<span data-i18n="btnBack">戻る</span>
+				</button>
+				<!-- ポップアップで起動された時用の閉じるボタン -->
+				<button class="btn btn-sm btn-default btnClose hide">
+					<i class="fa fa-times"></i>
+					<span data-i18n="btnClose">閉じる</span>
+				</button>
+				<button class="btn btn-sm btn-success btnCopyDoc hide">
+					<i class="fa fa-copy"></i>
+					<span data-i18n="btnCopyDoc">コピー起票</span>
+				</button>
+			</span>
+			<div class="row col-sm-6 text-left">
+				<h1 class="text-center">
+					<span id="screenProcessName"></span> <!--span id="activityDefName"></span--><span id="businessProcessStatusName"></span>
+				</h1>
+			</div>
+			<span id="continuousProcessing" class="row col-sm-3 pull-right text-right hide">
+				<button id="btnMoveFirst" class="btn btn-sm btn-success" disabled>
+					<i class="fa fa-angle-double-left"></i>
+				</button>
+				<button id="btnMovePrev" class="btn btn-sm btn-success" disabled>
+					<i class="fa fa-angle-left"></i>
+				</button>
+
+				<span id="processPositionInfo">999/999</span>
+
+				<button id="btnMoveNext" class="btn btn-sm btn-success" disabled>
+					<i class="fa fa-angle-right"></i>
+				</button>
+				<button id="btnMoveLast" class="btn btn-sm btn-success" disabled>
+					<i class="fa fa-angle-double-right"></i>
+				</button>
+			</span>
+		</div>
+	</section>
+	<section class="col-xs-12">
+		<!-- パンくずリスト：モバイル用 -->
+		<div class="dropdown pull-right dropdown_pageNavi forSP hide">
+			<button class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+				<span class="caret"></span>
+				<span data-i18n="toBreadcrumbs">%{各項目へ}%</span>
+			</button>
+			<ul class="dropdown-menu breadcrumbs forSP"></ul>
+		</div>
+
+		<!-- パンくずリスト：PC用 -->
+		<div class="col-xs-12 forPC hide">
+			<ul class="breadcrumbs pageNavi clearfix forPC"></ul>
+		</div>
+	</section>
+	<section id="blocks" class="col-xs-12">
+	</section>
+	<div id="pageend"></div>
+	</body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./mm0003.js"></script>
+	<title>#{MM0003 ユーザの編集}</title>
+</head>
+
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section id="userInfo" class="container">
+		<div class="row">
+			<span class="screen-name">#{MM0003}</span>
+
+			<label class="sub-title" data-i18n="userInfo">#{ユーザー情報}</label>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label data-i18n="userCode">#{ユーザコード}</label>
+				<input id="userCode" type="text" class="required form-control" maxlength="25" disabled />
+				<input id="corporationCode" type="hidden" maxlength="10" />
+				<input id="timestampUpdated" type="hidden" />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label data-i18n="userAddedInfo" class="required">#{ユーザID}</label>
+				<input id="userAddedInfo" type="text" class="required form-control" maxlength="50" data-validate='{ "pattern" : "alphaSymbolNumber" }' />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label data-i18n="userName" class="required">#{ユーザ名称}</label>
+				<input id="userName" type="text" class="required form-control" maxlength="100" />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label data-i18n="userNameAbbr">#{ユーザ略称}</label>
+				<input id="userNameAbbr" type="text" class="form-control" maxlength="100" />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label data-i18n="sealName">#{印章名称}</label>
+				<input id="sealName" type="text" class="form-control" maxlength="30" />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label data-i18n="postNum">#{郵便番号}</label>
+				<input id="postNum" type="text" class="form-control" maxlength="10" data-validate='{"pattern" : "postCode" }' />
+			</div>
+
+			<div class="form-group col-sm-8 col-md-6">
+				<label data-i18n="address">#{住所}</label>
+				<input id="address" type="text" class="form-control" maxlength="300" />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label data-i18n="telNum">#{電話番号}</label>
+				<input id="telNum" type="text" class="form-control" maxlength="20" data-validate='{"pattern" : "tel" }' />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label data-i18n="telNumCel">#{携帯電話番号}</label>
+				<input id="telNumCel" type="text" class="form-control" maxlength="20" data-validate='{"pattern": "tel" }' />
+			</div>
+
+			<div class="form-group col-sm-8 col-md-6">
+				<label data-i18n="mailAddress">#{メールアドレス}</label>
+				<input id="mailAddress" type="text" class="form-control" maxlength="100" data-validate='{"pattern" : "mail" }' />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label><span data-i18n="extendedInfo">#{拡張情報}</span>01</label>
+				<input id="extendedInfo01" type="text" class="form-control" maxlength="30" />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label><span data-i18n="extendedInfo">#{拡張情報}</span>02</label>
+				<input id="extendedInfo02" type="text" class="form-control" maxlength="30" />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label><span data-i18n="extendedInfo">#{拡張情報}</span>03</label>
+				<input id="extendedInfo03" type="text" class="form-control" maxlength="30" />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label><span data-i18n="extendedInfo">#{拡張情報}</span>04</label>
+				<input id="extendedInfo04" type="text" class="form-control" maxlength="30" />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label><span data-i18n="extendedInfo">#{拡張情報}</span>05</label>
+				<input id="extendedInfo05" type="text" class="form-control" maxlength="30" />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label data-i18n="deleteFlag" class="required">#{削除区分}</label>
+				<input id="deleteFlag" type="hidden" disabled />
+				<input id="deleteFlagName" type="text" class="form-control" disabled />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label data-i18n="defaultLocale" class="required">#{言語}</label>
+				<select id="defaultLocaleCode" class="form-control"></select>
+			</div>
+
+			<div class="form-group col-sm-8 col-md-6">
+				<label data-i18n="validTerm" class="required">#{有効期間}</label>
+				<div class="input-group">
+					<div class="has-feedback">
+						<input id="validStartDate" type="text" class="form-control ymdPicker required" maxlength="10" data-validate='{"pattern" : "date", "to" : "#validEndDate" }' />
+						<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+					</div>
+					<label class="input-group-addon">～</label>
+					<div class="has-feedback">
+						<input id="validEndDate" type="text" class="form-control ymdPicker required" maxlength="10" data-validate='{"pattern" : "date", "from" : "#validStartDate" }' />
+						<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group col-xs-12 text-center">
+				<button id="btnUpdateUser" class="btn btn-primary default-enabled" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnUpdate">#{更新}</span>
+				</button>
+				<button id="btnRemoveUser" class="btn btn-danger default-enabled" disabled>
+					<i class="glyphicon glyphicon-trash"></i>
+					<span data-i18n="btnDelete">#{削除}</span>
+				</button>
+				<button id="btnBack" class="btn btn-default default-enabled">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnBack">#{戻る}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+
+	<section class="container" id="userBelongInfo">
+		<div class="row">
+			<label class="sub-title" data-i18n="userBelongInfo">#{ユーザー所属情報}</label>
+			<table class="table table-hover table-striped table-condensed responsive">
+				<colgroup>
+					<col class="hide" />
+					<col class="col-sm-1" />
+					<col class="col-sm-1" />
+					<col class="col-sm-5" />
+					<col class="col-sm-2" />
+					<col class="col-sm-3" />
+				</colgroup>
+
+				<thead>
+					<tr>
+						<th data-i18n="seqNoUserBelong" class="hide">#{所属連番}</th>
+						<th data-i18n="choice">&nbsp;</th>
+						<th data-i18n="jobType">#{主務兼務}</th>
+						<th data-i18n="organizationName">#{組織名称}</th>
+						<th data-i18n="postName">#{役職名称}</th>
+						<th data-i18n="validTerm">#{有効期限}</th>
+					</tr>
+				</thead>
+
+				<tbody></tbody>
+
+				<tfoot class="template hide">
+					<tr>
+						<th class="hide"><a href="#" data-field="seqNoUserBelong">#{1}</a></th>
+						<td><input type="checkbox" class="selectable" /></td>
+						<td><input type="radio" name="jobType" value="1" class="required" data-field="jobType" /></td>
+						<td><a href="#" data-field="organizationName">#{組織名称}</a></td>
+						<td><a href="#" data-field="postName">#{役職名称}</a></td>
+						<td><span data-field="validStartDate"></span>～<span data-field="validEndDate"></span></td>
+						<td class="hide">
+							<span data-field="corporationCode"></span>
+							<span data-field="userCode"></span>
+							<span data-field="userName"></span>
+							<span data-field="organizationCode"></span>
+							<span data-field="postCode"></span>
+							<span data-field="immediateManagerFlag"></span>
+							<span data-field="timestampUpdated"></span>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="form-group text-center">
+				<button id="btnAddBelong" class="btn btn-primary default-enabled" disabled>
+					<i class="glyphicon glyphicon-plus-sign"></i>
+					<span data-i18n="btnAdd">#{追加}</span>
+				</button>
+				<button id="btnRemoveBelong" class="btn btn-danger default-disabled" disabled>
+					<i class="glyphicon glyphicon-minus-sign"></i>
+					<span data-i18n="btnDelete">#{削除}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+
+	<section class="container" id="menuRoleInfo">
+		<div class="row">
+			<label class="sub-title" data-i18n="roleInFuture">#{所有予定のロール}</label>
+			<table class="table table-hover table-striped table-condensed responsive">
+				<colgroup>
+					<col style="width:30%" />
+					<col style="width:70%" />
+				</colgroup>
+				<thead>
+					<tr>
+						<th data-i18n="menuRoleCode">#{メニューロールCD}</th>
+						<th data-i18n="menuRoleName">#{メニューロール名称}</th>
+					</tr>
+				</thead>
+
+				<tbody></tbody>
+
+				<tfoot class="template hide">
+					<tr>
+						<td class="menuRoleCode">#{メニューロールCD}</td>
+						<td class="menuRoleName">#{メニューロール名称}</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</section>
+
+	<section class="container" id="authTransferInfo">
+		<div class="row">
+			<label class="sub-title">代理しているユーザ</label>
+			<table class="table table-hover table-striped table-condensed responsive">
+				<colgroup>
+					<col class="col-sm-3" />
+					<col class="col-sm-3" />
+					<col class="col-sm-6" />
+				</colgroup>
+
+				<thead>
+					<tr>
+						<th data-i18n="userAddedInfo">#{ユーザID}</th>
+						<th data-i18n="userName">#{ユーザ名称}</th>
+						<th data-i18n="validTerm">#{有効期間}</th>
+					</tr>
+				</thead>
+
+				<tbody></tbody>
+
+				<tfoot class="template hide">
+					<tr>
+						<td class="userAddedInfo">#{Adminsitrator}</td>
+						<td class="userName">#{ユーザー氏名}</td>
+						<td class="validStartDate">#{yyyy/MM/dd}～#{yyyy/MM/dd}</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</section>
+
+	<section class="container" id="reverseAuthTransferInfo">
+		<div class="row">
+			<label class="sub-title">代理してもらっているユーザ</label>
+			<table class="table table-hover table-striped table-condensed responsive">
+				<colgroup>
+					<col style="width:25%" />
+					<col style="width:25%" />
+					<col style="width:50%" />
+				</colgroup>
+
+				<thead>
+					<tr>
+						<th data-i18n="userAddedInfo">#{ユーザID}</th>
+						<th data-i18n="userName">#{ユーザ名称}</th>
+						<th data-i18n="validTerm">#{有効期間}</th>
+					</tr>
+				</thead>
+
+				<tbody></tbody>
+
+				<tfoot class="template hide">
+					<tr>
+						<td class="userAddedInfo">#{Adminsitrator}</td>
+						<td class="userName">#{ユーザー氏名}</td>
+						<td class="validStartDate">#{yyyy/MM/dd}～#{yyyy/MM/dd}</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</section>
+</html>

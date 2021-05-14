@@ -1,0 +1,23 @@
+<!-- イベントボタンパーツのプロパティ -->
+<script type="text/javascript" src="./vd0114_13.js"></script>
+<div id="vd0114_13">
+	<label class="sub-title" data-i18n="eventButton">#{イベントButton}</label>
+
+	<div id="divExtProperties">
+		<div class='form-group col-sm-4'>
+			<span data-i18n='buttonLabel' class='form-control-static'>#{ボタンラベル}</span>
+			<input id='buttonLabel' class='form-control' maxlength='100' />
+		</div>
+
+		<div class='form-group col-sm-4'>
+			<span data-i18n='iconCssClass' class='form-control-static'>#{アイコン用CSSクラス}</span>
+			<input id='iconCssClass' class='form-control' maxlength='90'
+					data-validate='{"pattern" : "alphaSymbolNumber" }' />
+		</div>
+
+		<div class='form-group col-sm-4'>
+			<span data-i18n='buttonSize' class='form-control-static required'>#{ボタンサイズ}</span>
+			<select id='buttonSize' class='form-control buttonSize required'></select>
+		</div>
+	</div>
+</div>

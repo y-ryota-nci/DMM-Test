@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./ti0011.js"></script>
+	<title>#{TI0011 マスタカテゴリ設定}</title>
+</head>
+<body>
+	<header></header>
+
+	<article id="TI0010" class="container">
+		<section class="row">
+			<span id="header" class="screen-name">#{TI0011}</span>
+			<div class="sub-title" data-i18n="TI0011">#{マスタカテゴリ設定}</div>
+		</section>
+
+		<section class="container">
+			<div class="row">
+				<div class="col-xs-4 text-left">
+					<button id="btnAdd" class="btn btn-primary" disabled>
+						<i class="glyphicon glyphicon-plus-sign"></i>
+						<span data-i18n="btnAdd">#{追加}</span>
+					</button>
+				</div>
+			</div>
+		</section>
+
+		<section class="row" id="divRoot">
+			<table class="table table-hover table-striped table-condensed responsive">
+				<colgroup>
+					<col style="width: 3%" />
+					<col class="col-xs-4" />
+					<col class="col-xs-8" />
+				</colgroup>
+				<thead>
+					<tr>
+						<th></th>
+						<th data-i18n="categoryCode" class="required"></th>
+						<th data-i18n="categoryName" class="required"></th>
+				</thead>
+				<tbody></tbody>
+				<tfoot class="template hide">
+					<tr>
+						<td>
+							<input type="checkbox" class="selected" />
+						</td>
+						<td>
+							<input data-field="categoryCode" type="text" class="form-control required" maxlength="30"
+									data-validate='{"pattern" : "alphaNumberUnderscore"}' />
+						</td>
+						<td>
+							<input data-field="categoryName" type="text" class="form-control required" maxlength="30" />
+						</td>
+						<td data-field="categoryId" class="hide">#{テーブルカテゴリID}</td>
+						<td data-field="corporationCode" class="hide">#{企業コード}</td>
+					</tr>
+				</tfoot>
+			</table>
+		</section>
+
+		<section class="container">
+			<div class="row">
+				<div class="text-center">
+					<button id="btnUpdate" class="btn btn-primary" disabled>
+						<i class="glyphicon glyphicon-ok-sign"></i>
+						<span data-i18n="btnUpdate">#{更新}</span>
+					</button>
+					<button id="btnDelete" class="btn btn-danger" disabled>
+						<i class="glyphicon glyphicon-trash"></i>
+						<span data-i18n="btnDelete">#{削除}</span>
+					</button>
+					<button id="btnClose" class="btn btn-default" data-close>
+						<i class="glyphicon glyphicon-share-alt"></i>
+						<span data-i18n="btnClose">#{閉じる}</span>
+					</button>
+				</div>
+			</div>
+		</section>
+
+	</article>
+</body>
+</html>

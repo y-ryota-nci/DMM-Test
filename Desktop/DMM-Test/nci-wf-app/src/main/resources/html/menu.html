@@ -1,0 +1,99 @@
+	<div id="head_object">
+		<nav class="navbar navbar-custom" role="navigation">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#spMenu">		<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+
+					<a id="menu-app-name" class="navbar-brand" href="#"><span></span></a>
+					<div class="navbar-right">
+						<div class="btn-group pR10" data-toggle="buttons">
+							<select id="menu-corporationCode"></select>
+						</div>
+						<span class="admin forPC menu-user-name">管理者　Yamada Taro さん</span>
+						<div class="btn-group pR10" data-toggle="buttons">
+							<select id="menu-localeCode"></select>
+						</div>
+						<a id="lnkLogout" href="#" class="forPC"><i class="glyphicon glyphicon-log-out"></i></a>
+					</div>
+				</div>
+			</div><!-- /.container-fluid -->
+		</nav>
+		<div class="admin forSP menu-user-name">管理者　Yamada Taro さん</div>
+
+		<!-- PCメニュー -->
+		<div id="pcMenu" class="navi">
+			<ul>
+				<li><a href="#">ワークリスト</a></li>
+				<li class="on"><a href="#">案件一覧</a></li>
+				<li><a href="#">新規起案</a></li>
+				<li><a href="#">滞留案件</a></li>
+				<li><a href="#">掲示板</a></li>
+				<li><a href="#">文書管理</a></li>
+				<li><a href="#">業務管理</a></li>
+				<li><a href="#">伝票作成</a></li>
+				<li><a href="#">マスタ管理</a></li>
+				<li><a href="#">汎用マスタ管理</a></li>
+				<li><a href="#">企業管理者</a></li>
+			</ul>
+		</div>
+	</div>
+	<!-- /PCメニュー -->
+
+	<!-- スマホのメニュー -->
+	<div id="spMenu" class="col-sm-3 col-lg-2 sidebar forSP">
+
+			<div class="divider"></div>
+
+			<ul class="nav menu">
+				<li><a href="#">案件一覧</a></li>
+				<li><a href="#">新規起案</a></li>
+				<li><a href="#">滞留案件</a></li>
+				<li><a href="#">掲示板</a></li>
+				<li class="parent">
+					<a data-toggle="collapse" href="#sub-menu-1">
+						文書管理
+						<span data-toggle="collapse" data-target="#sub-menu-1" class="icon pull-right">
+							<i class="fa fa-plus"></i>
+						</span>
+					</a>
+					<ul class="children collapse" id="sub-menu-1">
+						<li><a class="" href="#">文書一覧</a></li>
+						<li><a class="" href="#">業務文書登録</a></li>
+						<li><a class="" href="#">バインダ登録</a></li>
+						<li class="parent">
+							<a data-toggle="collapse" class="subsub" href="#subsub-menu-1">フォルダ設定
+								<span data-toggle="collapse" data-target="#subsub-menu-1" class="icon pull-right">
+									<i class="fa fa-plus"></i>
+								</span>
+							</a>
+							<ul class="children collapse subsub" id="subsub-menu-1">
+								<li><a class="" href="#">└テスト</a></li>
+								<li><a class="" href="#">└テスト</a></li>
+								<li><a class="" href="#">└テスト</a></li>
+								<li><a class="" href="#">└テスト</a></li>
+							</ul>
+						</li>
+						<li><a class="" href="#">拡張項目設定</a></li>
+						<li><a class="" href="#">テンプレート</a></li>
+						<li><a class="" href="#">業務文書メンテナンス</a></li>
+					</ul>
+				</li>
+				<li><a href="#">業務管理</a></li>
+				<li><a href="#">伝票作成</a></li>
+				<li><a href="#">マスタ管理</a></li>
+				<li><a href="#">汎用マスタ管理</a></li>
+				<li><a href="#">企業管理者</a></li>
+				<li><a href="#">お知らせ</a></li>
+				<li><a href="#">ヘルプ</a></li>
+				<li><a href="#">マニュアル</a></li>
+				<li class="searchBtn">
+					<button id="btnLogout" class="btn btn-default margin">
+						<i class="glyphicon glyphicon-log-out"></i><span data-i18n="btnLogout"></span>
+					</button>
+				</li>
+			</ul>
+		</div><!-- / スマホのメニュー -->

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+<link rel="stylesheet" href="../../assets/jsTree/themes/default/style.min.css" />
+<link rel="stylesheet" href="../../assets/nci/styles.css" />
+<link rel="stylesheet" href="../../assets/nci/original.css" />
+<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+<link rel="stylesheet" href="../../assets/select2/css/select2.min.css" />
+<style type="text/css">
+</style>
+<script src="../../assets/jquery/jquery.min.js"></script>
+<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="../../assets/nci/NCI.js"></script>
+<script src="../../assets/nci/validate.js"></script>
+<script src="./dc0906.js"></script>
+<title>#{DC0906 ファイル移動}</title>
+</head>
+<body>
+<header class="container-fluid"></header>
+<section class="col-xs-12">
+	<article class="row">
+		<h1 class="page-header">ファイル移動 </h1>
+	</article>
+
+	<article class="row">
+		<div class="panel panel-default">
+			<div id="contents" class="panel-collapse collapse in">
+				<form id="formCondition" class="panel-body">
+					<table class="table table-bordered table-hover table-striped">
+						<colgroup>
+							<col class="col-sm-2 col-xs-4" />
+							<col class="col-sm-10 col-xs-8" />
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>
+									<span class="required" data-i18n="moveTo">#{移動先}</span>
+								</th>
+								<td>
+									<div id="divDocInfo" class="input-group">
+										<input type="text" id="title" class="form-control required" readonly/>
+										<input type="hidden" id="toDocId" />
+										<span class="input-group-btn">
+											<button id="btnSelectDocInfo" type="button" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-info-sign"></i></button>
+										</span>
+										<span class="input-group-btn">
+											<button id="btnClearDocInfo" type="button" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-remove-circle"></i></button>
+										</span>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>
+									<span data-i18n="version">#{バージョン}</span>
+								</th>
+								<td>
+									<input id="notVersionCopy" type="checkbox" value="1"/><span data-i18n="">バージョンはコピーしない</span>
+								</td>
+							</tr>
+							<tr class="hide">
+								<td>
+									<span id="docFileId"></span>
+									<span id="corporationCode"></span>
+									<span id="version"></span>
+									<span id="excludeDocId"></span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</div>
+		</div>
+		<div class="form-group text-center">
+			<button id="btnMove" class="btn btn-primary">
+				<i class="fa fa-copy"></i>
+				<span data-i18n="btnCopy">#{コピー}</span>
+			</button>
+			<button id="btnClose" class="btn btn-default" data-close>
+				<i class="fa fa-times"></i>
+				<span data-i18n="btnClose">#{閉じる}</span>
+			</button>
+		</div>
+	</article>
+</section>
+</body>
+</html>

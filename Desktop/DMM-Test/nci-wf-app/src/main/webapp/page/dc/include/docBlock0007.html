@@ -1,0 +1,51 @@
+<!-- 更新履歴ブロック -->
+<article id="docBlock0007">
+	<div class="panel panel-default">
+		<div id="a1" class="panel-heading clearfix">
+			<span id="docBlock0007_expansion" class="collapse_btn collapsed" role="button" data-toggle="collapse" data-target="#docBlock0007_contents">
+				<i class="fa fa-chevron-down"></i><span data-field="blockName">#{更新履歴}</span>
+			</span>
+			<div class="topend_btn">
+				<a href="#pageend" class="pageend">END</a>
+			</div>
+			<div class="topend_btn">
+				<a href="#pagetop" class="pagetop">TOP</a>
+			</div>
+		</div>
+
+		<div id="docBlock0007_contents" class="panel-body panel-collapse collapse">
+			<div id="historyList" class="table-responsive">
+				<table class="table table-bordered table-hover table-striped responsive">
+					<colgroup>
+						<col class="col-sm-2 col-xs-3"><!-- 形式 -->
+						<col class="col-sm-2 col-xs-5"><!-- 更新日時 -->
+						<col class="col-sm-2 col-xs-4"><!-- 更新者 -->
+						<col class="col-sm-6 hidden-xs"><!-- 更新内容 -->
+					</colgroup>
+					<thead>
+						<tr>
+							<th data-i18n="activityEndType">#{形式}</th>
+							<th data-i18n="updateTimestamp">#{更新日時}</th>
+							<th data-i18n="updater">#{更新者}</th>
+							<th data-i18n="updateContents" class="hidden-xs">#{更新内容}</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+					<tfoot class="template hide">
+						<tr>
+							<td><span data-field="contentsType">#{contentsType}</span></td>
+							<td><span data-field="docUpdateDate">#{docUpdateDate}</span></td>
+							<td><span data-field="docUpdateUserName">#{docUpdateUserName}</span></td>
+							<td class="hidden-xs"><span data-field="docUpdateLog">#{docUpdateLog}</span></td>
+							<td class="hide">
+								<span data-field="docUpdateLogId">#{docUpdateLogId}</span>
+								<span data-field="docId">#{docId}</span>
+								<span data-field="docVersionId">#{activityId}</span>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+</article>

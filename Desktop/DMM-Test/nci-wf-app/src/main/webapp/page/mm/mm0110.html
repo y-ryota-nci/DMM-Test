@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel='stylesheet' href='../../assets/jquery-minicolors/jquery.minicolors.css' />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src='../../assets/jquery-minicolors/jquery.minicolors.min.js'></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./mm0110.js"></script>
+	<title>#{MM0110システムプロパティ編集}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="container">
+		<div class="row">
+			<label class="sub-title">
+				<span data-i18n="corporation"></span>
+			</label>
+			<dl class="dl-horizontal">
+				<dt class="form-control-static" data-i18n="corporation"></dt>
+				<dd><select id="corporationCode" class="required form-control"></select></dd>
+			</dl>
+		</div>
+
+		<div id="inputs" class="row">
+			<span class="screen-name">#{MM0110}</span>
+
+			<label class="sub-title">
+				<span  data-i18n="systemProperty"></span>
+			</label>
+			<table id="tblInput" class="table responsive">
+				<colgroup>
+					<col class="col-sm-4" />
+					<col class="col-sm-4" />
+					<col class="col-sm-2" />
+					<col class="col-sm-2" />
+				</colgroup>
+
+				<thead>
+					<tr>
+						<th data-i18n="propertyCode">プロパティコード
+						<th data-i18n="description">説明
+						<th data-i18n="defaultValue">デフォルト値
+						<th data-i18n="corporationPropertyValue">企業固有値
+				</thead>
+
+				<tbody>
+					<tr>
+						<td data-field="propertyCode">SITE_BG_COLOR
+						<td data-field="propertyName">
+						<td><input data-field="defaultValue" class="form-control required color-picker" disabled
+								data-validate='{ "pattern" : "alphaNumberSymbol" }' maxlength="7">
+						<td><input data-field="propertyValue" class="form-control color-picker" disabled
+								data-validate='{ "pattern" : "alphaNumberSymbol" }' maxlength="7">
+					<tr>
+						<td data-field="propertyCode">SITE_FONT_COLOR
+						<td data-field="propertyName">
+						<td><input data-field="defaultValue" class="form-control required color-picker" disabled
+								data-validate='{ "pattern" : "alphaNumberSymbol" }' maxlength="7">
+						<td><input data-field="propertyValue" class="form-control color-picker" disabled
+								data-validate='{ "pattern" : "alphaNumberSymbol" }' maxlength="7">
+					<tr>
+						<td data-field="propertyCode">USE_TEST_BG_IMAGE
+						<td data-field="propertyName">
+						<td><select data-field="defaultValue" class="form-control" disabled><option value="FALSE">FALSE<option value="TRUE">TRUE</select>
+						<td><select data-field="propertyValue" class="form-control" disabled></select>
+					<tr>
+						<td data-field="propertyCode">LOGIN_ALLOWED_FAILURE_COUNT
+						<td data-field="propertyName">
+						<td><input data-field="defaultValue" class="form-control required" disabled
+								data-validate='{ "pattern" : "integer", "max" : 999, "min" : 0 }' maxlength="3">
+						<td><input data-field="propertyValue" class="form-control"
+								data-validate='{ "pattern" : "integer", "max" : 999, "min" : 0 }' maxlength="3">
+					<tr>
+						<td data-field="propertyCode">PASSWORD_VALIDITY_TERM
+						<td data-field="propertyName">
+						<td><input data-field="defaultValue" class="form-control required" disabled
+								data-validate='{ "pattern" : "integer", "max" : 999, "min" : 0 }' maxlength="3">
+						<td><input data-field="propertyValue" class="form-control"
+								data-validate='{ "pattern" : "integer", "max" : 999, "min" : 0 }' maxlength="3">
+					<tr>
+						<td data-field="propertyCode">MIN_PASSWORD_LENGTH
+						<td data-field="propertyName">
+						<td><input data-field="defaultValue" class="form-control required" disabled
+								data-validate='{ "pattern" : "integer", "max" : 99, "min" : 0 }' maxlength="2">
+						<td><input data-field="propertyValue" class="form-control"
+								data-validate='{ "pattern" : "integer", "max" : 99, "min" : 0 }' maxlength="2">
+					<tr>
+						<td data-field="propertyCode">PASSWORD_COMPLEXITY
+						<td data-field="propertyName">
+						<td><select data-field="defaultValue" class="form-control required" disabled><option value="FALSE">FALSE<option value="TRUE">TRUE</select>
+						<td><select data-field="propertyValue" class="form-control"><option value="" label="--" /><option value="FALSE">FALSE<option value="TRUE">TRUE</select>
+					<tr>
+						<td data-field="propertyCode">ALLOWED_LOGINID_CONTAIN
+						<td data-field="propertyName">
+						<td><select data-field="defaultValue" class="form-control required" disabled><option value="FALSE">FALSE<option value="TRUE">TRUE</select>
+						<td><select data-field="propertyValue" class="form-control"><option value="" label="--" /><option value="FALSE">FALSE<option value="TRUE">TRUE</select>
+					<tr>
+						<td data-field="propertyCode">PASSWORD_VALIDITY_GENERATION
+						<td data-field="propertyName">
+						<td><input data-field="defaultValue" class="form-control required" disabled
+								data-validate='{ "pattern" : "integer", "max" : 99, "min" : 0 }' maxlength="2">
+						<td><input data-field="propertyValue" class="form-control"
+								data-validate='{ "pattern" : "integer", "max" : 99, "min" : 0 }' maxlength="2">
+					<tr>
+						<td data-field="propertyCode">FIRST_LOGIN_CHANGE
+						<td data-field="propertyName">
+						<td><select data-field="defaultValue" class="form-control required" disabled><option value="FALSE">FALSE<option value="TRUE">TRUE</select>
+						<td><select data-field="propertyValue" class="form-control"><option value="" label="--" /><option value="FALSE">FALSE<option value="TRUE">TRUE</select>
+					<tr>
+						<td data-field="propertyCode">AUTH_TRANSFER_NOTIFICATION
+						<td data-field="propertyName">
+						<td><select data-field="defaultValue" class="form-control required" disabled><option value="FALSE">FALSE<option value="TRUE">TRUE</select>
+						<td><select data-field="propertyValue" class="form-control"><option value="" label="--" /><option value="FALSE">FALSE<option value="TRUE">TRUE</select>
+					<tr>
+						<td data-field="propertyCode">ACCOUNT_LOCK_NOTIFICATION
+						<td data-field="propertyName">
+						<td><select data-field="defaultValue" class="form-control required" disabled><option value="FALSE">FALSE<option value="TRUE">TRUE</select>
+						<td><select data-field="propertyValue" class="form-control"><option value="" label="--" /><option value="FALSE">FALSE<option value="TRUE">TRUE</select>
+					<tr>
+						<td data-field="propertyCode">CACHE_INTERVAL_SECONDS
+						<td data-field="propertyName">
+						<td><input data-field="defaultValue" class="form-control required" disabled
+								data-validate='{ "pattern" : "integer", "max" : 86400, "min" : 0 }' maxlength="6">
+						<td><input data-field="propertyValue" class="form-control" disabled
+								data-validate='{ "pattern" : "integer", "max" : 86400, "min" : 0 }' maxlength="6">
+					<tr>
+						<td data-field="propertyCode">LOGIN_FOR_ADMIN_ONLY
+						<td data-field="propertyName">
+						<td><select data-field="defaultValue" class="form-control" disabled><option value="FALSE">FALSE<option value="TRUE">TRUE</select>
+						<td><select data-field="propertyValue" class="form-control" disabled></select>
+					<tr>
+						<td data-field="propertyCode">LDAP_PROVIDER_URL
+						<td data-field="propertyName">
+						<td><input data-field="defaultValue" class="form-control required" maxlength="100">
+						<td><input data-field="propertyValue" class="form-control" disabled maxlength="100">
+					<tr>
+						<td data-field="propertyCode">AD_DOMAIN_NAME
+						<td data-field="propertyName">
+						<td><input data-field="defaultValue" class="form-control required" maxlength="100">
+						<td><input data-field="propertyValue" class="form-control" disabled maxlength="100">
+					<tr>
+						<td data-field="propertyCode">LDAP_PRINCIPAL_SUFFIX
+						<td data-field="propertyName">
+						<td><input data-field="defaultValue" class="form-control required" maxlength="100">
+						<td><input data-field="propertyValue" class="form-control" disabled maxlength="100">
+					<tr>
+						<td data-field="propertyCode">USE_LOGIN_SCREEN
+						<td data-field="propertyName">
+						<td><select data-field="defaultValue" class="form-control" disabled><option value="FALSE">FALSE<option value="TRUE">TRUE</select>
+						<td><select data-field="propertyValue" class="form-control" disabled></select>
+					<tr>
+						<td data-field="propertyCode">AUTHENTICATION_METHOD
+						<td data-field="propertyName">
+						<td><select data-field="defaultValue" class="form-control" disabled>
+								<option value="DB">DB
+								<option value="AD">AD
+								<option value="LDAP">LDAP
+								<option value="IWA">IWA
+							</select>
+						<td><select data-field="propertyValue" class="form-control" disabled></select>
+					<tr>
+						<td data-field="propertyCode">DISPLAY_DEBUG_INFO_ON_FOOTER
+						<td data-field="propertyName">
+						<td><select data-field="defaultValue" class="form-control" disabled><option value="FALSE">FALSE<option value="TRUE">TRUE</select>
+						<td><select data-field="propertyValue" class="form-control" disabled></select>
+					<tr>
+						<td data-field="propertyCode">ALLOW_ADMIN_TO_IMPERSONATE
+						<td data-field="propertyName">
+						<td><select data-field="defaultValue" class="form-control" disabled><option value="FALSE">FALSE<option value="TRUE">TRUE</select>
+						<td><select data-field="propertyValue" class="form-control" disabled></select>
+					<tr>
+						<td data-field="propertyCode">USE_LANGUAGE_SWITCHING
+						<td data-field="propertyName">
+						<td><select data-field="defaultValue" class="form-control" disabled><option value="FALSE">FALSE<option value="TRUE">TRUE</select>
+						<td><select data-field="propertyValue" class="form-control" disabled></select>
+					<tr>
+						<td data-field="propertyCode">MAX_FILE_SIZE_PER_PROCESS
+						<td data-field="propertyName">
+						<td><input data-field="defaultValue" class="form-control required" disabled
+								data-validate='{ "pattern" : "integer", "max" : 999, "min" : 0 }' maxlength="3">
+						<td><input data-field="propertyValue" class="form-control"
+								data-validate='{ "pattern" : "integer", "max" : 999, "min" : 0 }' maxlength="3">
+					<tr>
+						<td data-field="propertyCode">MAX_FILE_SIZE_PER_UPLOAD
+						<td data-field="propertyName">
+						<td><input data-field="defaultValue" class="form-control required" disabled
+								data-validate='{ "pattern" : "integer", "max" : 999, "min" : 0 }' maxlength="3">
+						<td><input data-field="propertyValue" class="form-control"
+								data-validate='{ "pattern" : "integer", "max" : 999, "min" : 0 }' maxlength="3">
+					<tr>
+						<td data-field="propertyCode">USE_APPROVERS_SETTING_SCREEN
+						<td data-field="propertyName">
+						<td><select data-field="defaultValue" class="form-control" disabled><option value="FALSE">FALSE<option value="TRUE">TRUE</select>
+						<td><select data-field="propertyValue" class="form-control" disabled></select>
+					<tr>
+						<td data-field="propertyCode">OLD_TAX_RATE_DISPLAY_REFERENCE_DATE
+						<td data-field="propertyName">
+						<td><input data-field="defaultValue" class="form-control required" maxlength="10">
+						<td><input data-field="propertyValue" class="form-control" disabled maxlength="10">
+					<!-- 「画面単位のアクセス制御を使用する」の建設予定地
+					<tr>
+						<td data-field="propertyCode">USE_SCREEN_AUTHORITY
+						<td data-field="propertyName">
+						<td><select data-field="defaultValue" class="form-control" disabled><option value="FALSE">FALSE<option value="TRUE">TRUE</select>
+						<td><select data-field="propertyValue" class="form-control" disabled></select>
+					 -->
+				</tbody>
+			</table>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<div class="col-xs-offset-4 col-xs-4 text-center">
+				<button id="btnUpdate" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnUpdate">#{更新}</span>
+				</button>
+			</div>
+			<div class="ol-xs-4 text-center">
+				<button id="btnDownload" class="btn btn-success" disabled>
+					<i class="glyphicon glyphicon-cloud-download"></i>
+					<span data-i18n="btnDownloadConfig">#{設定のダウンロード}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./ti0020.js"></script>
+	<title>#{TI0020 メニューロール一覧（マスタ権限設定）}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="container">
+		<div class="row">
+			<span class="screen-name">#{TI0020}</span>
+
+			<!-- javascript不要なアコーディオン -->
+			<article class="ac-container">
+				<input id="ac-1" type="checkbox" class="ac-trigger"/>
+				<label for="ac-1" class="ac-label sub-title">
+					<i class="glyphicon glyphicon-plus-sign"></i>
+					<span data-i18n="filterCondition">#{絞り込み条件を設定する}</span>
+					<i class="glyphicon glyphicon-chevron-up arrow-up"></i>
+					<i class="glyphicon glyphicon-chevron-down arrow-down"></i>
+				</label>
+				<form id="formCondition" class="ac-contents">
+					<div class="form-group col-sm-4 col-md-3">
+						<label data-i18n="menuRoleCode">#{menuRoleCode}</label>
+						<input type="text" id="menuRoleCode" class="form-control" maxlength="25" />
+					</div>
+					<div class="form-group col-sm-6 col-md-6">
+						<label data-i18n="menuRoleName">#{menuRoleName}</label>
+						<input type="text" id="menuRoleName" class="form-control" maxlength="30" />
+					</div>
+					<div class="form-group col-sm-6 col-md-6">
+						<label data-i18n="validTerm">#{validTerm}</label>
+						<div class="input-group">
+							<div class="has-feedback">
+								<input type="text" class="form-control ymdPicker" id="validStartDate" data-validate='{"to" : "#validEndDate", "pattern" : "date" }'/>
+								<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+							</div>
+							<span class="input-group-addon">～</span>
+							<div class="has-feedback">
+								<input type="text" class="form-control ymdPicker" id="validEndDate" data-validate='{"from" : "#validStartDate" , "pattern" : "date"}'/>
+								<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+							</div>
+						</div>
+					</div>
+					<div class="form-group col-sm-4 col-md-3">
+						<label data-i18n="deleteFlag">#{tableName}</label>
+						<select id="deleteFlag" class="form-control"></select>
+					</div>
+				</form>
+			</article>
+			<div class="form-group text-center">
+				<button id="btnSearch" class="btn btn-primary">
+					<i class="glyphicon glyphicon-search"></i>
+					<span data-i18n="btnFilter">#{btnFilter}</span>
+				</button>
+				<button id="btnReset" class="btn btn-default">
+					<i class="glyphicon glyphicon-refresh"></i>
+					<span data-i18n="btnReset">#{btnReset}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+
+	<section id="seach-result" class="container hide">
+		<div class="row" >
+			<!-- 検索結果サブタイトル -->
+			<div class="inline-group sub-title">
+				<div class="col-xs-3 text-left">
+					<i class="glyphicon glyphicon-info-sign"></i>
+					<span class="hidden-xs" data-i18n="searchResult">#{検索結果}</span>
+				</div>
+
+				<div class="col-xs-7 text-center">
+					<span>
+						<span data-i18n="pageCount">PAGE</span>:
+						<span class="page-no">#{page-no}</span>
+						 /
+						 <span class="page-count">#{page-count}</span>
+					</span>
+					<span class="hidden-xs">
+						&nbsp;&nbsp;
+						<span data-i18n="totalCount">#{総件数}</span>:
+						<span class="all-count">#{all-count}</span>
+					</span>
+				</div>
+
+				<!-- 設定アイコン -->
+				<div class="col-xs-2 pull-right text-right dropdown">
+					<i class="glyphicon glyphicon-cog dropdown-toggle clickable" data-toggle="dropdown"></i>
+
+					<!-- 設定アイコン押下時のエリア -->
+					<div class="dropdown-menu pageSizeConfig">
+			 			<label data-i18n="rowCountPerPage">#{１ページの行数}</label>
+						<select class="pageSize" class="form-control"></select>
+					</div>
+				</div>
+			</div>
+
+			<div class="text-center">
+				<ul class="pagination"></ul>
+			</div>
+
+			<table class="table table-hover table-striped table-condensed responsive">
+				<colgroup>
+					<col class="col-sm-3" />
+					<col class="col-sm-4" />
+					<col class="col-sm-4" />
+					<col class="col-sm-1" />
+				</colgroup>
+				<thead>
+				<tr>
+					<th><a href="#" data-i18n="menuRoleCode" data-sort="MR.MENU_ROLE_CODE">#{containerCode}</a>
+					<th><a href="#" data-i18n="menuRoleName" data-sort="MR.MENU_ROLE_NAME, MR.MENU_ROLE_CODE">#{containerName}</a>
+					<th><a href="#" data-i18n="validTerm" data-sort="MR.VALID_START_DATE, MR.VALID_END_DATE">#{tableName}</a>
+					<th><a href="#" data-i18n="deleteFlag" data-sort="MR.DELETE_FLAG, MR.MENU_ROLE_CODE">#{tableName}</a>
+				</thead>
+
+				<tbody></tbody>
+
+				<tfoot class="template hide">
+				<tr>
+					<th class="text-left"><a href="#" data-field="menuRoleCode">#{menuRoleCode}</a></th>
+					<td class="text-left"><a href="#" data-field="menuRoleName">#{menuRoleName}</a></td>
+					<td class="text-left">
+						<span data-field="validStartDate"></span>
+						<span>～</span>
+						<span data-field="validEndDate"></span>
+					</td>
+					<td class="text-left" data-field="deleteFlagName">#{deleteFlagName}</td>
+					<td class="hide" data-field="corporationCode"></td>
+					<td class="hide" data-field="timestampUpdated"></td>
+				</tfoot>
+			</table>
+
+			<div class="text-center">
+				<ul class="pagination"></ul>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

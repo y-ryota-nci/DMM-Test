@@ -1,0 +1,83 @@
+@charset "UTF-8";
+
+/* アクティビティ */
+	article.activity {
+		width : auto;
+		display : table;
+		margin-left : auto;
+		margin-right : auto;
+		min-width : 145px;
+		text-align : center;
+		margin-bottom : 40px;
+	}
+	article.activity + article.activity {
+	}
+
+	/* 未来のアクティビティ */
+	div.activity-name {
+		background-color : deepskyblue;
+		color : white;
+		font-weight : bold;
+		border : 2px dotted black;
+		border-top-left-radius : 5px;
+		border-top-right-radius : 5px;
+	}
+	div.assigned-user, div.execution-date {
+		padding : 0px 6px;
+		min-height : 26px;
+		min-width : 146px;
+	}
+	div.assigned-user {
+		border-left : 2px dotted black;
+		border-right : 2px dotted black;
+	}
+	div.execution-date {
+		border : 2px dotted black;
+		border-bottom-left-radius : 5px;
+		border-bottom-right-radius : 5px;
+	}
+	/* 現在以降のアクティビティ */
+	article.activity.closed > div.activity-name,
+	article.activity.closed > div.execution-date,
+	article.activity.current > div.activity-name,
+	article.activity.current > div.execution-date
+	{
+		border : 2px solid black;
+	}
+	article.activity.closed > div.assigned-user,
+	article.activity.current > div.assigned-user {
+		border-left : 2px solid black;
+		border-right : 2px solid black;
+	}
+	/* 現在のアクティビティ */
+	article.activity.current > div.assigned-user,
+	article.activity.current > div.execution-date {
+		background-color : yellow;
+	}
+	/* 処理済みアクティビティ */
+	article.activity.closed > div.assigned-user,
+	article.activity.closed > div.execution-date {
+		background-color : lightgrey;
+	}
+
+/* 並行処理 */
+	table.parallel {
+		margin-left : auto;
+		margin-right : auto;
+		width : auto;
+		margin-bottom : 40px;
+		block : inline-block;
+		border-collapse: separate;
+		border-spacing: 3px;
+	}
+	table.parallel > tbody > tr > th,
+	table.parallel > tbody > tr > td {
+		min-width : 200px;
+		padding : 6px 30px;
+		text-align : center;
+		vertical-align : top;
+	}
+	table.parallel > tbody > tr > th {
+		background-color : lightblue;
+		border-radius : 5px;
+	}

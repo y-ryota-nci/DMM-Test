@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+<link rel="stylesheet" href="../../assets/jsTree/themes/default/style.min.css" />
+<link rel="stylesheet" href="../../assets/nci/styles.css" />
+<link rel="stylesheet" href="../../assets/nci/original.css" />
+<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+<style type="text/css">
+a.jstree-anchor[data-type=file] {
+	color : green;
+}
+a.jstree-anchor[data-type=file]>span.label {
+	vertical-align: 1px;
+}
+#menuList {
+	padding-left: 0px;
+	padding-right: 0px;
+	margin-bottom: 0px;
+}
+#menuList .alert {
+	padding: 10px;
+	margin-bottom: 0px;
+}
+</style>
+<script src="../../assets/jquery/jquery.min.js"></script>
+<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../assets/jsTree/jstree.js"></script>
+<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="../../assets/nci/NCI.js"></script>
+<script src="../../assets/nci/validate.js"></script>
+<script src="./mm0130.js"></script>
+<title>#{MM0130 メニュー名称編集}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="col-xs-12">
+		<article class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">#{MM0130}</h1>
+			</div>
+		</article>
+
+		<article class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading" data-i18n="MM0130">#{メニュー名称編集一覧}</div>
+					<div id="condition-contents" class="panel-collapse collapse in">
+						<span data-i18n="MSG0210">#{メニュー名称をクリックすると編集可能です。更新内容は再ログイン後にメニューに反映されます。}</span>
+						<div class="panel-body">
+							<div id="menuList" class="form-group col-lg-12">
+								<div id="menuLevel" class="alert alert-info"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+	</section>
+
+	<button id="btnModal" class="hide" data-toggle="modal" data-target="#modal-example"></button>
+
+	<!-- モーダル -->
+	<div class="modal" id="modal-example" tabindex="-1">
+	    <div class="modal-dialog">
+
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <div class="panel-title" data-i18n="menuName">#{メニュー名称}</div>
+	            </div>
+	            <div class="modal-body">
+	                <input id="popMenuName" class="form-control required" maxLength="20" data-validate='{"maxLength" : 20}'></input>
+	                <input id="popMenuId" class="hide"></input>
+	            </div>
+	            <div class="modal-footer">
+					<button id="btnUpdate" class="btn btn-primary">
+						<i class="fa fa-save"></i>
+						<span data-i18n="btnUpdate">#{登録}</span>
+					</button>
+					<button id="btnClose" class="btn btn-default" data-dismiss="modal">
+						<i class="fa fa-times"></i>
+						<span data-i18n="btnClose">閉じる</span>
+					</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<style type="text/css">
+	#seach-result {
+		min-height: 480px;
+	}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src="./py0100.js"></script>
+	<title>PY0100 検収選択</title>
+</head>
+<body>
+	<header class="container-fluid"></header>
+
+	<section class="col-xs-12">
+		<article class="row">
+			<h1 class="page-header">検収選択</h1>
+		</article><!--/.row-->
+
+		<article class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#condition-contents"><i class="fa fa-chevron-up"></i><span data-i18n="searchCondition">検索条件</span></div>
+				<div id="condition-contents" class="panel-collapse collapse in">
+					<form class="tableBox col-lg-12 col-md-12 col-sm-12" id="formCondition" style="margin-bottom: 10px;">
+						<div class="tr">
+							<div class="col-lg-2 col-md-2 col-sm-2 th">発注No</div>
+							<div class="col-lg-4 col-md-4 col-sm-4 td">
+								<input class="corporationCode" id="corporationCode" type="hidden" readonly>
+								<input class="orgnzCd" id="orgnzCd" type="hidden" readonly>
+								<input class="form-control" id="purordNo" type="text">
+							</div>
+							<div class="col-lg-2 col-md-2 col-sm-2 th">発注件名</div>
+							<div class="col-lg-4 col-md-4 col-sm-4 td">
+								<input class="form-control" id="purordNm" type="text">
+							</div>
+						</div>
+						<div class="tr">
+							<div class="col-lg-2 col-md-2 col-sm-2 th">検収No</div>
+							<div class="col-lg-4 col-md-4 col-sm-4 td">
+								<input class="form-control" id="rcvinspNo" type="text">
+							</div>
+							<div class="col-lg-2 col-md-2 col-sm-2 th">検収件名</div>
+							<div class="col-lg-4 col-md-4 col-sm-4 td">
+								<input class="form-control" id="rcvinspNm" type="text">
+							</div>
+						</div>
+						<div class="tr">
+							<div class="col-lg-2 col-md-2 col-sm-2 th">取引先</div>
+							<div class="col-lg-4 col-md-4 col-sm-4 td">
+								<input class="splrNmKj input-group-field form-control" id="splrNmKj" type="text" maxlength="100">
+							</div>
+							<div class="col-lg-2 col-md-2 col-sm-2 th">検収状況</div>
+							<div class="col-lg-4 col-md-4 col-sm-4 td">
+								<span class="inline-block"><label for="rcvinspStsNotYet"><input type="checkbox" id="rcvinspStsNotYet" value="true">未支払依頼</label></span>
+								<span class="inline-block"><label for="rcvinspStsDone"><input type="checkbox" id="rcvinspStsDone" value="true">支払依頼済</label></span>
+							</div>
+						</div>
+						<div class="tr">
+							<div class="col-lg-2 col-md-2 col-sm-2 th">発注申請者</div>
+							<div class="col-lg-4 col-md-4 col-sm-4 td">
+								<input id="purordSbmtrNm" class="purordSbmtrNm input-group-field form-control" type="text" maxlength="100">
+							</div>
+							<div class="col-lg-2 col-md-2 col-sm-2 th">検収申請者</div>
+							<div class="col-lg-4 col-md-4 col-sm-4 td">
+								<input id="rcvinspSbmtrNm" class="rcvinspSbmtrNm input-group-field form-control" type="text" maxlength="100">
+							</div>
+						</div>
+						<div class="tr">
+							<div class="col-lg-2 col-md-2 col-sm-2 th">検収完了日</div>
+							<div class="col-lg-4 col-md-4 col-sm-4 td">
+								<div class="input-group">
+									<div class="has-feedback">
+										<input class="form-control from ymdPicker" id="rcvinspDtFrom" type="text" data-validate='{"pattern":"date","to":"#rcvinspDtTo"}'>
+										<i class="glyphicon glyphicon-calendar form-control-feedback">
+										</i>
+									</div>
+									<div class="input-group-addon">～
+									</div>
+									<div class="has-feedback">
+										<input class="form-control to ymdPicker" id="rcvinspDtTo" type="text" data-validate='{"pattern":"date","from":"#rcvinspDtFrom"}'>
+										<i class="glyphicon glyphicon-calendar form-control-feedback">
+										</i>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tr">
+							<div class="col-lg-2 col-md-2 col-sm-2 th">支払予定日</div>
+							<div class="col-lg-4 col-md-4 col-sm-4 td">
+								<div class="input-group">
+									<div class="has-feedback">
+										<input class="form-control from ymdPicker" id="payPlnDtFrom" type="text" data-validate='{"pattern":"date","to":"#payPlnDtTo"}'>
+										<i class="glyphicon glyphicon-calendar form-control-feedback">
+										</i>
+									</div>
+									<div class="input-group-addon">～
+									</div>
+									<div class="has-feedback">
+										<input class="form-control to ymdPicker" id="payPlnDtTo" type="text" data-validate='{"pattern":"date","from":"#payPlnDtFrom"}'>
+										<i class="glyphicon glyphicon-calendar form-control-feedback">
+										</i>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+					<span>※各申請者名での検索のみ前方一致なのでご注意ください</span>
+				</div>
+			</div>
+			<div class="form-group text-center">
+				<button id="btnSearch" class="btn btn-primary">
+					<i class="fa fa-search"></i>
+					<span data-i18n="btnFilter">#{btnFilter}</span>
+				</button>
+				<button class="btn btn-default btnClose" data-close>
+					<i class="fa fa-times"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+		</article>
+
+		<article id="seach-result" class="row invisible">
+			<!-- 検索結果サブタイトル -->
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#result-contents"><i class="fa fa-chevron-up"></i><span data-i18n="searchResult">検索結果</span></div>
+				<div id="result-contents" class="panel-body panel-collapse collapse in">
+
+					<!-- ページ制御 -->
+					<div class="fixed-table-pagination row">
+						<div class="pull-left col-sm-4 col-md-3">
+							<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+						</div>
+						<div class="pull-left col-sm-8 col-md-6 text-center">
+							<ul class="pagination"></ul>
+						</div>
+						<div class="pull-right pagination-detail col-sm-12 col-md-3">
+							<span data-i18n="rowCountPerPage">1ページの行数</span>
+							<select class="pageSize"></select>
+						</div>
+					</div>
+
+					<!-- 検索結果本体 -->
+					<div class="table-responsive">
+						<table class="table table-bordered table-hover table-striped responsive">
+							<colgroup>
+								<col style="width:30px" />
+								<col class="text-left" style="width:75px;">
+								<col class="text-left" style="width:10%;">
+								<col class="text-left" style="width:10%;">
+								<col class="text-left" style="width:10%;">
+								<col class="text-left" style="width:10%;">
+								<col class="text-left" style="width:10%;">
+								<col class="text-left" style="width:120px;">
+								<col class="text-left" style="width:50px;">
+								<col class="text-left" style="width:80px;">
+							</colgroup>
+							<thead>
+							<tr>
+								<th></th>
+								<th><a href="#" data-sort="D.COMPANY_CD,D.RCVINSP_NO,D.RCVINSP_DTL_NO">検収No</a></th>
+								<th><a href="#" data-sort="P.RCVINSP_NM, D.COMPANY_CD,D.RCVINSP_NO,D.RCVINSP_DTL_NO">検収件名</a></th>
+								<th><a href="#" data-sort="O.PURORD_NM, D.COMPANY_CD,D.RCVINSP_NO,D.RCVINSP_DTL_NO">発注件名</a></th>
+								<th><a href="#" data-sort="P.SPLR_NM_KJ, D.COMPANY_CD,D.RCVINSP_NO,D.RCVINSP_DTL_NO">取引先</a></th>
+								<th><a href="#" data-sort="D.ITMEXPS_CD1, D.COMPANY_CD,D.RCVINSP_NO,D.RCVINSP_DTL_NO">費目1</a></th>
+								<th><a href="#" data-sort="D.ITMEXPS_CD2, D.COMPANY_CD,D.RCVINSP_NO,D.RCVINSP_DTL_NO">費目2</a></th>
+								<th><a href="#" data-sort="D.BUMON_CD, D.COMPANY_CD,D.RCVINSP_NO,D.RCVINSP_DTL_NO">部門</a></th>
+								<th><a href="#" data-sort="D.MNY_CD, D.COMPANY_CD,D.RCVINSP_NO,D.RCVINSP_DTL_NO">通貨</a></th>
+								<th><a href="#" data-sort="RCVINSP_AMT_INCTAX, D.COMPANY_CD,D.RCVINSP_NO,D.RCVINSP_DTL_NO">検収金額</a></th>
+							</tr>
+							</thead>
+
+							<tbody></tbody>
+
+							<tfoot class="template hide">
+							<tr>
+								<td class="text-center">
+									<input type="checkbox" name="chkPurOrd" /></td>
+								<td class="text-left" data-field="dispRcvinspNo">#{pPurordNo}</td>
+								<td class="text-left" data-field="rcvinspNm">#{rcvinspNm}</td>
+								<td class="text-left" data-field="purordNm">#{purordNm}</td>
+								<td class="text-left" data-field="splrNmKj">#{splrNmKj}</td>
+								<td class="text-left" data-field="itmexpsNm1">#{itmexpsNm1}</td>
+								<td class="text-left" data-field="itmexpsNm2">#{itmexpsNm2}</td>
+								<td class="text-left" data-field="bumonNm">#{bumonNm}</td>
+								<td class="text-left" data-field="mnyNm">#{mnyNm}</td>
+								<td class="dataType-number" data-field="rcvinspAmtInctax" style="text-align:right;">#{purordAmt}</td>
+							</tr>
+							</tfoot>
+						</table>
+					</div>
+
+					<!-- ページ制御 -->
+					<div class="fixed-table-pagination row">
+						<div class="pull-left col-sm-4 col-lg-3">
+							<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+						</div>
+						<div class="pull-left col-sm-8 col-lg-6 text-center">
+							<ul class="pagination"></ul>
+						</div>
+						<div class="pull-right pagination-detail col-sm-12 col-lg-3">
+							<span data-i18n="rowCountPerPage">1ページの行数</span>
+							<select class="pageSize"></select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group text-center">
+				<button id="btnDecide" class="btn btn-primary" disabled>
+					<i class="fa fa-plus-circle"></i>
+					<span>決定</span>
+				</button>
+				<button class="btn btn-default btnClose" data-close>
+					<i class="fa fa-times"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+		</article>
+	</section>
+</body>
+</html>

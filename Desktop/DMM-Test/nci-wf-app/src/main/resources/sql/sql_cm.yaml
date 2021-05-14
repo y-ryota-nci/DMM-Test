@@ -1,0 +1,140 @@
+CM0001: |+
+ select /* CM0001 */ * from WFM_CORP_PROP_MASTER
+
+CM0002: |+
+ select /* CM0002 */ * from WFV_CORPORATION_PROPERTY where CORPORATION_CODE = ? and LOCALE_CODE = ?
+
+CM0004: |+
+ select /* CM0004 */ * from MWT_ACCESS_LOG order by ACCESS_LOG_ID
+
+#採番
+CM0007: |+
+ select /* CM0007 */ NEXT_NUMBERING(?, ?, ?)  from dual
+
+#画面ルックアップ
+CM0008: |+
+ select /* CM0008 */ *
+ from MWM_LOOKUP
+ where CORPORATION_CODE = ?
+  and LOOKUP_GROUP_ID = ?
+  and LOOKUP_ID = ?
+  and LOCALE_CODE = ?
+  and DELETE_FLAG = '0'
+
+#画面ルックアップ
+CM0009: |+
+ select /* CM0009 */ *
+ from MWM_LOOKUP
+ where CORPORATION_CODE = ?
+  and LOOKUP_GROUP_ID = ?
+  and LOCALE_CODE = ?
+  and DELETE_FLAG = '0'
+ order by SORT_ORDER, LOOKUP_ID
+
+#多言語対応
+CM0010: |+
+ select /* CM0010 */ *
+ from MWM_MULTILINGUAL
+ where TABLE_NAME = ?
+  and ID = ?
+  and COLUMN_NAME = ?
+  and LOCALE_CODE = ?
+  and DELETE_FLAG = '0'
+
+#多言語対応マスタをテーブル＋ID＋カラム名をキーに削除
+CM0011: |+
+ delete /* CM0011 */
+ from MWM_MULTILINGUAL
+ where TABLE_NAME = ?
+  and ID = ?
+  and COLUMN_NAME = ?
+
+#多言語対応マスタをテーブル＋IDをキーに削除
+CM0012: |+
+ delete /* CM0012 */
+ from MWM_MULTILINGUAL
+ where TABLE_NAME = ?
+  and ID = ?
+
+#メール環境設定の読み込み
+CM0013: |+
+ select /* CM0013 */ * from MWM_MAIL_CONFIG where DELETE_FLAG = '0'
+
+#パーツによる採番
+CM0014: |+
+ select /* CM0014 */ PKG_PARTS_NUMBERING.GET_SEQUENCE(?, ?, ?, ?, ?)  from dual
+
+#テーブル名とそのコメント
+CM0015_TABLE: |+
+ select /* CM0015_TABLE */
+  T.TABLE_NAME as "TABLE_NAME", TC.COMMENTS as "COMMENT", 'T' as ENTITY_TYPE
+ from
+  USER_TABLES T
+  inner join USER_TAB_COMMENTS TC
+   on T.TABLE_NAME = TC.TABLE_NAME
+ where
+  T.TABLE_NAME not like 'RUPD$%' and T.TABLE_NAME not like 'MLOG$%'
+
+#ビューとそのコメント
+CM0015_VIEW: |+
+ select /* CM0015_VIEW */
+  T.VIEW_NAME as "TABLE_NAME", VC.COMMENTS as "COMMENT", 'V' as ENTITY_TYPE
+ from
+  USER_VIEWS T
+  inner join USER_TAB_COMMENTS VC
+   on VC.TABLE_NAME = T.VIEW_NAME
+ where
+  T.VIEW_NAME not like 'RUPD$%' and T.VIEW_NAME not like 'MLOG$%'
+
+#カラム名とそのコメント
+CM0016: |+
+ select /* CM0016 */
+  CMT.COLUMN_NAME, CMT.COMMENTS
+ from
+  USER_TAB_COLUMNS COL
+  inner join USER_COL_COMMENTS CMT
+   on COL.TABLE_NAME = CMT.TABLE_NAME
+   and COL.COLUMN_NAME = CMT.COLUMN_NAME
+ where
+   COL.TABLE_NAME = ?
+
+#採番マスタの現在値を同期
+CM0017: |+
+ select /* CM0017 */ SYNC_NUMBERING(?, ?, ?) from dual
+
+#全社共通用、かつ指定日時で有効なお知らせをｎ件を抽出
+CM0018: |+
+ select /*CM0018*/ *
+ from MWV_ANNOUNCEMENT A
+ where A.LOCALE_CODE = ?
+  and A.CORPORATION_CODE = ?
+  and ? between A.TIMESTAMP_START and A.TIMESTAMP_END
+  and A.SUBJECT is not null
+ order by
+  A.TIMESTAMP_START desc
+  , A.TIMESTAMP_END desc
+  , A.ANNOUNCEMENT_ID desc
+ offset 0 rows fetch first ? rows only
+
+#全社共通＋特定企業用、かつ指定日時で有効なお知らせをｎ件を抽出
+CM0019: |+
+ select /*CM0019*/ *
+ from MWV_ANNOUNCEMENT A
+ where A.LOCALE_CODE = ?
+  and A.CORPORATION_CODE = ?
+  and ? between A.TIMESTAMP_START and A.TIMESTAMP_END
+  and A.SUBJECT is not null
+ order by
+  A.TIMESTAMP_START desc
+  , A.TIMESTAMP_END desc
+  , A.ANNOUNCEMENT_ID desc
+ offset 0 rows fetch first ? rows only
+
+#多言語リスト
+CM0020: |+
+ select /* CM0020 */ *
+ from MWM_MULTILINGUAL
+ where TABLE_NAME = ?
+  and ID = ?
+  and COLUMN_NAME = ?
+  and DELETE_FLAG = '0'

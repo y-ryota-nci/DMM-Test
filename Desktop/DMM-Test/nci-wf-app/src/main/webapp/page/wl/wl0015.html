@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./wl0015.js"></script>
+	<title>WL0015 トレイ設定一覧(個人用)</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="container">
+		<div class="row">
+			<span class="screen-name">#{トレイ設定一覧(個人用)}</span>
+
+			<!-- javascript不要なアコーディオン -->
+			<article class="ac-container">
+				<input id="ac-1" type="checkbox" class="ac-trigger"/>
+				<label for="ac-1" class="ac-label sub-title">
+					<i class="glyphicon glyphicon-plus-sign"></i>
+					<span data-i18n="filterCondition">#{絞り込み条件を設定する}</span>
+					<i class="glyphicon glyphicon-chevron-up arrow-up"></i>
+					<i class="glyphicon glyphicon-chevron-down arrow-down"></i>
+				</label>
+				<form id="formCondition" class="ac-contents">
+					<div class="form-group col-sm-5">
+						<label data-i18n="trayConfigCode">#{trayConfigCode}</label>
+						<input type="text" id="trayConfigCode" class="form-control" />
+					</div>
+					<div class="form-group col-sm-7">
+						<label data-i18n="userDisplayName">#{userDisplayName}</label>
+						<input type="text" id="trayConfigName" class="form-control" />
+					</div>
+				</form>
+			</article>
+			<div class="form-group text-center">
+				<button id="btnSearch" class="btn btn-primary">
+					<i class="glyphicon glyphicon-search"></i>
+					<span data-i18n="btnFilter">#{btnFilter}</span>
+				</button>
+				<button id="btnReset" class="btn btn-default">
+					<i class="glyphicon glyphicon-refresh"></i>
+					<span data-i18n="btnReset">#{btnReset}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+
+	<section id="seach-result" class="container hide">
+		<div class="row" >
+			<!-- 検索結果サブタイトル -->
+			<div class="inline-group sub-title">
+				<div class="col-xs-3 text-left">
+					<i class="glyphicon glyphicon-info-sign"></i>
+					<span class="hidden-xs" data-i18n="searchResult">#{検索結果}</span>
+				</div>
+
+				<div class="col-xs-7 text-center">
+					<span>
+						<span data-i18n="pageCount">PAGE</span>:
+						<span class="page-no">#{page-no}</span>
+						 /
+						 <span class="page-count">#{page-count}</span>
+					</span>
+					<span class="hidden-xs">
+						&nbsp;&nbsp;
+						<span data-i18n="totalCount">#{総件数}</span>:
+						<span class="all-count">#{all-count}</span>
+					</span>
+				</div>
+
+				<!-- 設定アイコン -->
+				<div class="col-xs-2 pull-right text-right dropdown">
+					<i class="glyphicon glyphicon-cog dropdown-toggle clickable" data-toggle="dropdown"></i>
+
+					<!-- 設定アイコン押下時のエリア -->
+					<div class="dropdown-menu pageSizeConfig">
+			 			<label data-i18n="rowCountPerPage">{１ページの行数}</label>
+						<select class="pageSize" class="form-control"></select>
+					</div>
+				</div>
+			</div>
+
+			<div class="text-center">
+				<ul class="pagination"></ul>
+			</div>
+
+			<table class="table table-hover table-striped table-condensed responsive">
+				<colgroup>
+					<col style="width:15px" />
+					<col class="col-sm-3" />
+					<col class="col-sm-5" />
+					<col class="col-sm-2" />
+					<col class="col-sm-2" />
+				</colgroup>
+				<thead>
+				<tr>
+					<th></th>
+					<th><a href="#" data-i18n="trayConfigCode" data-sort="TC.TRAY_CONFIG_CODE, TC.TRAY_CONFIG_ID">#{containerCode}</a>
+					<th><a href="#" data-i18n="userDisplayName" data-sort="TC.TRAY_CONFIG_NAME, TC.TRAY_CONFIG_ID">#{containerName}</a>
+					<th class="text-center"><a href="#" data-i18n="systemData" data-sort="TC.SYSTEM_FLAG, TC.TRAY_CONFIG_ID">#{containerName}</a>
+					<th class="text-center"><a href="#" data-i18n="sortOrder" data-sort="TC.SORT_ORDER, TC.TRAY_CONFIG_ID">#{containerName}</a>
+				</thead>
+
+				<tbody></tbody>
+
+				<tfoot class="template hide">
+				<tr>
+					<th class="text-right">
+						<input type="checkbox" class="selectable" data-field="trayConfigId" />
+					<td class="text-left">
+						<a href="#" data-field="trayConfigCode">#{trayConfigCode}</a>
+						<span class="hide" data-field="version">#{version}</span></td>
+					<td class="text-left"><a href="#" data-field="trayConfigName">#{trayConfigName}</a></td>
+					<td class="text-center"  data-field="systemFlagName">#{systemFlagName}</td>
+					<td class="text-center"  data-field="sortOrder">#{sortOrder}</td>
+				</tfoot>
+			</table>
+
+			<div class="text-center">
+				<ul class="pagination"></ul>
+			</div>
+		</div>
+	</section>
+	<section class="container">
+		<div class="row">
+			<button id="btnAdd" class="btn btn-primary" disabled>
+				<i class="glyphicon glyphicon-plus-sign"></i>
+				<span data-i18n="btnAdd">#{追加}</span>
+			</button>
+			<button id="btnDelete" class="btn btn-danger" disabled>
+				<i class="glyphicon glyphicon-trash"></i>
+				<span data-i18n="btnDelete">#{削除}</span>
+			</button>
+		</div>
+	</section>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./dc0060.js"></script>
+	<title>#{DC0060 拡張項目一覧}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="col-xs-12">
+		<article class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">拡張項目一覧</h1>
+			</div>
+		</article><!--/.row-->
+
+		<article class="row mB40 mB40_sp">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<!-- 初期状態でcollapseを閉じておく方法：
+						$('div.panel-heading').addClass('collapsed');
+						$('i.fa').addClass('fa-chevron-down').removeClass('fa-chevron-up');
+						$('div.panel-collapse').removeClass('in').css('height', '30px');
+					 -->
+					<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#condition-contents"><i class="fa fa-chevron-up"></i><span data-i18n="searchCondition">検索条件</span></div>
+					<div id="condition-contents" class="panel-collapse collapse" style="height:30px">
+						<div class="panel-body">
+							<form id="formCondition" class="tableBox col-lg-12 col-md-12 col-sm-12">
+								<div class="tableBox col-lg-12 col-md-12 col-sm-12" id="folderInfo">
+									<div class="tr">
+										<div class="col-lg-2 col-md-2 col-sm-2 th">
+											<label data-i18n="corporation">#{企業}</label>
+										</div>
+										<div class="col-lg-4 col-md-4 col-sm-4 td">
+											<select id="corporationCode" class="form-control"></select>
+										</div>
+										<div class="col-lg-2 col-md-2 col-sm-2 th">
+											<label data-i18n="metaCode">#{メタコード}</label>
+										</div>
+										<div class="col-lg-4 col-md-4 col-sm-4 td">
+											<input type="text" id="metaCode" class="form-control" maxlength="20" />
+										</div>
+									</div>
+									<div class="tr">
+										<div class="col-lg-2 col-md-2 col-sm-2 th">
+											<label data-i18n="metaName">#{メタ名称}</label>
+										</div>
+										<div class="col-lg-4 col-md-4 col-sm-4 td">
+											<input type="text" id="metaName" class="form-control" maxlength="30" />
+										</div>
+										<div class="col-lg-2 col-md-2 col-sm-2 th">
+											<label data-i18n="inputType">#{入力タイプ}</label>
+										</div>
+										<div class="col-lg-4 col-md-4 col-sm-4 td">
+											<select id="inputType" class="form-control"></select>
+										</div>
+									</div>
+									<div class="tr">
+										<div class="col-lg-2 col-md-2 col-sm-2 th">
+											<label data-i18n=required>#{必須}</label>
+										</div>
+										<div class="col-lg-4 col-md-4 col-sm-4 td">
+											<input type="checkbox" id="requiredFlag" value="true" class=""></input>
+										</div>
+										<div class="col-lg-2 col-md-2 col-sm-2 th">
+											<label data-i18n="deleteFlag">#{削除区分}</label>
+										</div>
+										<div class="col-lg-4 col-md-4 col-sm-4 td">
+											<select id="deleteFlag" class="form-control"></select>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-xs-4">
+						</div>
+						<div class="col-xs-4 text-center">
+							<button id="btnSearch" class="btn btn-primary btn-wide"><i class="fa fa-search"></i><span data-i18n="btnSearch">検索</span></button>
+						</div>
+						<div class="col-xs-4 text-right">
+						</div>
+					</div>
+				</div>
+			</div>
+		</article><!--/.row-->
+
+		<article id="seach-result" class="row hide">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#result-contents"><i class="fa fa-chevron-up"></i><span data-i18n="searchResult">検索結果</span></div>
+					<div id="result-contents" class="panel-body panel-collapse collapse in">
+						<!-- ページ制御 -->
+						<div class="fixed-table-pagination row">
+							<div class="pull-left col-sm-4 col-lg-3">
+								<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+							</div>
+							<div class="pull-left col-sm-8 col-lg-6 text-center">
+								<ul class="pagination"></ul>
+							</div>
+							<div class="pull-right pagination-detail col-sm-12 col-lg-3">
+								<span data-i18n="rowCountPerPage">1ページの行数</span>
+								<select class="pageSize"></select>
+							</div>
+						</div>
+
+						<div class="table-responsive">
+							<table class="table table-bordered table-hover table-striped responsive">
+								<colgroup>
+									<col class="col-xs-2" />
+									<col class="col-xs-3" />
+									<col class="col-xs-2" />
+									<col class="col-xs-1" />
+									<col class="col-xs-1" />
+									<col class="col-xs-2" />
+									<col class="col-xs-1" />
+								</colgroup>
+								<thead>
+									<tr>
+										<th><a href="#" data-i18n="metaCode" data-sort="META_CODE">#{metaCode}</a></th>
+										<th><a href="#" data-i18n="metaName" data-sort="META_NAME">#{metaName}</a></th>
+										<th><a href="#" data-i18n="inputType" data-sort="INPUT_TYPE, META_CODE">#{validTerm}</a></th>
+										<th><a href="#" data-i18n="required" data-sort="REQUIRED_FLAG, META_CODE">#{validTerm}</a></th>
+										<th><a href="#" data-i18n="numberOfDigits" data-sort="MAX_LENGTHS, META_CODE">#{validTerm}</a></th>
+										<th><a href="#" data-i18n="initValue" data-sort="INITIAL_VALUE1, META_CODE">#{validTerm}</a></th>
+										<th><a href="#" data-i18n="deleteFlag" data-sort="DELETE_FLAG, META_CODE">#{deleteFlag}</a></th>
+									</tr>
+								</thead>
+								<tbody></tbody>
+								<tfoot class="template hide">
+									<tr>
+										<td class="text-left"><a href="#" data-field="metaCode">#{metaCode}</a></td>
+										<td class="text-left"><a href="#" data-field="metaName">#{metaName}</a></td>
+										<td class="text-left" data-field="inputTypeName">#{inputTypeName}</td>
+										<td class="text-left" data-field="requiredFlagName">#{requiredFlagName}</td>
+										<td class="text-right" data-field="maxLengths">#{maxLengths}</td>
+										<td class="text-left">
+											<span data-field="initialValue1" class="hide">#{initialValue1}</span>
+											<input type="checkbox" data-field="initialValue1" value="1" class="hide" disabled/>
+										</td>
+										<td class="text-left" data-field="deleteFlagName">#{deleteFlagName}</td>
+										<td class="hide">
+											<span data-field="metaId"></span>
+											<span data-field="version"></span>
+										</td>
+									</tr>
+								</tfoot>
+							 </table>
+						</div>
+
+						<!-- ページ制御 -->
+						<div class="fixed-table-pagination row">
+							<div class="pull-left col-sm-4 col-lg-3">
+								<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+							</div>
+							<div class="pull-left col-sm-8 col-lg-6 text-center">
+								<ul class="pagination"></ul>
+							</div>
+							<div class="pull-right pagination-detail col-sm-12 col-lg-3">
+								<span data-i18n="rowCountPerPage">1ページの行数</span>
+								<select class="pageSize"></select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article><!--/.row-->
+
+		<article id="buttons">
+			<div class="col-xs-12">
+				<button id="btnAdd" class="btn btn-primary">
+					<i class="fa fa-add"></i>
+					<span data-i18n="btnAdd">#{追加}</span>
+				</button>
+			</div>
+		</article><!--/.row-->
+	</section><!--/.main-->
+
+	<section class="container">
+	</section>
+</body>
+</html>

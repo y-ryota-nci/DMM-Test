@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/jsTree/themes/default/style.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./vd0111.js"></script>
+	<title>#{VD0111 条件定義一覧}</title>
+</head>
+<body>
+	<header></header>
+
+	<section class="container">
+		<div class="row">
+			<span class="screen-name">#{VD0111}</span>
+		</div>
+		<!--
+		<div class="row">
+			<span data-i18n="MSG0145" style="color:red;">#{※デフォルトの計算式には計算条件は設定できません。}</span><br/>
+			<span data-i18n="MSG0146" style="color:red;">#{※並び順が上位のものから計算式を判定し、有効な計算式に基づいて計算処理を行います。}</span><br/>
+			<span data-i18n="MSG0147" style="color:red;">#{　有効な計算式が見つからない場合、入力値はクリアされます。}</span><br/>
+		</div>
+		-->
+	</section>
+
+	<section id="seach-result" class="container hide">
+		<div class="row" >
+			<label class="sub-title" data-i18n="condDefList">#{条件定義一覧}</label>
+
+			<table id="tblCondList" class="table table-hover table-striped table-condensed responsive">
+				<colgroup>
+					<col class="col-xs-2" />
+					<col class="col-xs-6" />
+					<col class="col-xs-4" />
+				</colgroup>
+				<thead>
+					<tr>
+						<th data-i18n="expressionName">#{条件名}</th>
+						<th data-i18n="condExpression">#{条件式}</th>
+						<th data-i18n="callbackFunction">#{コールバック関数}</th>
+					</tr>
+				</thead>
+
+				<tbody></tbody>
+
+				<tfoot class="template hide">
+					<tr>
+						<th>
+							<input type="checkbox" class="selectable" value="true"/>
+							<a href="#" data-field="partsConditionTypeName">#{partsConditionTypeName}</a>
+						</th>
+						<td>
+							<span data-field="expression"></span>
+						</td>
+						<td>
+							<span data-field="callbackFunction"></span>
+						</td>
+						<td class="hide" data-field="partsCondId"></td>
+						<td class="hide" data-field="version"></td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<div class="col-xs-4">
+				<button id="btnDelete" class="btn btn-danger" disabled>
+					<i class="glyphicon glyphicon-trash"></i>
+					<span data-i18n="btnDelete">#{削除}</span>
+				</button>
+			</div>
+			<div class="col-xs-4 text-center">
+				<button id="btnUpdate" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnOK">#{更新}</span>
+				</button>
+				<button id="btnClose" class="btn btn-default">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

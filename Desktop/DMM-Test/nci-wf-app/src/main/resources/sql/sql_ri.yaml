@@ -1,0 +1,821 @@
+#WF検収情報⇒検収情報を生成
+RI0000_01: |+
+ merge into /* RI0000_01 */ RCVINSP_INF R
+ using (
+  select
+   COMPANY_CD, RCVINSP_NO, '10' as RCVINSP_STS, RCVINSP_NM, '1' as PURORD_TP, SBMTR_CD, SBMT_DPT_CD, SBMT_DPT_NM, SBMT_DPT_DT
+   , SPLR_CD, SPLR_NM_KJ, SPLR_NM_KN, RCVINSP_AMT_EXCTAX, RCVINSP_AMT_INCTAX, DLV_DT, RCVINSP_DT, RCVINSP_YM
+   , CST_ADD_YM, RCVINSP_YM_S, RCVINSP_YM_E, RCVINSPSHT_ISS_DT, PAY_MTH, RCVINSP_CONT, DLV_LC
+   , case MNY_CD when 'JPY' then '1' else '2' end as MNY_TP, MNY_CD, ADD_RTO, STMP_TP, ORGNZ_CD
+   , PAY_SITE_CD, PAY_APPL_CD, ADVPAY_TP, TAX_UNT, TAX_FG, TAX_CD, HLDTAX_TP, HLDTAX_RTO, HLDTAX_SBJ_AMT
+   , HLDTAX_AMT
+   , BKBND_CHG_TP, MAIL_TP, MAIL_RMK
+   , SHT_TO_ZIP_CD, SHT_ADR_PRF_CD, SHT_ADR_PRF
+   , SHT_ADR1, SHT_ADR2, SHT_ADR3
+   , SHT_PIC_NM, SHT_DPT_NM, SHT_MLADR, SHT_TEL_NO, ADVCST_MRK
+   , TAX_SBJ_TP, TAX_KND_CD, TAX_FG_CHG
+   , TTLAMT_EXCTAX1, TTLAMT_TAX1, TTLAMT_INCTAX1
+   , TTLAMT_EXCTAX2, TTLAMT_TAX2, TTLAMT_INCTAX2
+   , TTLAMT_EXCTAX3, TTLAMT_TAX3, TTLAMT_INCTAX3
+   , '0' as DLT_FG
+   , ? as CORPORATION_CODE_CREATED, ? as USER_CODE_CREATED, ? as IP_CREATED, sysdate as TIMESTAMP_CREATED
+   , ? as CORPORATION_CODE_UPDATED, ? as USER_CODE_UPDATED, ? as IP_UPDATED, sysdate as TIMESTAMP_UPDATED
+  from MWT_RCVINSP
+  where RUNTIME_ID = ?
+ ) X
+  on (R.COMPANY_CD = X.COMPANY_CD and R.RCVINSP_NO = X.RCVINSP_NO)
+ when not matched then
+  insert (
+   COMPANY_CD, RCVINSP_NO, RCVINSP_STS, RCVINSP_NM, SBMTR_CD, SBMT_DPT_CD, SBMT_DPT_NM, SBMT_DPT_DT
+   , SPLR_CD, SPLR_NM_KJ, SPLR_NM_KN
+   , RCVINSP_AMT_EXCTAX, RCVINSP_AMT_INCTAX
+   , RCVINSP_AMT_FC_EXCTAX, RCVINSP_AMT_FC_INCTAX
+   , DLV_DT, RCVINSP_DT, RCVINSP_YM
+   , CST_ADD_YM, RCVINSP_YM_S, RCVINSP_YM_E, RCVINSPSHT_ISS_DT, PAY_MTH, RCVINSP_CONT, DLV_LC
+   , MNY_TP, MNY_CD, ADD_RTO, STMP_TP, ORGNZ_CD
+   , PAY_SITE_CD, PAY_APPL_CD, ADVPAY_TP, TAX_UNT, TAX_FG, TAX_CD, HLDTAX_TP, HLDTAX_RTO, HLDTAX_SBJ_AMT
+   , HLDTAX_AMT
+   , BKBND_CHG_TP, MAIL_TP, MAIL_RMK
+   , SHT_TO_ZIP_CD, SHT_ADR_PRF_CD, SHT_ADR_PRF
+   , SHT_ADR1, SHT_ADR2, SHT_ADR3
+   , SHT_PIC_NM, SHT_DPT_NM, SHT_MLADR, SHT_TEL_NO, ADVCST_MRK
+   , TAX_SBJ_TP, TAX_KND_CD, TAX_FG_CHG
+   , TTLAMT_EXCTAX1, TTLAMT_TAX1, TTLAMT_INCTAX1
+   , TTLAMT_EXCTAX2, TTLAMT_TAX2, TTLAMT_INCTAX2
+   , TTLAMT_EXCTAX3, TTLAMT_TAX3, TTLAMT_INCTAX3
+   , TTLAMT_FC_EXCTAX1, TTLAMT_FC_TAX1, TTLAMT_FC_INCTAX1
+   , TTLAMT_FC_EXCTAX3, TTLAMT_FC_TAX3, TTLAMT_FC_INCTAX3
+   , DLT_FG
+   , CORPORATION_CODE_CREATED, USER_CODE_CREATED, IP_CREATED, TIMESTAMP_CREATED
+   , CORPORATION_CODE_UPDATED, USER_CODE_UPDATED, IP_UPDATED, TIMESTAMP_UPDATED
+  )
+  values (
+   X.COMPANY_CD, X.RCVINSP_NO, X.RCVINSP_STS, X.RCVINSP_NM, X.SBMTR_CD, X.SBMT_DPT_CD, X.SBMT_DPT_NM, X.SBMT_DPT_DT
+   , X.SPLR_CD, X.SPLR_NM_KJ, X.SPLR_NM_KN
+   , decode(X.MNY_CD, 'JPY', X.RCVINSP_AMT_EXCTAX, null), decode(X.MNY_CD, 'JPY', X.RCVINSP_AMT_INCTAX, null)
+   , decode(X.MNY_CD, 'JPY', null, X.RCVINSP_AMT_EXCTAX), decode(X.MNY_CD, 'JPY', null, X.RCVINSP_AMT_INCTAX)
+   , X.DLV_DT, X.RCVINSP_DT, X.RCVINSP_YM
+   , X.CST_ADD_YM, X.RCVINSP_YM_S, X.RCVINSP_YM_E, X.RCVINSPSHT_ISS_DT, X.PAY_MTH, X.RCVINSP_CONT, X.DLV_LC
+   , X.MNY_TP, X.MNY_CD, X.ADD_RTO, X.STMP_TP, X.ORGNZ_CD
+   , X.PAY_SITE_CD, X.PAY_APPL_CD, X.ADVPAY_TP, X.TAX_UNT, X.TAX_FG, X.TAX_CD, X.HLDTAX_TP, X.HLDTAX_RTO, X.HLDTAX_SBJ_AMT
+   , X.HLDTAX_AMT
+   , X.BKBND_CHG_TP, X.MAIL_TP, X.MAIL_RMK
+   , X.SHT_TO_ZIP_CD, X.SHT_ADR_PRF_CD, X.SHT_ADR_PRF
+   , X.SHT_ADR1, X.SHT_ADR2, X.SHT_ADR3
+   , X.SHT_PIC_NM, X.SHT_DPT_NM, X.SHT_MLADR, X.SHT_TEL_NO, X.ADVCST_MRK
+   , X.TAX_SBJ_TP, X.TAX_KND_CD, X.TAX_FG_CHG
+   , decode(X.MNY_CD, 'JPY', X.TTLAMT_EXCTAX1, null), decode(X.MNY_CD, 'JPY', X.TTLAMT_TAX1, null), decode(X.MNY_CD, 'JPY', X.TTLAMT_INCTAX1, null)
+   , decode(X.MNY_CD, 'JPY', X.TTLAMT_EXCTAX2, null), decode(X.MNY_CD, 'JPY', X.TTLAMT_TAX2, null), decode(X.MNY_CD, 'JPY', X.TTLAMT_INCTAX2, null)
+   , decode(X.MNY_CD, 'JPY', X.TTLAMT_EXCTAX3, null), decode(X.MNY_CD, 'JPY', X.TTLAMT_TAX3, null), decode(X.MNY_CD, 'JPY', X.TTLAMT_INCTAX3, null)
+   , decode(X.MNY_CD, 'JPY', null, X.TTLAMT_EXCTAX1), decode(X.MNY_CD, 'JPY', null, X.TTLAMT_TAX1), decode(X.MNY_CD, 'JPY', null, X.TTLAMT_INCTAX1)
+   , decode(X.MNY_CD, 'JPY', null, X.TTLAMT_EXCTAX3), decode(X.MNY_CD, 'JPY', null, X.TTLAMT_TAX3), decode(X.MNY_CD, 'JPY', null, X.TTLAMT_INCTAX3)
+   , X.DLT_FG
+   , X.CORPORATION_CODE_CREATED, X.USER_CODE_CREATED, X.IP_CREATED, X.TIMESTAMP_CREATED
+   , X.CORPORATION_CODE_UPDATED, X.USER_CODE_UPDATED, X.IP_UPDATED, X.TIMESTAMP_UPDATED
+  )
+ when matched then
+  update set
+   RCVINSP_STS = X.RCVINSP_STS
+   , RCVINSP_NM = X.RCVINSP_NM
+   , SBMTR_CD = X.SBMTR_CD
+   , SBMT_DPT_CD = X.SBMT_DPT_CD
+   , SBMT_DPT_NM = X.SBMT_DPT_NM
+   , SBMT_DPT_DT = X.SBMT_DPT_DT
+   , SPLR_CD = X.SPLR_CD
+   , SPLR_NM_KJ = X.SPLR_NM_KJ
+   , SPLR_NM_KN = X.SPLR_NM_KN
+   , RCVINSP_AMT_EXCTAX = decode(X.MNY_CD, 'JPY', X.RCVINSP_AMT_EXCTAX, null)
+   , RCVINSP_AMT_INCTAX = decode(X.MNY_CD, 'JPY', X.RCVINSP_AMT_INCTAX, null)
+   , RCVINSP_AMT_FC_EXCTAX = decode(X.MNY_CD, 'JPY', null, X.RCVINSP_AMT_EXCTAX)
+   , RCVINSP_AMT_FC_INCTAX = decode(X.MNY_CD, 'JPY', null, X.RCVINSP_AMT_INCTAX)
+   , DLV_DT = X.DLV_DT
+   , RCVINSP_DT = X.RCVINSP_DT
+   , RCVINSP_YM = X.RCVINSP_YM
+   , CST_ADD_YM = X.CST_ADD_YM
+   , RCVINSP_YM_S = X.RCVINSP_YM_S
+   , RCVINSP_YM_E = X.RCVINSP_YM_E
+   , RCVINSPSHT_ISS_DT = X.RCVINSPSHT_ISS_DT
+   , PAY_MTH = X.PAY_MTH
+   , RCVINSP_CONT = X.RCVINSP_CONT
+   , DLV_LC = X.DLV_LC
+   , MNY_TP = X.MNY_TP
+   , MNY_CD = X.MNY_CD
+   , ADD_RTO = X.ADD_RTO
+   , STMP_TP = X.STMP_TP
+   , ORGNZ_CD = X.ORGNZ_CD
+   , PAY_SITE_CD = X.PAY_SITE_CD
+   , PAY_APPL_CD = X.PAY_APPL_CD
+   , ADVPAY_TP = X.ADVPAY_TP
+   , TAX_UNT = X.TAX_UNT
+   , TAX_FG = X.TAX_FG
+   , TAX_CD = X.TAX_CD
+   , HLDTAX_TP = X.HLDTAX_TP
+   , HLDTAX_RTO = X.HLDTAX_RTO
+   , HLDTAX_SBJ_AMT = X.HLDTAX_SBJ_AMT
+   , HLDTAX_AMT = X.HLDTAX_AMT
+   , BKBND_CHG_TP = X.BKBND_CHG_TP
+   , MAIL_TP = X.MAIL_TP
+   , MAIL_RMK = X.MAIL_RMK
+   , SHT_TO_ZIP_CD = X.SHT_TO_ZIP_CD
+   , SHT_ADR_PRF_CD = X.SHT_ADR_PRF_CD
+   , SHT_ADR_PRF = X.SHT_ADR_PRF
+   , SHT_ADR1 = X.SHT_ADR1
+   , SHT_ADR2 = X.SHT_ADR2
+   , SHT_ADR3 = X.SHT_ADR3
+   , SHT_PIC_NM = X.SHT_PIC_NM
+   , SHT_DPT_NM = X.SHT_DPT_NM
+   , SHT_MLADR = X.SHT_MLADR
+   , SHT_TEL_NO = X.SHT_TEL_NO
+   , ADVCST_MRK = X.ADVCST_MRK
+   , TAX_SBJ_TP = X.TAX_SBJ_TP
+   , TAX_KND_CD = X.TAX_KND_CD
+   , TAX_FG_CHG = X.TAX_FG_CHG
+   , TTLAMT_EXCTAX1 = decode(X.MNY_CD, 'JPY', X.TTLAMT_EXCTAX1, null)
+   , TTLAMT_TAX1 = decode(X.MNY_CD, 'JPY', X.TTLAMT_TAX1, null)
+   , TTLAMT_INCTAX1 = decode(X.MNY_CD, 'JPY', X.TTLAMT_INCTAX1, null)
+   , TTLAMT_EXCTAX2 = decode(X.MNY_CD, 'JPY', X.TTLAMT_EXCTAX2, null)
+   , TTLAMT_TAX2 = decode(X.MNY_CD, 'JPY', X.TTLAMT_TAX2, null)
+   , TTLAMT_INCTAX2 = decode(X.MNY_CD, 'JPY', X.TTLAMT_INCTAX2, null)
+   , TTLAMT_EXCTAX3 = decode(X.MNY_CD, 'JPY', X.TTLAMT_EXCTAX3, null)
+   , TTLAMT_TAX3 = decode(X.MNY_CD, 'JPY', X.TTLAMT_TAX3, null)
+   , TTLAMT_INCTAX3 = decode(X.MNY_CD, 'JPY', X.TTLAMT_INCTAX3, null)
+   , TTLAMT_FC_EXCTAX1 = decode(X.MNY_CD, 'JPY', null, X.TTLAMT_EXCTAX1)
+   , TTLAMT_FC_TAX1 = decode(X.MNY_CD, 'JPY', null, X.TTLAMT_TAX1)
+   , TTLAMT_FC_INCTAX1 = decode(X.MNY_CD, 'JPY', null, X.TTLAMT_INCTAX1)
+   , TTLAMT_FC_EXCTAX3 = decode(X.MNY_CD, 'JPY', null, X.TTLAMT_EXCTAX3)
+   , TTLAMT_FC_TAX3 = decode(X.MNY_CD, 'JPY', null, X.TTLAMT_TAX3)
+   , TTLAMT_FC_INCTAX3 = decode(X.MNY_CD, 'JPY', null, X.TTLAMT_INCTAX3)
+   , DLT_FG = X.DLT_FG
+   , CORPORATION_CODE_UPDATED = X.CORPORATION_CODE_UPDATED
+   , USER_CODE_UPDATED = X.USER_CODE_UPDATED
+   , IP_UPDATED = X.IP_UPDATED
+   , TIMESTAMP_UPDATED = X.TIMESTAMP_UPDATED
+
+#WF検収明細情報⇒検収明細情報を生成
+RI0000_02: |+
+ insert into /* RI0000_02 */ RCVINSPDTL_INF(
+  COMPANY_CD, RCVINSP_NO, RCVINSP_DTL_NO, PURORD_NO, PURORD_DTL_NO
+  , ORGNZ_CD, COM_CHG_ORGNZ_CD, ITMEXPS_CD1, ITMEXPS_CD2, ITM_CD, ITM_NM
+  , BUMON_CD, ANLYS_CD, ASST_TP, PURORD_QNT, RCVINSP_QNT
+  , UNT_CD, PURORD_UC_JPY, PURORD_AMT_JPY, PURORD_AMT_JPY_INCTAX
+  , RCVINSP_UC_JPY, RCVINSP_AMT_JPY, RCVINSP_AMT_JPY_INCTAX, ADVPAY_APLY_AMT_JPY
+  , MNY_CD, ADD_RTO
+  , PURORD_UC_FC, PURORD_AMT_FC
+  , RCVINSP_UC_FC, RCVINSP_AMT_FC, ADVPAY_APLY_AMT_FC
+  , TAX_FG, TAX_CD, RCVINSP_SMRY, APPL_CONT, CTRCT_TP, BRKDWN_TP
+  , APPL_PRD_S_DT, APPL_PRD_E_DT
+  , ADVPAY_NO, INV_COMPANY_CD
+  , DVC_CD, BND_FLR_CD, FRT_PNT_CD, MSR_TOOL_CD, MDA_ID
+  , TAX_SBJ_TP, TAX_KND_CD, TAX_FG_CHG
+  , DLT_FG
+  , CORPORATION_CODE_CREATED, USER_CODE_CREATED, IP_CREATED, TIMESTAMP_CREATED
+  , CORPORATION_CODE_UPDATED, USER_CODE_UPDATED, IP_UPDATED, TIMESTAMP_UPDATED
+ )
+ select
+  D.COMPANY_CD, ? as RCVINSP_NO, ? as RCVINSP_DTL_NO, D.PURORD_NO, D.PURORD_DTL_NO
+  , D.ORGNZ_CD, null as COM_CHG_ORGNZ_CD, D.ITMEXPS_CD1, D.ITMEXPS_CD2, D.ITM_CD, D.ITM_NM
+  , D.BUMON_CD, D.ANLYS_CD, D.ASST_TP, null as PURORD_QNT, null as RCVINSP_QNT
+  , null as UNT_CD, null as PURORD_UC_JPY
+  , decode(D.MNY_CD, 'JPY', PURORD_AMT, null) as PURORD_AMT_JPY
+  , decode(D.MNY_CD, 'JPY', PURORD_AMT, null) as PURORD_AMT_JPY_INCTAX
+  , null as RCVINSP_UC_JPY
+  , decode(D.MNY_CD, 'JPY', D.RCVINSP_AMT, null) as RCVINSP_AMT_JPY
+  , decode(D.MNY_CD, 'JPY', D.RCVINSP_AMT_INTAX, null) as RCVINSP_AMT_JPY_INCTAX
+  , decode(D.MNY_CD, 'JPY', D.PAY_AMT, null) as ADVPAY_APLY_AMT_JPY
+  , D.MNY_CD, null as ADD_RTO
+  , null as PURORD_UC_FC
+  , decode(D.MNY_CD, 'JPY', null, D.PURORD_AMT) as PURORD_AMT_FC
+  , null as RCVINSP_UC_FC
+  , decode(D.MNY_CD, 'JPY', null, D.RCVINSP_AMT) as RCVINSP_AMT_FC
+  , decode(D.MNY_CD, 'JPY', null, D.PAY_AMT) as ADVPAY_APLY_AMT_FC
+  , D.TAX_FG, D.TAX_CD, D.RCVINSP_SMRY, null APPL_CONT, null CTRCT_TP, null BRKDWN_TP
+  , null as APPL_PRD_S_DT, null as APPL_PRD_E_DT
+  , ADVPAY_NO, D.INV_COMPANY_CD
+  , D.DVC_CD, D.BND_FLR_CD, D.FRT_PNT_CD, D.MSR_TOOL_CD, D.MDA_ID
+  , D.TAX_SBJ_TP, D.TAX_KND_CD, D.TAX_FG_CHG
+  , '0' as DLT_FG
+  , ?, ?, ?, sysdate, ?, ?, ?, sysdate
+ from
+   MWT_RCVINSP_DETAIL D
+ where
+   RUNTIME_ID = ?
+
+#発注情報の発注ステータスを[検収中]に更新（[承認済]ステータスのみ）
+RI0000_03: |+
+ update PURORD_INF /* RI0000_03 */
+ set
+   PURORD_STS = '30'
+   , CORPORATION_CODE_UPDATED = ?
+   , USER_CODE_UPDATED = ?
+   , IP_UPDATED = ?
+   , TIMESTAMP_UPDATED = ?
+ where
+   COMPANY_CD = ?
+   AND PURORD_NO = ?
+   AND PURORD_STS = '20'
+
+#検収計上処理
+RI0000_09: |+
+ {CALL PKG_RECEIVE_INSPECTION.ADD(?,?,?,?,?,?,?)}
+
+#検収明細情報の削除
+RI0000_10: |+
+ delete /* RI0000_10 */ from RCVINSPDTL_INF where COMPANY_CD = ? and RCVINSP_NO = ?
+
+#前払金残高の超過チェック
+RI0000_11: |+
+ select /* RI0000_11 */ AM.*
+ from ADVPAY_MAT_INF AM
+ where
+  AM.COMPANY_CD = ?
+  and AM.ADVPAY_NO = ?
+  and AM.DLT_FG = '0'
+
+#充当した前払申請の完了チェック
+RI0000_11_02: |+
+ select  /* RI0000_11_02 */ AI.* , WP.*
+ from
+  ADVPAY_INF AI
+  left join WFT_PROCESS WP
+    ON AI.PAY_NO = WP.APPLICATION_NO
+ where
+  AI.COMPANY_CD = ?
+  and AI.ADVPAY_NO = ?
+  and AI.DLT_FG = '0'
+
+#未完了の検収申請における前払充当チェック(明細削除を除く)
+RI0000_11_03_01 : |+
+ select /* RI0000_11_03_01 */ distinct RI.RCVINSP_NO
+ from
+  (
+    select
+      *
+    from
+      MWT_RCVINSP RI
+    where
+      RI.COMPANY_CD = ?
+      AND RI.ADVPAY_TP = '1'
+  ) RI
+  left join WFT_PROCESS WP
+    ON RI.RCVINSP_NO = WP.APPLICATION_NO
+  left join MWT_RCVINSP_DETAIL RD
+    ON WP.PROCESS_ID = RD.PROCESS_ID
+ where
+   RD.ADVPAY_NO = ?
+  and not (
+    WP.PROCESS_STATUS = 'end'
+    or WP.PROCESS_STATUS = 'end_r'
+    or WP.PROCESS_STATUS = 'abort'
+    or WP.PROCESS_STATUS = 'f_abort'
+  )
+  and RI.RCVINSP_NO != ?
+
+#完了済の最新の検収申請における前払充当チェック
+RI0000_11_03_02 : |+
+ select distinct   /* RI0000_11_03_02 */ WP.APPLICATION_NO
+ from
+  (
+    select
+      *
+    from
+      MWT_RCVINSP RI
+    where
+      RI.COMPANY_CD = ?
+      AND RI.ADVPAY_TP = '1'
+  ) RI
+  left join (
+    select
+      max(WP.PROCESS_ID) PROCESS_ID
+      , WP.APPLICATION_NO
+    from
+      WFT_PROCESS WP
+    where
+      WP.PROCESS_STATUS = 'end'
+      or WP.PROCESS_STATUS = 'end_r'
+    group by
+      WP.APPLICATION_NO
+      , WP.PROCESS_STATUS
+  ) WP
+    ON RI.RCVINSP_NO = WP.APPLICATION_NO
+    AND RI.PROCESS_ID = WP.PROCESS_ID
+  left join MWT_RCVINSP_DETAIL RD
+    ON WP.PROCESS_ID = RD.PROCESS_ID
+ where
+  RD.ADVPAY_NO = ?
+  and RI.RCVINSP_NO != ?
+
+#未完了の検収申請における前払充当チェック(明細削除)
+RI0000_11_03_03 : |+
+ select  /* RI0000_11_03_03 */
+   count(*)
+ from WFT_PROCESS WP
+ where
+ WP.CORPORATION_CODE = ?
+ and WP.APPLICATION_NO = ?
+ and not (
+    WP.PROCESS_STATUS = 'end'
+    or WP.PROCESS_STATUS = 'end_r'
+    or WP.PROCESS_STATUS = 'abort'
+    or WP.PROCESS_STATUS = 'f_abort'
+  )
+
+#検収Noに紐付く前払金消込情報を抽出
+RI0000_12: |+
+ select /* RI0000_12 */ * from ADVPAY_MAT_INF
+ where COMPANY_CD = ? and RCVINSP_NO = ?
+
+#前払に紐づく検収Noをキーに検収情報を抽出
+RI0000_12_02: |+
+ select /* RI0000_12_02 */ ${REPLACE} from ${REPLACE}
+ where COMPANY_CD = ? and RCVINSP_NO = ?
+
+#前払金消込Noの現在値を採番
+RI0000_13: |+
+ select /* RI0000_13 */ nvl(max(ADVPAY_MAT_NO), 0)
+ from ADVPAY_MAT_INF where COMPANY_CD = ? and ADVPAY_NO = ?
+
+#前払金Noに紐付く前払金消込情報を抽出
+RI0000_14: |+
+ select /* RI0000_14 */ * from ADVPAY_MAT_INF
+ where COMPANY_CD = ? and ADVPAY_NO = ?
+
+#検収No(=申請番号)に紐付くプロセスインスタンスから文書IDを抽出
+RI0000_15: |+
+ select /* RI0000_15 */ DOC_ID
+ from WFT_PROCESS
+ where CORPORATION_CODE = ?
+   and APPLICATION_NO = ?
+   and PROCESS_STATUS = 'end'
+   and DOC_ID is not null
+ order by
+   PROCESS_ID desc
+
+#検収訂正処理
+RI0000_16: |+
+ {CALL PKG_RECEIVE_INSPECTION.REVISE(?,?,?,?,?,?,?)}
+
+#検収情報を支払済へ更新
+RI0000_17: |+
+ update /* RI0000_17 */ RCVINSP_INF set RCVINSP_STS = '20' where COMPANY_CD = ? and RCVINSP_NO = ?
+
+#発注選択一覧
+RI0010_01: |+
+  select /* RI0010_01 */
+  ${REPLACE}
+  from
+    PURORD_INF O
+    inner join PURORDDTL_INF D
+      on D.COMPANY_CD = O.COMPANY_CD
+      and D.PURORD_NO = O.PURORD_NO
+      and D.DLT_FG = '0'
+    left join V_ITM_MST I
+      on I.COMPANY_CD = O.COMPANY_CD
+      and I.ORGNZ_CD_SRCH = O.ORGNZ_CD
+      and I.ITM_CD = D.ITM_CD
+      and I.DLT_FG = '0'
+    inner join V_ITMEXPS_CHRMST_LV1 I1
+      on (
+        O.COMPANY_CD = I1.COMPANY_CD
+        and O.ORGNZ_CD = I1.ORGNZ_CD_SRCH
+        and D.ITMEXPS_CD1 = I1.ITMEXPS_CD1
+      )
+    inner join V_ITMEXPS_CHRMST_LV2 I2
+      on (
+        O.COMPANY_CD = I2.COMPANY_CD
+        and O.ORGNZ_CD = I2.ORGNZ_CD_SRCH
+        and D.ITMEXPS_CD1 = I2.ITMEXPS_CD1
+        and D.ITMEXPS_CD2 = I2.ITMEXPS_CD2
+      )
+    left join SPLR_MST S
+      on S.COMPANY_CD = O.COMPANY_CD
+      and S.SPLR_CD = O.SPLR_CD
+      and S.DLT_FG = '0'
+    left join MNY_MST_V M
+      on M.COMPANY_CD = O.COMPANY_CD
+      and M.MNY_CD = O.MNY_CD
+      and trunc(sysdate) between M.VD_DT_S and M.VD_DT_E
+    left join MWM_OPTION_ITEM OP1
+      on OP1.OPTION_ID = (select OPTION_ID from MWM_OPTION where OPTION_CODE = 'kbnSplitment' and CORPORATION_CODE = ?)
+      and OP1.CODE = O.SPRT_TP
+      and OP1.DELETE_FLAG = '0'
+    left join BND_FLR_MST B
+     on B.COMPANY_CD = O.COMPANY_CD
+     and B.BND_FLR_CD = D.BND_FLR_CD
+     and B.DLT_FG = '0'
+    left join PAY_SITE_MST PS
+      on PS.COMPANY_CD = O.COMPANY_CD
+      and PS.PAY_SITE_CD = O.PAY_SITE_CD
+      and PS.DLT_FG = '0'
+    left join (
+      select
+        X.COMPANY_CD
+        , X.PURORD_NO
+        , X.PURORD_DTL_NO
+        , sum(nvl(decode(X.MNY_CD, 'JPY', X.RCVINSP_AMT_JPY, RCVINSP_AMT_FC), 0)) as RCVINSP_AMT
+      from
+        RCVINSPDTL_INF X
+      where
+        X.DLT_FG = '0'
+      group by
+        X.COMPANY_CD
+        , X.PURORD_NO
+        , X.PURORD_DTL_NO
+        , X.MNY_CD
+    ) RD
+      on D.COMPANY_CD = RD.COMPANY_CD
+      and D.PURORD_NO = RD.PURORD_NO
+      and D.PURORD_DTL_NO = RD.PURORD_DTL_NO
+    left join V_TAX_FG_CHG TH
+      on TH.COMPANY_CD = O.COMPANY_CD
+      and TH.MNY_TP = case when O.MNY_CD is null or O.MNY_CD = 'JPY' then '1' else '2' end
+      and TH.TAX_SBJ_TP = O.TAX_SBJ_TP
+      and TH.TAX_KND_CD = O.TAX_KND_CD
+      and TH.TAX_FG_CHG = O.TAX_FG_CHG
+      and TH.LOCALE_CODE = 'ja'
+      and trunc(sysdate) between TH.VD_DT_S and TH.VD_DT_E
+    left join V_TAX_FG_CHG TD
+      on TD.COMPANY_CD = D.COMPANY_CD
+      and TD.MNY_TP = case when O.MNY_CD is null or O.MNY_CD = 'JPY' then '1' else '2' end
+      and TD.TAX_SBJ_TP = D.TAX_SBJ_TP
+      and TD.TAX_KND_CD = D.TAX_KND_CD
+      and TD.TAX_FG_CHG = D.TAX_FG_CHG
+      and TD.LOCALE_CODE = 'ja'
+      and trunc(sysdate) between TD.VD_DT_S and TD.VD_DT_E
+    left join WFM_USER U
+     on U.CORPORATION_CODE = O.COMPANY_CD
+     and U.USER_CODE = O.SBMTR_CD
+     and U.DELETE_FLAG = '0'
+   left join V_HLDTAX_MST H
+     on H.COMPANY_CD = O.COMPANY_CD
+     and H.HLDTAX_TP = O.HLDTAX_TP
+     and H.DLT_FG = '0'
+     and trunc(sysdate) between H.VD_DT_S and H.VD_DT_E
+   left join BUMON_MST bm
+      on D.COMPANY_CD = bm.COMPANY_CD
+      and D.BUMON_CD = bm.BUMON_CD
+      and bm.DLT_FG = '0'
+  where
+    O.COMPANY_CD = ?
+    and O.PURORD_STS in ('10', '20')
+    and ((D.PURORD_AMT_JPY > 0 and O.MNY_TP = '1' and D.PURORD_AMT_JPY - nvl(RD.RCVINSP_AMT, 0) > 0) or
+         (D.PURORD_AMT_FC > 0 and O.MNY_TP != '1' and D.PURORD_AMT_FC - nvl(RD.RCVINSP_AMT, 0) > 0) or
+         (D.PURORD_AMT_JPY < 0 and O.MNY_TP = '1' and D.PURORD_AMT_JPY - nvl(RD.RCVINSP_AMT, 0) < 0) or
+         (D.PURORD_AMT_FC < 0 and O.MNY_TP != '1' and D.PURORD_AMT_FC - nvl(RD.RCVINSP_AMT, 0) < 0) )
+    and not exists (
+     select *
+     from WFT_PROCESS PR
+     where PR.CORPORATION_CODE = O.COMPANY_CD
+      and PR.APPLICATION_NO = O.PURORD_NO
+      and PR.PROCESS_STATUS in ('start', 'run', 'wait')
+      and PR.BUSINESS_PROCESS_STATUS not in ('3', '301', '401') /* 決裁ポイント後は可とする */
+    )
+
+#検収対象選択のSELECT句
+RI0010_02: |+
+  O.PURORD_NO || '-' || D.PURORD_DTL_NO as P_PURORD_NO
+  , O.COMPANY_CD
+  , O.PURORD_NO
+  , D.PURORD_DTL_NO
+  , OP1.LABEL as SPRT_TP_NM
+  , O.PURORD_NM
+  , O.SPLR_CD
+  , O.SPLR_NM_KJ
+  , O.SPLR_NM_KN
+  , O.MNY_TP
+  , O.MNY_CD
+  , M.MNY_NM
+  , M.RDXPNT_GDT
+  , M.IN_RTO as ADD_RTO
+  , D.ITMEXPS_CD1
+  , I1.ITMEXPS_NM1
+  , D.ITMEXPS_CD2
+  , I2.ITMEXPS_NM2
+  , O.ORGNZ_CD
+  , D.ITM_CD
+  , D.ITM_NM
+  , I.IPT_NM_FG
+  , D.BUMON_CD
+  , bm.BUMON_NM
+  , D.ANLYS_CD
+  , decode(D.MNY_CD, 'JPY', D.PURORD_AMT_JPY, D.PURORD_AMT_FC) as PURORD_AMT
+  , decode(D.MNY_CD, 'JPY', PURORD_AMT_JPY, D.PURORD_AMT_FC) as RCVINSP_AMT
+  , (decode(D.MNY_CD, 'JPY', D.PURORD_AMT_JPY, D.PURORD_AMT_FC) - nvl(RD.RCVINSP_AMT, 0)) as PURORD_AMT_REMAIN
+  , D.PURORD_AMT_FC
+  , O.PAY_MTH
+  , O.DLV_LC
+  , S.PAY_COND_CD, S.PAY_COND_NM, S.CRP_PRS_TP, S.DMS_ABR_TP
+  , O.PAY_SITE_CD
+  , PS.PAY_SITE_NM
+  , D.PURORD_SMRY as RCVINSP_SMRY
+  , ROWNUM
+  , O.DLV_PLN_DT, O.INSP_COMP_DT
+  , O.PAY_PLN_DT
+  , to_char(to_date(O.RCVINSP_YM_S, 'yyyyMM'), 'yyyy/MM') as RCVINSP_YM_S
+  , to_char(to_date(O.RCVINSP_YM_E, 'yyyyMM'), 'yyyy/MM') as RCVINSP_YM_E
+  , O.STMP_TP, O.SPRT_TP, O.SPRT_CNT
+  , O.PURORD_RQST_CONT, O.TAX_UNT, O.TAX_FG, O.TAX_CD, TH.TAX_RTO, TH.TAX_TP
+  , O.TAX_SBJ_TP, O.TAX_KND_CD, O.TAX_FG_CHG
+  , O.HLDTAX_TP, substrb(O.HLDTAX_TP, 1, 1) as HLDTAX_FG
+  , O.HLDTAX_RTO, H.HLDTAX_RTO2, O.HLDTAX_SBJ_AMT, O.HLDTAX_AMT
+  , D.TAX_FG as TAX_FG_DTL, D.TAX_CD as TAX_CD_DTL, TD.TAX_RTO as TAX_RTO_DTL, TD.TAX_TP as TAX_TP_DTL
+  , D.TAX_SBJ_TP as TAX_SBJ_TP_DTL, D.TAX_KND_CD as TAX_KND_CD_DTL, D.TAX_FG_CHG as TAX_FG_CHG_DTL
+  , D.ASST_TP, D.PURORD_SMRY as RCVINSP_SMRY, D.INV_COMPANY_CD
+  , I2.SLP_GRP_GL, I2.CST_TP
+  , O.ADVPAY_TP
+  , U.USER_NAME as SBMTR_NM
+  , O.BKBND_CHG_TP, O.MAIL_TP, O.MAIL_RMK, O.SHT_TO_ZIP_CD, O.SHT_ADR_PRF_CD
+  , O.SHT_ADR_PRF, O.SHT_ADR1, O.SHT_ADR2, O.SHT_ADR3
+  , O.SHT_PIC_NM, O.SHT_DPT_NM, O.SHT_MLADR, O.SHT_TEL_NO
+  , O.ADVCST_MRK, D.DVC_CD, D.BND_FLR_CD, D.FRT_PNT_CD, D.MSR_TOOL_CD, D.MDA_ID
+  , B.BND_FLR_NM
+
+#通貨の選択肢リスト
+RI0010_03: |+
+ select /* RI0010_03 */ * from MNY_MST where COMPANY_CD = ? and DLT_FG = '0'
+
+#消費税コードの選択肢リスト
+RI0020_03: |+
+  select /* RI0020_03 */
+    *
+  from
+    TAX_MST
+  where
+    COMPANY_CD = ?
+    and DLT_FG = '0'
+    and trunc(sysdate) between VD_DT_S and VD_DT_E
+
+#検収一覧
+RI0030_01: |+
+ select /* RI0030_01 */
+  ${REPLACE}
+ from
+  RCVINSP_INF R
+  inner join WFM_LOCALE L
+   on L.LOCALE_CODE = ?
+  left join MWM_LOOKUP L1
+   on L1.CORPORATION_CODE = R.COMPANY_CD
+   and L1.LOOKUP_GROUP_ID = 'RCVINSP_STS'
+   and L1.LOOKUP_ID = R.RCVINSP_STS
+   and L1.LOCALE_CODE = L.LOCALE_CODE
+   and L1.DELETE_FLAG = '0'
+  left join MNY_MST M
+   on M.COMPANY_CD = R.COMPANY_CD
+   and M.MNY_CD = R.MNY_CD
+   and M.DLT_FG = '0'
+ where
+   exists (
+     select 'x' from (%SUBQUERY%) PS where R.COMPANY_CD = PS.CORPORATION_CODE and R.RCVINSP_NO = PS.APPLICATION_NO
+   )
+   and R.RCVINSP_STS >= '10'
+
+#検収一覧のSELECT句
+RI0030_02: |+
+  R.COMPANY_CD
+  , R.RCVINSP_NO
+  , R.RCVINSP_STS
+  , L1.LOOKUP_NAME as RCVINSP_STS_NM
+  , R.RCVINSP_NM
+  , R.SPLR_CD
+  , R.SPLR_NM_KJ
+  , R.SPLR_NM_KN
+  , decode(R.MNY_CD, 'JPY', R.RCVINSP_AMT_EXCTAX, R.RCVINSP_AMT_FC_EXCTAX) as RCVINSP_AMT_EXCTAX
+  , decode(R.MNY_CD, 'JPY', R.RCVINSP_AMT_INCTAX, R.RCVINSP_AMT_FC_INCTAX) as RCVINSP_AMT_INCTAX
+  , R.DLV_DT
+  , R.RCVINSP_DT
+  , R.MNY_TP
+  , R.MNY_CD
+  , M.MNY_NM
+
+#検収Noが支払申請されている件数
+RI0030_03: |+
+ select /* RI0030_03 */ count(*)
+ from PAYDTL_INF D
+  inner join WFT_PROCESS P
+   on P.CORPORATION_CODE = D.COMPANY_CD
+   and P.APPLICATION_NO = D.PAY_NO
+   and P.PROCESS_STATUS in ('start', 'wait', 'run', 'end', 'end_r')
+ where
+  D.COMPANY_CD = ?
+  and D.RCVINSP_NO = ?
+  and D.DLT_FG = '0'
+
+#申請中の変更＿検収申請をカウント
+RI0030_04: |+
+ select /* RI0030_04 */ count(*)
+ from WFT_PROCESS
+ where CORPORATION_CODE = ?
+   and APPLICATION_NO = ?
+   and PROCESS_STATUS in ('start', 'wait', 'run')
+
+#前払ありの検収をカウント
+RI0030_05: |+
+ select /* RI0030_05 */ count(*)
+ from RCVINSPDTL_INF D
+ where D.COMPANY_CD = ?
+  and D.RCVINSP_NO = ?
+  and D.ADVPAY_NO is not null
+  and D.DLT_FG = '0'
+
+
+#UserDataLoaderService用に検収情報を抽出
+RI0031_01: |+
+ select /* RI0031_01 */
+  R.COMPANY_CD, R.RCVINSP_NO, R.RCVINSP_NM, R.ORGNZ_CD, R.SBMTR_CD, U.USER_NAME as SBMTR_NM
+  , R.SBMT_DPT_CD, R.SBMT_DPT_NM, R.SBMT_DPT_DT, U.EXTENDED_INFO_01 as SBMTR_ADDR_CD
+  , L2.LOOKUP_NAME as SBMTR_ADDR, SPLR_CD, R.SPLR_NM_KJ, R.SPLR_NM_KN
+  , decode(R.MNY_CD, 'JPY', R.RCVINSP_AMT_EXCTAX, R.RCVINSP_AMT_FC_EXCTAX) as RCVINSP_AMT_EXCTAX
+  , decode(R.MNY_CD, 'JPY', R.RCVINSP_AMT_INCTAX, R.RCVINSP_AMT_FC_INCTAX) as RCVINSP_AMT_INCTAX
+  , R.DLV_DT, R.RCVINSP_DT
+  , R.RCVINSP_YM_S, R.RCVINSP_YM_E, R.RCVINSPSHT_ISS_DT, R.PAY_MTH, OP4.LABEL as PAY_MTH_NM
+  , R.RCVINSP_CONT, R.DLV_LC, R.MNY_CD, MNY.MNY_NM, OP3.LABEL as STMP_NM
+  , R.STMP_TP, R.PAY_SITE_CD, PSM.PAY_SITE_NM, R.PAY_APPL_CD, PAM.PAY_APPL_NM
+  , OP2.LABEL as ADVPAY_NM, R.ADVPAY_TP /*, SPRT_NM, SPRT_TP, SPRT_CNT*/
+  , R.TAX_UNT, OP4.LABEL as TAX_UNT_NM, R.TAX_CD, TM.TAX_NM, TM.TAX_RTO, TM.TAX_TP
+  , HLDTAX_NM, R.HLDTAX_TP, HLD.HLDTAX_FG, R.HLDTAX_RTO, HLD.HLDTAX_RTO2
+  , R.HLDTAX_SBJ_AMT, R.HLDTAX_AMT
+  , R.TAX_FG_CHG, TM.TAX_FG_CHG_NM
+  , R.TAX_SBJ_TP, R.TAX_KND_CD
+  , R.ADD_RTO, MNY.RDXPNT_GDT
+  , R.RCVINSP_YM, R.CST_ADD_YM
+  , (decode(R.MNY_CD, 'JPY', R.RCVINSP_AMT_INCTAX, R.RCVINSP_AMT_FC_INCTAX) - nvl(R.HLDTAX_AMT, 0) - nvl(ADV.ADVPAY_APLY_AMT_JPY, 0)) as PAY_AMT
+  , R.BKBND_CHG_TP, R.MAIL_TP, R.MAIL_RMK
+  , R.SHT_TO_ZIP_CD, R.SHT_ADR_PRF_CD, R.SHT_ADR_PRF
+  , R.SHT_ADR1, R.SHT_ADR2, R.SHT_ADR3
+  , R.SHT_PIC_NM, R.SHT_DPT_NM, R.SHT_MLADR, R.SHT_TEL_NO
+  , R.ADVCST_MRK
+  , decode(R.MNY_CD, 'JPY', nvl(R.RCVINSP_AMT_INCTAX, 0) - nvl(R.RCVINSP_AMT_EXCTAX, 0), nvl(R.RCVINSP_AMT_FC_INCTAX, 0) - nvl(R.RCVINSP_AMT_FC_EXCTAX, 0)) as RCVINSP_AMT_TAX
+  , decode(R.MNY_CD, 'JPY', R.TTLAMT_EXCTAX1, R.TTLAMT_FC_EXCTAX1) as TTLAMT_EXCTAX1
+  , decode(R.MNY_CD, 'JPY', R.TTLAMT_TAX1, R.TTLAMT_FC_TAX1) as TTLAMT_TAX1
+  , decode(R.MNY_CD, 'JPY', R.TTLAMT_INCTAX1, R.TTLAMT_FC_INCTAX1) as TTLAMT_INCTAX1
+  , R.TTLAMT_EXCTAX2
+  , R.TTLAMT_TAX2
+  , R.TTLAMT_INCTAX2
+  , decode(R.MNY_CD, 'JPY', R.TTLAMT_EXCTAX3, R.TTLAMT_FC_EXCTAX3) as TTLAMT_EXCTAX3
+  , decode(R.MNY_CD, 'JPY', R.TTLAMT_TAX3, R.TTLAMT_FC_TAX3) as TTLAMT_TAX3
+  , decode(R.MNY_CD, 'JPY', R.TTLAMT_INCTAX3, R.TTLAMT_FC_INCTAX3) as TTLAMT_INCTAX3
+  , case when R.TAX_UNT = '3' and exists (select 'x' from RCVINSPDTL_INF D where D.COMPANY_CD = R.COMPANY_CD and D.RCVINSP_NO = R.RCVINSP_NO and D.TAX_FG_CHG = '4') then '1' else '0' end TTLAMT_EXCTAX1_FG
+  , case when R.TAX_UNT = '3' and exists (select 'x' from RCVINSPDTL_INF D where D.COMPANY_CD = R.COMPANY_CD and D.RCVINSP_NO = R.RCVINSP_NO and D.TAX_FG_CHG = '5') then '1' else '0' end TTLAMT_EXCTAX2_FG
+  , case when R.TAX_UNT = '3' and exists (select 'x' from RCVINSPDTL_INF D where D.COMPANY_CD = R.COMPANY_CD and D.RCVINSP_NO = R.RCVINSP_NO and D.TAX_FG_CHG = '6') then '1' else '0' end TTLAMT_EXCTAX3_FG
+ from RCVINSP_INF R
+  inner join WFM_LOCALE L
+   on L.LOCALE_CODE = ?
+  inner join (
+   select COMPANY_CD, RCVINSP_NO, sum(ADVPAY_APLY_AMT_JPY) as ADVPAY_APLY_AMT_JPY
+   from RCVINSPDTL_INF
+   group by COMPANY_CD, RCVINSP_NO
+  ) ADV
+   on ADV.COMPANY_CD = R.COMPANY_CD
+   and ADV.RCVINSP_NO = R.RCVINSP_NO
+  left join PAY_APPL_MST PAM
+   on PAM.COMPANY_CD = R.COMPANY_CD
+   and PAM.PAY_APPL_CD = R.PAY_APPL_CD
+   and PAM.DLT_FG = '0'
+  left join MNY_MST MNY
+   on MNY.COMPANY_CD = R.COMPANY_CD
+   and MNY.MNY_CD = R.MNY_CD
+  left join V_HLDTAX_MST HLD
+   on HLD.COMPANY_CD = R.COMPANY_CD
+   and HLD.HLDTAX_TP = R.HLDTAX_TP
+   and HLD.DLT_FG = '0'
+  left join V_TAX_FG_CHG TM
+   on R.COMPANY_CD = TM.COMPANY_CD
+   and TM.MNY_TP = case when R.MNY_CD is null or R.MNY_CD = 'JPY' then '1' else '2' end
+   and R.TAX_SBJ_TP = TM.TAX_SBJ_TP
+   and R.TAX_KND_CD = TM.TAX_KND_CD
+   and R.TAX_FG_CHG = TM.TAX_FG_CHG
+   and trunc(sysdate) between TM.VD_DT_S and TM.VD_DT_E
+   and L.LOCALE_CODE = TM.LOCALE_CODE
+  left join MWV_OPTION_ITEM OP2
+   on OP2.CORPORATION_CODE = R.COMPANY_CD
+   and OP2.OPTION_CODE = 'ADVPAY_TP'
+   and OP2.CODE = R.ADVPAY_TP
+   and OP2.DELETE_FLAG = '0'
+   and OP2.LOCALE_CODE = L.LOCALE_CODE
+  left join PAY_SITE_MST PSM
+   on PSM.COMPANY_CD = R.COMPANY_CD
+   and PSM.PAY_SITE_CD = R.PAY_SITE_CD
+   and PSM.DLT_FG = '0'
+  left join MWV_OPTION_ITEM OP3 /* 印鑑種別*/
+   on OP3.CORPORATION_CODE = R.COMPANY_CD
+   and OP3.OPTION_CODE = 'KbnSmtpTp'
+   and OP3.CODE = R.STMP_TP
+   and OP3.LOCALE_CODE = L.LOCALE_CODE
+   and OP3.DELETE_FLAG = '0'
+  left join MWV_OPTION_ITEM OP4
+   on OP4.CORPORATION_CODE = R.COMPANY_CD
+   and OP4.OPTION_CODE = 'TaxUnit'
+   and OP4.CODE = R.TAX_UNT
+   and OP4.LOCALE_CODE = L.LOCALE_CODE
+   and OP4.DELETE_FLAG = '0'
+  /* 所在地 */
+  left join WFM_USER_V U
+   on U.CORPORATION_CODE = R.COMPANY_CD
+   and U.USER_CODE = R.SBMTR_CD
+   and U.LOCALE_CODE = L.LOCALE_CODE
+  left join WFM_ORGANIZATION_V O
+   on O.CORPORATION_CODE = R.COMPANY_CD
+   and O.ORGANIZATION_CODE = R.SBMT_DPT_CD
+   and O.LOCALE_CODE = L.LOCALE_CODE
+   left join MWM_LOOKUP L2
+   on L2.CORPORATION_CODE = U.CORPORATION_CODE
+   and L2.LOOKUP_GROUP_ID = 'USER_LOCATION'
+   and L2.LOOKUP_ID = U.EXTENDED_INFO_01
+   and L2.LOCALE_CODE = L.LOCALE_CODE
+ where
+  R.COMPANY_CD = ? and R.RCVINSP_NO = ?
+
+#UserDataLoaderService用に検収明細情報を抽出
+RI0031_02: |+
+ select /* RI0031_02 */
+  D.COMPANY_CD, D.RCVINSP_NO, D.RCVINSP_DTL_NO, D.ORGNZ_CD
+  , case when D.PURORD_NO is not null then (D.PURORD_NO || '-' || D.PURORD_DTL_NO) else null end as P_PURORD_NO
+  , D.PURORD_NO, D.PURORD_DTL_NO, D.ITMEXPS_CD1, IM1.ITMEXPS_NM as ITMEXPS_NM1
+  , D.ITMEXPS_CD2, IM2.ITMEXPS_NM as ITMEXPS_NM2, D.ITM_CD, D.ITM_NM
+  , case D.ITM_CD when '99999999999999999999' then '1' else '0' end as IPT_NM_FG
+  , D.BUMON_CD, bm.BUMON_NM, D.ANLYS_CD, D.ASST_TP
+  , case D.MNY_CD when 'JPY' then PD.PURORD_AMT_JPY else PD.PURORD_AMT_FC end as PURORD_AMT
+  , case D.MNY_CD when 'JPY' then (PD.PURORD_AMT_JPY - RD.RCVINSP_AMT_JPY) else (PD.PURORD_AMT_FC - RD.RDVINSP_AMT_FC) end as PURORD_AMT_REMAIN
+  , case D.MNY_CD when 'JPY' then D.RCVINSP_AMT_JPY else D.RCVINSP_AMT_FC end as RCVINSP_AMT
+  , case TM.TAX_TP
+     when '2' then decode(R.MNY_CD, 'JPY', D.RCVINSP_AMT_JPY, D.RCVINSP_AMT_FC) / (100 + TM.TAX_RTO) * 100
+     else decode(R.MNY_CD, 'JPY', D.RCVINSP_AMT_JPY, D.RCVINSP_AMT_FC)
+    end as RCVINSP_AMT_EXCTAX
+  , case TM.TAX_TP
+     when '1' then decode(R.MNY_CD, 'JPY', D.RCVINSP_AMT_JPY, D.RCVINSP_AMT_FC) * (100 + TM.TAX_RTO) / 100
+     else decode(R.MNY_CD, 'JPY', D.RCVINSP_AMT_JPY, D.RCVINSP_AMT_FC)
+    end as RCVINSP_AMT_INTAX
+  , D.TAX_CD, TM.TAX_NM, TM.TAX_RTO, TM.TAX_TP, D.RCVINSP_SMRY, D.TAX_FG_CHG, TM.TAX_FG_CHG_NM
+  , D.TAX_SBJ_TP, D.TAX_KND_CD
+  , D.INV_COMPANY_CD, OP1.LABEL as INV_COMPANY_NM, ITM1.SLP_GRP_GL, ITM1.CST_TP
+  , D.ADVPAY_NO, decode(R.MNY_CD, 'JPY', ADVPAY_APLY_AMT_JPY, ADVPAY_APLY_AMT_FC) as PAY_AMT
+  , R.SPLR_CD, R.MNY_CD
+  , D.DVC_CD, D.BND_FLR_CD, D.FRT_PNT_CD, D.MSR_TOOL_CD, D.MDA_ID
+  , B.BND_FLR_NM
+  , case when R.MNY_CD is null or R.MNY_CD = 'JPY' then '1' else '2' end MNY_TP
+ from RCVINSPDTL_INF D
+  inner join RCVINSP_INF R
+   on R.COMPANY_CD = D.COMPANY_CD
+   and R.RCVINSP_NO = D.RCVINSP_NO
+  inner join WFM_LOCALE L
+   on L.LOCALE_CODE = ?
+  left join PURORD_INF P
+   on P.COMPANY_CD = D.COMPANY_CD
+   and P.PURORD_NO = D.PURORD_NO
+  left join PURORDDTL_INF PD
+   on PD.COMPANY_CD = D.COMPANY_CD
+   and PD.PURORD_NO = D.PURORD_NO
+   and PD.PURORD_DTL_NO = D.PURORD_DTL_NO
+  left join (
+   /* 発注明細単位の検収済金額 */
+   select RD.COMPANY_CD, RD.PURORD_NO, RD.PURORD_DTL_NO, sum(RD.RCVINSP_AMT_JPY) as RCVINSP_AMT_JPY, sum(RD.RCVINSP_AMT_FC) as RDVINSP_AMT_FC
+   from RCVINSPDTL_INF RD
+   group by RD.COMPANY_CD, RD.PURORD_NO, RD.PURORD_DTL_NO
+  ) RD
+   on RD.COMPANY_CD = D.COMPANY_CD
+   and RD.PURORD_NO = D.PURORD_NO
+   and RD.PURORD_DTL_NO = D.PURORD_DTL_NO
+  left join MWV_OPTION_ITEM OP1
+   on OP1.CORPORATION_CODE = D.COMPANY_CD
+   and OP1.OPTION_CODE = 'INV_COMPANY_CD'
+   and OP1.CODE = D.INV_COMPANY_CD
+   and OP1.DELETE_FLAG = '0'
+   and OP1.LOCALE_CODE = L.LOCALE_CODE
+  left join V_TAX_FG_CHG TM
+   on D.COMPANY_CD = TM.COMPANY_CD
+   and TM.MNY_TP = case when R.MNY_CD is null or R.MNY_CD = 'JPY' then '1' else '2' end
+   and D.TAX_SBJ_TP = TM.TAX_SBJ_TP
+   and D.TAX_KND_CD = TM.TAX_KND_CD
+   and D.TAX_FG_CHG = TM.TAX_FG_CHG
+   and trunc(R.SBMT_DPT_DT) between TM.VD_DT_S and TM.VD_DT_E
+   and L.LOCALE_CODE = TM.LOCALE_CODE
+  left join ITM_MST IM
+   on IM.COMPANY_CD = D.COMPANY_CD
+   and IM.ORGNZ_CD = D.ORGNZ_CD
+   and IM.ITM_CD = D.ITM_CD
+   and trunc(P.SBMT_DPT_DT) between IM.VD_DT_S and IM.VD_DT_E
+   and IM.DLT_FG = '0'
+  left join ITMEXPS_MST IM1
+   on IM1.COMPANY_CD = D.COMPANY_CD
+   and IM1.ITMEXPS_CD = D.ITMEXPS_CD1
+   and IM1.DLT_FG = '0'
+  left join ITMEXPS_MST IM2
+   on IM2.COMPANY_CD = D.COMPANY_CD
+   and IM2.ITMEXPS_CD = D.ITMEXPS_CD2
+   and IM2.DLT_FG = '0'
+  left join ITMEXPS1_CHRMST ITM1
+   on ITM1.COMPANY_CD = D.COMPANY_CD
+   and ITM1.ITMEXPS_CD1 = D.ITMEXPS_CD1
+   and ITM1.ITMEXPS_CD2 = D.ITMEXPS_CD2
+   and ITM1.DLT_FG = '0'
+  left join BND_FLR_MST B
+   on B.COMPANY_CD = D.COMPANY_CD
+   and B.BND_FLR_CD = D.BND_FLR_CD
+   and B.DLT_FG = '0'
+  left join BUMON_MST bm
+    on D.COMPANY_CD = bm.COMPANY_CD
+    and D.BUMON_CD = bm.BUMON_CD
+    and bm.DLT_FG = '0'
+ where
+  D.COMPANY_CD = ? and D.RCVINSP_NO = ?
+ order by
+  D.COMPANY_CD, D.RCVINSP_NO, D.RCVINSP_DTL_NO

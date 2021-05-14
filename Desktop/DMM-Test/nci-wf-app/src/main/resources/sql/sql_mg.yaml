@@ -1,0 +1,2983 @@
+#品目マスタ一覧
+MG0010_01: |+
+   select
+     ${REPLACE}
+   from ITM_MST IM
+   where 1 = 1
+
+#品目マスタ一覧SELECT
+MG0010_02: |+
+  select /* MG0010_02 */ IM.COMPANY_CD,
+      IM.ORGNZ_CD,
+      WO.ORGANIZATION_NAME AS ORGNZ_NM,
+      IM.ITM_CD,
+      IM.SQNO,
+      IM.ITM_NM,
+      IM.CTGRY_CD,
+      IM.STCK_TP,
+      IM.UNT_CD,
+      IM.AMT,
+      IM.MAKER_NM,
+      IM.MAKER_MDL_NO,
+      IM.ITM_RMK,
+      IM.PRC_FLD_TP,
+      IM.VD_DT_S,
+      IM.VD_DT_E,
+      IM.DLT_FG,
+      opi1.LABEL AS DLT_FG_NM,
+      opi2.LABEL AS STCK_TP_NM,
+      opi3.LABEL AS PRC_FLD_TP_NM,
+      IM.SPLR_CD,
+      IM.SPLR_NM_KJ,
+      IM.SPLR_NM_KN,
+      IM.TAX_CD,
+      IM.ITM_VRSN,
+      TM.TAX_NM
+    FROM ITM_MST IM
+    LEFT JOIN WFM_ORGANIZATION WO
+      ON WO.CORPORATION_CODE = IM.COMPANY_CD
+      AND WO.ORGANIZATION_CODE     = IM.ORGNZ_CD
+    LEFT JOIN MWM_OPTION op1
+      ON op1.CORPORATION_CODE = IM.COMPANY_CD
+      AND op1.OPTION_CODE     = 'dltFg'
+      AND op1.DELETE_FLAG     = '0'
+    LEFT JOIN MWM_OPTION_ITEM opi1
+      ON opi1.OPTION_ID    = op1.OPTION_ID
+      AND opi1.CODE        = IM.DLT_FG
+      AND opi1.DELETE_FLAG = '0'
+    LEFT JOIN MWM_OPTION op2
+      ON op2.CORPORATION_CODE = IM.COMPANY_CD
+      AND op2.OPTION_CODE     = 'KbnStock'
+      AND op2.DELETE_FLAG     = '0'
+    LEFT JOIN MWM_OPTION_ITEM opi2
+      ON opi2.OPTION_ID    = op2.OPTION_ID
+      AND opi2.CODE        = IM.STCK_TP
+      AND opi2.DELETE_FLAG = '0'
+    LEFT JOIN MWM_OPTION op3
+      ON op3.CORPORATION_CODE = IM.COMPANY_CD
+      AND op3.OPTION_CODE     = 'PrcFldTps'
+      AND op3.DELETE_FLAG     = '0'
+    LEFT JOIN MWM_OPTION_ITEM opi3
+      ON opi3.OPTION_ID    = op3.OPTION_ID
+      AND opi3.CODE        = IM.PRC_FLD_TP
+      AND opi3.DELETE_FLAG = '0'
+    LEFT JOIN TAX_MST TM
+      ON TM.COMPANY_CD = IM.COMPANY_CD
+      AND TM.TAX_CD = IM.TAX_CD
+      AND TM.DLT_FG = '0'
+    WHERE 1 = 1
+
+#品目マスタ一覧UPDATE（論理削除）
+MG0010_04: |+
+  update /* MG0010_04 */ ITM_MST SET
+     DLT_FG = '1'
+  where COMPANY_CD = ?
+   and ORGNZ_CD = ?
+   and ITM_CD = ?
+   and SQNO = ?
+   and DLT_FG = '0'
+
+#品目マスタ一覧SELECT(ダウロード用)
+MG0010_05: |+
+  select /* MG0010_02 */ IM.COMPANY_CD,
+      IM.ORGNZ_CD,
+      WO.ORGANIZATION_NAME AS ORGNZ_NM,
+      IM.ITM_CD,
+      IM.SQNO,
+      IM.ITM_NM,
+      IM.CTGRY_CD,
+      IM.STCK_TP,
+      IM.UNT_CD,
+      IM.AMT,
+      IM.MAKER_NM,
+      IM.MAKER_MDL_NO,
+      IM.ITM_RMK,
+      IM.PRC_FLD_TP,
+      IM.VD_DT_S,
+      IM.VD_DT_E,
+      IM.DLT_FG,
+      opi1.LABEL AS DLT_FG_NM,
+      opi2.LABEL AS STCK_TP_NM,
+      opi3.LABEL AS PRC_FLD_TP_NM,
+      IM.SPLR_CD,
+      IM.SPLR_NM_KJ,
+      IM.SPLR_NM_KN,
+      IM.TAX_CD,
+      IM.ITM_VRSN,
+      TM.TAX_NM,
+      ROWNUM as ID,
+      NULL as PROCESS_TYPE
+    FROM ITM_MST IM
+    LEFT JOIN WFM_ORGANIZATION WO
+      ON WO.CORPORATION_CODE = IM.COMPANY_CD
+      AND WO.ORGANIZATION_CODE     = IM.ORGNZ_CD
+    LEFT JOIN MWM_OPTION op1
+      ON op1.CORPORATION_CODE = IM.COMPANY_CD
+      AND op1.OPTION_CODE     = 'dltFg'
+      AND op1.DELETE_FLAG     = '0'
+    LEFT JOIN MWM_OPTION_ITEM opi1
+      ON opi1.OPTION_ID    = op1.OPTION_ID
+      AND opi1.CODE        = IM.DLT_FG
+      AND opi1.DELETE_FLAG = '0'
+    LEFT JOIN MWM_OPTION op2
+      ON op2.CORPORATION_CODE = IM.COMPANY_CD
+      AND op2.OPTION_CODE     = 'KbnStock'
+      AND op2.DELETE_FLAG     = '0'
+    LEFT JOIN MWM_OPTION_ITEM opi2
+      ON opi2.OPTION_ID    = op2.OPTION_ID
+      AND opi2.CODE        = IM.STCK_TP
+      AND opi2.DELETE_FLAG = '0'
+    LEFT JOIN MWM_OPTION op3
+      ON op3.CORPORATION_CODE = IM.COMPANY_CD
+      AND op3.OPTION_CODE     = 'PrcFldTps'
+      AND op3.DELETE_FLAG     = '0'
+    LEFT JOIN MWM_OPTION_ITEM opi3
+      ON opi3.OPTION_ID    = op3.OPTION_ID
+      AND opi3.CODE        = IM.PRC_FLD_TP
+      AND opi3.DELETE_FLAG = '0'
+    LEFT JOIN TAX_MST TM
+      ON TM.COMPANY_CD = IM.COMPANY_CD
+      AND TM.TAX_CD = IM.TAX_CD
+      AND TM.DLT_FG = '0'
+    WHERE 1 = 1
+
+#アップロード品目マスタUPDATE
+MG0010_06: |+
+   update /* MG0010_04 */ ITM_MST SET
+     ITM_NM = ?,
+     CTGRY_CD = ?,
+     STCK_TP = ?,
+     SPLR_CD = ?,
+     SPLR_NM_KJ = ?,
+     SPLR_NM_KN = ?,
+     UNT_CD = ?,
+     AMT = ?,
+     TAX_CD = ?,
+     MAKER_NM = ?,
+     MAKER_MDL_NO = ?,
+     ITM_RMK = ?,
+     ITM_VRSN = ?,
+     PRC_FLD_TP = ?,
+     VD_DT_S = ?,
+     VD_DT_E = ?,
+     DLT_FG = ?,
+     CORPORATION_CODE_UPDATED = ?,
+     USER_CODE_UPDATED = ?,
+     IP_UPDATED = ?,
+     TIMESTAMP_UPDATED = ?
+   where COMPANY_CD = ?
+     and ORGNZ_CD = ?
+     and ITM_CD = ?
+     and SQNO = ?
+
+#アップロード品目マスタINSERT
+MG0010_07: |+
+   insert into /* MG0010_07 */ ITM_MST(
+      COMPANY_CD,
+      ORGNZ_CD,
+      ITM_CD,
+      SQNO,
+      ITM_NM,
+      CTGRY_CD,
+      STCK_TP,
+      SPLR_CD,
+      SPLR_NM_KJ,
+      SPLR_NM_KN,
+      UNT_CD,
+      AMT,
+      TAX_CD,
+      MAKER_NM,
+      MAKER_MDL_NO,
+      ITM_RMK,
+      ITM_VRSN,
+      PRC_FLD_TP,
+      VD_DT_S,
+      VD_DT_E,
+      DLT_FG, CORPORATION_CODE_CREATED, USER_CODE_CREATED, IP_CREATED, TIMESTAMP_CREATED,
+      CORPORATION_CODE_UPDATED, USER_CODE_UPDATED, IP_UPDATED, TIMESTAMP_UPDATED
+    ) VALUES (
+      ?,?,?,?,
+      ?,?,?,?,?,?,?,?,
+      ?,?,?,?,?,?,?,?,
+      '0',?,?,?,?,?,?,?,?
+    )
+
+#品目画像マスタ設定UPDATE
+MG0011_01: |+
+   update /* MG0011_01 */ ITM_IMG_MST set
+      ORGNZ_CD = ?,
+      ITM_CD = ?,
+      DLT_FG = ?,
+      CORPORATION_CODE_UPDATED = ?,
+      USER_CODE_UPDATED = ?,
+      IP_UPDATED = ?,
+      TIMESTAMP_UPDATED = ?
+   where COMPANY_CD = ?
+   and ITM_IMG_ID = ?
+
+#品目画像ID習得SELECT
+MG0011_02: |+
+  select /* MG0011_02 */ IMG.ITM_IMG_ID
+    from ITM_IMG_MST IMG
+    WHERE 1 = 1
+    AND COMPANY_CD = ?
+    AND ORGNZ_CD = ?
+    AND ITM_CD = ?
+    and DLT_FG = '0'
+
+#その他品目画像を論理削除
+MG0011_03: |+
+   update /* MG0011_03 */ ITM_IMG_MST set
+      DLT_FG = '1',
+      CORPORATION_CODE_UPDATED = ?,
+      USER_CODE_UPDATED = ?,
+      IP_UPDATED = ?,
+      TIMESTAMP_UPDATED = ?
+   where COMPANY_CD = ?
+   and ITM_CD = ?
+   and ITM_IMG_ID <> ?
+
+#品目登録際の存在チェック
+MG0011_04: |+
+   select /* MG0011_04 */ nvl(max(SQNO),0)
+   from ITM_MST
+   where COMPANY_CD = ?
+     and ORGNZ_CD = ?
+     and ITM_CD = ?
+
+#費目マスタ一覧
+MG0020_01: |+
+   select
+     ${REPLACE}
+   from ITMEXPS_MST IM
+   where 1 = 1
+
+#費目マスタ一覧SELECT
+MG0020_02: |+
+  select /* MG0020_02 */ IM.COMPANY_CD,
+      IM.ITMEXPS_CD,
+      IM.ITMEXPS_NM,
+      IM.ITMEXPS_NM_S,
+      IM.ITMEXPS_LEVEL,
+      IM.DLT_FG,
+      opi1.LABEL AS DLT_FG_NM,
+      ROWNUM as ID,
+      NULL as PROCESS_TYPE
+    from ITMEXPS_MST IM
+    LEFT JOIN MWM_OPTION op1
+      ON op1.CORPORATION_CODE = IM.COMPANY_CD
+      AND op1.OPTION_CODE     = 'dltFg'
+      AND op1.DELETE_FLAG     = '0'
+    LEFT JOIN MWM_OPTION_ITEM opi1
+      ON opi1.OPTION_ID    = op1.OPTION_ID
+      AND opi1.CODE        = IM.DLT_FG
+      AND opi1.DELETE_FLAG = '0'
+    WHERE 1 = 1
+
+#費目マスタ一覧DELETE
+MG0020_03: |+
+  update /* MG0020_03 */ ITMEXPS_MST set
+    DLT_FG = '1'
+  where COMPANY_CD = ?
+  and ITMEXPS_CD = ?
+  and DLT_FG = '0'
+
+#費目マスタ設定UPDATE
+MG0021_01: |+
+   update /* MG0021_01 */ ITMEXPS_MST set
+      ITMEXPS_NM = ?,
+      ITMEXPS_NM_S = ?,
+      ITMEXPS_LEVEL = ?,
+      DLT_FG = ?,
+      CORPORATION_CODE_UPDATED = ?,
+      USER_CODE_UPDATED = ?,
+      IP_UPDATED = ?,
+      TIMESTAMP_UPDATED = ?
+   where COMPANY_CD = ?
+   and ITMEXPS_CD = ?
+
+#費目マスタ設定INSERT
+MG0021_02: |+
+   insert /* MG0021_02 */ into ITMEXPS_MST (
+      COMPANY_CD,
+      ITMEXPS_CD,
+      ITMEXPS_NM,
+      ITMEXPS_NM_S,
+      ITMEXPS_LEVEL,
+      DLT_FG,
+      CORPORATION_CODE_CREATED,
+      USER_CODE_CREATED,
+      IP_CREATED,
+      TIMESTAMP_CREATED,
+      CORPORATION_CODE_UPDATED,
+      USER_CODE_UPDATED,
+      IP_UPDATED,
+      TIMESTAMP_UPDATED
+   ) values (
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      '0',
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?
+   )
+
+
+#費目関連マスタ一覧
+MG0030_01: |+
+   select
+     ${REPLACE}
+   from ITMEXPS2_CHRMST I2
+   inner join ITMEXPS_MST M1
+     on M1.COMPANY_CD = I2.COMPANY_CD
+     and M1.ITMEXPS_CD = I2.ITMEXPS_CD1
+     and M1.DLT_FG = '0'
+   inner join ITMEXPS_MST M2
+     on M2.COMPANY_CD = I2.COMPANY_CD
+     and M2.ITMEXPS_CD = I2.ITMEXPS_CD2
+     and M2.DLT_FG = '0'
+   inner join ITMEXPS1_CHRMST I1
+     on I1.COMPANY_CD = I2.COMPANY_CD
+     and I1.ITMEXPS_CD1 = I2.ITMEXPS_CD1
+     and I1.ITMEXPS_CD2 = I2.ITMEXPS_CD2
+   where 1 = 1
+
+#費目関連マスタ一覧SELECT
+MG0030_02: |+
+   select /* MG0030_02 */ DISTINCT I2.COMPANY_CD,
+     I2.ORGNZ_CD,
+     WO.ORGANIZATION_NAME AS ORGNZ_NM,
+     I2.ITMEXPS_CD1,
+     M1.ITMEXPS_NM as ITMEXPS_NM1,
+     I2.ITMEXPS_CD2,
+     M2.ITMEXPS_NM as ITMEXPS_NM2,
+     I1.JRN_CD,
+     J.JRN_NM,
+     I1.ACC_CD,
+     AM.ACC_NM,
+     I1.ACC_BRKDWN_CD,
+     ABM.ACC_BRKDWN_NM,
+     I1.MNGACC_CD,
+     I1.MNGACC_BRKDWN_CD,
+     I1.BDGTACC_CD,
+     I1.ASST_TP,
+     I1.TAX_CD,
+     T.TAX_NM,
+     I1.SLP_GRP_GL,
+     I1.CST_TP,
+     I2.DLT_FG,
+     opi1.LABEL AS DLT_FG_NM,
+     I1.TAX_SBJ_TP,
+     ml1.LOOKUP_NAME as TAX_SBJ_NM
+   from ITMEXPS2_CHRMST I2
+   inner join ITMEXPS_MST M1
+     on M1.COMPANY_CD = I2.COMPANY_CD
+     and M1.ITMEXPS_CD = I2.ITMEXPS_CD1
+     and M1.DLT_FG = '0'
+   inner join ITMEXPS_MST M2
+     on M2.COMPANY_CD = I2.COMPANY_CD
+     and M2.ITMEXPS_CD = I2.ITMEXPS_CD2
+     and M2.DLT_FG = '0'
+   inner join ITMEXPS1_CHRMST I1
+     on I1.COMPANY_CD = I2.COMPANY_CD
+     and I1.ITMEXPS_CD1 = I2.ITMEXPS_CD1
+     and I1.ITMEXPS_CD2 = I2.ITMEXPS_CD2
+   left join WFM_ORGANIZATION WO
+     ON WO.CORPORATION_CODE = I2.COMPANY_CD
+     AND WO.ORGANIZATION_CODE     = I2.ORGNZ_CD
+   left join TAX_MST T
+     on T.COMPANY_CD = I1.COMPANY_CD
+     and T.TAX_CD = I1.TAX_CD
+     and T.DLT_FG = '0'
+     and trunc(sysdate) between T.VD_DT_S and T.VD_DT_E
+   left join JRN_MST J
+     on J.COMPANY_CD = I1.COMPANY_CD
+     and J.JRN_CD = I1.JRN_CD
+     and J.DLT_FG = '0'
+   left join ACC_MST AM
+     on AM.COMPANY_CD = I1.COMPANY_CD
+     and AM.ACC_CD = I1.ACC_CD
+     and AM.DLT_FG = '0'
+   left join ACC_BRKDWN_MST ABM
+     on ABM.COMPANY_CD = I1.COMPANY_CD
+     and ABM.ACC_CD = I1.ACC_CD
+     and ABM.ACC_BRKDWN_CD = I1.ACC_BRKDWN_CD
+     and ABM.DLT_FG = '0'
+   left join MWM_OPTION op1
+     ON op1.CORPORATION_CODE = I2.COMPANY_CD
+     AND op1.OPTION_CODE     = 'dltFg'
+     AND op1.DELETE_FLAG     = '0'
+   left join MWM_OPTION_ITEM opi1
+     ON opi1.OPTION_ID    = op1.OPTION_ID
+     AND opi1.CODE        = I2.DLT_FG
+     AND opi1.DELETE_FLAG = '0'
+   LEFT JOIN MWM_LOOKUP ml1
+     ON ml1.CORPORATION_CODE = I1.COMPANY_CD
+     AND ml1.LOOKUP_ID       = I1.TAX_SBJ_TP
+     AND ml1.LOOKUP_GROUP_ID = 'TAX_SBJ_TP'
+     AND ml1.LOCALE_CODE     = ?
+     AND ml1.DELETE_FLAG     = '0'
+   where 1 = 1
+
+#費目関連マスタ２DELETE
+MG0030_03: |+
+  update /* MG0030_03 */ ITMEXPS2_CHRMST set
+    DLT_FG = ?
+  where COMPANY_CD = ?
+  and ORGNZ_CD = ?
+  and ITMEXPS_CD1 = ?
+  and ITMEXPS_CD2 = ?
+
+#費目関連マスタ１DELETE
+MG0030_04: |+
+  update /* MG0030_04 */ ITMEXPS1_CHRMST set
+    DLT_FG ='1'
+  where COMPANY_CD = ?
+  and ITMEXPS_CD1 = ?
+  and ITMEXPS_CD2 = ?
+  and DLT_FG ='0'
+
+#費目関連1-2マスタ依存チェック
+MG0030_05: |+
+   select
+     count(*)
+   from ITMEXPS2_CHRMST
+   where COMPANY_CD = ?
+   and ITMEXPS_CD1 = ?
+   and ITMEXPS_CD2 = ?
+
+#費目関連マスタ一覧SELECT(ダウンロード用)
+MG0030_06: |+
+   select /* MG0030_06 */ DISTINCT I2.COMPANY_CD,
+     I2.ORGNZ_CD,
+     I2.ITMEXPS_CD1,
+     I2.ITMEXPS_CD2,
+     I1.JRN_CD,
+     I1.ACC_CD,
+     I1.ACC_BRKDWN_CD,
+     I1.MNGACC_CD,
+     I1.MNGACC_BRKDWN_CD,
+     I1.BDGTACC_CD,
+     I1.ASST_TP,
+     I1.TAX_CD,
+     I1.SLP_GRP_GL,
+     I1.CST_TP,
+     I1.TAX_SBJ_TP,
+     I2.DLT_FG,
+     ROWNUM as ID,
+     NULL as PROCESS_TYPE
+   from ITMEXPS2_CHRMST I2
+   inner join ITMEXPS_MST M1
+     on M1.COMPANY_CD = I2.COMPANY_CD
+     and M1.ITMEXPS_CD = I2.ITMEXPS_CD1
+     and M1.DLT_FG = '0'
+   inner join ITMEXPS_MST M2
+     on M2.COMPANY_CD = I2.COMPANY_CD
+     and M2.ITMEXPS_CD = I2.ITMEXPS_CD2
+     and M2.DLT_FG = '0'
+   inner join ITMEXPS1_CHRMST I1
+     on I1.COMPANY_CD = I2.COMPANY_CD
+     and I1.ITMEXPS_CD1 = I2.ITMEXPS_CD1
+     and I1.ITMEXPS_CD2 = I2.ITMEXPS_CD2
+   where 1 = 1
+
+#費目関連マスタ１設定UPDATE
+MG0031_01: |+
+   update /* MG0031_01 */ ITMEXPS1_CHRMST set
+      JRN_CD = ?,
+      ACC_CD = ?,
+      ACC_BRKDWN_CD = ?,
+      MNGACC_CD = ?,
+      MNGACC_BRKDWN_CD = ?,
+      BDGTACC_CD = ?,
+      ASST_TP = ?,
+      TAX_CD = ?,
+      SLP_GRP_GL = ?,
+      CST_TP = ?,
+      TAX_SBJ_TP = ?,
+      CORPORATION_CODE_UPDATED = ?,
+      USER_CODE_UPDATED = ?,
+      IP_UPDATED = ?,
+      TIMESTAMP_UPDATED = ?
+   where COMPANY_CD = ?
+   and ITMEXPS_CD1 = ?
+   and ITMEXPS_CD2 = ?
+
+#費目関連マスタ１設定INSERT
+MG0031_02: |+
+   insert /* MG0031_02 */ into ITMEXPS1_CHRMST (
+      COMPANY_CD,
+      ITMEXPS_CD1,
+      ITMEXPS_CD2,
+      JRN_CD,
+      ACC_CD,
+      ACC_BRKDWN_CD,
+      MNGACC_CD,
+      MNGACC_BRKDWN_CD,
+      BDGTACC_CD,
+      ASST_TP,
+      TAX_CD,
+      SLP_GRP_GL,
+      CST_TP,
+      TAX_SBJ_TP,
+      DLT_FG,
+      CORPORATION_CODE_CREATED,
+      USER_CODE_CREATED,
+      IP_CREATED,
+      TIMESTAMP_CREATED,
+      CORPORATION_CODE_UPDATED,
+      USER_CODE_UPDATED,
+      IP_UPDATED,
+      TIMESTAMP_UPDATED
+   ) values (
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?
+   )
+
+#費目関連マスタ２設定INSERT
+MG0031_03: |+
+   insert /* MG0031_03 */ into ITMEXPS2_CHRMST (
+      COMPANY_CD,
+      ORGNZ_CD,
+      ITMEXPS_CD1,
+      ITMEXPS_CD2,
+      DLT_FG,
+      CORPORATION_CODE_CREATED,
+      USER_CODE_CREATED,
+      IP_CREATED,
+      TIMESTAMP_CREATED,
+      CORPORATION_CODE_UPDATED,
+      USER_CODE_UPDATED,
+      IP_UPDATED,
+      TIMESTAMP_UPDATED
+   ) values (
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?
+   )
+
+#費目関連同様存在チェック
+MG0031_04: |+
+   select
+     count(*)
+   from ITMEXPS2_CHRMST
+   where COMPANY_CD = ?
+   and ORGNZ_CD = ?
+   and ITMEXPS_CD1 = ?
+   and ITMEXPS_CD2 = ?
+
+#費目関連1マスタ存在チェック
+MG0031_05: |+
+   select
+     count(*)
+   from ITMEXPS1_CHRMST
+   where COMPANY_CD = ?
+   and ITMEXPS_CD1 = ?
+   and ITMEXPS_CD2 = ?
+
+#銀行口座マスタ一覧
+MG0090_01: |+
+   select
+     ${REPLACE}
+   from BNKACC_MST BAM
+   where 1 = 1
+
+#銀行口座マスタ一覧SELECT
+MG0090_02: |+
+  SELECT /* MG0090_02 */ BAM.COMPANY_CD,
+    BAM.BNKACC_CD,
+    BAM.SQNO,
+    BAM.BNK_CD,
+    BM.BNK_NM,
+    BAM.BNKBRC_CD,
+    BBM.BNKBRC_NM,
+    BAM.BNKACC_TP,
+    opi1.LABEL AS BNKACC_TP_NM,
+    BAM.BNKACC_NO,
+    BAM.BNKACC_NM,
+    BAM.BNKACC_NM_KN,
+    BAM.VD_DT_S,
+    BAM.VD_DT_E,
+    BAM.DLT_FG,
+    opi2.LABEL AS DLT_FG_NM,
+    ROWNUM as ID,
+    NULL as PROCESS_TYPE
+  FROM BNKACC_MST BAM
+  LEFT JOIN BNK_MST BM
+    ON BAM.COMPANY_CD = BM.COMPANY_CD
+    AND BAM.BNK_CD    = BM.BNK_CD
+  LEFT JOIN BNKBRC_MST BBM
+    ON BAM.COMPANY_CD = BBM.COMPANY_CD
+    AND BAM.BNK_CD    = BBM.BNK_CD
+    AND BAM.BNKBRC_CD = BBM.BNKBRC_CD
+  LEFT JOIN MWM_OPTION op1
+    ON op1.CORPORATION_CODE = BAM.COMPANY_CD
+    AND op1.OPTION_CODE     = 'KbnBnkaccTp'
+    AND op1.DELETE_FLAG     = '0'
+  LEFT JOIN MWM_OPTION_ITEM opi1
+    ON opi1.OPTION_ID    = op1.OPTION_ID
+    AND opi1.CODE        = BAM.BNKACC_TP
+    AND opi1.DELETE_FLAG = '0'
+  LEFT JOIN MWM_OPTION op2
+    ON op2.CORPORATION_CODE = BAM.COMPANY_CD
+    AND op2.OPTION_CODE     = 'dltFg'
+    AND op2.DELETE_FLAG     = '0'
+  LEFT JOIN MWM_OPTION_ITEM opi2
+    ON opi2.OPTION_ID    = op2.OPTION_ID
+    AND opi2.CODE        = BAM.DLT_FG
+    AND opi2.DELETE_FLAG = '0'
+  WHERE 1 = 1
+
+#銀行口座マスタ一覧DELETE
+MG0090_03: |+
+  update /* MG0090_03 */ BNKACC_MST set
+    DLT_FG = '1'
+  where COMPANY_CD = ?
+   and BNKACC_CD = ?
+   and SQNO = ?
+   and DLT_FG = '0'
+
+#銀行口座マスタ設定UPDATE(論理削除)
+MG0091_01: |+
+   update /* MG0091_01 */ BNKACC_MST set
+     BNK_CD = ?,
+     BNKBRC_CD = ?,
+     BNKACC_TP = ?,
+     BNKACC_NO = ?,
+     BNKACC_NM = ?,
+     BNKACC_NM_KN = ?,
+     VD_DT_S = ?,
+     VD_DT_E = ?,
+     DLT_FG = ?,
+     CORPORATION_CODE_UPDATED = ?,
+     USER_CODE_UPDATED = ?,
+     IP_UPDATED = ?,
+     TIMESTAMP_UPDATED = ?
+   where COMPANY_CD = ?
+     and BNKACC_CD = ?
+     and SQNO = ?
+
+#銀行口座マスタ設定INSERT
+MG0091_02: |+
+   insert /* MG0091_02 */ into BNKACC_MST (
+    COMPANY_CD,
+    BNKACC_CD,
+    SQNO,
+    BNK_CD,
+    BNKBRC_CD,
+    BNKACC_TP,
+    BNKACC_NO,
+    BNKACC_NM,
+    BNKACC_NM_KN,
+    VD_DT_S,
+    VD_DT_E,
+    DLT_FG,
+    CORPORATION_CODE_CREATED,
+    USER_CODE_CREATED,
+    IP_CREATED,
+    TIMESTAMP_CREATED,
+    CORPORATION_CODE_UPDATED,
+    USER_CODE_UPDATED,
+    IP_UPDATED,
+    TIMESTAMP_UPDATED
+   ) values (
+     ?,
+     ?,
+     (
+      select NVL(MAX(SQNO)+1,1) from BNKACC_MST BAM2 where BAM2.COMPANY_CD = ? and BAM2.BNKACC_CD = ?
+     ),
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     '0',
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?
+   )
+
+#銀行口座マスタ一覧SELECT
+MG0091_03: |+
+   select /* MG0091_03 */ nvl(max(SQNO), 0)
+   from BNKACC_MST
+   where COMPANY_CD = ?
+     and (BNKACC_CD = ? or (BNK_CD = ? and BNKBRC_CD = ? and BNKACC_NO = ?))
+     and DLT_FG = '0'
+
+#銀行口座マスタ設定INSERT(アップロード用)
+MG0091_04: |+
+   insert /* MG0091_04 */ into BNKACC_MST (
+    COMPANY_CD,
+    BNKACC_CD,
+    SQNO,
+    BNK_CD,
+    BNKBRC_CD,
+    BNKACC_TP,
+    BNKACC_NO,
+    BNKACC_NM,
+    BNKACC_NM_KN,
+    VD_DT_S,
+    VD_DT_E,
+    DLT_FG,
+    CORPORATION_CODE_CREATED,
+    USER_CODE_CREATED,
+    IP_CREATED,
+    TIMESTAMP_CREATED,
+    CORPORATION_CODE_UPDATED,
+    USER_CODE_UPDATED,
+    IP_UPDATED,
+    TIMESTAMP_UPDATED
+   ) values (
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     '0',
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?
+   )
+
+#銀行マスタ一覧
+MG0100_01: |+
+   select
+     ${REPLACE}
+   from BNK_MST BM
+   where 1 = 1
+
+#銀行マスタ一覧SELECT
+MG0100_02: |+
+  select /* MG0100_02 */ BM.COMPANY_CD,
+    BM.BNK_CD,
+    BM.BNK_NM,
+    BM.BNK_NM_S,
+    BM.BNK_NM_KN,
+    BM.VD_DT_S,
+    BM.VD_DT_E,
+    BM.DLT_FG,
+    opi1.LABEL AS DLT_FG_NM,
+    ROWNUM as ID,
+    NULL as PROCESS_TYPE
+  from BNK_MST BM
+  LEFT JOIN MWM_OPTION op1
+    ON op1.CORPORATION_CODE = BM.COMPANY_CD
+    AND op1.OPTION_CODE     = 'dltFg'
+    AND op1.DELETE_FLAG     = '0'
+  LEFT JOIN MWM_OPTION_ITEM opi1
+    ON opi1.OPTION_ID    = op1.OPTION_ID
+    AND opi1.CODE        = BM.DLT_FG
+    AND opi1.DELETE_FLAG = '0'
+  WHERE 1 = 1
+
+#銀行マスタ一覧DELETE
+MG0100_03: |+
+  update /* MG0100_03 */ BNK_MST set
+    DLT_FG = '1'
+  where COMPANY_CD = ?
+   and BNK_CD = ?
+   and DLT_FG = '0'
+
+#銀行マスタ設定UPDATE
+MG0101_01: |+
+   update /* MG0101_01 */ BNK_MST set
+      BNK_NM = ?,
+      BNK_NM_S = ?,
+      BNK_NM_KN = ?,
+      VD_DT_S = ?,
+      VD_DT_E = ?,
+      DLT_FG = ?,
+      CORPORATION_CODE_UPDATED = ?,
+      USER_CODE_UPDATED = ?,
+      IP_UPDATED = ?,
+      TIMESTAMP_UPDATED = ?
+   where COMPANY_CD = ?
+   and BNK_CD = ?
+
+#銀行マスタ設定INSERT
+MG0101_02: |+
+   insert /* MG0101_02 */ into BNK_MST (
+    COMPANY_CD,
+    BNK_CD,
+    BNK_NM,
+    BNK_NM_S,
+    BNK_NM_KN,
+    VD_DT_S,
+    VD_DT_E,
+    DLT_FG,
+    CORPORATION_CODE_CREATED,
+    USER_CODE_CREATED,
+    IP_CREATED,
+    TIMESTAMP_CREATED,
+    CORPORATION_CODE_UPDATED,
+    USER_CODE_UPDATED,
+    IP_UPDATED,
+    TIMESTAMP_UPDATED
+   ) values (
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     '0',
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?
+   )
+
+#銀行支店マスタ一覧
+MG0110_01: |+
+   select
+     ${REPLACE}
+   from BNKBRC_MST BBM
+   where 1 = 1
+
+#銀行支店マスタ一覧SELECT
+MG0110_02: |+
+  select /* MG0110_02 */ BBM.COMPANY_CD,
+    BBM.BNK_CD,
+    BM.BNK_NM,
+    BBM.BNKBRC_CD,
+    BBM.BNKBRC_NM,
+    BBM.BNKBRC_NM_S,
+    BBM.BNKBRC_NM_KN,
+    BBM.VD_DT_S,
+    BBM.VD_DT_E,
+    BBM.DLT_FG,
+    opi1.LABEL AS DLT_FG_NM,
+    ROWNUM as ID,
+    NULL as PROCESS_TYPE
+  from BNKBRC_MST BBM
+  LEFT JOIN BNK_MST BM
+    ON BBM.COMPANY_CD = BM.COMPANY_CD
+    AND BBM.BNK_CD    = BM.BNK_CD
+  LEFT JOIN MWM_OPTION op1
+    ON op1.CORPORATION_CODE = BBM.COMPANY_CD
+    AND op1.OPTION_CODE     = 'dltFg'
+    AND op1.DELETE_FLAG     = '0'
+  LEFT JOIN MWM_OPTION_ITEM opi1
+    ON opi1.OPTION_ID    = op1.OPTION_ID
+    AND opi1.CODE        = BBM.DLT_FG
+    AND opi1.DELETE_FLAG = '0'
+  WHERE 1 = 1
+
+#銀行支店マスタ一覧DELETE
+MG0110_03: |+
+  update /* MG0110_03 */ BNKBRC_MST set
+    DLT_FG = '1'
+  where COMPANY_CD = ?
+   and BNK_CD = ?
+   and BNKBRC_CD = ?
+   and DLT_FG = '0'
+
+#銀行支店マスタ設定UPDATE
+MG0111_01: |+
+   update /* MG0111_01 */ BNKBRC_MST set
+      BNKBRC_NM = ?,
+      BNKBRC_NM_S = ?,
+      BNKBRC_NM_KN = ?,
+      VD_DT_S = ?,
+      VD_DT_E = ?,
+      DLT_FG = ?,
+      CORPORATION_CODE_UPDATED = ?,
+      USER_CODE_UPDATED = ?,
+      IP_UPDATED = ?,
+      TIMESTAMP_UPDATED = ?
+   where COMPANY_CD = ?
+   and BNK_CD = ?
+   and BNKBRC_CD = ?
+
+#銀行支店マスタ設定INSERT
+MG0111_02: |+
+   insert /* MG0111_02 */ into BNKBRC_MST (
+    COMPANY_CD,
+    BNK_CD,
+    BNKBRC_CD,
+    BNKBRC_NM,
+    BNKBRC_NM_S,
+    BNKBRC_NM_KN,
+    VD_DT_S,
+    VD_DT_E,
+    DLT_FG,
+    CORPORATION_CODE_CREATED,
+    USER_CODE_CREATED,
+    IP_CREATED,
+    TIMESTAMP_CREATED,
+    CORPORATION_CODE_UPDATED,
+    USER_CODE_UPDATED,
+    IP_UPDATED,
+    TIMESTAMP_UPDATED
+   ) values (
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     '0',
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?
+   )
+
+#勘定科目マスタ一覧
+MG0130_01: |+
+   select
+     ${REPLACE}
+   from ACC_MST AM
+   where 1 = 1
+
+#勘定科目マスタ一覧SELECT
+MG0130_02: |+
+  SELECT /* MG0130_02 */ AM.COMPANY_CD,
+    AM.ACC_CD,
+    AM.SQNO,
+    AM.ACC_NM,
+    AM.ACC_NM_S,
+    AM.DC_TP,
+    opi1.LABEL AS DC_TP_NM,
+    AM.ACC_BRKDWN_TP,
+    opi2.LABEL AS ACC_BRKDWN_TP_NM,
+    AM.TAX_CD_SS,
+    AM.TAX_IPT_TP,
+    opi3.LABEL AS TAX_IPT_TP_NM,
+    AM.VD_DT_S,
+    AM.VD_DT_E,
+    AM.DLT_FG,
+    opi4.LABEL AS DLT_FG_NM
+  FROM ACC_MST AM
+  LEFT JOIN MWM_OPTION op1
+    ON op1.CORPORATION_CODE = AM.COMPANY_CD
+    AND op1.OPTION_CODE     = 'kbnDcTp'
+    AND op1.DELETE_FLAG     = '0'
+  LEFT JOIN MWM_OPTION_ITEM opi1
+    ON opi1.OPTION_ID    = op1.OPTION_ID
+    AND opi1.CODE        = AM.DC_TP
+    AND opi1.DELETE_FLAG = '0'
+  LEFT JOIN MWM_OPTION op2
+    ON op2.CORPORATION_CODE = AM.COMPANY_CD
+    AND op2.OPTION_CODE     = 'kbnAccBrkdwnTp'
+    AND op2.DELETE_FLAG     = '0'
+  LEFT JOIN MWM_OPTION_ITEM opi2
+    ON opi2.OPTION_ID    = op2.OPTION_ID
+    AND opi2.CODE        = AM.ACC_BRKDWN_TP
+    AND opi2.DELETE_FLAG = '0'
+  LEFT JOIN MWM_OPTION op3
+    ON op3.CORPORATION_CODE = AM.COMPANY_CD
+    AND op3.OPTION_CODE     = 'kbnTaxIptTp'
+    AND op3.DELETE_FLAG     = '0'
+  LEFT JOIN MWM_OPTION_ITEM opi3
+    ON opi3.OPTION_ID    = op3.OPTION_ID
+    AND opi3.CODE        = AM.TAX_IPT_TP
+    AND opi3.DELETE_FLAG = '0'
+  LEFT JOIN MWM_OPTION op4
+    ON op4.CORPORATION_CODE = AM.COMPANY_CD
+    AND op4.OPTION_CODE     = 'dltFg'
+    AND op4.DELETE_FLAG     = '0'
+  LEFT JOIN MWM_OPTION_ITEM opi4
+    ON opi4.OPTION_ID    = op4.OPTION_ID
+    AND opi4.CODE        = AM.DLT_FG
+    AND opi4.DELETE_FLAG = '0'
+  WHERE 1 = 1
+
+#勘定科目マスタ一覧DELETE
+MG0130_03: |+
+  update /* MG0130_03 */ ACC_MST set
+    DLT_FG = '1'
+  where COMPANY_CD = ?
+   and ACC_CD = ?
+   and SQNO = ?
+   and DLT_FG = '0'
+
+#勘定科目マスタ設定INSERT(アップロード用)
+MG0130_04: |+
+   insert /* MG0130_04 */ into ACC_MST (
+    COMPANY_CD,
+    ACC_CD,
+    SQNO,
+    ACC_NM,
+    ACC_NM_S,
+    DC_TP,
+    ACC_BRKDWN_TP,
+    TAX_CD_SS,
+    TAX_IPT_TP,
+    VD_DT_S,
+    VD_DT_E,
+    DLT_FG,
+    CORPORATION_CODE_CREATED,
+    USER_CODE_CREATED,
+    IP_CREATED,
+    TIMESTAMP_CREATED,
+    CORPORATION_CODE_UPDATED,
+    USER_CODE_UPDATED,
+    IP_UPDATED,
+    TIMESTAMP_UPDATED
+   ) values (
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     '0',
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?
+   )
+
+#勘定科目マスタ設定UPDATE
+MG0131_01: |+
+   update /* MG0131_01 */ ACC_MST set
+    ACC_NM = ?,
+    ACC_NM_S = ?,
+    DC_TP = ?,
+    ACC_BRKDWN_TP = ?,
+    TAX_CD_SS = ?,
+    TAX_IPT_TP = ?,
+    VD_DT_S = ?,
+    VD_DT_E = ?,
+    DLT_FG = ?,
+    CORPORATION_CODE_UPDATED = ?,
+    USER_CODE_UPDATED = ?,
+    IP_UPDATED = ?,
+    TIMESTAMP_UPDATED = ?
+   where COMPANY_CD = ?
+    and ACC_CD = ?
+    and SQNO = ?
+
+#勘定科目マスタ設定INSERT
+MG0131_02: |+
+   insert /* MG0131_02 */ into ACC_MST (
+    COMPANY_CD,
+    ACC_CD,
+    SQNO,
+    ACC_NM,
+    ACC_NM_S,
+    DC_TP,
+    ACC_BRKDWN_TP,
+    TAX_CD_SS,
+    TAX_IPT_TP,
+    VD_DT_S,
+    VD_DT_E,
+    DLT_FG,
+    CORPORATION_CODE_CREATED,
+    USER_CODE_CREATED,
+    IP_CREATED,
+    TIMESTAMP_CREATED,
+    CORPORATION_CODE_UPDATED,
+    USER_CODE_UPDATED,
+    IP_UPDATED,
+    TIMESTAMP_UPDATED
+   ) values (
+     ?,
+     ?,
+     (
+      select NVL(MAX(SQNO)+1,1) from ACC_MST AM2 where AM2.COMPANY_CD = ? and AM2.ACC_CD = ?
+     ),
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     '0',
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?
+   )
+
+#勘定科目マスタ連番取得
+MG0131_03: |+
+   select /* MG0131_03 */
+     nvl(max(SQNO), 0)
+   from
+     ACC_MST
+   where COMPANY_CD = ?
+     and ACC_CD = ?
+     and DLT_FG = '0'
+
+#勘定科目補助マスタ一覧
+MG0140_01: |+
+   select
+     ${REPLACE}
+   from ACC_BRKDWN_MST ABM
+   where 1 = 1
+
+#勘定科目補助マスタ一覧SELECT
+MG0140_02: |+
+   SELECT /* MG0140_02 */ DISTINCT ABM.COMPANY_CD,
+      ABM.ACC_CD,
+      AM.ACC_NM,
+      ABM.ACC_BRKDWN_CD,
+      ABM.SQNO,
+      ABM.ACC_BRKDWN_NM,
+      ABM.ACC_BRKDWN_NM_S,
+      ABM.VD_DT_S,
+      ABM.VD_DT_E,
+      ABM.DLT_FG,
+      opi1.LABEL AS DLT_FG_NM
+   FROM ACC_BRKDWN_MST ABM
+   LEFT JOIN ACC_MST AM
+      ON AM.COMPANY_CD = ABM.COMPANY_CD
+      AND AM.ACC_CD     = ABM.ACC_CD
+      AND AM.VD_DT_S <= ABM.VD_DT_E
+      AND AM.VD_DT_E >= ABM.VD_DT_S
+      AND AM.DLT_FG     = '0'
+   LEFT JOIN MWM_OPTION op1
+      ON op1.CORPORATION_CODE = ABM.COMPANY_CD
+      AND op1.OPTION_CODE     = 'dltFg'
+      AND op1.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_OPTION_ITEM opi1
+      ON opi1.OPTION_ID    = op1.OPTION_ID
+      AND opi1.CODE        = ABM.DLT_FG
+      AND opi1.DELETE_FLAG = '0'
+   WHERE 1 = 1
+
+#勘定科目補助マスタ一覧DELETE
+MG0140_03: |+
+  update /* MG0140_03 */ ACC_BRKDWN_MST set
+    DLT_FG = '1'
+  where COMPANY_CD = ?
+   and ACC_CD = ?
+   and ACC_BRKDWN_CD = ?
+   and SQNO = ?
+   and DLT_FG = '0'
+
+#勘定科目補助マスタ設定INSERT(アップロード用)
+MG0140_04: |+
+   insert /* MG0140_04 */ into ACC_BRKDWN_MST (
+      COMPANY_CD,
+      ACC_CD,
+      ACC_BRKDWN_CD,
+      SQNO,
+      ACC_BRKDWN_NM,
+      ACC_BRKDWN_NM_S,
+      VD_DT_S,
+      VD_DT_E,
+      DLT_FG,
+      CORPORATION_CODE_CREATED,
+      USER_CODE_CREATED,
+      IP_CREATED,
+      TIMESTAMP_CREATED,
+      CORPORATION_CODE_UPDATED,
+      USER_CODE_UPDATED,
+      IP_UPDATED,
+      TIMESTAMP_UPDATED
+   ) values (
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     '0',
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?
+   )
+
+#勘定科目補助マスタ設定UPDATE(論理削除)
+MG0141_01: |+
+   update /* MG0141_01 */ ACC_BRKDWN_MST set
+      ACC_BRKDWN_NM = ?,
+      ACC_BRKDWN_NM_S = ?,
+      VD_DT_S = ?,
+      VD_DT_E = ?,
+      DLT_FG = ?,
+      CORPORATION_CODE_UPDATED = ?,
+      USER_CODE_UPDATED = ?,
+      IP_UPDATED = ?,
+      TIMESTAMP_UPDATED = ?
+   where COMPANY_CD = ?
+   and ACC_CD = ?
+   and ACC_BRKDWN_CD = ?
+   and SQNO = ?
+
+#勘定科目補助マスタ設定INSERT
+MG0141_02: |+
+   insert /* MG0141_02 */ into ACC_BRKDWN_MST (
+      COMPANY_CD,
+      ACC_CD,
+      ACC_BRKDWN_CD,
+      SQNO,
+      ACC_BRKDWN_NM,
+      ACC_BRKDWN_NM_S,
+      VD_DT_S,
+      VD_DT_E,
+      DLT_FG,
+      CORPORATION_CODE_CREATED,
+      USER_CODE_CREATED,
+      IP_CREATED,
+      TIMESTAMP_CREATED,
+      CORPORATION_CODE_UPDATED,
+      USER_CODE_UPDATED,
+      IP_UPDATED,
+      TIMESTAMP_UPDATED
+   ) values (
+     ?,
+     ?,
+     ?,
+     (
+      select NVL(MAX(SQNO)+1,1) from ACC_BRKDWN_MST ABM2 where ABM2.COMPANY_CD = ? and ABM2.ACC_CD = ? and ABM2.ACC_BRKDWN_CD = ?
+     ),
+     ?,
+     ?,
+     ?,
+     ?,
+     '0',
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?
+   )
+
+#勘定科目補助マスタ連番取得
+MG0141_03: |+
+   select /* MG0141_03 */
+     nvl(max(SQNO), 0)
+   from
+     ACC_BRKDWN_MST
+   where COMPANY_CD = ?
+     and ACC_CD = ?
+     and ACC_BRKDWN_CD = ?
+     and DLT_FG = '0'
+
+#勘定科目マスタ存在チェック
+MG0141_04: |+
+   select /* MG0141_04 */
+     count(*)
+   from
+     ACC_MST
+   where COMPANY_CD = ?
+     and ACC_CD = ?
+     and DLT_FG = '0'
+
+#消費税マスタ一覧
+MG0160_01: |+
+   select
+     /* MG0160_01 */
+     ${REPLACE}
+   from TAX_MST A
+   LEFT JOIN ACC_MST am
+    ON am.COMPANY_CD = A.COMPANY_CD
+    AND am.ACC_CD = A.ACC_CD
+    AND am.DLT_FG = '0'
+   LEFT JOIN ACC_BRKDWN_MST abm
+    ON abm.COMPANY_CD = A.COMPANY_CD
+    AND abm.ACC_CD = A.ACC_CD
+    AND abm.ACC_BRKDWN_CD = A.ACC_BRKDWN_CD
+    AND abm.DLT_FG = '0'
+   LEFT JOIN MWM_OPTION op1
+    ON op1.CORPORATION_CODE = A.COMPANY_CD
+    AND op1.OPTION_CODE     = 'dltFg'
+    AND op1.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_OPTION_ITEM opi1
+    ON opi1.OPTION_ID    = op1.OPTION_ID
+    AND opi1.CODE        = A.DLT_FG
+    AND opi1.DELETE_FLAG = '0'
+   LEFT JOIN MWM_OPTION op2
+    ON op2.CORPORATION_CODE = A.COMPANY_CD
+    AND op2.OPTION_CODE     = 'TAX'
+    AND op2.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_OPTION_ITEM opi2
+    ON opi2.OPTION_ID    = op2.OPTION_ID
+    AND opi2.CODE        = A.TAX_TP
+    AND opi2.DELETE_FLAG = '0'
+   LEFT JOIN MWM_OPTION op3
+    ON op3.CORPORATION_CODE = A.COMPANY_CD
+    AND op3.OPTION_CODE     = 'DC_TP'
+    AND op3.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_OPTION_ITEM opi3
+    ON opi3.OPTION_ID    = op3.OPTION_ID
+    AND opi3.CODE        = A.DC_TP
+    AND opi3.DELETE_FLAG = '0'
+   LEFT JOIN MWM_OPTION op4
+    ON op4.CORPORATION_CODE = A.COMPANY_CD
+    AND op4.OPTION_CODE     = 'FRC_TP'
+    AND op4.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_OPTION_ITEM opi4
+    ON opi4.OPTION_ID    = op4.OPTION_ID
+    AND opi4.CODE        = A.FRC_TP
+    AND opi4.DELETE_FLAG = '0'
+
+
+   where 1 = 1
+
+#消費税マスタ一覧DELETE（論理削除）
+MG0160_02: |+
+   update /* MG0160_02 */ TAX_MST set
+     DLT_FG = '1'
+   where COMPANY_CD = ?
+     and TAX_CD = ?
+     and SQNO = ?
+     and DLT_FG = '0'
+
+#消費税マスタ一覧UPDATE
+MG0160_03: |+
+   update /* MG0160_03 */ TAX_MST set
+     TAX_NM = ?,
+     TAX_NM_S = ?,
+     TAX_RTO = ?,
+     TAX_TP = ?,
+     TAX_CD_SS = ?,
+     FRC_UNT = ?,
+     FRC_TP = ?,
+     ACC_CD = ?,
+     ACC_BRKDWN_CD = ?,
+     DC_TP = ?,
+     VD_DT_S = ?,
+     VD_DT_E = ?,
+     DLT_FG = ?,
+     CORPORATION_CODE_UPDATED = ?,
+     USER_CODE_UPDATED = ?,
+     IP_UPDATED = ?,
+     TIMESTAMP_UPDATED = ?
+   where COMPANY_CD = ?
+     and TAX_CD = ?
+     and SQNO = ?
+
+#消費税マスタ一覧INSERT
+MG0160_04: |+
+  insert into /* MG0160_04 */ TAX_MST(
+     COMPANY_CD,
+     TAX_CD,
+     SQNO,
+     TAX_NM,
+     TAX_NM_S,
+     TAX_RTO,
+     TAX_TP,
+     TAX_CD_SS,
+     FRC_UNT,
+     FRC_TP,
+     ACC_CD,
+     ACC_BRKDWN_CD,
+     DC_TP,
+     VD_DT_S,
+     VD_DT_E,
+     DLT_FG,
+     CORPORATION_CODE_CREATED,
+     USER_CODE_CREATED,
+     IP_CREATED,
+     TIMESTAMP_CREATED,
+     CORPORATION_CODE_UPDATED,
+     USER_CODE_UPDATED,
+     IP_UPDATED,
+     TIMESTAMP_UPDATED
+  ) values (
+     ?,
+     ?,
+     (
+        select nvl(max(SQNO),0)+1 from TAX_MST where COMPANY_CD = ? and TAX_CD = ?
+     ),
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?
+  )
+
+#消費税マスタ一覧(ダウンロード用)
+MG0160_05: |+
+   select
+     /* MG0160_05 */
+     /* MG0160_01 */
+     A.COMPANY_CD,
+     A.TAX_CD,
+     A.SQNO,
+     A.TAX_NM,
+     A.TAX_NM_S,
+     A.TAX_RTO,
+     A.TAX_TP,
+     opi2.LABEL AS TAX_TP_NM,
+     A.TAX_CD_SS,
+     A.FRC_UNT,
+     A.FRC_TP,
+     opi4.LABEL AS FRC_NM,
+     A.ACC_CD,
+     am.ACC_NM,
+     A.ACC_BRKDWN_CD,
+     abm.ACC_BRKDWN_NM,
+     A.DC_TP,
+     opi3.LABEL AS DC_TP_NM,
+     A.VD_DT_S,
+     A.VD_DT_E,
+     A.DLT_FG,
+     opi1.LABEL AS DLT_FG_NM,
+     ROWNUM as ID,
+     NULL as PROCESS_TYPE
+   from TAX_MST A
+   LEFT JOIN ACC_MST am
+    ON am.COMPANY_CD = A.COMPANY_CD
+    AND am.ACC_CD = A.ACC_CD
+    AND am.DLT_FG = '0'
+   LEFT JOIN ACC_BRKDWN_MST abm
+    ON abm.COMPANY_CD = A.COMPANY_CD
+    AND abm.ACC_CD = A.ACC_CD
+    AND abm.ACC_BRKDWN_CD = A.ACC_BRKDWN_CD
+    AND abm.DLT_FG = '0'
+   LEFT JOIN MWM_OPTION op1
+    ON op1.CORPORATION_CODE = A.COMPANY_CD
+    AND op1.OPTION_CODE     = 'dltFg'
+    AND op1.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_OPTION_ITEM opi1
+    ON opi1.OPTION_ID    = op1.OPTION_ID
+    AND opi1.CODE        = A.DLT_FG
+    AND opi1.DELETE_FLAG = '0'
+   LEFT JOIN MWM_OPTION op2
+    ON op2.CORPORATION_CODE = A.COMPANY_CD
+    AND op2.OPTION_CODE     = 'TAX'
+    AND op2.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_OPTION_ITEM opi2
+    ON opi2.OPTION_ID    = op2.OPTION_ID
+    AND opi2.CODE        = A.TAX_TP
+    AND opi2.DELETE_FLAG = '0'
+   LEFT JOIN MWM_OPTION op3
+    ON op3.CORPORATION_CODE = A.COMPANY_CD
+    AND op3.OPTION_CODE     = 'DC_TP'
+    AND op3.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_OPTION_ITEM opi3
+    ON opi3.OPTION_ID    = op3.OPTION_ID
+    AND opi3.CODE        = A.DC_TP
+    AND opi3.DELETE_FLAG = '0'
+   LEFT JOIN MWM_OPTION op4
+    ON op4.CORPORATION_CODE = A.COMPANY_CD
+    AND op4.OPTION_CODE     = 'FRC_TP'
+    AND op4.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_OPTION_ITEM opi4
+    ON opi4.OPTION_ID    = op4.OPTION_ID
+    AND opi4.CODE        = A.FRC_TP
+    AND opi4.DELETE_FLAG = '0'
+
+   where 1 = 1
+
+#消費税マスタ一覧INSERT(アップロード用)
+MG0160_06: |+
+  insert into /* MG0160_06 */ TAX_MST(
+     COMPANY_CD,
+     TAX_CD,
+     SQNO,
+     TAX_NM,
+     TAX_NM_S,
+     TAX_RTO,
+     TAX_TP,
+     TAX_CD_SS,
+     FRC_UNT,
+     FRC_TP,
+     ACC_CD,
+     ACC_BRKDWN_CD,
+     DC_TP,
+     VD_DT_S,
+     VD_DT_E,
+     DLT_FG,
+     CORPORATION_CODE_CREATED,
+     USER_CODE_CREATED,
+     IP_CREATED,
+     TIMESTAMP_CREATED,
+     CORPORATION_CODE_UPDATED,
+     USER_CODE_UPDATED,
+     IP_UPDATED,
+     TIMESTAMP_UPDATED
+  ) values (
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     '0',
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?
+  )
+
+#消費税登録際の存在チェック
+MG0161_01: |+
+   select /* MG0161_01 */ nvl(max(SQNO),0)
+   from TAX_MST
+   where COMPANY_CD = ?
+     and TAX_CD = ?
+     and DLT_FG = '0'
+
+#通貨マスタ一覧
+MG0170_01: |+
+   select
+     /* MG0170_01 */
+     ${REPLACE}
+   from MNY_MST A
+   LEFT JOIN MWM_OPTION op1
+    ON op1.CORPORATION_CODE = A.COMPANY_CD
+    AND op1.OPTION_CODE     = 'dltFg'
+    AND op1.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_OPTION_ITEM opi1
+    ON opi1.OPTION_ID    = op1.OPTION_ID
+    AND opi1.CODE        = A.DLT_FG
+    AND opi1.DELETE_FLAG = '0'
+   where 1 = 1
+
+#通貨マスタ一覧DELETE
+MG0170_02: |+
+  update /* MG0170_02 */ MNY_MST set
+   DLT_FG = '1'
+  where COMPANY_CD = ?
+   and MNY_CD = ?
+   and DLT_FG = '0'
+
+#通貨マスタ一覧UPDATE
+MG0170_03: |+
+  update /* MG0170_03 */ MNY_MST SET
+     MNY_NM = ?,
+     MNY_MRK = ?,
+     RDXPNT_GDT = ?,
+     SORT_ORDER = ?,
+     DLT_FG = ?,
+     CORPORATION_CODE_UPDATED = ?,
+     USER_CODE_UPDATED = ?,
+     IP_UPDATED = ?,
+     TIMESTAMP_UPDATED = ?
+  where COMPANY_CD = ?
+   and MNY_CD = ?
+
+#通貨マスタ一覧INSERT
+MG0170_04: |+
+  insert into /* MG0170_03 */ MNY_MST(
+     COMPANY_CD,
+     MNY_CD,
+     MNY_NM,
+     MNY_MRK,
+     RDXPNT_GDT,
+     SORT_ORDER,
+     DLT_FG,
+     CORPORATION_CODE_CREATED,
+     USER_CODE_CREATED,
+     IP_CREATED,
+     TIMESTAMP_CREATED,
+     CORPORATION_CODE_UPDATED,
+     USER_CODE_UPDATED,
+     IP_UPDATED,
+     TIMESTAMP_UPDATED
+  ) values (
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?
+  )
+
+#社内レートマスタ検索
+MG0180_01: |+
+   select /* MG0180_01 */
+     ${REPLACE}
+   from
+     IN_RTO_MST RTO
+     LEFT JOIN MNY_MST MNY
+       ON  MNY.COMPANY_CD = RTO.COMPANY_CD
+       AND MNY.MNY_CD = RTO.MNY_CD
+       AND MNY.DLT_FG = '0'
+     LEFT JOIN MWM_OPTION OP1
+       ON  OP1.CORPORATION_CODE = RTO.COMPANY_CD
+       AND OP1.OPTION_CODE = 'dltFg'
+       AND OP1.DELETE_FLAG = '0'
+     LEFT JOIN MWM_OPTION_ITEM OI1
+       ON  OI1.OPTION_ID = OP1.OPTION_ID
+       AND OI1.CODE = RTO.DLT_FG
+       AND OI1.DELETE_FLAG = '0'
+   where 1 = 1
+
+MG0180_02: |+
+     /* MG0180_02 */
+     ROWNUM as ID,
+     RTO.COMPANY_CD,
+     RTO.MNY_CD,
+     RTO.SQNO,
+     MNY.MNY_NM,
+     RTO.IN_RTO,
+     RTO.RTO_TP,
+     RTO.VD_DT_S,
+     RTO.VD_DT_E,
+     RTO.DLT_FG,
+     OI1.LABEL AS DLT_FG_NM,
+     RTO.TIMESTAMP_UPDATED
+
+#社内レートマスタアップロードの重複チェック
+MG0180_03: |+
+ select /* MG0180_03 */ count(*)
+ from IN_RTO_MST
+ where COMPANY_CD = ?
+   and MNY_CD = ?
+   and VD_DT_S <= ?
+   and VD_DT_E >= ?
+   and DLT_FG = '0'
+
+#社内レートマスタアップロードの存在チェック
+MG0180_04: |+
+ select /* MG0180_04 */ count(*)
+ from IN_RTO_MST
+ where COMPANY_CD = ?
+   and MNY_CD = ?
+   and SQNO = ?
+
+#社内レートマスタ登録
+MG0181_01: |+
+   select /* MG0181_01 */
+     ROWNUM as ID,
+     RTO.COMPANY_CD,
+     RTO.MNY_CD,
+     RTO.SQNO,
+     RTO.IN_RTO,
+     RTO.RTO_TP,
+     RTO.VD_DT_S,
+     RTO.VD_DT_E,
+     RTO.DLT_FG,
+     RTO.CORPORATION_CODE_CREATED,
+     RTO.USER_CODE_CREATED,
+     RTO.IP_CREATED,
+     RTO.TIMESTAMP_CREATED,
+     RTO.CORPORATION_CODE_UPDATED,
+     RTO.USER_CODE_UPDATED,
+     RTO.IP_UPDATED,
+     RTO.TIMESTAMP_UPDATED,
+     CRP.CORPORATION_NAME AS COMPANY_NM,
+     MNY.MNY_NM,
+     (select MAX(LST.SQNO) from IN_RTO_MST LST where LST.COMPANY_CD=RTO.COMPANY_CD and LST.MNY_CD=RTO.MNY_CD) AS LST_SQNO
+   from
+     IN_RTO_MST RTO
+     LEFT JOIN WFM_CORPORATION CRP
+       ON  CRP.CORPORATION_CODE = RTO.COMPANY_CD
+       AND CRP.DELETE_FLAG = '0'
+     LEFT JOIN MNY_MST MNY
+       ON  MNY.COMPANY_CD = RTO.COMPANY_CD
+       AND MNY.MNY_CD = RTO.MNY_CD
+       AND MNY.DLT_FG = '0'
+   where 1 = 1
+
+#社内レートマスタ連番取得
+MG0181_02: |+
+   select /* MG0181_02 */
+     nvl(max(SQNO), 0)
+   from
+     IN_RTO_MST
+   where COMPANY_CD = ?
+     and MNY_CD = ?
+     and DLT_FG = '0'
+
+#社内レートマスタ連番取得
+MG0181_03: |+
+   select /* MG0181_03 */
+     nvl(max(RTO.SQNO), 0)
+   from
+     IN_RTO_MST RTO
+   where RTO.COMPANY_CD = ?
+   and RTO.MNY_CD = ?
+
+#部門マスタ一覧
+MG0190_01: |+
+   select
+     ${REPLACE}
+   from BUMON_MST BM
+   where 1 = 1
+
+#部門マスタ一覧SELECT
+MG0190_02: |+
+   SELECT
+     /* MG0190_02 */
+     BM.COMPANY_CD,
+     BM.BUMON_CD,
+     BM.BUMON_NM,
+     BM.ENTRP_TP_CD,
+     BM.ENTRP_CD,
+     ml1.LOOKUP_NAME AS ENTRP_NM,
+     BM.TAB_CD,
+     ml2.LOOKUP_NAME AS TAB_NM,
+     BM.SITE_CD,
+     ml3.LOOKUP_NAME AS SITE_NM,
+     BM.TP_CD,
+     ml4.LOOKUP_NAME AS TP_NM,
+     BM.AREA_CD,
+     ml5.LOOKUP_NAME AS AREA_NM,
+     BM.DLT_FG,
+     opi1.LABEL AS DLT_FG_NM,
+     BM.TAX_KND_CD,
+     ml6.LOOKUP_NAME AS TAX_KND_NM
+   FROM
+     (SELECT BM1.*,
+       concat(BM1.ENTRP_TP_CD,BM1.ENTRP_CD) AS code1
+     FROM BUMON_MST BM1
+     ) BM
+   LEFT JOIN MWM_OPTION op1
+   ON op1.CORPORATION_CODE = BM.COMPANY_CD
+   AND op1.OPTION_CODE     = 'dltFg'
+   AND op1.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_OPTION_ITEM opi1
+   ON opi1.OPTION_ID    = op1.OPTION_ID
+   AND opi1.CODE        = BM.DLT_FG
+   AND opi1.DELETE_FLAG = '0'
+   LEFT JOIN MWM_LOOKUP ml1
+   ON ml1.CORPORATION_CODE = BM.COMPANY_CD
+   AND ml1.LOOKUP_ID       = code1
+   AND ml1.LOOKUP_GROUP_ID = 'SS_KINO_CD_1'
+   AND ml1.LOCALE_CODE     = ?
+   AND ml1.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_LOOKUP ml2
+   ON ml2.CORPORATION_CODE = BM.COMPANY_CD
+   AND ml2.LOOKUP_ID       = BM.TAB_CD
+   AND ml2.LOOKUP_GROUP_ID = 'SS_KINO_CD_2'
+   AND ml2.LOCALE_CODE     = ?
+   AND ml2.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_LOOKUP ml3
+   ON ml3.CORPORATION_CODE = BM.COMPANY_CD
+   AND ml3.LOOKUP_ID       = BM.SITE_CD
+   AND ml3.LOOKUP_GROUP_ID = 'SS_KINO_CD_3'
+   AND ml3.LOCALE_CODE     = ?
+   AND ml3.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_LOOKUP ml4
+   ON ml4.CORPORATION_CODE = BM.COMPANY_CD
+   AND ml4.LOOKUP_ID       = BM.TP_CD
+   AND ml4.LOOKUP_GROUP_ID = 'SS_KINO_CD_4'
+   AND ml4.LOCALE_CODE     = ?
+   AND ml4.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_LOOKUP ml5
+   ON ml5.CORPORATION_CODE = BM.COMPANY_CD
+   AND ml5.LOOKUP_ID       = BM.AREA_CD
+   AND ml5.LOOKUP_GROUP_ID = 'SS_PROJECT_MST'
+   AND ml5.LOCALE_CODE     = ?
+   AND ml5.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_LOOKUP ml6
+   ON ml6.CORPORATION_CODE = BM.COMPANY_CD
+   AND ml6.LOOKUP_ID       = BM.TAX_KND_CD
+   AND ml6.LOOKUP_GROUP_ID = 'TAX_KND_CD'
+   AND ml6.LOCALE_CODE     = ?
+   AND ml6.DELETE_FLAG     = '0'
+   WHERE 1                 = 1
+
+#部門マスタ一覧DELETE
+MG0190_03: |+
+  update /* MG0190_03 */ BUMON_MST set
+    DLT_FG = '1'
+  where COMPANY_CD = ?
+  and BUMON_CD = ?
+  and DLT_FG = '0'
+
+#部門マスタ設定UPDATE
+MG0191_01: |+
+   update /* MG0191_01 */ BUMON_MST set
+      BUMON_NM = ?,
+      TAX_KND_CD = ?,
+      DLT_FG = ?,
+      CORPORATION_CODE_UPDATED = ?,
+      USER_CODE_UPDATED = ?,
+      IP_UPDATED = ?,
+      TIMESTAMP_UPDATED = ?
+   where COMPANY_CD = ?
+   and BUMON_CD = ?
+
+#部門マスタ設定INSERT
+MG0191_02: |+
+   insert /* MG0191_02 */ into BUMON_MST (
+      COMPANY_CD,
+      BUMON_CD,
+      ENTRP_TP_CD,
+      ENTRP_CD,
+      TAB_CD,
+      SITE_CD,
+      TP_CD,
+      AREA_CD,
+      BUMON_NM,
+      TAX_KND_CD,
+      DLT_FG,
+      CORPORATION_CODE_CREATED,
+      USER_CODE_CREATED,
+      IP_CREATED,
+      TIMESTAMP_CREATED,
+      CORPORATION_CODE_UPDATED,
+      USER_CODE_UPDATED,
+      IP_UPDATED,
+      TIMESTAMP_UPDATED
+   ) values (
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      '0',
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?,
+      ?
+   )
+
+#会計カレンダマスタ検索
+MG0200_01: |+
+   select /* MG0200_01 */
+     ${REPLACE}
+   from ACC_CLND_MST ACM
+   where 1 = 1
+
+#会計カレンダマスタ一覧のSELECT句
+MG0200_02: |+
+   /* MG0200_02 */
+   ROWNUM as ID,
+   ACM.COMPANY_CD,
+   ACM.CLND_DT,
+   ACM.CLND_DAY,
+   DECODE(ACM.CLND_DAY,'1','日','2','月','3','火','4','水','5','木','6','金','7','土','') as CLND_DAY_NM,
+   ACM.HLDAY_TP,
+   DECODE(ACM.HLDAY_TP,'1','休日','') as HLDAY_TP_NM,
+   ACM.BNK_HLDAY_TP,
+   ACM.STL_TP_PUR,
+   DECODE(ACM.STL_TP_PUR,'1','決算＆当月','2','当月','') as STL_TP_PUR_NM,
+   ACM.STL_TP_FNCOBL,
+   DECODE(ACM.STL_TP_FNCOBL,'1','決算＆当月','2','当月','') as STL_TP_FNCOBL_NM,
+   ACM.STL_TP_FNCAFF,
+   DECODE(ACM.STL_TP_FNCAFF,'1','決算＆当月','2','当月','') as STL_TP_FNCAFF_NM,
+   ACM.ML_CLS_TM,
+   DECODE(ACM.ML_CLS_TM,null,'',SUBSTR(ACM.ML_CLS_TM,1,2)||':'||SUBSTR(ACM.ML_CLS_TM,3)) as ML_CLS_TM_FMT,
+   ACM.TIMESTAMP_UPDATED
+
+#会計カレンダマスタ一覧のSELECT句
+MG0200_03: |+
+   /* MG0200_03 */
+   ACM.COMPANY_CD,
+   ACM.CLND_DT,
+   ACM.CLND_DAY,
+   ACM.HLDAY_TP,
+   ACM.BNK_HLDAY_TP,
+   ACM.STL_TP_PUR,
+   ACM.STL_TP_FNCOBL,
+   ACM.STL_TP_FNCAFF,
+   ACM.ML_CLS_TM,
+   ACM.CORPORATION_CODE_CREATED,
+   ACM.USER_CODE_CREATED,
+   ACM.IP_CREATED,
+   ACM.TIMESTAMP_CREATED,
+   ACM.CORPORATION_CODE_UPDATED,
+   ACM.USER_CODE_UPDATED,
+   ACM.IP_UPDATED,
+   ACM.TIMESTAMP_UPDATED
+
+#会計カレンダーDELETE
+MG0200_04: |+
+  update /* MG0200_04 */ ACC_CLND_MST set
+    DLT_FG = '1'
+  where COMPANY_CD = ?
+    and CLND_DT = ?
+
+#会計カレンダーUPDATE
+MG0200_05: |+
+  update /* MG0200_05 */ ACC_CLND_MST SET
+     CLND_DAY = ?,
+     HLDAY_TP = ?,
+     BNK_HLDAY_TP = ?,
+     STL_TP_PUR = ?,
+     STL_TP_FNCOBL = ?,
+     STL_TP_FNCAFF = ?,
+     ML_CLS_TM = ?,
+     DLT_FG = ?,
+     CORPORATION_CODE_UPDATED = ?,
+     USER_CODE_UPDATED = ?,
+     IP_UPDATED = ?,
+     TIMESTAMP_UPDATED = ?
+  where COMPANY_CD = ?
+   and CLND_DT = ?
+
+#源泉税区分マスタ検索
+MG0210_01: |+
+   select /* MG0210_01 */
+     ${REPLACE}
+   from
+     HLDTAX_MST HLD
+     LEFT JOIN WFM_CORPORATION CRP
+       ON  CRP.CORPORATION_CODE = HLD.COMPANY_CD
+       AND CRP.DELETE_FLAG = '0'
+     LEFT JOIN MWM_OPTION OP1
+       ON  OP1.CORPORATION_CODE = HLD.COMPANY_CD
+       AND OP1.OPTION_CODE = 'dltFg'
+       AND OP1.DELETE_FLAG = '0'
+     LEFT JOIN MWM_OPTION_ITEM OI1
+       ON  OI1.OPTION_ID = OP1.OPTION_ID
+       AND OI1.CODE = HLD.DLT_FG
+       AND OI1.DELETE_FLAG = '0'
+     LEFT JOIN ACC_MST AM
+       ON AM.COMPANY_CD = HLD.COMPANY_CD
+       AND AM.ACC_CD = HLD.ACC_CD
+       AND AM.DLT_FG = '0'
+     LEFT JOIN ACC_BRKDWN_MST ABM
+       ON ABM.COMPANY_CD = HLD.COMPANY_CD
+       AND ABM.ACC_CD = HLD.ACC_CD
+       AND ABM.ACC_BRKDWN_CD = HLD.ACC_BRKDWN_CD
+       AND ABM.DLT_FG = '0'
+   where 1 = 1
+
+MG0210_02: |+
+     /* MG0210_02 */
+     ROWNUM as ID,
+     HLD.COMPANY_CD,
+     CRP.CORPORATION_NAME as COMPANY_NM,
+     HLD.HLDTAX_TP,
+     HLD.HLDTAX_NM,
+     HLD.HLDTAX_RTO1,
+     HLD.HLDTAX_RTO2,
+     HLD.ACC_CD,
+     AM.ACC_NM as ACC_NM,
+     HLD.ACC_BRKDWN_CD,
+     ABM.ACC_BRKDWN_NM as ACC_BRKDWN_NM,
+     HLD.VD_DT_S,
+     HLD.VD_DT_E,
+     HLD.DLT_FG,
+     OI1.LABEL as DLT_FG_NM,
+     HLD.TIMESTAMP_UPDATED,
+     HLD.SORT_ORDER
+
+#源泉税区分マスタ登録
+MG0211_01: |+
+   select /* MG0211_01 */
+     ROWNUM as ID,
+     HLD.COMPANY_CD,
+     CRP.CORPORATION_NAME as COMPANY_NM,
+     HLD.HLDTAX_TP,
+     HLD.HLDTAX_NM,
+     HLD.HLDTAX_RTO1,
+     HLD.HLDTAX_RTO2,
+     HLD.ACC_CD,
+     AM.ACC_NM as ACC_NM,
+     HLD.ACC_BRKDWN_CD,
+     ABM.ACC_BRKDWN_NM as ACC_BRKDWN_NM,
+     HLD.VD_DT_S,
+     HLD.VD_DT_E,
+     HLD.DLT_FG,
+     HLD.CORPORATION_CODE_CREATED,
+     HLD.USER_CODE_CREATED,
+     HLD.IP_CREATED,
+     HLD.TIMESTAMP_CREATED,
+     HLD.CORPORATION_CODE_UPDATED,
+     HLD.USER_CODE_UPDATED,
+     HLD.IP_UPDATED,
+     HLD.TIMESTAMP_UPDATED,
+     HLD.SORT_ORDER
+   from
+     HLDTAX_MST HLD
+     LEFT JOIN WFM_CORPORATION CRP
+       ON  CRP.CORPORATION_CODE = HLD.COMPANY_CD
+       AND CRP.DELETE_FLAG = '0'
+     LEFT JOIN ACC_MST AM
+       ON AM.COMPANY_CD = HLD.COMPANY_CD
+       AND AM.ACC_CD = HLD.ACC_CD
+       AND AM.DLT_FG = '0'
+     LEFT JOIN ACC_BRKDWN_MST ABM
+       ON ABM.COMPANY_CD = HLD.COMPANY_CD
+       AND ABM.ACC_CD = HLD.ACC_CD
+       AND ABM.ACC_BRKDWN_CD = HLD.ACC_BRKDWN_CD
+       AND ABM.DLT_FG = '0'
+   where 1 = 1
+
+#支払業務マスタ一覧
+MG0220_01: |+
+   select
+     /* MG0220_01 */
+     ${REPLACE}
+   from PAY_APPL_MST A
+   LEFT JOIN MWM_OPTION op1
+    ON op1.CORPORATION_CODE = A.COMPANY_CD
+    AND op1.OPTION_CODE     = 'dltFg'
+    AND op1.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_OPTION_ITEM opi1
+    ON opi1.OPTION_ID    = op1.OPTION_ID
+    AND opi1.CODE        = A.DLT_FG
+    AND opi1.DELETE_FLAG = '0'
+   where 1 = 1
+
+#支払業務マスタ一覧DELETE
+MG0220_02: |+
+  update /* MG0220_02 */ PAY_APPL_MST set
+    DLT_FG = '1'
+  where COMPANY_CD = ?
+   and PAY_APPL_CD = ?
+   and DLT_FG = '0'
+
+#支払業務マスタ一覧UPDATE
+MG0220_03: |+
+  update /* MG0220_03 */ PAY_APPL_MST SET
+     PAY_APPL_NM = ?,
+     DLT_FG = ?,
+     CORPORATION_CODE_UPDATED = ?,
+     USER_CODE_UPDATED = ?,
+     IP_UPDATED = ?,
+     TIMESTAMP_UPDATED = ?
+  where COMPANY_CD = ?
+   and PAY_APPL_CD = ?
+
+#支払条件マスタ一覧INSERT
+MG0220_04: |+
+  insert into /* MG0220_04 */ PAY_APPL_MST(
+     COMPANY_CD,
+     PAY_APPL_CD,
+     PAY_APPL_NM,
+     DLT_FG,
+     CORPORATION_CODE_CREATED,
+     USER_CODE_CREATED,
+     IP_CREATED,
+     TIMESTAMP_CREATED,
+     CORPORATION_CODE_UPDATED,
+     USER_CODE_UPDATED,
+     IP_UPDATED,
+     TIMESTAMP_UPDATED
+  ) values (
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?
+  )
+
+#支払条件マスタ一覧
+MG0230_01: |+
+   select
+     /* MG0230_01 */
+     ${REPLACE}
+   from PAY_COND_MST A
+   LEFT JOIN MWM_OPTION op1
+    ON op1.CORPORATION_CODE = A.COMPANY_CD
+    AND op1.OPTION_CODE     = 'dltFg'
+    AND op1.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_OPTION_ITEM opi1
+    ON opi1.OPTION_ID    = op1.OPTION_ID
+    AND opi1.CODE        = A.DLT_FG
+    AND opi1.DELETE_FLAG = '0'
+   where 1 = 1
+
+#支払条件マスタ一覧DELETE
+MG0230_02: |+
+  delete /* MG0230_02 */ from PAY_COND_MST
+  where COMPANY_CD = ?
+   and PAY_COND_CD = ?
+
+#支払条件マスタ一覧UPDATE
+MG0230_03: |+
+  update /* MG0230_03 */ PAY_COND_MST SET
+     PAY_COND_NM = ?,
+     DLT_FG = ?,
+     CORPORATION_CODE_UPDATED = ?,
+     USER_CODE_UPDATED = ?,
+     IP_UPDATED = ?,
+     TIMESTAMP_UPDATED = ?
+  where COMPANY_CD = ?
+   and PAY_COND_CD = ?
+
+#支払条件マスタ一覧INSERT
+MG0230_04: |+
+  insert into /* MG0230_04 */ PAY_COND_MST(
+     COMPANY_CD,
+     PAY_COND_CD,
+     PAY_COND_NM,
+     DLT_FG,
+     CORPORATION_CODE_CREATED,
+     USER_CODE_CREATED,
+     IP_CREATED,
+     TIMESTAMP_CREATED,
+     CORPORATION_CODE_UPDATED,
+     USER_CODE_UPDATED,
+     IP_UPDATED,
+     TIMESTAMP_UPDATED
+  ) values (
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?
+  )
+
+  #支払サイトマスタ一覧
+MG0240_01: |+
+   select
+     /* MG0240_01 */
+     ${REPLACE}
+   from PAY_SITE_MST A
+   LEFT JOIN MWM_OPTION op1
+    ON op1.CORPORATION_CODE = A.COMPANY_CD
+    AND op1.OPTION_CODE     = 'dltFg'
+    AND op1.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_OPTION_ITEM opi1
+    ON opi1.OPTION_ID    = op1.OPTION_ID
+    AND opi1.CODE        = A.DLT_FG
+    AND opi1.DELETE_FLAG = '0'
+   where 1 = 1
+
+#支払サイトマスタ一覧DELETE
+MG0240_02: |+
+  update /* MG0240_02 */ PAY_SITE_MST set
+    DLT_FG = '1'
+  where COMPANY_CD = ?
+   and PAY_SITE_CD = ?
+   and DLT_FG = '0'
+
+#支払サイトマスタ一覧UPDATE
+MG0240_03: |+
+  update /* MG0240_03 */ PAY_SITE_MST SET
+     PAY_SITE_NM = ?,
+     PAY_SITE_M = ?,
+     PAY_SITE_N = ?,
+     SORT_ORDER = ?,
+     DLT_FG = ?,
+     CORPORATION_CODE_UPDATED = ?,
+     USER_CODE_UPDATED = ?,
+     IP_UPDATED = ?,
+     TIMESTAMP_UPDATED = ?
+  where COMPANY_CD = ?
+   and PAY_SITE_CD = ?
+
+#支払サイトマスタ一覧INSERT
+MG0240_04: |+
+  insert into /* MG0240_04 */ PAY_SITE_MST(
+     COMPANY_CD,
+     PAY_SITE_CD,
+     PAY_SITE_NM,
+     PAY_SITE_M,
+     PAY_SITE_N,
+     SORT_ORDER,
+     DLT_FG,
+     CORPORATION_CODE_CREATED,
+     USER_CODE_CREATED,
+     IP_CREATED,
+     TIMESTAMP_CREATED,
+     CORPORATION_CODE_UPDATED,
+     USER_CODE_UPDATED,
+     IP_UPDATED,
+     TIMESTAMP_UPDATED
+  ) values (
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?
+  )
+
+#住所マスタ一覧
+MG0310_01: |+
+   select
+     /* MG0310_01 */
+     ${REPLACE}
+   from ZIP_MST Z
+   LEFT JOIN MWM_OPTION op1
+    ON op1.CORPORATION_CODE = Z.COMPANY_CD
+    AND op1.OPTION_CODE     = 'dltFg'
+    AND op1.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_OPTION_ITEM opi1
+    ON opi1.OPTION_ID    = op1.OPTION_ID
+    AND opi1.CODE        = Z.DLT_FG
+    AND opi1.DELETE_FLAG = '0'
+   where 1 = 1
+
+#住所マスタ一覧DELETE（論理削除）
+MG0310_02: |+
+  update /* MG0310_02 */ ZIP_MST SET
+     DLT_FG = '1'
+  where COMPANY_CD = ?
+   and ZIP_CD = ?
+   and SQNO = ?
+
+#住所マスタINSERT
+MG0311_01: |+
+  insert into /* MG0311_01 */ ZIP_MST(
+     COMPANY_CD,
+     ZIP_CD,
+     SQNO,
+     ADR_PRF_CD,
+     ADR_PRF,
+     ADR_PRF_KN,
+     ADR1,
+     ADR1_KN,
+     ADR2,
+     ADR2_KN,
+     DLT_FG,
+     CORPORATION_CODE_CREATED,
+     USER_CODE_CREATED,
+     IP_CREATED,
+     TIMESTAMP_CREATED,
+     CORPORATION_CODE_UPDATED,
+     USER_CODE_UPDATED,
+     IP_UPDATED,
+     TIMESTAMP_UPDATED
+  ) values (
+     ?,?,
+     (select nvl(max(SQNO)+1, 1) from ZIP_MST where COMPANY_CD = ? and ZIP_CD = ?),
+     ?,?,?,?,?,?,?,
+     ?,?,?,?,?,?,?,?,?
+  )
+
+#登録用存在チェック
+MG0311_02: |+
+  select nvl(max(SQNO), 0) /* MG0311_02 */ from ZIP_MST
+  where
+  (
+    COMPANY_CD = ?
+    and ADR_PRF = ?
+    and ADR1 = ?
+    and ADR2 = ?
+  )
+  or
+  (
+    COMPANY_CD = ?
+    and ZIP_CD = ?
+    and (ADR_PRF != ? or ADR1 != ?)
+  )
+
+#更新用存在チェック
+MG0311_03: |+
+  select count(1) /* MG0311_03 */ from ZIP_MST
+  where
+  ((
+    COMPANY_CD = ?
+    and ADR_PRF = ?
+    and ADR1 = ?
+    and ADR2 = ?
+  )
+  or
+  (
+    COMPANY_CD = ?
+    and ZIP_CD = ?
+    and (ADR_PRF != ? or ADR1 != ?)
+  ))
+  and ZIP_CD != ?
+  and SQNO != ?
+
+#部門関連マスタ一覧
+MG0250_01: |+
+   select
+     /* MG0250_01 */
+     count(*)
+   from BUMONEXPS_MST bm
+   where 1 = 1
+
+#部門関連マスタ一覧
+MG0250_02: |+
+   select
+     /* MG0250_02 */
+     bm.COMPANY_CD,
+     bm.BUMON_CD,
+     b.BUMON_NM,
+     bm.ORGNZ_CD,
+     wo.ORGANIZATION_NAME as ORGNZ_NM,
+     bm.DLT_FG,
+     opi1.LABEL AS DLT_FG_NM
+   from BUMONEXPS_MST bm
+   LEFT JOIN WFM_ORGANIZATION wo
+      ON wo.CORPORATION_CODE = bm.COMPANY_CD
+      AND wo.ORGANIZATION_CODE = bm.ORGNZ_CD
+   LEFT JOIN BUMON_MST b
+    ON b.COMPANY_CD = bm.COMPANY_CD
+    AND b.BUMON_CD = bm.BUMON_CD
+   LEFT JOIN MWM_OPTION op1
+    ON op1.CORPORATION_CODE = bm.COMPANY_CD
+    AND op1.OPTION_CODE     = 'dltFg'
+    AND op1.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_OPTION_ITEM opi1
+    ON opi1.OPTION_ID    = op1.OPTION_ID
+    AND opi1.CODE        = bm.DLT_FG
+    AND opi1.DELETE_FLAG = '0'
+   where 1 = 1
+
+#部門関連マスタ一覧DELETE
+MG0250_03: |+
+  update /* MG0250_03 */ BUMONEXPS_MST set
+    DLT_FG = '1'
+  where COMPANY_CD = ?
+   and BUMON_CD = ?
+   and ORGNZ_CD = ?
+
+#部門関連マスタ一覧UPDATE
+MG0250_04: |+
+  update /* MG0250_04 */ BUMONEXPS_MST SET
+     BUMON_CD = ?,
+     ORGNZ_CD = ?,
+     DLT_FG = ?,
+     CORPORATION_CODE_UPDATED = ?,
+     USER_CODE_UPDATED = ?,
+     IP_UPDATED = ?,
+     TIMESTAMP_UPDATED = ?
+  where COMPANY_CD = ?
+   and BUMON_CD = ?
+   and ORGNZ_CD = ?
+
+#部門関連マスタ一覧INSERT
+MG0250_05: |+
+  insert into /* MG0250_04 */ BUMONEXPS_MST(
+     COMPANY_CD,
+     BUMON_CD,
+     ORGNZ_CD,
+     DLT_FG,
+     CORPORATION_CODE_CREATED,
+     USER_CODE_CREATED,
+     IP_CREATED,
+     TIMESTAMP_CREATED,
+     CORPORATION_CODE_UPDATED,
+     USER_CODE_UPDATED,
+     IP_UPDATED,
+     TIMESTAMP_UPDATED
+  ) values (
+     ?,?,?,?,?,?,?,?,?,?,
+     ?,?
+  )
+
+#ｸﾚｶ口座マスタ一覧
+MG0260_01: |+
+   select
+     /* MG0260_01 */
+     count(*)
+   from CRDCRD_BNKACC_MST cbm
+   where 1 = 1
+
+#ｸﾚｶ口座マスタ一覧
+MG0260_02: |+
+   select
+     /* MG0260_02 */
+     cbm.COMPANY_CD,
+     cbm.CRD_COMPANY_NM,
+     cbm.USR_CD,
+     wu.USER_NAME as USR_NM,
+     cbm.BNKACC_CD,
+     ba.BNKACC_NM as BNKACC_NM,
+     cbm.DLT_FG,
+     opi1.LABEL as DLT_FG_NM,
+     cbm.SPLR_CD,
+     sm.SPLR_NM_KJ as SPLR_NM_KJ,
+     sm.SPLR_NM_KN as SPLR_NM_KN,
+     cbm.BNKACC_CHRG_DT
+   from CRDCRD_BNKACC_MST cbm
+   LEFT JOIN WFM_USER wu
+      ON wu.CORPORATION_CODE = cbm.COMPANY_CD
+      AND wu.USER_CODE = cbm.USR_CD
+   LEFT JOIN SPLR_MST sm
+      ON sm.COMPANY_CD = cbm.COMPANY_CD
+      AND sm.SPLR_CD = cbm.SPLR_CD
+      AND sm.DLT_FG = '0'
+   LEFT JOIN BNKACC_MST ba
+    ON ba.COMPANY_CD = cbm.COMPANY_CD
+    AND ba.BNKACC_CD = cbm.BNKACC_CD
+    AND ba.DLT_FG     = '0'
+   LEFT JOIN MWM_OPTION op1
+    ON op1.CORPORATION_CODE = cbm.COMPANY_CD
+    AND op1.OPTION_CODE     = 'dltFg'
+    AND op1.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_OPTION_ITEM opi1
+    ON opi1.OPTION_ID    = op1.OPTION_ID
+    AND opi1.CODE        = cbm.DLT_FG
+    AND opi1.DELETE_FLAG = '0'
+   where 1 = 1
+
+#ｸﾚｶ口座マスタ一覧DELETE
+MG0260_03: |+
+  update /* MG0260_03 */ CRDCRD_BNKACC_MST set
+    DLT_FG = '1'
+  where COMPANY_CD = ?
+   and SPLR_CD = ?
+   and USR_CD = ?
+
+#ｸﾚｶ口座マスタ一覧UPDATE
+MG0260_04: |+
+  update /* MG0260_04 */ CRDCRD_BNKACC_MST SET
+     CRD_COMPANY_NM = ?,
+     BNKACC_CD = ?,
+     BNKACC_CHRG_DT = ?,
+     DLT_FG = ?,
+     CORPORATION_CODE_UPDATED = ?,
+     USER_CODE_UPDATED = ?,
+     IP_UPDATED = ?,
+     TIMESTAMP_UPDATED = ?
+  where COMPANY_CD = ?
+   and SPLR_CD = ?
+   and USR_CD = ?
+
+#ｸﾚｶ口座マスタ一覧INSERT
+MG0260_05: |+
+  insert into /* MG0260_04 */ CRDCRD_BNKACC_MST(
+     COMPANY_CD,
+     SPLR_CD,
+     USR_CD,
+     CRD_COMPANY_NM,
+     BNKACC_CD,
+     BNKACC_CHRG_DT,
+     DLT_FG,
+     CORPORATION_CODE_CREATED,
+     USER_CODE_CREATED,
+     IP_CREATED,
+     TIMESTAMP_CREATED,
+     CORPORATION_CODE_UPDATED,
+     USER_CODE_UPDATED,
+     IP_UPDATED,
+     TIMESTAMP_UPDATED
+  ) values (
+     ?,?,?,?,?,?,?,
+     ?,?,?,?,?,?,?,?
+  )
+
+#ｸﾚｶ口座マスタ一覧(ダウンロード用)
+MG0260_06: |+
+   select
+     /* MG0260_06 */
+     cbm.COMPANY_CD,
+     cbm.CRD_COMPANY_NM,
+     cbm.USR_CD,
+     wu.USER_NAME as USR_NM,
+     cbm.BNKACC_CD,
+     ba.BNKACC_NM as BNKACC_NM,
+     cbm.DLT_FG,
+     opi1.LABEL as DLT_FG_NM,
+     cbm.SPLR_CD,
+     sm.SPLR_NM_KJ as SPLR_NM_KJ,
+     sm.SPLR_NM_KN as SPLR_NM_KN,
+     cbm.BNKACC_CHRG_DT,
+     ROWNUM as ID,
+     NULL as PROCESS_TYPE
+   from CRDCRD_BNKACC_MST cbm
+   LEFT JOIN WFM_USER wu
+      ON wu.CORPORATION_CODE = cbm.COMPANY_CD
+      AND wu.USER_CODE = cbm.USR_CD
+   LEFT JOIN SPLR_MST sm
+      ON sm.COMPANY_CD = cbm.COMPANY_CD
+      AND sm.SPLR_CD = cbm.SPLR_CD
+      AND sm.DLT_FG = '0'
+   LEFT JOIN BNKACC_MST ba
+    ON ba.COMPANY_CD = cbm.COMPANY_CD
+    AND ba.BNKACC_CD = cbm.BNKACC_CD
+    AND ba.DLT_FG     = '0'
+   LEFT JOIN MWM_OPTION op1
+    ON op1.CORPORATION_CODE = cbm.COMPANY_CD
+    AND op1.OPTION_CODE     = 'dltFg'
+    AND op1.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_OPTION_ITEM opi1
+    ON opi1.OPTION_ID    = op1.OPTION_ID
+    AND opi1.CODE        = cbm.DLT_FG
+    AND opi1.DELETE_FLAG = '0'
+   where 1 = 1
+
+#予算科目マスタ一覧
+MG0270_01: |+
+   select
+     /* MG0270_01 */
+     ${REPLACE}
+   from BGT_ITM_MST A
+   LEFT JOIN MWM_OPTION op1
+    ON op1.CORPORATION_CODE = A.COMPANY_CD
+    AND op1.OPTION_CODE     = 'dltFg'
+    AND op1.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_OPTION_ITEM opi1
+    ON opi1.OPTION_ID    = op1.OPTION_ID
+    AND opi1.CODE        = A.DLT_FG
+    AND opi1.DELETE_FLAG = '0'
+   LEFT JOIN MWM_LOOKUP lok
+    ON lok.CORPORATION_CODE  = A.COMPANY_CD
+    AND lok.LOOKUP_GROUP_ID  = 'BS_PL_TP'
+    AND lok.LOOKUP_ID        = A.BS_PL_TP
+    AND lok.LOCALE_CODE      = 'ja'
+   where 1 = 1
+
+#予算科目マスタ一覧DELETE
+MG0270_02: |+
+  update /* MG0270_02 */ BGT_ITM_MST set
+    DLT_FG = '1'
+  where COMPANY_CD = ?
+    and BGT_ITM_CD = ?
+
+#予算科目マスタ一覧UPDATE
+MG0270_03: |+
+  update /* MG0270_03 */ BGT_ITM_MST SET
+     BGT_ITM_NM = ?,
+     BS_PL_TP = ?,
+     SORT_ORDER = ?,
+     DLT_FG = ?,
+     CORPORATION_CODE_UPDATED = ?,
+     USER_CODE_UPDATED = ?,
+     IP_UPDATED = ?,
+     TIMESTAMP_UPDATED = ?
+  where COMPANY_CD = ?
+   and BGT_ITM_CD = ?
+
+#予算科目マスタ一覧INSERT
+MG0270_04: |+
+  insert into /* MG0270_04 */ BGT_ITM_MST(
+     COMPANY_CD,
+     BGT_ITM_CD,
+     BGT_ITM_NM,
+     BS_PL_TP,
+     SORT_ORDER,
+     DLT_FG,
+     CORPORATION_CODE_CREATED,
+     USER_CODE_CREATED,
+     IP_CREATED,
+     TIMESTAMP_CREATED,
+     CORPORATION_CODE_UPDATED,
+     USER_CODE_UPDATED,
+     IP_UPDATED,
+     TIMESTAMP_UPDATED
+  ) values (
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?
+  )
+
+#予算科目マスタ一覧(ダウンロード用)
+MG0270_05: |+
+   select
+     /* MG0270_05 */
+     COMPANY_CD,
+     BGT_ITM_CD,
+     BGT_ITM_NM,
+     BS_PL_TP,
+     SORT_ORDER,
+     DLT_FG,
+     ROWNUM as ID,
+     NULL as PROCESS_TYPE
+   from BGT_ITM_MST A
+   where 1 = 1
+
+#メディアマスタ一覧
+MG0280_01: |+
+   select
+     /* MG0280_01 */
+     ${REPLACE}
+   from MDA_MST A
+   LEFT JOIN MWM_OPTION op1
+    ON op1.CORPORATION_CODE = A.COMPANY_CD
+    AND op1.OPTION_CODE     = 'dltFg'
+    AND op1.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_OPTION_ITEM opi1
+    ON opi1.OPTION_ID    = op1.OPTION_ID
+    AND opi1.CODE        = A.DLT_FG
+    AND opi1.DELETE_FLAG = '0'
+   where 1 = 1
+
+#メディアマスタ一覧DELETE
+MG0280_02: |+
+  update /* MG0280_02 */ MDA_MST set
+    DLT_FG = '1'
+  where COMPANY_CD = ?
+    and MDA_ID = ?
+
+#メディアマスタ一覧UPDATE
+MG0280_03: |+
+  update /* MG0280_03 */ MDA_MST SET
+     MDA_NM = ?,
+     DLT_FG = ?,
+     CORPORATION_CODE_UPDATED = ?,
+     USER_CODE_UPDATED = ?,
+     IP_UPDATED = ?,
+     TIMESTAMP_UPDATED = ?
+  where COMPANY_CD = ?
+   and MDA_ID = ?
+
+#メディアマスタ一覧INSERT
+MG0280_04: |+
+  insert into /* MG0280_04 */ MDA_MST(
+     COMPANY_CD,
+     MDA_ID,
+     MDA_NM,
+     DLT_FG,
+     CORPORATION_CODE_CREATED,
+     USER_CODE_CREATED,
+     IP_CREATED,
+     TIMESTAMP_CREATED,
+     CORPORATION_CODE_UPDATED,
+     USER_CODE_UPDATED,
+     IP_UPDATED,
+     TIMESTAMP_UPDATED
+  ) values (
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?
+  )
+
+#メディアマスタ一覧(ダウンロード用)
+MG0280_05: |+
+   select
+     /* MG0280_05 */
+     COMPANY_CD,
+     MDA_ID,
+     MDA_NM,
+     DLT_FG,
+     ROWNUM as ID,
+     NULL as PROCESS_TYPE
+   from MDA_MST A
+   where 1 = 1
+
+#結合フロアマスタ一覧
+MG0290_01: |+
+   select
+     /* MG0290_01 */
+     ${REPLACE}
+   from BND_FLR_MST A
+   LEFT JOIN MWM_OPTION op1
+    ON op1.CORPORATION_CODE = A.COMPANY_CD
+    AND op1.OPTION_CODE     = 'dltFg'
+    AND op1.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_OPTION_ITEM opi1
+    ON opi1.OPTION_ID    = op1.OPTION_ID
+    AND opi1.CODE        = A.DLT_FG
+    AND opi1.DELETE_FLAG = '0'
+   where 1 = 1
+
+#結合フロアマスタ一覧DELETE
+MG0290_02: |+
+  update /* MG0290_02 */ BND_FLR_MST set
+    DLT_FG = '1'
+  where COMPANY_CD = ?
+    and BND_FLR_CD = ?
+
+#結合フロアマスタ一覧UPDATE
+MG0290_03: |+
+  update /* MG0290_03 */ BND_FLR_MST SET
+     BND_FLR_NM = ?,
+     SORT_ORDER = ?,
+     DLT_FG = ?,
+     CORPORATION_CODE_UPDATED = ?,
+     USER_CODE_UPDATED = ?,
+     IP_UPDATED = ?,
+     TIMESTAMP_UPDATED = ?
+  where COMPANY_CD = ?
+   and BND_FLR_CD = ?
+
+#結合フロアマスタ一覧INSERT
+MG0290_04: |+
+  insert into /* MG0290_04 */ BND_FLR_MST(
+     COMPANY_CD,
+     BND_FLR_CD,
+     BND_FLR_NM,
+     SORT_ORDER,
+     DLT_FG,
+     CORPORATION_CODE_CREATED,
+     USER_CODE_CREATED,
+     IP_CREATED,
+     TIMESTAMP_CREATED,
+     CORPORATION_CODE_UPDATED,
+     USER_CODE_UPDATED,
+     IP_UPDATED,
+     TIMESTAMP_UPDATED
+  ) values (
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?
+  )
+
+#結合フロアマスタ一覧(ダウンロード用)
+MG0290_05: |+
+   select
+     /* MG0290_05 */
+     COMPANY_CD,
+     BND_FLR_CD,
+     BND_FLR_NM,
+     SORT_ORDER,
+     DLT_FG,
+     ROWNUM as ID,
+     NULL as PROCESS_TYPE
+   from BND_FLR_MST A
+   where 1 = 1
+
+#消費税関連マスタ一覧
+MG0320_01: |+
+   select
+     /* MG0320_01 */
+     ${REPLACE}
+   from TAXEXPS_MST A
+   LEFT JOIN MWM_OPTION op1
+    ON op1.CORPORATION_CODE = A.COMPANY_CD
+    AND op1.OPTION_CODE     = 'dltFg'
+    AND op1.DELETE_FLAG     = '0'
+   LEFT JOIN MWM_OPTION_ITEM opi1
+    ON opi1.OPTION_ID    = op1.OPTION_ID
+    AND opi1.CODE        = A.DLT_FG
+    AND opi1.DELETE_FLAG = '0'
+   LEFT JOIN TAX_MST tm
+    ON A.COMPANY_CD = tm.COMPANY_CD
+    AND A.TAX_CD = tm.TAX_CD
+    AND tm.DLT_FG = '0'
+   LEFT JOIN MWM_LOOKUP lp1
+    ON A.COMPANY_CD = lp1.CORPORATION_CODE
+    AND A.TAX_KND_CD = lp1.LOOKUP_ID
+    AND lp1.LOOKUP_GROUP_ID = 'TAX_KND_CD'
+    AND lp1.LOCALE_CODE = 'ja'
+    AND lp1.DELETE_FLAG = '0'
+   LEFT JOIN MWM_LOOKUP lp2
+    ON A.COMPANY_CD = lp2.CORPORATION_CODE
+    AND A.TAX_SPC = lp2.LOOKUP_ID
+    AND lp2.LOOKUP_GROUP_ID = 'TAX_SPC'
+    AND lp2.LOCALE_CODE = 'ja'
+    AND lp2.DELETE_FLAG = '0'
+   where 1 = 1
+
+#消費税関連マスタ一覧DELETE
+MG0320_02: |+
+  update /* MG0320_02 */ TAXEXPS_MST set
+    DLT_FG = '1'
+  where COMPANY_CD = ?
+    and TAX_KND_CD = ?
+    and TAX_SPC = ?
+
+#消費税関連マスタ一覧UPDATE
+MG0320_03: |+
+  update /* MG0320_03 */ TAXEXPS_MST SET
+     TAX_CD = ?,
+     DLT_FG = ?,
+     CORPORATION_CODE_UPDATED = ?,
+     USER_CODE_UPDATED = ?,
+     IP_UPDATED = ?,
+     TIMESTAMP_UPDATED = ?
+  where COMPANY_CD = ?
+   and TAX_KND_CD = ?
+   and TAX_SPC = ?
+
+#消費税関連マスタ一覧INSERT
+MG0320_04: |+
+  insert into /* MG0320_04 */ TAXEXPS_MST(
+     COMPANY_CD,
+     TAX_KND_CD,
+     TAX_SPC,
+     TAX_CD,
+     DLT_FG,
+     CORPORATION_CODE_CREATED,
+     USER_CODE_CREATED,
+     IP_CREATED,
+     TIMESTAMP_CREATED,
+     CORPORATION_CODE_UPDATED,
+     USER_CODE_UPDATED,
+     IP_UPDATED,
+     TIMESTAMP_UPDATED
+  ) values (
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?,
+     ?
+  )
+
+#消費税関連マスタ一覧(ダウンロード用)
+MG0320_05: |+
+   select
+     /* MG0320_05 */
+     COMPANY_CD,
+     TAX_KND_CD,
+     TAX_SPC,
+     TAX_CD,
+     DLT_FG,
+     ROWNUM as ID,
+     NULL as PROCESS_TYPE
+   from TAXEXPS_MST A
+   where 1 = 1
+
+#国マスタ一覧
+MG0330_01: |+
+ select /* MG0330_01 */
+   ${REPLACE}
+ from LND_MST L
+ left join (select * from MWV_OPTION_ITEM where OPTION_CODE = 'dltFg' and DELETE_FLAG = '0' and LOCALE_CODE = ?) O
+   on (L.COMPANY_CD = O.CORPORATION_CODE and L.DLT_FG = O.CODE)
+ where COMPANY_CD = ?

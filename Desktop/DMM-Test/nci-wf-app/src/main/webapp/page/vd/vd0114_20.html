@@ -1,0 +1,108 @@
+<!-- 添付ファイルパーツのプロパティ -->
+<script type="text/javascript" src="vd0114_20.js"></script>
+<div id="vd0114_20" class="row">
+	<label class="sub-title" data-i18n="attachFile">添付ファイル</label>
+
+	<div class='col-sm-3 form-group'>
+		<label>
+			<input id="multiple" type="checkbox" value="true" />
+			<span data-i18n="useMultipleAttachFiles">#{複数添付ファイルを扱う}</span>
+		</label>
+		<label>
+			<input id="notUseComment" type="checkbox" value="true" />
+			<span data-i18n="notUseComment">#{コメント欄を使う}</span>
+		</label>
+	</div>
+	<div class="col-sm-3 form-group">
+		<span data-i18n="requiredFileCount">#{必須ファイル数}</span>
+		<input id="requiredFileCount" type="text" class="form-control" maxlength="3"
+				data-validate='{ "pattern" : "integer", "min" : 0, "max" : 999 }' />
+	</div>
+	<div class="col-sm-3 form-group">
+		<span data-i18n="maxFileCount" class="required">#{最大ファイル数}</span>
+		<input id="maxFileCount" type="text" class="form-control required" maxlength="3"
+				data-validate='{ "pattern" : "integer", "min" : 1, "max" : 999 }' />
+	</div>
+	<div class="col-sm-3 form-group">
+		<span data-i18n="pageSize" class="required">#{ページあたりの行数}</span>
+		<select id="pageSize" class="form-control required"></select>
+	</div>
+	<div class="col-sm-3 form-group">
+		<span data-i18n="designSampleCount" class="required">#{デザイン用サンプル行数}</span>
+		<input id="initSampleCount" type="text" class="form-control required" maxlength="3"
+				data-validate='{ "pattern" : "integer", "min" : 0, "max" : 999 }' />
+	</div>
+	<div class='col-sm-6 form-group'>
+		<span>target</span>
+		<input type="text" data-field="target" class="form-control" maxlength="300"
+				data-validate='{ "pattern" : "all" }' />
+	</div>
+
+	<fieldset id="fileExtLimitation" class='form-group fieldset'>
+		<legend data-i18n="fileLimitation">#ファイルの制限</legend>
+
+		<div class="clearfix for-group">
+			<div class='col-sm-4'>
+				<label>
+					<input id="enableAny" type="checkbox" value="true" />
+					<span data-i18n="noLimitation">#制限なし</span>
+				</label>
+			</div>
+			<div class='col-sm-4'>
+				<label>
+					<input id="enableImage" type="checkbox" value="true" />
+					<span data-i18n="allowImage">#画像を許可</span>
+				</label>
+			</div>
+			<div class='col-sm-4'>
+				<label>
+					<input id="enablePdf" type="checkbox" value="true" />
+					<span data-i18n="allowPdf">#PDFを許可</span>
+				</label>
+			</div>
+			<div class='col-sm-4'>
+				<label>
+					<input id="enableWord" type="checkbox" value="true" />
+					<span data-i18n="allowWord">#WORD文書を許可</span>
+				</label>
+			</div>
+			<div class='col-sm-4'>
+				<label>
+					<input id="enableExcel" type="checkbox" value="true" />
+					<span data-i18n="allowExcel">#EXCEL文書を許可</span>
+				</label>
+			</div>
+			<div class='col-sm-4'>
+				<label>
+					<input id="enablePowerPoint" type="checkbox" value="true" />
+					<span data-i18n="allowPowerPoint">#PowerPoint文書を許可</span>
+				</label>
+			</div>
+			<div class='col-sm-4'>
+				<label>
+					<input id="enableCsv" type="checkbox" value="true" />
+					<span data-i18n="allowCsv">#CSVファイルを許可</span>
+				</label>
+			</div>
+			<div class='col-sm-4'>
+				<label>
+					<input id="enableText" type="checkbox" value="true" />
+					<span data-i18n="allowText">#テキストファイルを許可</span>
+				</label>
+			</div>
+			<div class='col-sm-4'>
+				<label>
+					<input id="enableHtml" type="checkbox" value="true" />
+					<span data-i18n="allowHtml">#HTMLを許可</span>
+				</label>
+			</div>
+			<div class='col-sm-12'>
+				<label>
+					<input id="enableOther" type="checkbox" value="true" />
+					<span data-i18n="allowOthersWithRegExp">#その他</span>
+				</label>
+				<input id="regExpOther" type="text" class="form-control" maxlength="300" />
+			</div>
+		</div>
+	</fieldset>
+</div>

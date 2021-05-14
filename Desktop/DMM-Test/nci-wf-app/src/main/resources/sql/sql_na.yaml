@@ -1,0 +1,226 @@
+#画面プロセス定義階層取得
+NA0000_01: |+
+ select /* NA0000_01 */
+   SPL.SCREEN_PROCESS_LEVEL_ID
+   , SPL.PARENT_LEVEL_CODE
+   , SPL.LEVEL_CODE
+   , nvl(M.VAL, SPL.LEVEL_NAME) LEVEL_NAME
+   , SPL.EXPANSION_FLAG
+   , SPL.SORT_ORDER
+ from
+   (
+     select T.*, LEVEL LEVEL_DEPTH from MWM_SCREEN_PROCESS_LEVEL T
+     start with T.LEVEL_CODE = T.PARENT_LEVEL_CODE
+     connect BY NOCYCLE
+       prior T.CORPORATION_CODE = T.CORPORATION_CODE
+       and prior T.LEVEL_CODE = T.PARENT_LEVEL_CODE
+       and T.DELETE_FLAG = '0'
+   ) SPL
+   left join (select * from MWM_MULTILINGUAL where TABLE_NAME = 'MWM_SCREEN_PROCESS_LEVEL' and COLUMN_NAME = 'LEVEL_NAME' and DELETE_FLAG = '0' and LOCALE_CODE = ?) M
+     on (M.ID = SPL.SCREEN_PROCESS_LEVEL_ID)
+ where SPL.CORPORATION_CODE = ?
+ order by
+   SPL.LEVEL_DEPTH
+   , SPL.SORT_ORDER
+   , SPL.LEVEL_CODE
+
+#画面プロセス定義取得
+NA0000_02: |+
+ select /* NA0000_02 */
+   SPD.SCREEN_PROCESS_ID
+   , SPD.SCREEN_PROCESS_CODE
+   , nvl(M1.VAL, SPD.SCREEN_PROCESS_NAME) SCREEN_PROCESS_NAME
+   , SPD.SCREEN_PROCESS_LEVEL_ID
+   , SPD.SORT_ORDER
+ from
+   MWM_SCREEN_PROCESS_DEF SPD
+   left join (select * from MWM_MULTILINGUAL where TABLE_NAME = 'MWM_SCREEN_PROCESS_DEF' and COLUMN_NAME = 'SCREEN_PROCESS_NAME' and DELETE_FLAG = '0' and LOCALE_CODE = ?) M1
+     on (M1.ID = SPD.SCREEN_PROCESS_ID)
+ where SPD.DELETE_FLAG = '0'
+   and SPD.CORPORATION_CODE = ?
+ order by
+   SPD.SORT_ORDER
+   , SPD.SCREEN_PROCESS_CODE
+
+#画面プロセス定義取得
+NA0002_01: |+
+ select /* NA0002_01 */
+   S.*
+   , D.SCREEN_PROCESS_NAME
+ from
+   MWM_ACCESSIBLE_SCREEN S
+   inner join (
+     select T1.SCREEN_PROCESS_ID, nvl(T2.VAL, T1.SCREEN_PROCESS_NAME) SCREEN_PROCESS_NAME
+     from MWM_SCREEN_PROCESS_DEF T1
+       left join (select * from MWM_MULTILINGUAL where TABLE_NAME = 'MWM_SCREEN_PROCESS_DEF' and COLUMN_NAME = 'SCREEN_PROCESS_NAME' and LOCALE_CODE = ?) T2
+         on (T1.SCREEN_PROCESS_ID = T2.ID)
+   ) D
+     on (S.SCREEN_PROCESS_ID = D.SCREEN_PROCESS_ID)
+ where S.CORPORATION_CODE = ?
+   and S.MENU_ROLE_CODE = ?
+   and S.DELETE_FLAG = '0'
+ order by
+   S.SCREEN_PROCESS_ID
+   , S.ACCESSIBLE_SCREEN_ID
+
+#画面プロセス定義階層－画面プロセス定義取得
+NA0002_02: |+
+ select /* NA0002_02 */
+   rownum ROW_ID
+   , T.*
+ from
+   (
+     select
+       SCREEN_PROCESS_LEVEL_ID ID
+       , 'book' TYPE
+       , CORPORATION_CODE
+       , PARENT_LEVEL_CODE
+       , LEVEL_CODE
+       , nvl(VAL, LEVEL_NAME) LEVEL_NAME
+       , EXPANSION_FLAG
+       , NULL VALID_START_DATE
+       , NULL VALID_END_DATE
+       , DELETE_FLAG
+     from
+       (
+         select T1.*, T2.VAL
+         from MWM_SCREEN_PROCESS_LEVEL T1
+         left join (select * from MWM_MULTILINGUAL where TABLE_NAME = 'MWM_SCREEN_PROCESS_LEVEL' and COLUMN_NAME = 'LEVEL_NAME' and LOCALE_CODE = ?) T2
+           on (T1.SCREEN_PROCESS_LEVEL_ID = T2.ID)
+       )
+     union all
+     select
+       SCREEN_PROCESS_ID ID
+       , 'file' TYPE
+       , D.CORPORATION_CODE
+       , nvl(L.LEVEL_CODE, SCREEN_PROCESS_CODE) PARENT_LEVEL_CODE
+       , D.SCREEN_PROCESS_CODE LEVEL_CODE
+       , nvl(D.VAL, D.SCREEN_PROCESS_NAME) LEVEL_NAME
+       , '0' EXPANSION_FLAG
+       , D.VALID_START_DATE
+       , D.VALID_END_DATE
+       , D.DELETE_FLAG
+     from
+       (
+         select T1.*, T2.VAL
+         from MWM_SCREEN_PROCESS_DEF T1
+         left join (select * from MWM_MULTILINGUAL where TABLE_NAME = 'MWM_SCREEN_PROCESS_DEF' and COLUMN_NAME = 'SCREEN_PROCESS_NAME' and LOCALE_CODE = ?) T2
+           on (T1.SCREEN_PROCESS_ID = T2.ID)
+         where not exists (select 'x' from MWM_ACCESSIBLE_SCREEN S where S.CORPORATION_CODE = ? and S.MENU_ROLE_CODE = ? and S.SCREEN_PROCESS_ID = T1.SCREEN_PROCESS_ID and S.DELETE_FLAG = '0')
+       ) D
+       left join MWM_SCREEN_PROCESS_LEVEL L
+         on (D.SCREEN_PROCESS_LEVEL_ID = L.SCREEN_PROCESS_LEVEL_ID)
+   ) T
+ where
+   1 = decode(T.TYPE, 'file', 1, decode(connect_by_isleaf, 1, 0, 1))
+   and T.DELETE_FLAG = '0'
+   and T.CORPORATION_CODE = ?
+ start with
+   T.LEVEL_CODE = T.PARENT_LEVEL_CODE
+ connect by
+   nocycle prior T.CORPORATION_CODE = T.CORPORATION_CODE
+   and prior T.LEVEL_CODE = T.PARENT_LEVEL_CODE
+ order by
+   LEVEL, TYPE, ID
+
+#画面プロセス定義取得
+NA0002_03: |+
+ select /* NA0002_03 */ * from MWV_SCREEN_PROCESS_DEF
+ where SCREEN_PROCESS_ID = ? and LOCALE_CODE = ?
+ order by SCREEN_PROCESS_ID
+
+#アクセス可能画面マスタで、すでに同一キーが登録済みでないか
+NA0002_04: |+
+ select /* NA0002_04 */ count(*)
+ from MWM_ACCESSIBLE_SCREEN
+ where
+  CORPORATION_CODE = ?
+  and MENU_ROLE_CODE = ?
+  and SCREEN_PROCESS_ID = ?
+
+#画面プロセス配下のコンテナを抽出
+NA0002_05: |+
+ select /* NA0002_05 */ C.*
+ from MWV_SCREEN_PROCESS_CONTAINER SPC
+  inner join MWV_CONTAINER C
+   on C.CONTAINER_ID = SPC.CONTAINER_ID
+   and C.LOCALE_CODE = ?
+ where
+  SPC.SCREEN_PROCESS_ID = ?
+ order by
+  SPC.CONTAINER_ID, SPC.NEST_LEVEL, SPC.SORT_ORDER, SPC.ROW_NUM
+
+
+#申請一覧(階層取得)
+NA0010_01: |+
+ select /* NA0010_01 */
+   SPL.SCREEN_PROCESS_LEVEL_ID
+   , SPL.PARENT_LEVEL_CODE
+   , SPL.LEVEL_CODE
+   , nvl(M.VAL, SPL.LEVEL_NAME) LEVEL_NAME
+   , SPL.EXPANSION_FLAG
+   , SPL.SORT_ORDER
+ from
+   (
+     select T.*, LEVEL LEVEL_DEPTH from MWM_SCREEN_PROCESS_LEVEL T
+     start with T.LEVEL_CODE = T.PARENT_LEVEL_CODE
+     connect BY NOCYCLE
+       prior T.CORPORATION_CODE = T.CORPORATION_CODE
+       and prior T.LEVEL_CODE = T.PARENT_LEVEL_CODE
+       and T.DELETE_FLAG = '0'
+   ) SPL
+   left join (select * from MWM_MULTILINGUAL where TABLE_NAME = 'MWM_SCREEN_PROCESS_LEVEL' and COLUMN_NAME = 'LEVEL_NAME' and DELETE_FLAG = '0' and LOCALE_CODE = ?) M
+     on (M.ID = SPL.SCREEN_PROCESS_LEVEL_ID)
+ where SPL.CORPORATION_CODE = ?
+ order by
+   SPL.LEVEL_DEPTH
+   , SPL.SORT_ORDER
+   , SPL.LEVEL_CODE
+
+#申請一覧
+NA0010_02: |+
+ select /* NA0010_02 */
+   SPD.SCREEN_PROCESS_ID
+   , SPD.SCREEN_PROCESS_CODE
+   , nvl(M1.VAL, SPD.SCREEN_PROCESS_NAME) SCREEN_PROCESS_NAME
+   , SPD.SCREEN_PROCESS_LEVEL_ID
+   , SPD.DESCRIPTION
+   , SPD.SORT_ORDER
+ from
+   MWM_SCREEN_PROCESS_DEF SPD
+   left join (select * from MWM_MULTILINGUAL where TABLE_NAME = 'MWM_SCREEN_PROCESS_DEF' and COLUMN_NAME = 'SCREEN_PROCESS_NAME' and DELETE_FLAG = '0' and LOCALE_CODE = ?) M1
+     on (M1.ID = SPD.SCREEN_PROCESS_ID)
+ where
+   exists (
+     select
+       'x'
+     from
+       MWM_ACCESSIBLE_SCREEN A
+     where
+       A.SCREEN_PROCESS_ID = SPD.SCREEN_PROCESS_ID
+       and A.CORPORATION_CODE = SPD.CORPORATION_CODE
+       and trunc(sysdate) between A.VALID_START_DATE and A.VALID_END_DATE
+       and A.NEW_APPLY_DISPLAY_FLAG = '1'
+       and A.MENU_ROLE_CODE in (###REPLACE###)
+       and A.DELETE_FLAG = '0'
+   )
+   and trunc(sysdate) between SPD.VALID_START_DATE and SPD.VALID_END_DATE
+   and SPD.DELETE_FLAG = '0'
+   and SPD.CORPORATION_CODE = ?
+
+#申請一覧(階層の深さを取得)
+NA0010_03: |+
+ select /* NA0010_03 */
+   max(SPL.LEVEL_DEPTH)
+ from
+   (
+     select T.*, LEVEL LEVEL_DEPTH from MWM_SCREEN_PROCESS_LEVEL T
+     start with T.LEVEL_CODE = T.PARENT_LEVEL_CODE
+     connect BY NOCYCLE
+       prior T.CORPORATION_CODE = T.CORPORATION_CODE
+       and prior T.LEVEL_CODE = T.PARENT_LEVEL_CODE
+       and T.DELETE_FLAG = '0'
+   ) SPL
+   left join (select * from MWM_MULTILINGUAL where TABLE_NAME = 'MWM_SCREEN_PROCESS_LEVEL' and COLUMN_NAME = 'LEVEL_NAME' and DELETE_FLAG = '0' and LOCALE_CODE = ?) M
+     on (M.ID = SPL.SCREEN_PROCESS_LEVEL_ID)
+ where SPL.CORPORATION_CODE = ?

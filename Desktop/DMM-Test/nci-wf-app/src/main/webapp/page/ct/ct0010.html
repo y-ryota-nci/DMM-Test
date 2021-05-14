@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src="./ct0010.js"></script>
+	<title>CT0010 カタログ検索</title>
+</head>
+<body>
+<header class="container-fluid">
+	<div id="nav"></div>
+</header>
+<section class="col-xs-12">
+	<article class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">カタログ検索</h1>
+		</div>
+	</article><!--/.row-->
+
+	<article class="row mB40 mB40_sp">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix collapse_btn collapsed" role="button" data-toggle="collapse" data-target="#condition-contents"><i class="fa fa-chevron-down"></i><span>カタログ検索</span></div>
+				<div id="condition-contents" class="panel-collapse collapse">
+					<div class="panel-body">
+						<form id="formCondition" class="tableBox col-lg-12 col-md-12 col-sm-12">
+							<div class="tr">
+								<div class="th col-sm-4 col-md-2">品番</div>
+								<div class="td col-sm-8 col-md-4"><input type="text" id="catalogCode" class="form-control" maxlength="10" /></div>
+								<div class="th col-sm-4 col-md-2">カテゴリ</div>
+								<div class="td col-sm-8 col-md-4"><select id="catalogCategoryId" class="form-control"></select></div>
+							</div>
+							<div class="tr">
+								<div class="th col-sm-4 col-md-2">品目名称</div>
+								<div class="td col-sm-8 col-md-10"><input type="text" id="catalogName" class="form-control" maxlength="100"/></div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-xs-12 text-center">
+						<button id="btnSearch" class="btn btn-primary">
+							<i class="fa fa-search"></i>
+							<span data-i18n="btnSearch">#{btnSearch}</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</article>
+
+	<article id="seach-result" class="row invisible">
+		<div class="col-lg-12">
+			<!-- 検索結果サブタイトル -->
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#result-contents"><i class="fa fa-chevron-up"></i><span>カタログ一覧</span></div>
+				<div id="result-contents" class="panel-body panel-collapse collapse in">
+
+					<!-- ページ制御 -->
+					<div class="fixed-table-pagination row">
+						<div class="pull-left col-sm-4">
+							<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+						</div>
+						<div class="pull-left col-sm-4 text-center">
+							<ul class="pagination"></ul>
+						</div>
+						<div class="pull-right col-sm-4 text-right pagination-detail">
+							<span data-i18n="rowCountPerPage">1ページの行数</span>
+							<select class="pageSize"></select>
+						</div>
+					</div>
+
+					<!-- 検索結果本体 -->
+					<div class="table-responsive">
+						<table class="table table-bordered table-hover table-striped responsive">
+							<colgroup>
+								<col class="col-xs-1">
+								<col class="col-xs-2">
+								<col class="col-xs-2">
+								<col class="col-xs-3">
+								<col class="col-xs-2">
+								<col class="col-xs-1">
+								<col class="col-xs-1">
+							</colgroup>
+							<thead>
+							<tr>
+								<th>品番</th>
+								<th>品目名称</th>
+								<th>カテゴリ</th>
+								<th>発注先</th>
+								<th>金額</th>
+								<th>単位</th>
+								<th>消費税区分</th>
+							</tr>
+							</thead>
+							<tbody></tbody>
+							<tfoot class="template hide">
+							<tr>
+								<td><a href="#" data-field="catalogCode">#{catalogCode}</a><span data-field="catalogId" class="hide">#{catalogId}</span></td>
+								<td data-field="catalogName">#{catalogName}</td>
+								<td data-field="catalogCategoryName">#{catalogCategoryName}</td>
+								<td data-field="vendorName">#{vendorName}</td>
+								<td data-field="unitPrice">#{unitPrice}</td>
+								<td data-field="catalogUnitName">#{catalogUnitName}</td>
+								<td data-field="salesTaxTypeName">#{salesTaxTypeName}</td>
+							</tr>
+							</tfoot>
+						</table>
+					</div>
+
+					<!-- ページ制御 -->
+					<div class="fixed-table-pagination row">
+						<div class="pull-left col-sm-4">
+							<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+						</div>
+						<div class="pull-left col-sm-4 text-center">
+							<ul class="pagination"></ul>
+						</div>
+						<div class="pull-right col-sm-4 text-right pagination-detail">
+							<span data-i18n="rowCountPerPage">1ページの行数</span>
+							<select class="pageSize"></select>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</article>
+
+	<article class="row">
+		<div class="col-lg-12">
+			<button id="btnAdd" class="btn btn-primary" disabled>
+				<i class="glyphicon glyphicon-plus-sign"></i>
+				<span data-i18n="btnAdd">#{追加}</span>
+			</button>
+		</div>
+	</article>
+</section>
+</body>
+</html>

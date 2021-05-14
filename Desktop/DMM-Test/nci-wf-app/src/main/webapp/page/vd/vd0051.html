@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+
+	<link rel="stylesheet" href="../../assets/codemirror/lib/codemirror.css" />
+	<link rel="stylesheet" href="../../assets/codemirror/theme/eclipse.css" />
+	<link rel="stylesheet" href="../../assets/codemirror/addon/hint/show-hint.css">
+	<link rel="stylesheet" href="../../assets/codemirror/addon/dialog/dialog.css">
+
+	<style type="text/css">
+	#script_wrapper {
+		border : 1px solid #ddd;
+	}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./vd0051.js"></script>
+
+	<script src="../../assets/codemirror/lib/codemirror.js"></script>
+	<script src="../../assets/codemirror/mode/javascript/javascript.js"></script>
+	<script src="../../assets/codemirror/addon/selection/active-line.js"></script>
+	<script src="../../assets/codemirror/addon/edit/matchbrackets.js"></script>
+	<script src="../../assets/codemirror/addon/edit/closebrackets.js"></script>
+	<script src="../../assets/codemirror/addon/comment/continuecomment.js"></script>
+	<script src="../../assets/codemirror/addon/comment/comment.js"></script>
+	<script src="../../assets/codemirror/addon/hint/show-hint.js"></script>
+	<script src="../../assets/codemirror/addon/hint/javascript-hint.js"></script>
+	<script src="../../assets/codemirror/addon/scroll/annotatescrollbar.js"></script>
+	<script src="../../assets/codemirror/addon/search/matchesonscrollbar.js"></script>
+	<script src="../../assets/codemirror/addon/search/searchcursor.js"></script>
+	<script src="../../assets/codemirror/addon/search/match-highlighter.js"></script>
+
+	<title>#{VD0051 Javascript設定}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="container">
+		<div class="row">
+			<span class="screen-name">#{VD0051}</span>
+
+			<label class="sub-title">
+				<span  data-i18n="javascriptSetting"></span>
+			</label>
+
+			<form id="inputed">
+				<div class="form-group col-sm-4">
+					<span class="required" data-i18n="fileName">#{ファイル名}</span>
+					<input type="text" id="fileName" class="form-control required" maxlength="90"
+							data-validate='{ "pattern" : "fileName" }' />
+					<input type="hidden" id="javascriptHistoryId" />
+					<input type="hidden" id="javascriptId" />
+					<input type="hidden" id="corporationCode" />
+					<input type="hidden" id="version" />
+				</div>
+				<div class="form-group col-sm-2">
+					<span data-i18n="historyNo">#{履歴No}</span>
+					<input type="text" id="historyNo" class="form-control" maxlength="4" disabled />
+				</div>
+				<div class="form-group col-sm-3">
+					<span data-i18n="timestampUpdated">#{最終更新日}</span>
+					<input type="text" id="timestampUpdated" class="form-control" maxlength="20" disabled />
+				</div>
+				<div class="form-group col-sm-12">
+					<span data-i18n="remarks">#{備考}#</span>
+					<textarea id="remarks" rows="2" class="form-control" maxlength="100"></textarea>
+				</div>
+				<div class="form-group col-sm-12">
+					<span class="required" data-i18n="scriptContents">#{"javascript"}</span>
+					<div id="script_wrapper">
+						<textarea id="script" rows="5" class="form-control required" maxlength="30000"></textarea>
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<div class="col-xs-12 text-center">
+				<button id="btnRegister" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnRegister">#{登録}</span>
+				</button>
+				<button id="btnUpdate" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnUpdate">#{更新}</span>
+				</button>
+				<button id="btnBack" class="btn btn-default">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnBack">#{戻る}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<div class="text-center">
+	<div class="row mB0 mB0_sp">
+		<div class="submit_btn_area col-lg-12 mB10 mB10_sp clearfix">
+			<div class="row col-sm-4 text-left clearfix">
+				<!-- 非ポップアップで起動した際は戻るボタン -->
+				<button id="btnBack" class="btn btn-sm btn-default hide">
+					<i class="fa fa-reply"></i>
+					<span data-i18n="btnBack">#{戻る}</span>
+				</button>
+				<!-- ポップアップで起動した際は閉じるボタン -->
+				<button id="btnClose" class="btn btn-sm btn-default hide">
+					<i class="fa fa-times"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+			<div class="row col-sm-4 text-center clearfix">
+				<button id="btnRegist" class="btn btn-sm btn-success hide">
+					<i class="fa fa-copy"></i>
+					<span data-i18n="btnRegister">#{登録}</span>
+				</button>
+				&nbsp;
+				<button id="btnUpdate" class="btn btn-sm btn-success hide">
+					<i class="fa fa-copy"></i>
+					<span data-i18n="btnUpdate">#{更新}</span>
+				</button>
+				&nbsp;
+				<button id="btnWfApply" class="btn btn-sm btn-success hide">
+					<i class="fa fa-copy"></i>
+					<span data-i18n="btnWfApply">#{Wf申請}</span>
+				</button>
+			</div>
+			<div class="row col-sm-4 pull-right text-right clearfix">
+				<button id="btnCopy" class="btn btn-sm btn-success hide">
+					<i class="fa fa-copy"></i>
+					<span data-i18n="btnCopy">#{コピー}</span>
+				</button>
+				<button id="btnLock" class="btn btn-sm btn-success hide">
+					<i class="fa fa-copy"></i>
+					<span data-i18n="btnLockAndEdit">#{ロックして編集する}</span>
+				</button>
+				<button id="btnUnlock" class="btn btn-sm btn-success hide">
+					<i class="fa fa-copy"></i>
+					<span data-i18n="btnUnlock">#{ロック解除}</span>
+				</button>
+			</div>
+		</div>
+		<div id="lockInfo" class="col-lg-12 clearfix form-inline text-left hide">
+			<b class="fa fa-lg fa-lock text-warning">:<span data-i18n="editing">#{編集中}</span></b>&nbsp;
+			<i class="fa fa-lg">
+				<span id="lockUserName"></span>&nbsp;
+				<span data-field="lockTimestamp">#{lockTimestamp}</span>
+			</i>
+		</div>
+	</div>
+	<div id="confirmEdit" class="modal fade">
+		<div class="modal-md modal-dialog">
+			<div class="modal-content form-group">
+				<div class="modal-header">
+					<span data-i18n="confirmEdit">#{編集確定}</span>
+				</div>
+				<div class="modal-body">
+					<div class="tableBox col-lg-12 col-md-12 col-sm-12" id="folderInfo">
+						<div class="tr">
+							<div class="col-lg-4 col-md-4 col-sm-4 th text-left">
+								<label class="" data-i18n="unlock">#{ロック解除}</label>
+							</div>
+							<div class="col-lg-8 col-md-8 col-sm-8 td text-left">
+								<fieldset>
+									<input type="radio" name="unlockFlag" value="0" class="required"/><label data-i18n="lockNotRelease">#{ロックを解除しない}</label>
+									<input type="radio" name="unlockFlag" value="1" class="required"/><label data-i18n="lockRelease">#{ロックを解除する}</label>
+								</fieldset>
+							</div>
+						</div>
+						<div class="tr">
+							<div class="col-lg-4 col-md-4 col-sm-4 th text-left">
+								<label class="" data-i18n="versionControl">#{版管理}</label>
+							</div>
+							<div class="col-lg-8 col-md-8 col-sm-8 td text-left">
+								<div class="input-group col-xs-4 regist hide">
+									<input type="text" id="majorVersion" class="form-control text-right required" maxlength="3" data-validate='{"pattern":"integer", "min":0, "max":999}' />
+									<span class="input-group-addon">.</span>
+									<input type="text" id="minorVersion" class="form-control text-right required" maxlength="3" data-validate='{"pattern":"integer", "min":0, "max":999}' />
+								</div>
+								<div class="input-group update hide">
+									<select id="updateVersionType" class="required"></select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer form-group text-center">
+					<button id="btnExecute" class="btn btn-primary">
+						<i class="fa fa-save"></i>
+						<span data-i18n="btnExecute">#{実行}</span>
+					</button>
+					<button id="btnCancel" class="btn btn-default">
+						<i class="fa fa-reply"></i>
+						<span data-i18n="btnCancel">#{キャンセル}</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

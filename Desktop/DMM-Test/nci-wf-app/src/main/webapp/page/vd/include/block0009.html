@@ -1,0 +1,58 @@
+<!-- 参照者情報ブロック -->
+<article id="block0009">
+	<div class="panel panel-default">
+		<div id="a1" class="panel-heading clearfix">
+			<span id="block0009_expansion" class="collapse_btn collapsed" role="button" data-toggle="collapse" data-target="#block0009_contents">
+				<i class="fa fa-chevron-down"></i><span data-field="blockName">#{参照者情報}</span>
+			</span>
+<!-- 			<div class="topend_btn"> -->
+<!-- 				<a href="#pagetop" class="pagetop">TOP</a> -->
+<!-- 				<a href="#pageend" class="pageend">END</a> -->
+<!-- 			</div> -->
+		</div>
+
+		<div id="block0009_contents" class="panel-body panel-collapse collapse">
+			<div id="informationSharerList" class="table-responsive">
+				<table class="table table-striped table-condensed responsive">
+					<colgroup>
+						<col class="col-xs-12">
+						<col style="width:65px">
+					</colgroup>
+					<thead>
+						<tr>
+							<th><span data-i18n="organization"></span> / <span data-i18n="post"></span> / <span data-i18n="user"></span></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+					<tfoot class="template hide">
+						<tr>
+							<td>
+								<span data-field="organizationName">#{organizationName}</span>
+								<span data-field="postName">#{postName}</span>
+								<span data-field="userName">#{userName}</span>
+							</td>
+							<td class="text-right">
+								<a class="btn btn-default btn-sm bthRemoveInfoSharer"><i class="glyphicon glyphicon-remove-circle"></i></a>
+							</td>
+							<td class="hide">
+								<span data-field="informationSharerId">#{informationSharerId}</span>
+								<span data-field="corporationCodeShare">#{corporationCodeShare}</span>
+								<span data-field="organizationCode">#{organizationCode}</span>
+								<span data-field="postCode">#{postCode}</span>
+								<span data-field="userCode">#{userCode}</span>
+								<span data-field="assignRoleCode">#{assignRoleCode}</span>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+				<div class="form-group col-xs-12 row">
+					<div class="btn-group">
+						<button class="btnOrgAddInfoSharer btn btn-default btn-sm"><i class="fa fa-plus-circle"></i><span data-i18n="organization">#{組織}</span></button>
+						<button class="btnUsrAddInfoSharer btn btn-default btn-sm"><i class="fa fa-plus-circle"></i><span data-i18n="user">#{ユーザ}</span></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</article>

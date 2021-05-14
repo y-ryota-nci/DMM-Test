@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+		<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+		<link rel="stylesheet" href="../../assets/nci/styles.css" />
+		<link rel="stylesheet" href="../../assets/nci/original.css" />
+		<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+		<style type="text/css">
+		</style>
+		<script src="../../assets/jquery/jquery.min.js"></script>
+		<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+		<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+		<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+		<script src="../../assets/nci/NCI.js"></script>
+		<script src='../../assets/nci/tray.js'></script>
+		<script src="./vd0311.js"></script>
+		<title>VD0311 申請・承認完了画面</title>
+		</head>
+	<body>
+		<header class="container-fluid">
+			<div id="nav"></div>
+		</header>
+		<section class="col-xs-12">
+			<article class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header">申請・承認完了</h1>
+				</div>
+			</article><!--/.row-->
+
+			<article id="trayConfigs" class="row panel panel-default">
+				<div class="panel-heading" data-i18n="complete">完了</div>
+				<div id="condition-contents" class="col-xs-12">
+
+					<div class="form-group-lg col-xs-12 text-center navbar-text" data-i18n="MSG0118">%{正常に処理が完了しました。}%</div>
+
+					<dl class="dl-horizontal col-sm-offset-2 col-sm-10 col-md-offset-4 col-md-8 ">
+						<dt class="form-control-static subject" data-i18n="title">#{件名}</dt>
+						<dd class="form-control-static subject" id="subject">#{subject}</dd>
+
+						<dt class="form-control-static applicationNo" data-i18n="applicationNo">#{申請番号}</dt>
+						<dd class="form-control-static applicationNo" id="applicationNo">#{applicationNo}</dd>
+
+						<dt class="form-control-static approvalNo" data-i18n="approvalNo">#{決裁番号}</dt>
+						<dd class="form-control-static approvalNo" id="approvalNo">#{approvalNo}</dd>
+					</dl>
+
+					<div class="form-group-lg col-xs-12 text-center navbar-text">
+						<button class="btn btn-default btnBack">
+							<i class="fa fa-reply"></i>
+							<span data-i18n="btnBack">#{戻る}</span>
+						</button>
+						<button id="btnContinuousProcessing" class="btn btn-primary hide">
+							<i class="fa fa-list-ol"></i><span data-i18n="btnContinuousProcessing">連続処理</span>
+						</button>
+					</div>
+				</div>
+			</article>
+		</section>
+	</body>
+</html>

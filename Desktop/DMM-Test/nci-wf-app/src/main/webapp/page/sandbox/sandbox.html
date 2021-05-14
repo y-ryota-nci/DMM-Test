@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<link rel="stylesheet" href="../../assets/jquery-ui/jquery-ui.min.css" />
+	<style type="text/css">
+	/* ファイルアップロードの進捗バー */
+		.progressBar {
+			width: 200px;
+			height: 22px;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+			overflow: hidden;
+			display: inline-block;
+			margin: 0px 10px 5px 5px;
+			vertical-align: top;
+		}
+
+		.progressBar div {
+			height: 100%;
+			color: #fff;
+			text-align: right;
+			line-height: 22px;
+			/* same as #progressBar height if we want text middle aligned */
+			width: 0;
+			background-color: #0ba1b5;
+			border-radius: 3px;
+		}
+
+		.monitorbar {
+			border-top: 1px solid #A9CCD1;
+			min-height: 25px;
+			padding: 10px 10px 0px 10px;
+			vertical-align: top;
+		}
+
+		.monitorbar:nth-child(odd) {
+			background: #EBEFF0;
+		}
+
+		.filename {
+			display: inline-block;
+			vertical-align: top;
+			width: 250px;
+		}
+
+		.filesize {
+			display: inline-block;
+			vertical-align: top;
+			color: #30693D;
+			width: 100px;
+			margin-left: 10px;
+			margin-right: 5px;
+		}
+
+		.abort {
+			background-color: #A8352F;
+			-moz-border-radius: 4px;
+			-webkit-border-radius: 4px;
+			border-radius: 4px;
+			display: inline-block;
+			color: #fff;
+			font-family: arial;
+			font-size: 13px;
+			font-weight: normal;
+			padding: 4px 15px;
+			cursor: pointer;
+			vertical-align: top
+		}
+	/* 幅確認用 */
+		#width-test div {text-align: center;}
+		#width-test .col-xs-1 {border: 1px solid blue;}
+		#width-test .col-xs-4 {border: 1px solid blueviolet;}
+		#width-test .col-sm-3 {border: 1px solid green;}
+		#width-test .col-md-2 {border: 1px solid orange;}
+		#width-test .col-lg-1 {border: 1px solid red;}
+		#width-test .x-small {color: blue;}
+		#width-test .small {color: green;}
+		#width-test .medium {color: orange;}
+		#width-test .large {color: red;}
+</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="../../assets/nci/suggestion.js"></script>
+	<script src="./sandbox.js"></script>
+	<title></title>
+</head>
+
+<body>
+
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="container" id="width-test">
+		<div class="row">
+			<span class="screen-name">#{Sandbox}</span>
+
+			<label class="sub-title">幅</label>
+
+			<ul id="display" class="list-inline">
+				<li>Window : <span id="window-width"></span></li>
+				<li>Container : <span id="container-width"></span></li>
+				<li>Column : <span id="column-width"></span></li>
+			</ul>
+		</div>
+
+		<div class="form-group col-xs-12">
+			<div class="row">
+				<div class="col-xs-1">1</div>
+				<div class="col-xs-1">1</div>
+				<div class="col-xs-1">1</div>
+				<div class="col-xs-1">1</div>
+				<div class="col-xs-1">1</div>
+				<div class="col-xs-1">1</div>
+				<div class="col-xs-1">1</div>
+				<div class="col-xs-1">1</div>
+				<div class="col-xs-1">1</div>
+				<div class="col-xs-1">1</div>
+				<div class="col-xs-1">1</div>
+				<div class="col-xs-1">1</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-4">col-xs-4</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-3">col-sm-3</div>
+			</div>
+			<div class="row">
+				<div class="col-md-2">col-md-2</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-1">col-lg-1</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<label class="sub-title">メール</label>
+
+			<div class="form-group col-sm-3">
+				<label>メール件名／本文の言語</label>
+				<select id="mailLocaleCode" class="form-control">
+					<option value="ja" selected>日本語</option>
+					<option value="en">英語</option>
+				</select>
+			</div>
+			<div class="form-group col-sm-3">
+				<label>宛先</label>
+				<input id="mailSendTo" type="text" class="form-control" />
+			</div>
+			<div class="form-group col-sm-3">
+				<label>mail.env</label>
+				<input id="mailEnv" value="#{STAGING}" class="form-control" readonly />
+			</div>
+			<div class="form-group col-sm-3">
+				<label>SMTPサーバー</label>
+				<input id="smtpHost" value="" class="form-control" readonly />
+			</div>
+			<div class="col-xs-12">
+				<ul id="hoge">
+					<li>mail.env=PRODUCT：指定された宛先へメール送信します。
+					<li>mail.env=STAGING：指定された宛先ではなく、ダミー宛先へ送信します（現在のダミー宛先は[<span id="dummySendTo" class="label label-primary">{wish-test@wellcoms.jp}</span>]））
+					<li>mail.env=DEVELOP：メール送信せず、ログ出力のみ行います。
+				</ul>
+			</div>
+			<div class="col-xs-12 form-group">
+				<button id="btnSendMail" class="btn btn-primary btn-sm">
+					<span class="glyphicon glyphicon-envelope">メール送信</span>
+				</button>
+			</div>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<label class="sub-title">サーバ側エラーハンドリング</label>
+		</div>
+
+		<div class="button-group form-group col-xs-12">
+			<button id="btnValidationError" class="btn btn-primary btn-sm">エラーメッセージ</button>
+			<button id="btnValidationException" class="btn btn-primary btn-sm">バリデーション例外</button>
+			<button id="btnJsonParseError" class="btn btn-primary btn-sm">JSONパース例外</button>
+			<button id="btnSystemError" class="btn btn-primary btn-sm">システム例外</button>
+			<button id="btnNotFoundError" class="btn btn-primary btn-sm">NOT FOUND例外</button>
+			<button id="btnServiceUnavailable" class="btn btn-primary btn-sm">サービス利用不可例外</button>
+			<button id="btnForbidden" class="btn btn-primary btn-sm">権限なし例外</button>
+			<button id="btnAlreadyUpdatedError" class="btn btn-primary btn-sm">排他ロック例外</button>
+			<button id="btnDialog" class="btn btn-primary btn-sm">
+				<span class="glyphicon glyphicon-question-sign">Yes/Noダイアログ</span>
+			</button>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<label class="sub-title">リクエスト・タイムアウト検証</label>
+		</div>
+
+		<div class="button-group form-group col-xs-12">
+			<span>
+				WAIT
+				<input id="timeoutSec" type="text" value="10" data-validate='{"pattern" : "numeric", "min": 0, "max": 999999999}'>
+				秒
+			</span>
+			<button id="btnRequestTimeout" class="btn btn-primary btn-sm">リクエスト送信</button>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<label class="sub-title">Suggestion</label>
+		</div>
+
+		<div class="col-xs-12 form-group">
+			<label>
+				ログインID<input type="text" class="form-control inline-auto-width suggest-userAddedInfo" maxlength="100" />
+			</label>
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<label>
+				<span class="form-control-static suggest-userName"></span>
+			</label>
+			<label>
+				<span class="form-control-static suggest-mailAddr"></span>
+			</label>
+			<label>
+				<span class="form-control-static suggest-telNum"></span>
+			</label>
+			<label>
+				<span class="form-control-static suggest-telNumCel"></span>
+			</label>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<label class="sub-title">ダウンロード</label>
+			<p>どれだけデータ量が多くても OutOfMemory が発生しないダウンロード </p>
+			<div class="form-group col-xs-12">
+				<button id="btnDownloadAccessLog" class="btn btn-primary btn-sm">
+					<i class="glyphicon glyphicon-cloud-download"></i><span>CSVダウンロード</span>
+				</button>
+				<button id="btnDownloadPDF" class="btn btn-primary btn-sm">
+					<i class="glyphicon glyphicon-cloud-download"></i><span>PDFダウンロード</span>
+				</button>
+				<button id="btnDownloadExcel2" class="btn btn-primary btn-sm">
+					<i class="glyphicon glyphicon-cloud-download"></i><span>セル結合ありのEXCELサンプルをダウンロード</span>
+				</button>
+			</div>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<label class="sub-title">ファイルアップロード</label>
+			<div id="divFileUpload" class="form-group col-xs-12 dragZone">ここにドラッグ＆ドロップすることでファイルアップロードが行われます</div>
+			<div class="form-group col-xs-12">
+				<input id="fileFileUpload" type="file" multiple />
+			</div>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<label class="sub-title">EXCELの差し込み処理</label>
+			<div class="form-group col-xs-12">
+				<button id="btnDownloadExcelForm" class="btn btn-primary btn-sm">
+					<i class="glyphicon glyphicon-cloud-download"></i><span>EXCELフォームをダウンロード</span>
+				</button>
+				<div id="divExcelUpload" class="form-group col-xs-12 dragZone">「EXCELフォームをダウンロード」して記入・保存してください。その後、EXCELファイルをここへドラッグ＆ドロップすれば、取込をおこなって結果を表示します。</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- EXCEL差込処理アップロードの結果 -->
+	<div class="modal fade" id="excelUploadResult" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div class="sub-title">EXCEL取込結果:ユーザ</div>
+					<table class="table table-hover table-striped table-condensed">
+						<tbody>
+							<tr>
+								<th>題名
+								<td data-field="title">
+							<tr>
+								<th>記入日
+								<td data-field="date">
+							<tr>
+								<th>企業コード
+								<td data-field="corporationCode">
+							<tr>
+								<th>ユーザコード
+								<td data-field="userCode">
+							<tr>
+								<th>ログインID
+								<td data-field="userAddedInfo">
+							<tr>
+								<th>氏名
+								<td data-field="userName">
+							<tr>
+								<th>メールアドレス
+								<td data-field="mailAddress">
+					</table>
+				</div>
+				<div class="modal-body">
+					<div class="sub-title">EXCEL取込結果:ユーザ所属</div>
+					<table class="table table-hover table-striped table-condensed responsive">
+						<thead><tr>
+							<th>ユーザ所属連番<th>組織コード<th>組織名
+						<tbody></tbody>
+						<tfoot class="hide template"><tr>
+							<th data-field="seqNoUserBelong">
+							<td data-field="organizationCode">
+							<td data-field="organizationName">
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<section class="container">
+		<div class="row">
+			<label class="sub-title">バリデーション</label>
+			<fieldset class="form-group col-xs-12 fieldset">
+				<legend>エレメントの状態</legend>
+				<div class="radio-inline">
+					<input type="radio" name="changeCheck" value="1" checked /><label>有効</label>
+				</div>
+				<div class="radio-inline">
+					<input type="radio" name="changeCheck" value="2" /><label>無効</label>
+				</div>
+				<div class="radio-inline">
+					<input type="radio" name="changeCheck" value="3" /><label>読取専用</label>
+				</div>
+			</fieldset>
+
+			<fieldset class="form-group col-xs-12 fieldset">
+				<legend>型・桁数・バイト数</legend>
+				<div class="button-group">
+					<button class="btn btn-primary btn-sm btnInitVal">初期値付与</button>
+					<button class="btn btn-default btn-sm btnClearVal"><i class="glyphicon glyphicon-refresh"></i>全クリア</button>
+				</div>
+				<div class="form-group col-sm-3">
+					<label>最大桁数=10</label>
+					<input type="text" class="form-control" data-validate='{"maxLength" : 10}' />
+				</div>
+				<div class="form-group col-sm-3">
+					<label>最大桁数=10 (TEXTAREA)</label>
+					<textarea rows="3" class="form-control" data-validate='{"maxLength" : 10}'></textarea>
+				</div>
+				<div class="form-group col-sm-3">
+					<label>SJISで15byte (TEXTAREA) </label>
+					<textarea rows="3" class="form-control" data-validate='{"maxByteSjis" : 15}'></textarea>
+				</div>
+				<div class="form-group col-sm-3">
+					<label>UTF-8で15byte (TEXTAREA)</label>
+					<textarea rows="3" class="form-control" data-validate='{"maxByteUtf8" : 15}'></textarea>
+				</div>
+
+				<div class="form-group col-sm-3">
+					<label>日付型(yyyy/MM/dd)</label>
+					<div class="has-feedback">
+						<input type="text" class="ymdPicker form-control" data-validate='{"pattern" : "date"}'/>
+						<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+					</div>
+				</div>
+				<div class="form-group col-sm-3">
+					<label>日付型(yyyy/MM)</label>
+					<div class="has-feedback">
+						<input type="text" class="ymPicker form-control" data-validate='{"pattern" : "ym"}'/>
+						<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+					</div>
+				</div>
+				<div class="form-group col-sm-6">
+					<label>日付型(from～to)</label>
+					<div class="input-group">
+						<div class="has-feedback">
+							<input type="text" value="" class="form-control ymdPicker" id="dateFrom1" data-validate='{"to" : "#dateTo1", "pattern" : "date" }'/>
+							<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+						</div>
+						<span class="input-group-addon">～</span>
+						<div class="has-feedback">
+							<input type="text" value="" class="form-control ymdPicker" id="dateTo1" data-validate='{"from" : "#dateFrom1" , "pattern" : "date"}'/>
+							<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+						</div>
+					</div>
+				</div>
+				<div class="form-group col-sm-3">
+					<label>数値型(最少-5/最大9999.999)</label>
+					<input type="text" class="form-control" data-validate='{"pattern" : "numeric" , "min": -5, "max" : 9999.999 }'/>
+				</div>
+				<div class="form-group col-sm-3">
+					<label>数値型(最少-5/最大9999.999/0埋め)</label>
+					<input type="text" class="form-control" data-validate='{"pattern" : "numeric" , "decimalPlaces" : 3, "zeroPadRight" : true, "min": -5, "max" : 9999.999 }'/>
+				</div>
+				<div class="form-group col-sm-3">
+					<label>整数型(整数/最少-5/最大9999)</label>
+					<input type="text" class="form-control" data-validate='{"pattern" : "integer", "min": -5, "max" : 9999 }'/>
+				</div>
+				<div class="form-group col-sm-3">
+					<label>数字（0-9のみ）</label>
+					<input type="text" class="form-control" data-validate='{"pattern" : "numberOnly"}' />
+				</div>
+				<div class="form-group col-sm-3">
+					<label>半角英字</label>
+					<input type="text" class="form-control" data-validate='{"pattern" : "alpha"}' />
+				</div>
+				<div class="form-group col-sm-3">
+					<label>半角英数</label>
+					<input type="text" class="form-control" data-validate='{"pattern" : "alphaNumber"}'/>
+				</div>
+				<div class="form-group col-sm-3">
+					<label>半角英字＋記号</label>
+					<input type="text" class="form-control" data-validate='{"pattern" : "alphaSymbol"}'/>
+				</div>
+				<div class="form-group col-sm-3">
+					<label>半角英数＋記号</label>
+					<input type="text" class="form-control" data-validate='{"pattern" : "alphaSymbolNumber"}'/>
+				</div>
+				<div class="form-group col-sm-3">
+					<label>半角英数＋アンダースコア</label>
+					<input type="text" class="form-control" data-validate='{"pattern" : "alphaNumberUnderscore"}'/>
+				</div>
+				<div class="form-group col-sm-3">
+					<label>全角のみ</label>
+					<input type="text" class="form-control" data-validate='{"pattern" : "fullWidthOnly"}'/>
+				</div>
+				<div class="form-group col-sm-3">
+					<label>半角のみ</label>
+					<input type="text" class="form-control" data-validate='{"pattern" : "halfWidthOnly"}'/>
+				</div>
+				<div class="form-group col-sm-3">
+					<label>半角カナのみ</label>
+					<input type="text" class="form-control" data-validate='{"pattern" : "halfKanaOnly"}'/>
+				</div>
+				<div class="form-group col-sm-3">
+					<label>正規表現（ /^[A-Z]*$/ ）</label>
+					<input type="text" class="form-control" data-validate='{"pattern" : "regExp", "regPattern" : "A-Z"}'/>
+				</div>
+				<div class="form-group col-sm-3">
+					<label>メール形式</label>
+					<input type="text" class="form-control" data-validate='{"pattern" : "mail"}'/>
+				</div>
+				<div class="form-group col-sm-3">
+					<label>郵便番号</label>
+					<input type="text" class="form-control" data-validate='{"pattern" : "postCode"}'/>
+				</div>
+			</fieldset>
+
+			<fieldset class="form-group col-xs-12 fieldset">
+				<legend>数値用の追加書式（サンプルはすべて小数点第三位まで）</legend>
+				<div class="button-group">
+					<button class="btn btn-primary btn-sm btnInitVal">初期値付与</button>
+					<button class="btn btn-default btn-sm btnClearVal"><i class="glyphicon glyphicon-refresh"></i>全クリア</button>
+				</div>
+				<div class="form-group col-sm-3">
+					<label>数値(端数処理なし) </label>
+					<input type="text" class="form-control text-right"
+							data-validate='{"pattern" : "numeric" , "decimalPlaces" : 3, "min": -9999999.999, "max" : 9999999.999 }' />
+				</div>
+				<div class="form-group col-sm-3">
+					<label>数値(少数以下を０埋め) </label>
+					<input type="text" class="form-control text-right"
+							data-validate='{"pattern" : "numeric" , "decimalPlaces" : 3, "min": -9999999.999, "max" : 9999999.999, "zeroPadRight" : true }' />
+				</div>
+				<div class="form-group col-sm-3">
+					<label>数値(マイナスなら赤字) </label>
+					<input type="text" class="form-control text-right"
+							data-validate='{"pattern" : "numeric" , "decimalPlaces" : 3, "min": -9999999.999, "max" : 9999999.999, "redIfNegative" : true }' />
+				</div>
+				<div class="form-group col-sm-3">
+					<label>数値(0埋め+ﾏｲﾅｽ赤+切上げ) </label>
+					<input type="text" class="form-control text-right"
+							data-validate='{"pattern" : "numeric" , "decimalPlaces" : 3, "min": -9999999.999, "max" : 9999999.999, "zeroPadRight" : true, "redIfNegative" : true, "roundType" : "ROUND_UP" }' />
+				</div>
+				<div class="form-group col-sm-3">
+					<label>通貨(端数処理なし) </label>
+					<input type="text" class="form-control text-right"
+							data-validate='{"pattern" : "numeric" , "decimalPlaces" : 3, "min": -9999999.999, "max" : 9999999.999, "prefix" : "￥" }' />
+				</div>
+				<div class="form-group col-sm-3">
+					<label>通貨(少数以下を０埋め) </label>
+					<input type="text" class="form-control text-right"
+							data-validate='{"pattern" : "numeric" , "decimalPlaces" : 3, "min": -9999999.999, "max" : 9999999.999, "prefix" : "￥", "zeroPadRight" : true }' />
+				</div>
+				<div class="form-group col-sm-3">
+					<label>通貨(マイナスなら赤字) </label>
+					<input type="text" class="form-control text-right"
+							data-validate='{"pattern" : "numeric" , "decimalPlaces" : 3, "min": -9999999.999, "max" : 9999999.999, "prefix" : "￥", "redIfNegative" : true }' />
+				</div>
+				<div class="form-group col-sm-3">
+					<label>通貨(0埋め+ﾏｲﾅｽ赤+切捨て) </label>
+					<input type="text" class="form-control text-right"
+							data-validate='{"pattern" : "numeric" , "decimalPlaces" : 3, "min": -9999999.999, "max" : 9999999.999, "prefix" : "￥", "zeroPadRight" : true, "redIfNegative" : true, "roundType" : "ROUND_DOWN" }' />
+				</div>
+				<div class="form-group col-sm-3">
+					<label>パーセント(端数処理なし) </label>
+					<input type="text" class="form-control text-right"
+							data-validate='{"pattern" : "numeric" , "decimalPlaces" : 3, "min": -9999999.999, "max" : 9999999.999, "suffix" : "％" }' />
+				</div>
+				<div class="form-group col-sm-3">
+					<label>少数第3位までで四捨五入 </label>
+					<input type="text" class="form-control text-right"
+							data-validate='{"pattern" : "numeric" , "decimalPlaces" : 3, "min": -9999999.999, "max" : 9999999.999, "roundType" : "ROUND_HALF_UP" }' />
+				</div>
+				<div class="form-group col-sm-3">
+					<label>少数第3位までで切上げ </label>
+					<input type="text" class="form-control text-right"
+							data-validate='{"pattern" : "numeric" , "decimalPlaces" : 3, "min": -9999999.999, "max" : 9999999.999, "roundType" : "ROUND_UP" }' />
+				</div>
+				<div class="form-group col-sm-3">
+					<label>少数第3位までで切捨て </label>
+					<input type="text" class="form-control text-right"
+							data-validate='{"pattern" : "numeric" , "decimalPlaces" : 3, "min": -9999999.999, "max" : 9999999.999, "roundType" : "ROUND_DOWN" }' />
+				</div>
+				<div class="form-group col-sm-3">
+					<label>カンマ編集しない整数 </label>
+					<input type="text" class="form-control text-right"
+							data-validate='{"pattern" : "integer" , "min": -9999999.999, "max" : 9999999.999, "notAddComma": true }' />
+				</div>
+			</fieldset>
+
+			<fieldset class="form-group col-xs-12 fieldset">
+				<legend>必須</legend>
+				<div class="button-group">
+					<button class="btn btn-primary btn-sm btnInitVal">初期値付与</button>
+					<button class="btn btn-default btn-sm btnClearVal"><i class="glyphicon glyphicon-refresh"></i>全クリア</button>
+				</div>
+				<div class="form-group col-sm-3">
+					<label class="required">テキストボックス</label>
+					<input type="text" class="form-control required" />
+				</div>
+				<div class="form-group col-sm-3">
+					<label class="required">ラジオボタン</label>
+					<fieldset>
+						<input type="radio" name="radio1" value="1" class="required"/><label>ほげ</label>
+						<input type="radio" name="radio1" value="2" class="required"/><label>ふが</label>
+						<input type="radio" name="radio1" value="3" class="required"/><label>ほご</label>
+					</fieldset>
+				</div>
+				<div class="form-group col-sm-3">
+					<label class="required">チェックボックス</label>
+					<fieldset>
+						<input type="checkbox" value="1" class="required" />
+						<label>ほげほげ</label>
+					</fieldset>
+				</div>
+				<div class="form-group col-sm-3">
+					<label class="required">TEXTAREA</label>
+					<textarea rows="1" class="required form-control"></textarea>
+				</div>
+
+				<div class="form-group col-sm-3">
+					<label class="required">ドロップダウン</label>
+					<select class="required form-control">
+						<option value=""> --
+						<option value="1">１
+						<option value="2">２
+						<option value="3">３
+						<option value="4">４
+					</select>
+				</div>
+				<div class="form-group col-sm-3">
+					<label class="required">パスワード</label>
+					<input type="password" value="" class="required form-control"/>
+				</div>
+				<div class="form-group col-sm-3">
+					<label class="required">15桁 + 半角英字のみ</label>
+					<input type="text" id="multi1" value="" class="required form-control" data-validate='{"maxLength" : 15 , "pattern" : "alpha"}' />
+				</div>
+				<div class="form-group col-sm-3">
+					<label class="required">ファイル</label>
+					<input type="file" id="file1" class="required" multiple />
+				</div>
+				<div class="form-group col-sm-4">
+					<label class="required">企業選択</label>
+					<div class="input-group">
+						<input id="corporationCode" type="hidden" readonly />
+						<input id="corporationName" type="text" class="input-group-field required form-control" readonly />
+						<span class="input-group-btn">
+							<button id="btnSelectCorp" class="btn btn-default"><i class="glyphicon glyphicon-info-sign"></i></button>
+						</span>
+						<span class="input-group-btn">
+							<button class="btn btn-default clear-input-group"><i class="glyphicon glyphicon-remove-circle"></i></button>
+						</span>
+					</div>
+				</div>
+				<div class="form-group col-sm-4">
+					<label class="required">組織選択</label>
+					<div class="input-group">
+						<input id="organizationCode" type="hidden" readonly />
+						<input id="organizationName" type="text" class="input-group-field required form-control" readonly />
+						<span class="input-group-btn">
+							<button id="btnSelectOrg" class="btn btn-default"><i class="glyphicon glyphicon-info-sign"></i></button>
+						</span>
+						<span class="input-group-btn">
+							<button class="btn btn-default clear-input-group"><i class="glyphicon glyphicon-remove-circle"></i></button>
+						</span>
+					</div>
+				</div>
+				<div class="form-group col-sm-4">
+					<label class="required">役職選択</label>
+					<div class="input-group">
+						<input id="postCode" type="hidden" readonly />
+						<input id="postName" type="text" class="required form-control" readonly />
+						<span class="input-group-btn">
+							<button id="btnSelectPost" class="btn btn-default"><i class="glyphicon glyphicon-info-sign"></i></button>
+						</span>
+						<span class="input-group-btn">
+							<button class="btn btn-default clear-input-group"><i class="glyphicon glyphicon-remove-circle"></i></button>
+						</span>
+					</div>
+				</div>
+				<div class="form-group col-sm-4">
+					<label class="required">ユーザ選択</label>
+					<div class="input-group">
+						<input id="userCode" type="hidden" readonly />
+						<input id="userAddedInfo" type="hidden" readonly />
+						<input id="userName" type="text" class="required form-control" readonly />
+						<span class="input-group-btn">
+							<button id="btnSelectUser" class="btn btn-default"><i class="glyphicon glyphicon-info-sign"></i></button>
+						</span>
+						<span class="input-group-btn">
+							<button class="btn btn-default clear-input-group"><i class="glyphicon glyphicon-remove-circle"></i></button>
+						</span>
+					</div>
+				</div>
+				<div class="form-group col-sm-6" id="belongSelect">
+					<label class="required">ユーザ所属選択</label>
+					<div class="input-group" id='userBelong'>
+						<input id="userAndOrgAndPostName" type="text" class="required form-control" readonly />
+						<span class="input-group-btn">
+							<button id="btnSelectUserBelong" class="btn btn-default"><i class="glyphicon glyphicon-info-sign"></i></button>
+						</span>
+						<span class="input-group-btn">
+							<button class="btn btn-default clear-input-group"><i class="glyphicon glyphicon-remove-circle"></i></button>
+						</span>
+					</div>
+				</div>
+			</fieldset>
+			<fieldset class="form-group col-xs-12 fieldset">
+				<legend>隠れた項目へのバリデーション</legend>
+				<ul>
+					<li>display:noneはエラーとしない
+					<li>親が display:noneでもエラーとしない
+					<li>visibility:hiddenはエラーとする
+					<li>ブロック／サブタイトルが折り畳まれていて隠されているものはエラー(警告)とする
+				</ul>
+
+				<div class="form-group col-sm-3 panel panel-default">
+					<div class="panel-heading">
+						<label class="required">自分がhide</label>
+					</div>
+					<div class="panel-body">
+						<input type="text" class="form-control required hide"
+									data-validate='{ "pattern": "integer" }' />
+					</div>
+				</div>
+				<div class="form-group col-sm-3 panel panel-default">
+					<div class="panel-heading">
+						<label class="required">親がhide</label>
+					</div>
+					<div class="panel-body">
+						<div class="hide">
+							<input type="text" class="form-control required"
+									data-validate='{ "pattern": "integer" }' />
+						</div>
+					</div>
+				</div>
+				<div class="form-group col-sm-3 panel panel-default">
+					<div class="panel-heading clearfix collapse_btn collapsed" role="button" data-toggle="collapse" data-target="#condition-contents">
+						<i class="fa fa-chevron-down"></i>
+						サブタイトル(新デザイン)
+					</div>
+					<div id="condition-contents" class="panel-collapse collapse" style="height:30px">
+						<div class="panel-body">
+							<input type="text" class="form-control required"
+									data-validate='{ "pattern": "integer" }' />
+						</div>
+					</div>
+				</div>
+				<div class="form-group col-sm-3 ac-container">
+					<input id="ac-1" type="checkbox" class="ac-trigger"/>
+
+					<label for="ac-1" class="ac-label sub-title">
+						<i class="glyphicon glyphicon-plus-sign"></i>
+						サブタイトル(旧デザイン)
+					</label>
+
+					<form class="ac-contents">
+							<input type="text" class="form-control required"
+									data-validate='{ "pattern": "integer" }' />
+					</form>
+				</div>
+			</fieldset>
+			<div class="form-group">
+				<button class="btn btn-primary validate"><span class="glyphicon glyphicon-check">チェック(必須なし)</span></button>
+				<button class="btn btn-primary validate required"><span class="glyphicon glyphicon-check">チェック(必須あり)</span></button>
+				<button class="btn btn-default btnAllErrorCrear" ><span class="glyphicon glyphicon-refresh">エラークリア</span></button>
+			</div>
+			<div class="form-group">
+				<button id="btnVd0330" type="button" class="btn btn-primary">申請文書を参照モードで開く</button>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

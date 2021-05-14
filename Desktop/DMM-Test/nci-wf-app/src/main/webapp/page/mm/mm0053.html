@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/jsTree/themes/default/style.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./mm0053.js"></script>
+	<title>#{MM0053 通し番号設定}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<div class="nonSideSearchArea">
+		<section id="inputed" class="container">
+			<div class="row">
+				<span class="screen-name">#{MM0053}</span>
+
+				<div class="searchStyle">
+					<form id="formCondition" class="ac-contents">
+						<div class="searchConditionArea">
+							<label class="searchConditionTh" data-i18n="corporationCode">#{企業コード}</label>
+							<div class="searchConditionTd">
+								<input id="corporationCode" type="text" class="form-control required searchConditionText" maxlength="10" disabled />
+							</div>
+						</div>
+						<div class="searchConditionArea">
+							<label class="searchConditionTh required" data-i18n="sequenceCode">#{連番コード}</label>
+							<div class="searchConditionTd">
+								<input id="partsSequenceSpecCode" type="text" class="form-control required searchConditionText" maxlength="10" data-validate='{"pattern" : "alphaNumberUnderscore"}' />
+							</div>
+						</div>
+						<div class="searchConditionArea">
+							<label class="searchConditionTh required" data-i18n="sequenceName">#{連番名称}</label>
+							<div class="searchConditionTd">
+								<input id="partsSequenceSpecName" type="text" class="form-control required searchConditionText" maxlength="100" />
+							</div>
+						</div>
+						<div class="searchConditionArea">
+							<label class="searchConditionTh required" data-i18n="sequenceLength">#{桁数}</label>
+							<div class="searchConditionTd">
+								<select id="sequenceLength" class="required form-control searchConditionText"></select>
+							</div>
+						</div>
+						<div class="searchConditionArea">
+							<label class="searchConditionTh required" data-i18n="resetType">#{リセット区分}</label>
+							<div class="searchConditionTd">
+								<select id="resetType" class="required form-control searchConditionText"></select>
+							</div>
+						</div>
+						<div class="searchConditionArea">
+							<label class="searchConditionTh required" data-i18n="startValue">#{開始値}</label>
+							<div class="searchConditionTd">
+								<input id="startValue" type="text" class="required form-control searchConditionText"
+										data-validate='{"pattern" : "integer", "min" : 1, "max" : 9999999999 }' />
+							</div>
+						</div>
+						<div class="searchConditionArea">
+							<label class="searchConditionTh" data-i18n="deleteFlag">#{deleteFlag}</label>
+							<div class="searchConditionTd">
+								<select id="deleteFlag" class="required form-control searchConditionText"></select>
+							</div>
+						</div>
+					</form>
+
+					<div class="form-group text-center searchButtonArea">
+						<button id="btnRegister" class="btn btn-primary searchButton" disabled>
+							<i class="glyphicon glyphicon-ok-sign"></i>
+							<span data-i18n="btnRegister">#{登録}</span>
+						</button>
+						<button id="btnUpdate" class="btn btn-primary searchButton" disabled>
+							<i class="glyphicon glyphicon-ok-sign"></i>
+							<span data-i18n="btnUpdate">#{更新}</span>
+						</button>
+						<button id="btnBack" class="btn btn-default searchButton">
+							<i class="glyphicon glyphicon-share-alt"></i>
+							<span data-i18n="btnBack">#{戻る}</span>
+						</button>
+						<button id="btnClose" class="btn btn-default searchButton">
+							<i class="glyphicon glyphicon-share-alt"></i>
+							<span data-i18n="btnClose">閉じる</span>
+						</button>
+
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+
+</body>
+</html>

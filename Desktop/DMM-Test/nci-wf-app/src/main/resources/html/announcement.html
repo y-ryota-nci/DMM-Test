@@ -1,0 +1,44 @@
+<section class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content" id="announcements">
+			<div class="modal-header">
+				<label class="text-primary">
+					<i class="glyphicon glyphicon-info-sign"></i>
+					<span data-i18n="announcementOfTheDay">###{announcementOfTheDay}###</span>
+				</label>
+			</div>
+			<div class="modal-body">
+				<table class="table table-hover table-striped table-condensed responsive">
+					<colgroup>
+						<col class="col-sm-3" />
+						<col class="col-sm-9" />
+					<tbody></tbody>
+					<tfoot class="hide template">
+						<tr>
+							<th>
+								<span data-field="publicationDate"></span>
+								<i class="label label-success" data-field="labelNew"></i>
+							<td>
+								<div class="dropdown">
+									<span data-field="subject" class="hyperlink" data-toggle="dropdown"></span>
+									<ul class="dropdown-menu">
+										<li>
+											<div data-field="contents"></div>
+											<div class="text-right">
+												<span data-field="linkTitle" class="hyperlink"></span>
+											</div>
+										</li>
+									</ul>
+								</div>
+					</tfoot>
+				</table>
+			</div>
+			<div class="modal-footer text-center">
+				<button id="btnClose" class="btn btn-default" data-dismiss="modal">
+					<i class="glyphicon glyphicon-remove-sign"></i>
+					<span data-i18n="btnClose">Close</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</section>

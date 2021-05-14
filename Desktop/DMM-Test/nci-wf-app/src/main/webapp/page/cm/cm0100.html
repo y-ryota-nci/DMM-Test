@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	#seach-result {
+		min-height: 480px;
+	}
+	.acc_container .open{
+		display:block;
+	}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./cm0100.js"></script>
+	<title>{CM0100 参加者変更ロールユーザ選択}</title>
+</head>
+<body>
+	<header class="container-fluid"></header>
+
+	<section class="container">
+		<div class="row">
+			<span class="screen-name">#{CM0040}</span>
+
+			<!-- javascript不要なアコーディオン -->
+			<article class="ac-container">
+				<input id="ac-1" type="checkbox" class="ac-trigger" checked />
+				<label for="ac-1" class="ac-label sub-title">
+					<i class="glyphicon glyphicon-plus-sign"></i>
+					<span data-i18n="filterCondition">#{絞り込み条件を設定する}</span>
+					<i class="glyphicon glyphicon-chevron-up arrow-up"></i>
+					<i class="glyphicon glyphicon-chevron-down arrow-down"></i>
+				</label>
+				<div id="formCondition" class="ac-contents">
+					<input type="hidden" id="corporationCode" />
+					<input type="hidden" id="processDefCode" />
+					<input type="hidden" id="processDefDetailCode" />
+					<input type="hidden" id="activityDefCode" />
+					<input type="hidden" id="organizationCodeStart" />
+					<div class="form-group col-sm-6 col-md-6">
+						<span data-i18n="changeRoleName">#{changeRoleName}</span>
+						<select id="changeRoleCode" class="form-control required"></select>
+					</div>
+				</div>
+			</article>
+
+			<div class="form-group text-center">
+				<button id="btnSearch" class="btn btn-primary">
+					<i class="glyphicon glyphicon-search"></i>
+					<span data-i18n="btnFilter">#{btnFilter}</span>
+				</button>
+				<button id="btnReset" class="btn btn-default">
+					<i class="glyphicon glyphicon-refresh"></i>
+					<span data-i18n="btnReset">#{btnReset}</span>
+				</button>
+				<button id="btnClose" class="btn btn-default" data-close>
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+
+	<section id="seach-result" class="container invisible">
+		<div class="row" >
+			<!-- 検索結果サブタイトル -->
+			<div class="inline-group sub-title">
+				<div class="col-xs-3 text-left">
+					<i class="glyphicon glyphicon-info-sign"></i>
+					<span class="hidden-xs" data-i18n="searchResult">#{検索結果}</span>
+				</div>
+
+				<div class="col-xs-7 text-center">
+					<span>
+						<span data-i18n="pageCount">PAGE</span>:
+						<span class="page-no">#{page-no}</span>
+						 /
+						 <span class="page-count">#{page-count}</span>
+					</span>
+					<span class="hidden-xs">
+						&nbsp;&nbsp;
+						<span data-i18n="totalCount">#{総件数}</span>:
+						<span class="all-count">#{all-count}</span>
+					</span>
+				</div>
+
+				<!-- 設定アイコン -->
+				<div class="col-xs-2 pull-right text-right dropdown">
+					<i class="glyphicon glyphicon-cog dropdown-toggle clickable" data-toggle="dropdown"></i>
+
+					<!-- 設定アイコン押下時のエリア -->
+					<div class="dropdown-menu pageSizeConfig">
+			 			<label data-i18n="rowCountPerPage">{１ページの行数}</label>
+						<select class="pageSize" class="form-control"></select>
+					</div>
+				</div>
+			</div>
+
+			<div class="text-center">
+				<ul class="pagination"></ul>
+			</div>
+
+			<table class="table table-hover table-striped table-condensed responsive">
+				<colgroup>
+					<col class="col-sm-4" />
+					<col class="col-sm-4" />
+					<col class="col-sm-4" />
+				</colgroup>
+				<thead>
+				<tr>
+					<th><a href="#" data-i18n="userCode" data-sort="USER_ADDED_INFO">#{ユーザCD}</a>
+					<th><a href="#" data-i18n="userName" data-sort="USER_NAME">#{ユーザ名}</a>
+					<th><a href="#" data-i18n="validTerm" data-sort="VALID_START_DATE_USER_BELONG, VALID_END_DATE_USER_BELONG">#{validTerm}</a>
+				</thead>
+
+				<tbody></tbody>
+
+				<tfoot class="template hide">
+				<tr>
+					<th class="text-left">
+						<input type="checkbox" name="chkSelect" />
+						<span data-field="userAddedInfo">#{userAddedInfo}</span>
+					</th>
+					<td class="text-left" data-field="userName">#{userName}</td>
+					<td class="text-left"><span data-field="validStartDate"></span>～<span data-field="validEndDate"></span></td>
+					<td class="hide">
+						<span data-field="corporationCode"></span>
+						<span data-field="userCode"></span>
+						<span data-field="userNameAbbr"></span>
+						<span data-field="telNum"></span>
+						<span data-field="telNumCel"></span>
+						<span data-field="mailAddress"></span>
+					</td>
+				</tfoot>
+			</table>
+
+			<div class="text-center">
+				<ul class="pagination"></ul>
+			</div>
+
+			<div class="form-group text-center">
+				<button id="btnSelect" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnSelect">#{選択}</span>
+				</button>
+				<button id="btnClose2" class="btn btn-default" data-close>
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

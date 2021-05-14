@@ -1,0 +1,72 @@
+<!-- WF連携ブロック -->
+<article id="docBlock0011">
+	<div class="panel panel-default">
+		<div id="a1" class="panel-heading clearfix">
+			<span id="docBlock0011_expansion" class="collapse_btn collapsed" role="button" data-toggle="collapse" data-target="#docBlock0011_contents">
+				<i class="fa fa-chevron-down"></i><span data-field="blockName">#{WF連携}</span>
+			</span>
+			<div class="topend_btn">
+				<a href="#pageend" class="pageend">END</a>
+			</div>
+			<div class="topend_btn">
+				<a href="#pagetop" class="pagetop">TOP</a>
+			</div>
+		</div>
+
+		<div id="docBlock0011_contents" class="panel-body panel-collapse collapse">
+			<div id="divWfRelation" class="table-responsive">
+				<table id="docWfRelations" class="table table-bordered table-hover table-striped responsive">
+					<colgroup>
+						<col class="col-md-1 col-sm-2 col-xs-3">
+						<col class="col-md-2 col-sm-4 col-xs-6">
+						<col class="col-md-2 col-sm-3 col-xs-3">
+						<col class="col-md-2 hidden-sm hidden-xs">
+						<col class="col-md-3 hidden-sm hidden-xs">
+						<col class="col-md-1 col-sm-3 hidden-xs">
+						<col class="col-md-1 hidden-sm hidden-xs">
+					</colgroup>
+					<thead>
+						<tr>
+							<th data-i18n="businessStatus">#{業務ステータス}</th>
+							<th data-i18n="title">#{件名}</th>
+							<th data-i18n="applicationNo">#{申請番号}</th>
+							<th class="hidden-sm hidden-xs" data-i18n="documentType">#{文書種別}</th>
+							<th class="hidden-sm hidden-xs" data-i18n="organizationNameProcess">#{起案組織}</th>
+							<th class="hidden-xs" data-i18n="userNameProxyProcess">#{起案者}</th>
+							<th class="hidden-sm hidden-xs" data-i18n="applicationDate">#{申請日}</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+					<tfoot class="hide template">
+						<tr>
+							<td>
+								<a href="javascript:void(0)" data-field="businessProcessStatus" class="lnkDownloadAttachFile">#{businessProcessStatus}</a>
+								<span class="hide" data-field="corporationCode">#{corporationCode}</span>
+								<span class="hide" data-field="processId">#{processId}</span>
+								<span class="hide" data-field="timestampUpdatedProcessLong">#{timestampUpdatedProcessLong}</span>
+							</td>
+							<td>
+								<span data-field="subject">#{subject}</span>
+							</td>
+							<td>
+								<span data-field="applicationNo">#{applicationNo}</span>
+							</td>
+							<td class="hidden-sm hidden-xs">
+								<span data-field="processDefName">#{processDefName}</span>
+							</td>
+							<td class="hidden-sm hidden-xs">
+								<span data-field="applyOrganizationName">#{applyOrganizationName}</span>
+							</td>
+							<td class="hidden-xs">
+								<span data-field="applyUserName">#{applyUserName}</span>
+							</td>
+							<td class="hidden-sm hidden-xs">
+								<span data-field="applicationDate">#{applicationDate}</span>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+</article>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./vd0312.js"></script>
+	<title>#{VD0312 承認者設定}</title>
+</head>
+<body>
+	<section class="container">
+		<article class="row">
+			<h1 class="page-header">要説明入力</h1>
+		</article><!--/.row-->
+
+		<article class="row">
+			<div class="panel panel-default col-xs-12">
+
+				<div id="vd0312" class="row">
+					<div class="form-group">
+						<button id="btnAddStep" class="btn btn-sm btn-primary" disabled>
+							<i class="glyphicon glyphicon-plus-sign"></i>
+							<span data-i18n="btnAddStep" class="hidden-xs">#{ステップ追加}</span>
+						</button>
+						<button id="btnDelStep" class="btn btn-sm btn-danger" disabled>
+							<i class="glyphicon glyphicon-minus-sign"></i>
+							<span data-i18n="btnDelStep" class="hidden-xs">#{ステップ削除}</span>
+						</button>
+					</div>
+
+					<table id="tblRoute" class="table table-condensed responsive">
+						<colgroup>
+							<col class="col-xs-3" />
+							<col class="col-xs-6 col-md-3" />
+							<col class="col-md-2 hidden-xs hidden-sm" />
+							<col class="col-md-1 hidden-xs hidden-sm" />
+							<col class="col-xs-3" />
+						</colgroup>
+						<thead>
+							<tr>
+								<th data-i18n="step">#{ステップ}</th>
+								<th data-i18n="approver">#{承認者}</th>
+								<th data-i18n="organization" class="hidden-xs hidden-sm">#{組織}</th>
+								<th data-i18n="post" class="hidden-xs hidden-sm">#{役職}</th>
+								<th data-i18n="proxyUser3">#{代理者}</th>
+							</tr>
+						</thead>
+
+						<tbody></tbody>
+
+						<tfoot class="template hide">
+							<!-- 並行承認用 -->
+							<tr class="parallel">
+								<th colspan="2">
+									<input type="radio" name=selected value="" class="invisible undeletable" disabled="disabled" />
+									<a href="javascript:void(0);" data-field="activityDefName">#{activityDefName}</a>
+								<th colspan="2" class="hidden-xs hidden-sm">
+									<input type="hidden" data-field="id" />
+									<input type="hidden" data-field="activityDefCode" />
+									<input type="hidden" data-field="parentKey" />
+								</th>
+								<th>&nbsp;</th>
+							</tr>
+							<!-- 通常 -->
+							<tr class="normal">
+								<th>
+									<input type="radio" name="selected" value="" class="invisible undeletable" disabled="disabled" />
+									<span data-field="activityDefName" class="hide">#{activityDefName}</span>
+									<a href="javascript:void(0);" data-field="activityDefName" class="hide">#{activityDefName}</a>
+									<input type="hidden" data-field="id" />
+									<input type="hidden" data-field="activityDefCode" />
+									<input type="hidden" data-field="parentKey" />
+									<input type="hidden" data-field="existChangeDefFlag" />
+									<input type="hidden" data-field="addedActivity" />
+									<input type="hidden" data-field="changeActivity" />
+								</th>
+								<td>
+									<span class="arrow glyphicon glyphicon-arrow-right invisible"></span>
+									<span data-field="userName">#{userName}</span>
+								</td>
+								<td data-field="organizationName"class="hidden-xs hidden-sm">#{organizationName}</td>
+								<td data-field="postName" class="hidden-xs hidden-sm">#{postName}</td>
+								<td data-field="proxyUsers" data-html-escaped>#{proxyUsers}</td>
+								<td data-field="corporationCode" class="hide">#{corporationCode}</td>
+								<td data-field="organizationCode" class="hide">#{organizationCode}</td>
+								<td data-field="postCode" class="hide">#{postCode}</td>
+								<td data-field="userCode" class="hide">#{userCode}</td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+			<div class="form-group text-center">
+				<button id="btnMove" class="btn btn-primary">
+					<i class="glyphicon glyphicon-ok"></i>
+					<span></span>
+				</button>
+				<button id="btnClose" class="btn btn-default" data-close>
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+		</article>
+	</section>
+</body>
+</html>

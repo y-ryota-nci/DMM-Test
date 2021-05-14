@@ -1,0 +1,57 @@
+<!-- 要説明情報（掲示板）ブロック -->
+<article id="block0010">
+	<div class="panel panel-default">
+		<div id="a1" class="panel-heading clearfix">
+			<span id="block0010_expansion" class="collapse_btn collapsed" role="button" data-toggle="collapse" data-target="#block0010_contents">
+				<i class="fa fa-chevron-down"></i><span data-field="blockName">#{要説明情報（掲示板）}</span>
+			</span>
+<!-- 			<div class="topend_btn"> -->
+<!-- 				<a href="#pagetop" class="pagetop">TOP</a> -->
+<!-- 				<a href="#pageend" class="pageend">END</a> -->
+<!-- 			</div> -->
+		</div>
+
+		<div id="block0010_contents" class="panel-body panel-collapse collapse">
+			<div class="form-group">
+				<button id="btnNewThread" class="btn btn-default btn-sm hide">
+					<i class="fa fa-plus-circle"></i>
+					<span data-i18n="btnAdd">#{追加}</span>
+				</button>
+			</div>
+
+			<div id="bl0010-noRecord" data-i18n="noRecord" class="form-group">#{該当する結果はありませんでした}</div>
+			<div id="bl0010-hasRecord" class="replies hide form-group"></div>
+
+			<div class="hide">
+				<div id="bl0010-template" class="media">
+					<i class="media-left person-icon glyphicon glyphicon-user"></i>
+					<div class="media-body">
+						<h4 class="media-heading">
+							<span data-field="organizationNameSubmit">#{投稿者所属}</span>
+							<span data-field="postNameSubmit">#{投稿者役職}</span>
+							:
+							<span data-field="userNameSubmit">#{投稿者}</span>
+							<small><i data-field="timestampSubmit">%{2017/10/18 17:58:32}%</i></small>
+							<i data-field="labelNew" class="label label-success">#{NEW}</i>
+							<small style="margin-left: 10px;">
+								<a href="#" class="btnReplyArticle" data-i18n="btnReply">#{返信}</a>
+							</small>
+						</h4>
+						<span data-field="contents">#{これは入れ子/ネストにした時のサンプル}</span>
+						<div>
+							<div class="bbs-attach-files mB10"></div>
+						</div>
+						<div class="replies"></div>
+					</div>
+				</div>
+				<div id="bl0010-template-a" class="hide">
+					<a class="text-center" style="margin-right: 10px; display: inline-block; white-space: nowrap;">
+						<span class="file-icon fa"></span>
+						<span data-field="fileName" style="white-space: nowrap;">ファイル名.xlsx</span>
+						<span data-field="bbsAttachFileWfId" class="hide">#{bbsAttachFileWfId}</span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</article>

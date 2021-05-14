@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style>
+		/* ファイルのドラッグ＆ドロップ */
+		.dragZone {
+			border: 2px dotted #0B85A1;
+			color: #92AAB0;
+			text-align: left;
+			vertical-align: middle;
+			padding: 10px 10px 10 10px;
+			margin-bottom: 10px;
+			font-size: 300%;
+		}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src="./po0040.js"></script>
+	<title>PO0040 kitoneデータ取込</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="container">
+		<div class="row">
+			<h2><span class="screen-name">#{PO0040 kintoneデータ取込}</span></h2>
+		</div><!--/.row-->
+	</section>
+
+	<section class="container">
+
+		<div id="targetYmArea" class="row hide">
+			<label class="sub-title">
+				<span >処理対象月</span>
+			</label>
+			<div class="has-feedback">
+				<div class="col-xs-2 input-group">
+					<input class="form-control required ymPicker" id="targetYm" type="text" data-validate='{"pattern":"ym"}'> <i class="glyphicon glyphicon-calendar form-control-feedback"> </i>
+				</div>
+			</div>
+		</div>
+
+		<div id="dragAndDropArea" class="row hide">
+			<label class="sub-title">
+				<span data-i18n="uploadFileInfo">アップロードファイル情報</span>
+			</label>
+			<div data-i18n="dragAndDrop" class="form-group col-sm-12 dragZone">ここにドラッグ＆ドロップすることでファイルアップロードが行われます</div>
+			<div class="form-group col-sm-12">
+				<input type="file" id="file" />
+			</div>
+		</div>
+	</section>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+<link rel="stylesheet" href="../../assets/jsTree/themes/default/style.min.css" />
+<link rel="stylesheet" href="../../assets/nci/app.css" />
+<style type="text/css">
+.form-control.disabled {
+	background-color: #eee;
+	opacity: 1;
+}
+</style>
+<script src="../../assets/jquery/jquery.min.js"></script>
+<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../assets/jsTree/jstree.js"></script>
+<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="../../assets/nci/NCI.js"></script>
+<script src="../../assets/nci/validate.js"></script>
+<script src="./mm0100.js"></script>
+<title>{MM0100 情報共有設定}</title>
+</head>
+<body>
+<header class="container-fluid">
+	<div id="nav"></div>
+</header>
+<div class="nonSideSearchArea">
+<section class="container">
+	<div>
+		<span class="screen-name">#{MM0100}</span>
+		<label class="sub-title" data-i18n="processInfo">#{プロセス情報}</label>
+		<div class="searchStyle ac-contents">
+			<div class="form-group searchConditionArea">
+				<label class="col-sm-3 control-label searchConditionTh" data-i18n="processDefCode">#{プロセス定義コード}</label>
+				<div class="col-sm-7 searchConditionTd">
+					<div class="form-control input-sm disabled">
+						<span data-field="processDefCode">#{processDefCode}</span>
+						<span>‐</span>
+						<span data-field="processDefDetailCode">#{processDefDetailCode}</span>
+					</div>
+				</div>
+				<input type="hidden" id="corporationCode"  data-field="corporationCode">
+				<input type="hidden" id="processDefCode"  data-field="processDefCode">
+				<input type="hidden" id="processDefDetailCode"  data-field="processDefDetailCode">
+			</div>
+			<div class="form-group searchConditionArea">
+				<label class="col-sm-3 control-label searchConditionTh" data-i18n="processDefName">#{プロセス定義名}</label>
+				<div class="col-sm-7 searchConditionTd">
+					<div class="form-control input-sm disabled"><span data-field="processDefName">#{processDefName}</span></div>
+				</div>
+			</div>
+			<div class="form-group searchConditionArea">
+				<label class="col-sm-3 control-label searchConditionTh" data-i18n=validTerm>#{有効期間}</label>
+				<div class="col-sm-7 searchConditionTd">
+					<div class="form-control input-sm disabled">
+						<span data-field="validStartDate">#{validStartDate}</span>
+						<span>～</span>
+						<span data-field="validEndDate">#{validEndDate}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="container">
+	<div id="searchResult">
+		<!-- 検索結果サブタイトル -->
+		<div class="inline-group sub-title">
+			<div class="col-xs-3 text-left">
+				<span class="hidden-xs" data-i18n="informationSharingPerson">#{情報共有者}</span>
+			</div>
+			<div class="col-xs-7 text-center">
+				<span>
+					<span data-i18n="pageCount">PAGE</span>:
+					<span class="page-no">#{page-no}</span>
+					 /
+					 <span class="page-count">#{page-count}</span>
+				</span>
+				<span class="hidden-xs">
+					&nbsp;&nbsp;
+					<span data-i18n="totalCount">#{総件数}</span>:
+					<span class="all-count">#{all-count}</span>
+				</span>
+			</div>
+
+			<!-- 設定アイコン -->
+			<div class="col-xs-2 pull-right text-right dropdown">
+				<i class="glyphicon glyphicon-cog dropdown-toggle clickable" data-toggle="dropdown"></i>
+
+				<!-- 設定アイコン押下時のエリア -->
+				<div class="dropdown-menu pageSizeConfig">
+		 			<label data-i18n="rowCountPerPage">{１ページの行数}</label>
+					<select class="pageSize" class="form-control"></select>
+				</div>
+			</div>
+		</div>
+
+		<div class="text-center">
+			<ul class="pagination"></ul>
+		</div>
+
+		<table id="tblInformationSharerDefs" class="table table-hover table-striped table-condensed responsive">
+			<colgroup>
+				<col class="col-md-1" />
+				<col class="col-md-3" />
+				<col class="col-md-5" />
+				<col class="col-md-1" />
+				<col class="col-md-1" />
+				<col class="col-md-1" />
+			</colgroup>
+			<thead>
+				<tr>
+					<th data-i18n="choice">#{選択}</th>
+					<th data-i18n="assignRoleCode">#{参加者ロールコード}</th>
+					<th data-i18n="assignRoleName">#{参加者ロール名}</th>
+					<th data-i18n="conditionalExpression">#{比較条件式}</th>
+					<th data-i18n="sharerFlag">#{共有区分}</th>
+					<th data-i18n="display">#{表示}</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+			<tfoot class="hide template">
+				<tr>
+					<td class="text-center"><input type="checkbox" class="selectable" data-field="uniqueKey" /></td>
+					<th class="text-left"><a href="javascript:void(0)" class="lnkOpenEdit" data-field="assignRoleCode">#{参加者ロールコード}</a></th>
+					<td class="text-left"><a href="javascript:void(0)" class="lnkOpenEdit" data-field="assignRoleName">#{参加者ロール名}</a></td>
+					<td class="text-left" data-field="expressionExistsFlagName">#{比較条件式}</td>
+					<td class="text-left" data-field="informationSharerTypeName">#{共有区分}</td>
+					<td class="text-left" data-field="displayFlagName">#{表示}</td>
+					<td class="hide"><span data-field="uniqueKey"></span></td>
+				</tr>
+			</tfoot>
+		</table>
+
+		<div class="text-center">
+			<ul class="pagination"></ul>
+		</div>
+	</div>
+</section>
+<section class="container searchButtonArea">
+	<div class="row text-center">
+		<button id="btnAdd" class="btn btn-primary">
+			<i class="glyphicon glyphicon-plus-sign"></i>
+			<span data-i18n="btnAdd">#{追加}</span>
+		</button>
+		<button id="btnRemove" class="btn btn-danger" disabled>
+			<i class="glyphicon glyphicon-trash"></i>
+			<span data-i18n="btnDelete">#{削除}</span>
+		</button>
+		<button id="btnBack" class="btn btn-default">
+			<i class="glyphicon glyphicon-share-alt"></i>
+			<span data-i18n="btnBack">#{戻る}</span>
+		</button>
+	</div>
+</section>
+<div id="editInformationSharerDef" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content form-group">
+			<div class="modal-body">
+				<input type="hidden" id="uniqueKey">
+				<div class="form-group">
+					<label class="required" data-i18n="assignRole">#{参加者ロール}</label>
+					<select id="assignRoleCode" class="form-control required"></select>
+				</div>
+				<div class="form-group">
+					<label data-i18n="conditionalExpression">#{比較条件式}</label>
+					<select id="expressionDefCode" class="form-control"></select>
+				</div>
+				<div class="form-group">
+					<label data-i18n="expressionInfoSharer">#{情報共有条件}</label>
+					<select id="expressionInfoSharerType" class="form-control"></select>
+				</div>
+				<div class="form-group">
+					<label data-i18n="sharerFlag">#{共有区分}</label>
+					<select id="informationSharerType" class="form-control"></select>
+				</div>
+				<div class="form-group">
+					<label><input id="displayFlag" type="checkbox" value="1"><span data-i18n="display">#{表示}</span></label>
+				</div>
+			</div>
+			<div class="moda-footer form-group text-center">
+				<button id="btnOK" class="btn btn-primary">
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnOK">#{ＯＫ}</span>
+				</button>
+				<button id="btnCancel" class="btn btn-default">
+					<i class="glyphicon glyphicon-remove-sign"></i>
+					<span data-i18n="btnCancel">#{キャンセル}</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</body>
+</html>

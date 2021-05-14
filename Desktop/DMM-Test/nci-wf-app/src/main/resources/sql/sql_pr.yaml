@@ -1,0 +1,153 @@
+#購入依頼情報から対象レコードを削除（差戻し及び引き戻しを考慮）
+PR0000_01: |+
+ delete /* PR0000_01 */ from PURRQST_INF where COMPANY_CD = ? and PURRQST_NO = ?
+
+#購入依頼明細情報から対象レコードを削除（差戻し及び引き戻しを考慮）
+PR0000_02: |+
+ delete /* PR0000_02 */ from PURRQSTDTL_INF where COMPANY_CD = ? and PURRQST_NO = ?
+
+#WF購入依頼情報⇒購入依頼情報を生成
+PR0000_03: |+
+ insert into /* PR0000_03 */ PURRQST_INF (
+  COMPANY_CD, PURRQST_NO, PURRQST_STS, PURRQST_NM, SBMTR_CD
+  , SBMT_DPT_CD, SBMT_DPT_NM, SBMT_DPT_DT, ORGNZ_CD, PURRQST_AMT_EXCTAX
+  , PURRQST_AMT_INCTAX, PRC_FLD_TP, RCP_LC_CD, RMK, DLT_FG
+  , CORPORATION_CODE_CREATED, USER_CODE_CREATED, IP_CREATED, TIMESTAMP_CREATED
+  , CORPORATION_CODE_UPDATED, USER_CODE_UPDATED, IP_UPDATED, TIMESTAMP_UPDATED
+ )
+ select
+  COMPANY_CD, PURRQST_NO, PURRQST_STS, PURRQST_NM, SBMTR_CD
+  , SBMT_DPT_CD, SBMT_DPT_NM, SBMT_DPT_DT, ORGNZ_CD, PURRQST_AMT_EXCTAX
+  , PURRQST_AMT_INCTAX, PRC_FLD_TP, RCP_LC_CD, RMK, '0'
+  , ?, ?, ?, SYSTIMESTAMP
+  , ?, ?, ?, SYSTIMESTAMP
+ from ${REPLACE}
+ where RUNTIME_ID = ?
+
+#WF購入依頼明細情報⇒購入依頼明細情報を生成
+PR0000_04: |+
+ insert into /* PR0000_04 */ PURRQSTDTL_INF (
+  COMPANY_CD, PURRQST_NO, PURRQST_DTL_NO, ITM_CD, ITM_NM
+  , MAKER_NM, MAKER_MDL_NO, PURRQST_QNT, PURRQST_UC_JPY, PURRQST_AMT_JPY, PURRQST_AMT_JPY_INCTAX
+  , MNY_CD, PURRQST_UC_FC, PURRQST_AMT_FC, TAX_FG, TAX_CD, BUMON_CD
+  , PURRQST_ABST, PURRQST_TP, DLT_FG
+  , CORPORATION_CODE_CREATED, USER_CODE_CREATED, IP_CREATED, TIMESTAMP_CREATED
+  , CORPORATION_CODE_UPDATED, USER_CODE_UPDATED, IP_UPDATED, TIMESTAMP_UPDATED
+ )
+ select
+  CORPORATION_CODE, ?, ?, ITM_CD, ITM_NM
+  , MAKER_NM, MAKER_MDL_NO, PURRQST_QNT, PURRQST_UC_JPY, PURRQST_AMT_JPY, PURRQST_AMT_JPY_INCTAX
+  , ?, NULL, NULL, TAX_FG, TAX_CD, BUMON_CD
+  , PURRQST_ABST, PURRQST_TP, '0'
+  , ?, ?, ?, SYSTIMESTAMP
+  , ?, ?, ?, SYSTIMESTAMP
+ from ${REPLACE}
+ where RUNTIME_ID = ?
+
+#申請No(=申請番号)に紐付くプロセスインスタンスから文書IDを抽出
+PR0000_05: |+
+ select /* PR0000_05 */ DOC_ID
+ from WFT_PROCESS
+ where CORPORATION_CODE = ?
+   and APPLICATION_NO = ?
+   and PROCESS_STATUS = 'end'
+   and DOC_ID is not null
+ order by
+   PROCESS_ID desc
+
+#調達部門選択肢取得
+PR0010_01: |+
+ select /* PR0010_01 */ *
+ from MWV_OPTION_ITEM
+ where CORPORATION_CODE = ?
+   and LOCALE_CODE = ?
+   and OPTION_CODE = 'KbnTyotatsu'
+   and DELETE_FLAG = '0'
+ order by SORT_ORDER
+
+#調達部門選択肢取得
+PR0010_02: |+
+ select /* PR0010_02 */
+   ${REPLACE}
+ from
+   (
+     select T.*, L.LOCALE_CODE from PURRQST_INF T
+     inner join WFM_LOCALE L on (L.LOCALE_CODE = ?)
+   ) P
+   left join (
+     select * from MWV_OPTION_ITEM
+     where OPTION_CODE = 'KbnTyotatsu' and DELETE_FLAG = '0'
+   ) O
+     on (
+       P.COMPANY_CD = O.CORPORATION_CODE
+       and P.PRC_FLD_TP = O.CODE
+       and P.LOCALE_CODE = O.LOCALE_CODE
+     )
+ where
+   exists (
+     select 'x' from (%SUBQUERY%) PS where P.COMPANY_CD = PS.CORPORATION_CODE and P.PURRQST_NO = PS.APPLICATION_NO
+   )
+
+#購入依頼一覧のSELECT句
+PR0010_03: |+
+   P.COMPANY_CD
+   , P.PURRQST_NO
+   , P.PURRQST_NM
+   , P.PURRQST_AMT_EXCTAX as PURRQST_AMT
+   , O.LABEL as PRC_FLD_TP_NM
+   , 'SCR0054' as SCREEN_CODE
+
+PR0011_01: |+
+ select /* PR0011_01 */
+   P.*
+   , U.USER_NAME SBMTR_NM
+   , O.LABEL as PRC_FLD_TP_NM
+   , U.EXTENDED_INFO_01 as SBMTR_ADDR_CD
+   , L.LOOKUP_NAME as SBMTR_ADDR
+ from
+   (
+     select T.*, L.LOCALE_CODE from PURRQST_INF T
+     inner join WFM_LOCALE L on (L.LOCALE_CODE = ?)
+   ) P
+   inner join WFM_USER_V U
+     on (
+       P.COMPANY_CD = U.CORPORATION_CODE
+       and P.SBMTR_CD = U.USER_CODE
+       and P.LOCALE_CODE = U.LOCALE_CODE
+     )
+   left join MWM_LOOKUP L
+     on (
+       L.CORPORATION_CODE = U.CORPORATION_CODE
+       and L.LOOKUP_GROUP_ID = 'USER_LOCATION'
+       and L.LOOKUP_ID = U.EXTENDED_INFO_01
+       and L.LOCALE_CODE = U.LOCALE_CODE
+     )
+   left join (
+     select * from MWV_OPTION_ITEM
+     where OPTION_CODE = 'KbnTyotatsu' and DELETE_FLAG = '0'
+   ) O
+     on (
+       P.COMPANY_CD = O.CORPORATION_CODE
+       and P.PRC_FLD_TP = O.CODE
+       and P.LOCALE_CODE = O.LOCALE_CODE
+     )
+ where P.COMPANY_CD = ?
+   and P.PURRQST_NO = ?
+
+PR0011_02: |+
+ select /* PR0011_02 */
+   D.*
+   , T.TAX_FG_NM
+   , O.LABEL as PURRQST_TP_NM
+ from (
+   select P.*, L.LOCALE_CODE from PURRQST_INF P inner join WFM_LOCALE L on (L.LOCALE_CODE = ?)
+ ) P
+   inner join PURRQSTDTL_INF D
+     on (P.COMPANY_CD = D.COMPANY_CD and P.PURRQST_NO = D.PURRQST_NO)
+   left join V_TAX_FG T
+     on (P.COMPANY_CD = T.COMPANY_CD and P.ORGNZ_CD = T.ORGNZ_CD and D.TAX_FG = T.TAX_FG and trunc(sysdate) between T.VD_DT_S and T.VD_DT_E and P.LOCALE_CODE = T.LOCALE_CODE)
+   left join (select * from MWV_OPTION_ITEM where OPTION_CODE = 'kbnPurrqstTp') O
+     on (P.COMPANY_CD = O.CORPORATION_CODE and D.PURRQST_TP = O.CODE and P.LOCALE_CODE = O.LOCALE_CODE)
+ where P.COMPANY_CD = ?
+   and P.PURRQST_NO = ?
+ order by D.PURRQST_DTL_NO

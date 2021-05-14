@@ -1,0 +1,98 @@
+<!-- 組織選択パーツのプロパティ -->
+<script type="text/javascript" src="vd0114_8.js"></script>
+<div id="vd0114_8">
+	<label class='sub-title' data-i18n='organizationSelect'>OrganizationSelect</label>
+
+	<div id='displayItems' class='form-group col-xs-12'>
+		<span data-i18n='displayItem'>表示する項目</span>
+		<table id='tblDispItems' class='table-striped table-condensed responsive' style="width:100%;">
+			<colgroup>
+				<col class='col-xs-3' />
+				<col class='col-xs-1' />
+				<col class='col-xs-2' />
+				<col class='col-xs-2' />
+				<col class='col-xs-2' />
+				<col class='col-xs-2' />
+			</colgroup>
+
+			<thead>
+				<tr>
+					<td class="text-center"><span data-i18n='itemName'>項目名</span></td>
+					<td class="text-center"><span data-i18n='display'>表示</span></td>
+					<td class="text-center"><span data-i18n='width'>幅</span>:<span data-i18n='colXs'>最少画面</span></td>
+					<td class="text-center"><span data-i18n='width'>幅</span>:<span data-i18n='colSm'>小画面</span></td>
+					<td class="text-center"><span data-i18n='width'>幅</span>:<span data-i18n='colMd'>中画面</span></td>
+					<td class="text-center"><span data-i18n='width'>幅</span>:<span data-i18n='colLg'>大画面</span></td>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr>
+					<td><i class='glyphicon glyphicon-align-justify clickable'></i><span data-i18n='organizationName'>組織名称</span></td>
+					<td class='text-center'><input type='checkbox'  data-field='organizationNameDisplay' value='true' /></td>
+					<td><select class='form-control itemColumnSize' data-field='organizationNameColXs'></select></td>
+					<td><select class='form-control itemColumnSize' data-field='organizationNameColSm'></select></td>
+					<td><select class='form-control itemColumnSize' data-field='organizationNameColMd'></select></td>
+					<td><select class='form-control itemColumnSize' data-field='organizationNameColLg'></select></td>
+					<td class='hide sortOrder' data-field='organizationNameSortOrder'></td>
+				</tr>
+				<tr>
+					<td><i class='glyphicon glyphicon-align-justify clickable'></i><span data-i18n='organizationAddedInfo'>組織ID</span></td>
+					<td class='text-center'><input type='checkbox'  data-field='organizationAddedInfoDisplay' value='true' /></td>
+					<td><select class='form-control itemColumnSize' data-field='organizationAddedInfoColXs'></select></td>
+					<td><select class='form-control itemColumnSize' data-field='organizationAddedInfoColSm'></select></td>
+					<td><select class='form-control itemColumnSize' data-field='organizationAddedInfoColMd'></select></td>
+					<td><select class='form-control itemColumnSize' data-field='organizationAddedInfoColLg'></select></td>
+					<td class='hide sortOrder' data-field='organizationAddedInfoSortOrder'></td>
+				</tr>
+				<tr>
+					<td><i class='glyphicon glyphicon-align-justify clickable'></i><span data-i18n='organizationNameAbbr'>組織略称</span></td>
+					<td class='text-center'><input type='checkbox'  data-field='organizationNameAbbrDisplay' value='true' /></td>
+					<td><select class='form-control itemColumnSize' data-field='organizationNameAbbrColXs'></select></td>
+					<td><select class='form-control itemColumnSize' data-field='organizationNameAbbrColSm'></select></td>
+					<td><select class='form-control itemColumnSize' data-field='organizationNameAbbrColMd'></select></td>
+					<td><select class='form-control itemColumnSize' data-field='organizationNameAbbrColLg'></select></td>
+					<td class='hide sortOrder' data-field='organizationNameAbbrSortOrder'></td>
+				</tr>
+				<tr>
+					<td><i class='glyphicon glyphicon-align-justify clickable'></i><span data-i18n='telNum'>電話番号</span></td>
+					<td class='text-center'><input type='checkbox'  data-field='telNumDisplay' value='true' /></td>
+					<td><select class='form-control itemColumnSize' data-field='telNumColXs'></select></td>
+					<td><select class='form-control itemColumnSize' data-field='telNumColSm'></select></td>
+					<td><select class='form-control itemColumnSize' data-field='telNumColMd'></select></td>
+					<td><select class='form-control itemColumnSize' data-field='telNumColLg'></select></td>
+					<td class='hide sortOrder' data-field='telNumSortOrder'></td>
+				</tr>
+				<tr>
+					<td><i class='glyphicon glyphicon-align-justify clickable'></i><span data-i18n='faxNum'>FAX番号</span></td>
+					<td class='text-center'><input type='checkbox'  data-field='faxNumDisplay' value='true' /></td>
+					<td><select class='form-control itemColumnSize' data-field='faxNumColXs'></select></td>
+					<td><select class='form-control itemColumnSize' data-field='faxNumColSm'></select></td>
+					<td><select class='form-control itemColumnSize' data-field='faxNumColMd'></select></td>
+					<td><select class='form-control itemColumnSize' data-field='faxNumColLg'></select></td>
+					<td class='hide sortOrder' data-field='faxNumSortOrder'></td>
+				</tr>
+				<tr>
+					<td><i class='glyphicon glyphicon-align-justify clickable'></i><span data-i18n='address'>住所</span></td>
+					<td class='text-center'><input type='checkbox' data-field='addressDisplay' value='true' /></td>
+					<td><select class='form-control itemColumnSize' data-field='addressColXs'></select></td>
+					<td><select class='form-control itemColumnSize' data-field='addressColSm'></select></td>
+					<td><select class='form-control itemColumnSize' data-field='addressColMd'></select></td>
+					<td><select class='form-control itemColumnSize' data-field='addressColLg'></select></td>
+					<td class='hide sortOrder' data-field='addressSortOrder'></td>
+				</tr>
+			</tbody>
+
+		</table>
+	</div>
+
+	<div class='form-group col-xs-6'>
+		<span data-i18n='defaultValue'>デフォルト値</span>
+		<select id='defaultValue' class='form-control'></select>
+	</div>
+
+	<div class='form-group col-sm-4'>
+		<span data-i18n='buttonSize' class='form-control-static required'>#{ボタンサイズ}</span>
+		<select id='buttonSize' class='form-control buttonSize required'></select>
+	</div>
+</div>

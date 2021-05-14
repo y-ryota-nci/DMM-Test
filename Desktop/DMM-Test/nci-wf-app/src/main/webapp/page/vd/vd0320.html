@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+<link rel="stylesheet" href="../../assets/jsTree/themes/default/style.min.css" />
+<link rel="stylesheet" href="../../assets/nci/styles.css" />
+<link rel="stylesheet" href="../../assets/nci/original.css" />
+<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+<link rel="stylesheet" href="../../assets/jquery-ui/jquery-ui.min.css" />
+<style type="text/css">
+</style>
+<!-- コンテナ固有のカスタムCSSスタイル -->
+<style type="text/css" id="customCssStyleTag"></style>
+
+<script src="../../assets/jquery/jquery.min.js"></script>
+<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="../../assets/nci/NCI.js"></script>
+<script src="../../assets/nci/codeBook.js"></script>
+<script src="../../assets/nci/validate.js"></script>
+<script id="outside-javascript"></script>
+<!-- 外部Javascript読み込み用SCRIPTタグ -->
+<script src='../../endpoint/javascript/static/enabledEvaluate.js'></script>
+<script src="../../assets/nci/enabledCondition.js"></script>
+<script src="../../assets/nci/calculate.js"></script>
+<script src="../../assets/nci/parts.js"></script>
+<script src="../../assets/nci/suggestion.js"></script><!-- サジェスチョン関数 -->
+<!-- パーツ共通関数 -->
+<script src="./vd0320.js"></script>
+<title>#{VD0320 独立画面パーツ}</title>
+</head>
+<body>
+	<header></header>
+
+	<section class="col-xs-12">
+		<article class="row">
+			<h1 class="page-header">プレビュー</h1>
+		</article>
+		<!--/.row-->
+
+		<div class="row panel panel-default">
+			<!-- 検索結果サブタイトル -->
+			<div class="panel-heading" id="containerName"></div>
+
+			<div id="editArea" class="col-xs-12"></div>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row text-center">
+			<button id="btnOK" class="btn btn-primary" disabled>
+				<i class="glyphicon glyphicon-check"></i>
+				<span data-i18n="btnOK">OK</span>
+			</button>
+			<button id="btnClose" class="btn btn-default">
+				<i class="glyphicon glyphicon-ok-circle"></i> <span
+					data-i18n="btnClose">閉じる</span>
+			</button>
+		</div>
+	</section>
+</body>
+</html>

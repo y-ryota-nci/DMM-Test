@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+		<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+		<link rel="stylesheet" href="../../assets/jsTree/themes/default/style.min.css" />
+		<link rel="stylesheet" href="../../assets/nci/styles.css" />
+		<link rel="stylesheet" href="../../assets/nci/original.css" />
+		<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+		<link rel="stylesheet" href="../../assets/jquery-ui/jquery-ui.min.css" />
+		<style type="text/css">
+		h4 {
+			font-weight: bold;
+		}
+		.dragZone {
+			border: 2px dotted #0B85A1;
+			color: #92AAB0;
+			text-align: left;
+			vertical-align: middle;
+			padding: 10px;
+			margin-bottom: 10px;
+			font-size: 200%;
+		}
+		#blocks {
+			padding-bottom: 20px;
+		}
+		</style>
+		<style type="text/css" id="customCssStyleTag"></style><!-- コンテナ固有のカスタムCSSスタイル -->
+
+		<script src="../../assets/jquery/jquery.js"></script>
+		<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+		<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+		<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+		<script src="../../assets/nci/NCI.js"></script>
+		<script src='../../assets/nci/validate.js'></script>
+		<script src='../../assets/nci/tray.js'></script>
+		<script src="../../assets/nci/codeBook.js"></script>
+		<script id="outside-javascript"></script><!-- 外部Javascript読み込み用SCRIPTタグ -->
+		<script src='../../endpoint/javascript/static/enabledEvaluate.js'></script><!-- 有効条件の判定ライブラリ関数 -->
+		<script src="../../assets/nci/enabledCondition.js"></script><!-- 有効条件の共通関数 -->
+		<script src="../../assets/nci/calculate.js"></script><!-- 計算式の共通関数 -->
+		<script src="../../assets/nci/parts.js"></script><!-- パーツ共通関数 -->
+		<script src="../../assets/nci/suggestion.js"></script><!-- サジェスチョン関数 -->
+		<script src="./include/docBlock.js"></script>
+		<script src="./dc0100.js"></script>
+
+		<title>#{DC0100 登録・更新}</title>
+	</head>
+	<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section id="pagetop"></section>
+
+	<section class="col-xs-12">
+		<!-- パンくずリスト：モバイル用 -->
+		<div class="dropdown pull-right dropdown_pageNavi forSP">
+			<button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+				<span class="caret"></span>
+				<span data-i18n="toBreadcrumbs">%{各項目へ}%</span>
+			</button>
+			<ul class="dropdown-menu breadcrumbs forSP"></ul>
+		</div>
+
+		<!-- パンくずリスト：PC用 -->
+		<div class="forPC">
+			<ul class="breadcrumbs pageNavi clearfix forPC"></ul>
+		</div>
+	</section>
+	<section id="blocks" class="col-xs-12">
+		<h1 class="text-center">
+			<span id="screenDocName"></span>
+		</h1>
+	</section>
+
+	<section id="pageend"></section>
+
+	</body>
+</html>

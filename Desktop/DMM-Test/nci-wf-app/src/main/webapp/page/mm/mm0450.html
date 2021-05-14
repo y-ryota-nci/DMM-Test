@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+<link rel="stylesheet" href="../../assets/nci/app.css" />
+<style type="text/css">
+</style>
+<script src="../../assets/jquery/jquery.min.js"></script>
+<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="../../assets/nci/NCI.js"></script>
+<script src="../../assets/nci/validate.js"></script>
+<script src="./mm0450.js"></script>
+<title>#{MM0450 参加者作成}</title>
+</head>
+<body>
+<header></header>
+<section id="inputed" class="container">
+	<div>
+		<span class="screen-name">#{MM0450}</span>
+		<label class="sub-title" data-i18n="assignChangeSetting">#{参加者変更設定}</label>
+		<div class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-3 control-label required" data-i18n="changeRole">#{参加者変更ロール}</label>
+				<div class="col-sm-5">
+					<div class="input-group">
+						<span id="corporationCode" class="hide">#{corporationCode}</span>
+						<span id="processDefCode" class="hide">#{processDefCode}</span>
+						<span id="processDefDetailCode" class="hide">#{processDefDetailCode}</span>
+						<span id="activityDefCode" class="hide">#{activityDefCode}</span>
+						<select id="changeRoleCode" class="form-control required"></select>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label" data-i18n="conditionalExpression">#{比較条件式}</label>
+				<div class="col-sm-7"><select id="expressionDefCode" class="form-control"></select></div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label" data-i18n="sortOrder">#{並び順}</label>
+				<div class="col-sm-7"><input id="sortOrder" type="text" class="form-control" maxlength="5" data-validate='{"pattern" : "integer", "min": 1, "max" : 99999 }' /></div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label required" data-i18n="validTerm">#{有効期間}</label>
+				<div class="col-sm-7">
+					<div class="input-group">
+						<div class="has-feedback">
+							<input type="text" class="form-control ymdPicker required" id="validStartDate" data-validate='{"to" : "#validEndDate", "pattern" : "date" }'/>
+							<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+						</div>
+						<span class="input-group-addon">～</span>
+						<div class="has-feedback">
+							<input type="text" class="form-control ymdPicker required" id="validEndDate" data-validate='{"from" : "#validStartDate" , "pattern" : "date"}'/>
+							<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group text-center">
+				<button id="btnCreate" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnAdd">#{追加}</span>
+				</button>
+				<button id="btnClose" class="btn btn-default">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</section>
+</body>
+</html>

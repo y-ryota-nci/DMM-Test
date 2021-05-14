@@ -1,0 +1,22 @@
+<!-- スタンプパーツのプロパティ -->
+<script type="text/javascript" src="vd0114_16.js"></script>
+<div id="vd0114_16">
+	<label class="sub-title" data-i18n="stamp">stamp</label>
+	<div class="col-sm-4">
+		<span class="required" data-i18n="stampCode">#{スタンプコード}</span>
+		<input id="stampCode" class="form-control required" maxlength="15" data-validate='{ "pattern" : "alphaSymbolNumber" }' />
+	</div>
+	<div class="col-sm-4">
+		<span class="required" data-i18n="stampSize">#{スタンプサイズ}</span>
+		<input id="stampSize" class="form-control required" maxlength="15" data-validate='{"pattern" : "integer", "min": 30, "max" : 500}' />
+	</div>
+	<div class="col-sm-4">
+		<label class="checkbox-inline">
+			<input id="stampFrameDisplaty" type="checkbox" value="true" />
+			<span data-i18n="stampFrameDisplaty">#{枠付きで表示}</span>
+		</label>
+		<span>
+			<input id="stampBorderColor" type="text" maxlength="7" class="form-control color-picker" data-validate='{ "pattern" : "alphaNumberSymbol" }' />
+		</span>
+	</div>
+</div>

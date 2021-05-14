@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+<link rel="stylesheet" href="../../assets/nci/styles.css" />
+<link rel="stylesheet" href="../../assets/nci/original.css" />
+<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+<style type="text/css">
+#seach-result {
+	min-height: 480px;
+}
+
+.table.table {
+	margin-bottom: 15px;
+}
+</style>
+<script src="../../assets/jquery/jquery.min.js"></script>
+<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="../../assets/nci/NCI.js"></script>
+<script src='../../assets/nci/validate.js'></script>
+<script src="./ri0020.js"></script>
+<title>RI0020 発注分割</title>
+</head>
+<body>
+	<header class="container-fluid"></header>
+
+	<section class="col-xs-12">
+		<article class="row">
+			<h1 class="page-header">発注分割</h1>
+		</article><!--/.row-->
+
+		<article id="seach-result" class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#result-contents"><i class="fa fa-chevron-up"></i><span data-i18n="rcvinspDtlInfo">発注分割情報</span></div>
+				<div id="result-contents" class="panel-body panel-collapse collapse in">
+
+					<!-- 分割元情報 -->
+					<div id="srcPO" class="">
+						<table id="tblHead" class="table table-bordered table-hover table-striped responsive">
+							<colgroup>
+								<col class="text-left" style="width: 135px;"><!-- 発注No -->
+								<col class="text-left" style="width: 70px;"><!-- 分納 -->
+								<col class="text-left" style="width: 10%;"><!-- 発注件名 -->
+								<col class="text-left" style="width: 10%;"><!-- 取引先 -->
+								<col class="text-left" style="width: 10%;"><!-- 費目1 -->
+								<col class="text-left" style="width: 10%;"><!-- 費目2 -->
+								<col class="text-left" style="width: 10%;"><!-- 品目 -->
+								<col class="text-left" style="width: 120px;"><!-- 部門 -->
+								<col class="text-left" style="width: 50px;"><!-- 通貨 -->
+								<col class="text-left" style="width: 80px;"><!-- 発注金額 -->
+								<col class="text-left" style="width: 80px;"><!-- 発注残金額 -->
+							</colgroup>
+							<thead>
+								<tr>
+									<th>発注No</th>
+									<th>分納</th>
+									<th>発注件名</th>
+									<th>取引先</th>
+									<th>費目1</th>
+									<th>費目2</th>
+									<th>品目</th>
+									<th>部門</th>
+									<th>通貨</th>
+									<th>発注金額</th>
+									<th>発注残金額</th>
+							</thead>
+
+							<tbody>
+								<tr>
+									<td class="text-left" data-field="pPurordNo">#{pPurordNo}</td>
+									<td class="text-left" data-field="sprtTpNm">#{sprtTpNm}</td>
+									<td class="text-left" data-field="purordNm">#{purordNm}</td>
+									<td class="text-left" data-field="splrNmKj">#{splrNmKj}</td>
+									<td class="text-left" data-field="itmexpsNm1">#{itmexpsNm1}</td>
+									<td class="text-left" data-field="itmexpsNm2">#{itmexpsNm2}</td>
+									<td class="text-left" data-field="itmNm">#{itmNm}</td>
+									<td class="text-left" data-field="bumonCd">#{bumonCd}</td>
+									<td class="text-left" data-field="mnyNm">#{mnyNm}</td>
+								<td class="dataType-number" data-field="purordAmt" style="text-align:right;">#{purordAmt}</td>
+								<td class="dataType-number" data-field="purordAmtRemain" style="text-align:right;">#{purordAmtRemain}
+								<td class="hide">
+									<span data-field="purordNo"></span>
+									<span data-field="purordDtlNo"></span>
+									<span data-field="splrCd"></span>
+									<span data-field="splrNmKn"></span>
+									<span data-field="mnyTp"></span>
+									<span data-field="orgnzCd"></span>
+									<span data-field="itmexpsCd1"></span>
+									<span data-field="itmexpsCd2"></span>
+									<span data-field="itmCd"></span>
+									<span data-field="anlysCd"></span>
+									<span data-field="rcvinspAmt"></span>
+									<span data-field="purordAmtFc"></span>
+									<span data-field="taxCd"></span>
+									<span data-field="mnyCd"></span>
+									<span data-field="iptNmFg"></span>
+									<span data-field="rcvinspSmry"></span>
+									<span data-field="rownum"></span>
+									<span data-field="companyCd"></span>
+									<span data-field="payCondCd"></span>
+									<span data-field="payCondNm"></span>
+									<span data-field="payMth"></span>
+									<span data-field="dlvLc"></span>
+									<span data-field="paySiteCd"></span>
+									<span data-field="paySiteNm"></span>
+								</td>
+						</table>
+					</div>
+
+					<!-- 分割後情報 -->
+					<div id="splitPO" class="table-responsive">
+						<table id="splitTbl" class="table table-bordered table-hover table-striped responsive">
+							<colgroup>
+								<col style="width: 50px;">
+								<col class="col-xs-1">
+								<col class="col-xs-1">
+								<col class="col-xs-1">
+								<col class="col-xs-1">
+								<col class="col-xs-1">
+								<col class="col-xs-1">
+								<col class="col-xs-1">
+								<col class="col-xs-1">
+								<col class="col-xs-1">
+								<col class="col-xs-1">
+								<col class="col-xs-1">
+								<col class="col-xs-1">
+							</colgroup>
+							<thead>
+								<tr>
+									<th class="line-number" rowspan="4">No.</th>
+									<th class="text-center" colspan="4">費目</th>
+									<th class="text-center" colspan="4">品目</th>
+									<th class="text-center" colspan="2">部門コード</th>
+									<th class="text-center" colspan="2">分析コード</th>
+								</tr>
+								<tr>
+									<th class="text-center" colspan="2">検収金額</th>
+									<th class="text-center" colspan="2">消費税コード</th>
+									<th class="text-center" colspan="8">検収摘要</th>
+								</tr>
+							</thead>
+
+							<tbody></tbody>
+
+							<tfoot class="template hide">
+								<tr>
+								<th rowspan="2">
+									<input class="selectable" type="checkbox" >
+									<span class="rownum" data-field="rownum" style="float: right;"></span>
+								<td colspan="4" class="form-inline">
+									<input data-field="itmexpsNm1" type="text" class="form-control required" maxLength="30" readonly style="width:37%" />
+									<input data-field="itmexpsNm2" type="text" class="form-control required" maxLength="30" readonly style="width:37%" />
+									<button class="btn btn-default btn-sm btnItmexps"><i class="glyphicon glyphicon-search"></i></button>
+									<button class="btn btn-default btn-sm btnClearItmexps"><i class="glyphicon glyphicon-remove-circle"></i></button>
+								<td colspan="4" class="form-inline">
+									<input data-field="itmCd" type="text" class="form-control required" maxLength="20" readonly style="width:25%" />
+									<input data-field="itmNm" type="text" class="form-control required" maxLength="30" readonly style="width:47%"  />
+									<button class="btn btn-default btn-sm btnItm"><i class="glyphicon glyphicon-search"></i></button>
+									<button class="btn btn-default btn-sm btnClearItm"><i class="glyphicon glyphicon-remove-circle"></i></button>
+								<td colspan="2" class="form-inline">
+									<input data-field="bumonCd" type="text" class="form-control" maxLength="14"
+										data-validate='{ "pattern" : "alphaNumberUnderscore" }' style="width: 45%" />
+									<button class="btn btn-default btn-sm btnBumon"><i class="glyphicon glyphicon-search"></i></button>
+									<button class="btn btn-default btn-sm btnClearBumon"><i class="glyphicon glyphicon-remove-circle"></i></button>
+								<td colspan="2">
+									<input data-field="anlysCd" type="text" class="form-control" maxLength="20" />
+								<tr>
+								<td class="text-right" colspan="2">
+									<input data-field="rcvinspAmt" type="text" class="form-control required text-right dataType-number" maxLength="20"
+										data-validate='{"pattern" : "numeric" , "min": -999999999999, "max" : 999999999999 }' />
+								<td colspan="2">
+									<select data-field="taxCd" class="form-control taxCd required"></select>
+								<td class="text-right" colspan="8">
+									<input data-field="rcvinspSmry" type="text" class="form-control" maxLength="20">
+								<td class="hide">
+									<span data-field="pPurordNo"></span>
+									<span data-field="purordNo"></span>
+									<span data-field="purordDtlNo"></span>
+									<span data-field="splrCd"></span>
+									<span data-field="splrNmKn"></span>
+									<span data-field="mnyTp"></span>
+									<span data-field="itmexpsCd"></span>
+									<span data-field="orgnzCd"></span>
+									<span data-field="itmexpsCd1"></span>
+									<span data-field="itmexpsCd2"></span>
+									<span data-field="itmCd"></span>
+									<span data-field="anlysCd"></span>
+									<span data-field="purordAmt"></span>
+									<span data-field="purordAmtRemain"></span>
+									<span data-field="purordAmtFc"></span>
+									<span data-field="mnyCd"></span>
+									<span data-field="iptNmFg"></span>
+									<span data-field="sprtTpNm"></span>
+									<span data-field="purordNm"></span>
+									<span data-field="splrNmKj"></span>
+									<span data-field="mnyNm"></span>
+									<span data-field="companyCd"></span>
+									<span data-field="payCondCd"></span>
+									<span data-field="payCondNm"></span>
+									<span data-field="payMth"></span>
+									<span data-field="dlvLc"></span>
+									<span data-field="paySiteCd"></span>
+									<span data-field="paySiteNm"></span>
+								</td>
+							</tfoot>
+						</table>
+					</div>
+					<div class="line-controller form-inline">
+						<button id="btnAddLine" class="btn btn-default btn-sm" disabled>追加</button>
+						<button id="btnDeleteLine" class="btn btn-default btn-sm" disabled>削除</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group text-center">
+				<button id="btnDecide" class="btn btn-primary" disabled>
+					<i class="fa fa-plus-circle"></i>
+					<span>決定</span>
+				</button>
+				<button class="btn btn-default btnClose" data-close>
+					<i class="fa fa-times"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+		</article>
+	</section>
+</body>
+</html>
+
+

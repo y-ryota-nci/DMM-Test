@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/jsTree/themes/default/style.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./rm0000.js"></script>
+	<title>#{RM0000 利用者ロール一覧}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<div class="nonSideSearchArea">
+	<section class="container">
+		<div class="row">
+			<span id="header" class="screen-name">#{RM0000}</span>
+
+			<div class="searchStyle">
+				<form id="formCondition" class="ac-contents">
+					<div class="form-group col-sm-6 searchConditionArea">
+						<label data-i18n="corporation" class="searchConditionTh">#{corporation}</label>
+						<div class="searchConditionTd">
+							<select id="corporationCode" class="form-control searchConditionSelect"></select>
+						</div>
+					</div>
+					<div class="form-group col-sm-6 searchConditionArea">
+						<label data-i18n="menuRoleCode" class="searchConditionTh">#{menuRoleCode}</label>
+						<div class="searchConditionTd">
+							<input type="text" id="menuRoleCode"  class="form-control searchConditionText"  />
+						</div>
+					</div>
+					<div class="form-group col-sm-6 searchConditionArea">
+						<label data-i18n="menuRoleName" class="searchConditionTh">#{menuRoleName}</label>
+						<div class="searchConditionTd">
+							<input type="text" id="menuRoleName"  class="form-control searchConditionText"  />
+						</div>
+					</div>
+					<div class="form-group col-sm-6 searchConditionArea">
+						<label data-i18n="validTerm" class="searchConditionTh">#{有効期限}</label>
+						<div class="input-group searchConditionTd">
+							<div class="has-feedback">
+								<input type="text" value="" class="form-control ymdPicker searchConditionText" id="validStartDate" data-validate='{"to" : "#validEndDate", "pattern" : "date" }'/>
+								<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+							</div>
+							<span class="input-group-addon">～</span>
+							<div class="has-feedback">
+								<input type="text" value="" class="form-control ymdPicker searchConditionText" id="validEndDate" data-validate='{"from" : "#validStartDate" , "pattern" : "date"}'/>
+								<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+							</div>
+						</div>
+					</div>
+					<div class="form-group col-sm-12 searchConditionArea">
+						<label data-i18n="deleteFlag" class="searchConditionTh">#{deleteFlag}</label>
+						<div class="searchConditionTd">
+							<select id="deleteFlag" class="form-control searchConditionText" ></select>
+						</div>
+					</div>
+				</form>
+
+				<div class="column button-group text-center searchButtonArea">
+					<button id="btnSearch" class="btn btn-primary searchButton">
+						<i class="glyphicon glyphicon-search"></i>
+						<span data-i18n="btnFilter">#{btnFilter}</span>
+					</button>
+					<button id="btnReset" class="btn btn-default searchButton">
+						<i class="glyphicon glyphicon-refresh"></i>
+						<span data-i18n="btnReset">#{btnReset}</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="seach-result" class="container hide">
+		<div class="row" >
+			<div class="searchResultStyle">
+
+			<div class="text-center">
+				<div class="hidden-xs searchCount">
+					&nbsp;&nbsp;
+					<span class="all-count">#{all-count}</span>
+					<span>件</span>
+				</div>
+				<div class="pageArea">
+					<ul class="pagination"></ul>
+				</div>
+				<div class="pageSizeConfig">
+					<label data-i18n="rowCountPerPage" class="pageTextColor">#{１ページの行数}</label>
+					<select class="pageSize"></select>
+				</div>
+			</div>
+
+			<table class="table table-hover table-striped table-condensed responsive">
+				<colgroup>
+					<col style="width:35px">
+					<col class="col-sm-3" />
+					<col class="col-sm-4" />
+					<col class="col-sm-4" />
+					<col class="col-sm-1" />
+				</colgroup>
+				<thead>
+				<tr>
+					<th></th>
+					<th><a href="#" data-i18n="menuRoleCode" data-sort="MENU_ROLE_CODE">#{menuRoleCode}</a></th>
+					<th><a href="#" data-i18n="menuRoleName" data-sort="MENU_ROLE_NAME">#{menuRoleName}</a></th>
+					<th><a href="#" data-i18n="validTerm" data-sort="VALID_START_DATE, VALID_END_DATE">#{validTerm}</a></th>
+					<th><a href="#" data-i18n="deleteFlag" data-sort="DELETE_FLAG, MENU_ROLE_CODE">#{deleteFlag}</a></th>
+				</thead>
+
+				<tbody></tbody>
+
+				<tfoot class="template hide">
+				<tr>
+					<td><input type="checkbox" class="selectable" value="true" checked /></td>
+					<td class="text-left"><a href="#" data-field="menuRoleCode">#{menuRoleCode}</a></td>
+					<td class="text-left"><a href="#" data-field="menuRoleName">#{menuRoleName}</a></td>
+					<td class="text-left">
+						<span data-field="validStartDate"></span>
+						～
+						<span data-field="validEndDate"></span>
+					</td>
+					<td class="text-left" data-field="deleteFlagName">#{deleteFlagName}</td>
+					<td class="hide" data-field="corporationCode"></td>
+				</tfoot>
+			</table>
+
+			</div>
+		</div>
+		<div>
+			<button class="btnSelectAll btn btn-default btn-sm" data-i18n="btnSelectAll">全選択</button>
+			<button class="btnCancelAll btn btn-default btn-sm" data-i18n="btnCancelAll">全解除</button>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<button id="btnAdd" class="btn btn-primary" disabled>
+				<i class="glyphicon glyphicon-plus-sign"></i>
+				<span data-i18n="btnAdd">#{追加}</span>
+			</button>
+			<button id="btnDownload" class="btn btn-success" disabled>
+				<i class="glyphicon glyphicon-cloud-download"></i>
+				<span data-i18n="btnDownloadDefinition">#{定義のダウンロード}</span>
+			</button>
+		</div>
+	</section>
+
+	</div>
+</body>
+</html>

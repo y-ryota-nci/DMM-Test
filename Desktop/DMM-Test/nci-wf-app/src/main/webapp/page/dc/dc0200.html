@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src='../../assets/nci/tray.js'></script>
+	<script src="./dc0200.js"></script>
+
+	<title>DC0200 文書トレイ選択(個人用)</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<!-- 表示設定 -->
+	<section class="col-xs-12">
+		<article class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">文書トレイ選択(個人用)</h1>
+			</div>
+		</article><!--/.row-->
+
+		<article id="docTrayConfigs" class="row panel panel-default">
+			<div class="panel-heading" data-i18n="docTrayConfig">文書トレイ設定</div>
+			<div id="condition-contents" class="col-xs-12">
+				<label class="help" data-i18n="MSG0169">#{ご希望の検索条件と検索結果の組み合わせをトレイ設定として画面毎に選択できます. }</label>
+				<table class="table table-bordered table-hover table-striped responsive">
+					<colgroup>
+						<col class="col-sm-5" />
+						<col class="col-sm-7" />
+					<thead>
+						<tr>
+							<th data-i18n="screen">
+							<th data-i18n="docTrayConfig">
+					<tbody></tbody>
+					<tfoot class="template hide">
+						<tr>
+							<td>
+								<span data-field="docTrayConfigPersonalizeId" class="hide"></span>
+								<span data-field="docTrayType" class="hide"></span>
+								<span data-field="docTrayTypeName"></span>
+							<td>
+								<select data-field="docTrayConfigId" class="form-control docTrayConfigId"></select>
+
+				</table>
+			</div>
+		</article>
+	</section>
+	<section class="container">
+		<div class="row mB40 mB40_sp">
+			<div class="text-center">
+				<button id="btnUpdate" class="btn btn-primary" disabled>
+					<i class="fa fa-save"></i><span data-i18n="btnUpdate">#{更新}</span>
+				</button>
+				<button id="btnBack" class="btn btn-default">
+					<i class="fa fa-reply"></i><span data-i18n="btnBack">#{戻る}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+
+</body>
+</html>

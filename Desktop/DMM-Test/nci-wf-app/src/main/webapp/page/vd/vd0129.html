@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./vd0129.js"></script>
+	<title>#{VD0129 カラム定義一覧}</title>
+</head>
+<body>
+	<header></header>
+
+	<section class="container">
+		<div class="row" id="inputed">
+			<span class="screen-name">#{VD0129}</span>
+
+			<label class="sub-title">
+				<span  data-i18n="tableName"></span> : <span id="tableName">#{tableName}</span>
+			</label>
+
+			<span id="tableColNotSortable" data-i18n='tableColNotSortable' class='label label-warning hide'>すでにテーブルが作成済みなので、並び順は変更できません</span>
+
+			<table id="tblColumns" class="table table-hover table-striped table-condensed responsive">
+				<colgroup>
+					<col class='col-xs-3' />
+					<col class='col-xs-2' />
+					<col class='col-xs-4' />
+					<col class='col-xs-2' />
+					<col class='col-xs-1' />
+				</colgroup>
+
+				<thead>
+					<tr>
+						<th><span data-i18n='label'>ラベル</span>
+						<th data-i18n='role'>役割</th>
+						<th><span data-i18n='dbColumnName' class='required'>物理カラム名</span>
+						<th data-i18n='dbColumnType'>型
+						<th data-i18n='sortOrder'>並び順
+				</thead>
+
+				<tbody></tbody>
+
+				<tfoot class='template hide'>
+					<tr>
+						<td><i class='glyphicon glyphicon-align-justify clickable'></i><span data-field='comments'></span>
+						<td><span data-field='roleCode'></span>
+						<td><input type='text' data-field='columnName' class='form-control required' data-validate='{"pattern" : "alphaNumberUnderscore" }' />
+						<td data-field='columnTypeLabel'>
+						<td><input type='text' data-field='sortOrder' readonly class='form-control text-right' data-validate='{"pattern" : "integer", "min": 0, "max" : 9999 }' />
+						<td class='hide'>
+							<span data-field='partsId'></span>
+							<span data-field='partsColumnId'></span>
+							<span data-field='columnSize'></span>
+							<span data-field='columnType'></span>
+							<span data-field='comments'></span>
+							<span data-field='decimalPoint'></span>
+				</tfoot>
+			</table>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="text-center">
+			<button id='btnOK' class='btn btn-primary' disabled>
+				<i class='glyphicon glyphicon-ok-sign'></i>
+				<span data-i18n='btnOK'>#{OK}</span>
+			</button>
+			<button id='btnClose' class='btn btn-default'>
+				<i class='glyphicon glyphicon-share-alt'></i>
+				<span data-i18n='btnClose'>#{閉じる}</span>
+			</button>
+		</div>
+	</section>
+</body>
+</html>

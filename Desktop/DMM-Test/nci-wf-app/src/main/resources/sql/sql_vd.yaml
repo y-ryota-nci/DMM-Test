@@ -1,0 +1,1884 @@
+#コンテナ一覧の件数
+VD0010_01: |+
+ select /* VD0010_01 */ count(*) from MWV_CONTAINER C where LOCALE_CODE = ?
+
+#コンテナ一覧
+VD0010_02: |+
+ select /* VD0010_02 */ * from MWV_CONTAINER C where LOCALE_CODE = ?
+
+#テーブル同期日時を更新
+VD0010_03: |+
+ update /* VD0010_03 */ MWM_CONTAINER
+ set TABLE_SYNC_TIMESTAMP = ?
+ , CORPORATION_CODE_UPDATED = ?
+ , USER_CODE_UPDATED = ?
+ , TIMESTAMP_UPDATED = ?
+ where CONTAINER_ID = ?
+
+#コンテナIDをキーにパーツ子要素定義を削除
+VD0010_04: |+
+ delete /* VD0010_04 */ from MWM_PARTS_CHILD_HOLDER
+ where PARTS_ID in (select PARTS_ID from MWM_PARTS P where CONTAINER_ID = ?)
+
+#コンテナIDをキーにパーツ計算項目定義の削除
+VD0010_05: |+
+ delete /* VD0010_05 */ from MWM_PARTS_CALC_ITEM
+ where PARTS_CALC_ID in (
+  select PC.PARTS_CALC_ID
+  from MWM_PARTS P inner join MWM_PARTS_CALC PC on PC.PARTS_ID = P.PARTS_ID
+  where P.CONTAINER_ID = ?
+ )
+
+#コンテナIDをキーにパーツ計算式有効条件定義を削除
+VD0010_06: |+
+ delete /* VD0010_06 */ from MWM_PARTS_CALC_EC
+ where PARTS_CALC_ID in (
+  select PC.PARTS_CALC_ID
+  from MWM_PARTS P inner join MWM_PARTS_CALC PC on PC.PARTS_ID = P.PARTS_ID
+  where P.CONTAINER_ID = ?
+ )
+
+#コンテナIDをキーにパーツ計算式定義を削除
+VD0010_07: |+
+ delete /* VD0010_07 */ from MWM_PARTS_CALC
+ where PARTS_ID in (select PARTS_ID from MWM_PARTS P where CONTAINER_ID = ?)
+
+#コンテナIDをキーにパーツ表示条件を削除
+VD0010_09: |+
+ delete /* VD0010_09 */ from MWM_PARTS_DC
+ where PARTS_ID in (select PARTS_ID from MWM_PARTS P where CONTAINER_ID = ?)
+
+#コンテナIDをキーにパーツ定義を削除
+VD0010_11: |+
+ delete /* VD0010_11 */ from MWM_PARTS where CONTAINER_ID = ?
+
+#コンテナIDをキーにコンテナJavaScript定義を削除
+VD0010_12: |+
+ delete /* VD0010_12 */ from MWM_CONTAINER_JAVASCRIPT where CONTAINER_ID = ?
+
+#コンテナIDをキーにパーツ選択肢定義を削除
+VD0010_13: |+
+ delete /* VD0010_13 */ from MWM_PARTS_OPTION
+ where PARTS_ID in (select PARTS_ID from MWM_PARTS P where CONTAINER_ID = ?)
+
+#コンテナIDに紐付く画面多言語マスタを削除
+VD0010_14: |+
+ delete /* VD0010_14 */ from MWM_MULTILINGUAL
+ where TABLE_NAME in ('MWM_PARTS', 'MWM_CONTAINER') and ID = ?
+
+#コンテナIDをキーにコンテナ定義を削除
+VD0010_15: |+
+ delete /* VD0010_15 */ from MWM_CONTAINER where CONTAINER_ID = ?
+
+#コンテナIDをキーにパーツイベント定義を削除
+VD0010_16: |+
+ delete /* VD0010_16 */ from MWM_PARTS_EVENT
+ where PARTS_ID in (select PARTS_ID from MWM_PARTS P where CONTAINER_ID = ?)
+
+#コンテナIDをキーにパーツ条件項目定義を削除
+VD0010_17: |+
+ delete /* VD0010_17 */ from MWM_PARTS_COND_ITEM
+ where PARTS_COND_ID in (
+  select PC.PARTS_COND_ID
+  from MWM_PARTS P inner join MWM_PARTS_COND PC on PC.PARTS_ID = P.PARTS_ID
+  where P.CONTAINER_ID = ?
+ )
+
+#コンテナIDをキーにパーツ条件定義を削除
+VD0010_18: |+
+ delete /* VD0010_18 */ from MWM_PARTS_COND
+ where PARTS_ID in (select PARTS_ID from MWM_PARTS P where CONTAINER_ID = ?)
+
+#画面一覧（件数）
+VD0030_01: |+
+ select /* VD0030_01 */ count(*) from MWV_SCREEN where LOCALE_CODE = ?
+
+#画面一覧
+VD0030_02: |+
+ select /* VD0030_02 */ * from MWV_SCREEN where LOCALE_CODE = ?
+
+#画面IDに紐付くアクセス可能画面マスタを削除
+VD0030_03: |+
+ delete /* VD0030_03 */ from MWM_ACCESSIBLE_SCREEN where SCREEN_PROCESS_ID in (
+  select SPD.SCREEN_PROCESS_ID
+  from MWM_SCREEN_PROCESS_DEF SPD inner join MWM_SCREEN S on S.SCREEN_ID = SPD.SCREEN_ID
+  where S.SCREEN_ID = ?
+ )
+
+#画面IDに紐付くブロック表示条件マスタを削除
+VD0030_05: |+
+ delete /* VD0030_05 */ from MWM_BLOCK_DISPLAY where SCREEN_PROCESS_ID in (
+  select SCREEN_PROCESS_ID
+  from MWM_SCREEN_PROCESS_DEF SPD inner join MWM_SCREEN S on S.SCREEN_ID = SPD.SCREEN_ID
+  where S.SCREEN_ID = ?
+ )
+
+#画面IDに紐付く画面プロセス定義マスタを削除
+VD0030_06: |+
+ delete /* VD0030_06 */ from MWM_SCREEN_PROCESS_DEF where SCREEN_ID = ?
+
+#画面IDをキーに画面計算項目定義の削除
+VD0030_08: |+
+ delete /* VD0030_08 */ from MWM_SCREEN_CALC_ITEM
+ where SCREEN_CALC_ID in (select SCREEN_CALC_ID from MWM_SCREEN_CALC where SCREEN_ID = ?)
+
+#画面IDをキーに画面計算式有効条件定義を削除
+VD0030_09: |+
+ delete /* VD0030_09 */ from MWM_SCREEN_CALC_EC
+ where SCREEN_CALC_ID in (select SCREEN_CALC_ID from MWM_SCREEN_CALC where SCREEN_ID = ?)
+
+#画面IDをキーに画面計算式定義を削除
+VD0030_10: |+
+ delete /* VD0030_10 */ from MWM_SCREEN_CALC where SCREEN_ID = ?
+
+#画面IDをキーに画面定義マスタを削除
+VD0030_11: |+
+ delete /* VD0030_11 */ from MWM_SCREEN where SCREEN_ID = ?
+
+#画面IDをキーに画面パーツ条件項目定義を削除
+VD0030_12: |+
+ delete /* VD0030_12 */ from MWM_SCREEN_PARTS_COND_ITEM
+ where SCREEN_PARTS_COND_ID in (select SCREEN_PARTS_COND_ID from MWM_SCREEN_PARTS_COND where SCREEN_ID = ?)
+
+#画面IDをキーに画面パーツ条件定義を削除
+VD0030_13: |+
+ delete /* VD0030_13 */ from MWM_SCREEN_PARTS_COND where SCREEN_ID = ?
+
+#画面IDをキーに画面マスタを抽出
+VD0030_14: |+
+ select /* VD0030_14 */ * from MWV_SCREEN where LOCALE_CODE = ? ${REPLACE} order by CORPORATION_CODE, SCREEN_CODE
+
+#任意の画面で使用されているコンテナ定義を抽出
+VD0031_00: |+
+ select /* VD0031_00 */ C.CONTAINER_ID, C.CORPORATION_CODE, C.CONTAINER_CODE
+  , nvl(MT.VAL, C.CONTAINER_NAME) as CONTAINER_NAME
+ from MWM_CONTAINER C
+  left join MWM_MULTILINGUAL MT
+   on MT.TABLE_NAME = 'MWM_CONTAINER'
+   and MT.ID = C.CONTAINER_ID
+   and MT.COLUMN_NAME = 'CONTAINER_NAME'
+   and MT.LOCALE_CODE = ?
+   and MT.DELETE_FLAG = '0'
+ where
+  C.DELETE_FLAG = '0'
+  and C.CONTAINER_ID in (
+   select S.CONTAINER_ID
+   from MWM_SCREEN S
+   where S.SCREEN_ID = ?
+   and S.DELETE_FLAG = '0'
+  )
+ order by
+  C.CONTAINER_CODE, C.CONTAINER_ID
+
+#未使用の全コンテナ定義一覧を抽出
+VD0031_01: |+
+ select /* VD0031_01 */ C.CONTAINER_ID, C.CORPORATION_CODE, C.CONTAINER_CODE
+  , nvl(MT.VAL, C.CONTAINER_NAME) as CONTAINER_NAME
+ from MWM_CONTAINER C
+  left join MWM_MULTILINGUAL MT
+   on MT.TABLE_NAME = 'MWM_CONTAINER'
+   and MT.ID = C.CONTAINER_ID
+   and MT.COLUMN_NAME = 'CONTAINER_NAME'
+   and MT.LOCALE_CODE = ?
+   and MT.DELETE_FLAG = '0'
+ where
+  C.CORPORATION_CODE = ?
+  and C.DELETE_FLAG = '0'
+  /* and C.CONTAINER_ID not in (
+   select S.CONTAINER_ID
+   from MWM_SCREEN S
+   where S.CONTAINER_ID is not null
+   and S.DELETE_FLAG = '0'
+  ) */
+ order by
+  C.CONTAINER_CODE, C.CONTAINER_ID
+
+#コンテナIDをキーに件数取得
+VD0031_02: |+
+ select /* VD0031_02 */ count(*) from MWM_CONTAINER
+ where CONTAINER_ID = ? and CORPORATION_CODE = ? and DELETE_FLAG = '0'
+
+#指定SCREEN_ID以外でスクリーンコードを使用している件数取得
+VD0031_03: |+
+ select /* VD0031_03 */ count(*) from MWM_SCREEN where CORPORATION_CODE = ? and SCREEN_CODE = ? and SCREEN_ID != ?
+
+#指定SCREE_ID以外でコンテナIDを使用している件数取得
+VD0031_04: |+
+ select /* VD0031_04 */ count(*) from MWM_SCREEN where CONTAINER_ID = ? and SCREEN_ID != ?
+
+#PKで画面定義情報を抽出
+VD0031_05: |+
+ select /* VD0031_05 */
+  S.SCREEN_ID, S.CONTAINER_ID, S.SCREEN_CODE, nvl(MT2.VAL, S.SCREEN_NAME) as SCREEN_NAME
+  , S.SCRATCH_FLAG, S.SCREEN_CUSTOM_CLASS, S.VERSION, S.DELETE_FLAG, S.UPLOAD_DATETIME
+  , S.SUBMIT_FUNC_NAME, S.SUBMIT_FUNC_PARAM, S.LOAD_FUNC_NAME, S.LOAD_FUNC_PARAM
+  , S.CHANGE_START_USER_FUNC_NAME, S.CHANGE_START_USER_FUNC_PARAM
+  , S.CORPORATION_CODE_CREATED, S.USER_CODE_CREATED, S.TIMESTAMP_CREATED
+  , S.CORPORATION_CODE_UPDATED, S.USER_CODE_UPDATED, S.TIMESTAMP_UPDATED
+ from MWM_SCREEN S
+  left join MWM_MULTILINGUAL MT2
+    on MT2.TABLE_NAME = 'MWM_SCREEN'
+    and MT2.ID = S.SCREEN_ID
+    and MT2.COLUMN_NAME = 'SCREEN_NAME'
+    and MT2.LOCALE_CODE = ?
+    and MT2.DELETE_FLAG = '0'
+ where
+  S.DELETE_FLAG = '0'
+  and S.SCREEN_ID = ?
+
+#画面パーツ条件定義を画面IDをキーに抽出
+VD0031_06: |+
+ select /* VD0031_06 */ PC.*, L.LOOKUP_NAME AS PARTS_CONDITION_TYPE_NAME
+ from MWM_SCREEN S
+   inner join MWM_SCREEN_PARTS_COND PC
+     on PC.SCREEN_ID = S.SCREEN_ID
+     and PC.DELETE_FLAG = '0'
+   inner join MWM_LOOKUP L
+     on L.CORPORATION_CODE = S.CORPORATION_CODE
+     and L.LOOKUP_GROUP_ID = 'PARTS_CONDITION_TYPE'
+     and L.LOOKUP_ID = PC.PARTS_CONDITION_TYPE
+     and L.LOCALE_CODE = ?
+     and L.DELETE_FLAG = '0'
+ where
+   S.SCREEN_ID = ? and S.DELETE_FLAG = '0'
+ order by
+   PC.PARTS_ID, PC.SORT_ORDER, PC.SCREEN_PARTS_COND_ID
+
+#画面パーツ条件項目定義を画面IDをキーに抽出
+VD0031_07: |+
+ select /* VD0031_07 */ CI.*
+ from MWM_SCREEN S
+   inner join MWM_SCREEN_PARTS_COND PC
+     on PC.SCREEN_ID = S.SCREEN_ID
+     and PC.DELETE_FLAG = '0'
+   inner join MWM_SCREEN_PARTS_COND_ITEM CI
+     on CI.SCREEN_PARTS_COND_ID = PC.SCREEN_PARTS_COND_ID
+     and CI.DELETE_FLAG = '0'
+ where
+   S.SCREEN_ID = ? and S.DELETE_FLAG = '0'
+ order by
+   CI.SCREEN_PARTS_COND_ID, CI.SORT_ORDER, CI.SCREEN_PARTS_COND_ITEM_ID
+
+#画面計算式定義を画面IDをキーに抽出
+VD0031_08: |+
+ select /* VD0031_08 */ SC.*
+ from MWM_SCREEN S
+   inner join MWM_SCREEN_CALC SC
+     on SC.SCREEN_ID = S.SCREEN_ID
+     and SC.DELETE_FLAG = '0'
+ where
+   S.SCREEN_ID = ? and S.DELETE_FLAG = '0'
+ order by
+   SC.PARTS_ID, SC.SORT_ORDER, SC.SCREEN_CALC_ID
+
+#画面計算式定義を削除
+VD0031_09: |+
+ delete /* VD0031_09 */ from MWM_SCREEN_CALC where
+
+#画面計算式項目定義を画面IDをキーに抽出
+VD0031_10: |+
+ select /* VD0031_10 */ CI.*
+ from MWM_SCREEN S
+   inner join MWM_SCREEN_CALC SC
+     on SC.SCREEN_ID = S.SCREEN_ID
+     and SC.DELETE_FLAG = '0'
+   inner join MWM_SCREEN_CALC_ITEM CI
+     on CI.SCREEN_CALC_ID = SC.SCREEN_CALC_ID
+     and CI.DELETE_FLAG = '0'
+ where
+   S.SCREEN_ID = ? and S.DELETE_FLAG = '0'
+ order by
+   CI.SCREEN_CALC_ID, CI.SORT_ORDER, CI.SCREEN_CALC_ITEM_ID
+
+#画面計算式項目定義を削除
+VD0031_11: |+
+ delete /* VD0031_11 */ from MWM_SCREEN_CALC_ITEM where
+
+#画面計算式有効条件定義を画面IDをキーに抽出
+VD0031_12: |+
+ select /* VD0031_12 */ EC.*
+ from MWM_SCREEN S
+   inner join MWM_SCREEN_CALC SC
+     on SC.SCREEN_ID = S.SCREEN_ID
+     and SC.DELETE_FLAG = '0'
+   inner join MWM_SCREEN_CALC_EC EC
+     on EC.SCREEN_CALC_ID = SC.SCREEN_CALC_ID
+     and EC.DELETE_FLAG = '0'
+ where
+   S.SCREEN_ID = ? and S.DELETE_FLAG = '0'
+ order by
+   EC.SCREEN_CALC_ID, EC.SORT_ORDER, EC.SCREEN_CALC_EC_ID
+
+#パーツ計算式有効条件定義を削除
+VD0031_13: |+
+ delete /* VD0031_13 */ from MWM_SCREEN_CALC_EC where
+
+#画面Javascript定義
+VD0031_14: |+
+ select /* VD0031_14 */
+  SJ.*
+ from
+  MWM_SCREEN_JAVASCRIPT SJ
+ where
+  SJ.DELETE_FLAG = '0' and SJ.SCREEN_ID = ?
+ order by
+  SJ.SCREEN_ID, SJ.SORT_ORDER
+
+#画面パーツ条件定義を削除
+VD0031_15: |+
+ delete /* VD0031_16 */ from MWM_SCREEN_PARTS_COND where
+
+#画面パーツ条件項目定義を削除
+VD0031_16: |+
+ delete /* VD0031_18 */ from MWM_SCREEN_PARTS_COND_ITEM where
+
+#Javascript定義
+VD0033_01: |+
+ select /* VD0033_01 */
+  J.JAVASCRIPT_ID, J.FILE_NAME, nvl(M.VAL, J.REMARKS) as REMARKS
+ from
+  MWM_JAVASCRIPT J
+  left join MWM_MULTILINGUAL M
+   on M.TABLE_NAME = 'MWM_JAVASCRIPT'
+   and M.ID = J.JAVASCRIPT_ID
+   and M.COLUMN_NAME = 'REMARKS'
+   and M.LOCALE_CODE = ?
+   and M.DELETE_FLAG = '0'
+ where
+  J.DELETE_FLAG = '0' and J.CORPORATION_CODE = ?
+ order by
+  J.FILE_NAME, J.JAVASCRIPT_ID
+
+#画面Javascript定義
+VD0033_02: |+
+ select /* VD0033_02 */
+  SJ.*
+ from
+  MWM_SCREEN_JAVASCRIPT SJ
+ where
+  SJ.DELETE_FLAG = '0' and SJ.SCREEN_ID = ?
+ order by
+  SJ.SCREEN_ID, SJ.SORT_ORDER
+
+#指定コンテナをルートコンテナとする画面一覧
+VD0034_01: |+
+ select /* VD0034_01 */ * from MWV_SCREEN where CONTAINER_ID = ? and LOCALE_CODE = ? and DELETE_FLAG = '0'
+
+#コピー元画面で画面パーツ条件または画面パーツ計算式が定義されているパーツを抽出
+VD0034_02: |+
+ select /* VD0034_02 */
+  S.SCREEN_ID, S.SCREEN_NAME, P.CONTAINER_ID, P.PARTS_ID, nvl(M.VAL, P.LABEL_TEXT) as LABEL_TEXT, P.PARTS_TYPE
+  , (select count(*) from MWM_SCREEN_PARTS_COND PC where PC.SCREEN_ID = S.SCREEN_ID and PC.PARTS_ID = P.PARTS_ID and  PC.DELETE_FLAG = '0') as COND_COUNT
+  , (select count(*) from MWM_SCREEN_CALC CLC where CLC.SCREEN_ID = S.SCREEN_ID and CLC.PARTS_ID = P.PARTS_ID and CLC.DELETE_FLAG = '0') as CALC_COUNT
+ from
+  MWV_SCREEN S
+  inner join MWM_PARTS P
+   on P.CONTAINER_ID = S.CONTAINER_ID
+   and P.DELETE_FLAG = '0'
+  left join MWM_MULTILINGUAL M
+   on M.TABLE_NAME = 'MWM_PARTS'
+   and M.ID = P.PARTS_ID
+   and M.COLUMN_NAME = 'LABEL_TEXT'
+   and M.LOCALE_CODE = S.LOCALE_CODE
+   and M.DELETE_FLAG = '0'
+ where
+  S.SCREEN_ID = ?
+  and S.LOCALE_CODE = ?
+  and S.DELETE_FLAG = '0'
+  and (
+   exists (
+    select * from MWM_SCREEN_PARTS_COND PC where PC.SCREEN_ID = S.SCREEN_ID and PC.PARTS_ID = P.PARTS_ID and PC.DELETE_FLAG = '0'
+   ) or exists (
+    select * from MWM_SCREEN_CALC CLC where CLC.SCREEN_ID = S.SCREEN_ID and CLC.PARTS_ID = P.PARTS_ID and CLC.DELETE_FLAG = '0'
+   )
+  )
+ order by S.SCREEN_ID, P.CONTAINER_ID, P.PARTS_ID
+
+
+#画面プロセス定義一覧の件数
+VD0040_01: |+
+ select /* VD0040_01 */ count(*) from MWV_SCREEN_PROCESS_DEF where LOCALE_CODE = ?
+
+#画面プロセス定義一覧の抽出
+VD0040_02: |+
+ select /* VD0040_02 */ * from MWV_SCREEN_PROCESS_DEF where LOCALE_CODE = ?
+
+#画面プロセス定義に紐付くアクセス可能画面マスタを削除
+VD0040_03: |+
+ delete /* VD0040_03 */ from MWM_ACCESSIBLE_SCREEN where SCREEN_PROCESS_ID = ?
+
+#画面プロセス定義に紐付くブロック表示表示条件マスタを削除
+VD0040_04: |+
+ delete /* VD0040_04 */ from MWM_BLOCK_DISPLAY where SCREEN_PROCESS_ID = ?
+
+#画面プロセス定義を削除
+VD0040_05: |+
+ delete /* VD0040_05 */ from MWM_SCREEN_PROCESS_DEF where SCREEN_PROCESS_ID = ?
+
+#画面一覧
+VD0041_01: |+
+ select /* VD0041_01 */ S.SCREEN_ID, S.SCREEN_CODE, S.SCREEN_NAME
+ from MWV_SCREEN S
+ where S.LOCALE_CODE = ? and S.CORPORATION_CODE = ?
+ order by S.SCREEN_CODE ASC, S.SCREEN_ID ASC
+
+#画面プロセス定義をユニークキーで抽出
+VD0041_02: |+
+ select /* VD0041_02 */ * from MWV_SCREEN_PROCESS_DEF where LOCALE_CODE = ? and SCREEN_PROCESS_ID = ?
+
+#画面プロセス定義でプロセス定義＋画面の組み合わせが存在するか
+VD0041_03: |+
+ select /* VD0041_03 */ count(*)
+ from MWM_SCREEN_PROCESS_DEF SPD
+ where
+  CORPORATION_CODE = ?
+  and PROCESS_DEF_CODE = ?
+  and PROCESS_DEF_DETAIL_CODE = ?
+  and SCREEN_ID = ?
+  and SCREEN_PROCESS_ID != ?
+
+#外部Javascript一覧
+VD0050_01: |+
+ select /* VD0050_01 */ count(*)
+ from MWM_JAVASCRIPT J
+  inner join WFM_LOCALE LO
+   on LO.LOCALE_CODE = ?
+  inner join MWM_JAVASCRIPT_HISTORY H
+   on H.JAVASCRIPT_ID = J.JAVASCRIPT_ID
+  left join MWM_MULTILINGUAL M1
+   on M1.TABLE_NAME = 'MWM_JAVASCRIPT_HISTORY'
+   and M1.ID = H.JAVASCRIPT_HISTORY_ID
+   and M1.COLUMN_NAME = 'REMARKS'
+   and M1.LOCALE_CODE = LO.LOCALE_CODE
+   and M1.DELETE_FLAG = '0'
+
+#外部Javascript一覧
+VD0050_02: |+
+ select /* VD0050_02 */ J.FILE_NAME, J.CORPORATION_CODE, H.JAVASCRIPT_HISTORY_ID
+  , H.JAVASCRIPT_ID, H.HISTORY_NO, nvl(M1.VAL, J.REMARKS) as REMARKS, H.DELETE_FLAG
+  , H.VERSION, H.TIMESTAMP_UPDATED
+ from MWM_JAVASCRIPT J
+  inner join WFM_LOCALE LO
+   on LO.LOCALE_CODE = ?
+  inner join MWM_JAVASCRIPT_HISTORY H
+   on H.JAVASCRIPT_ID = J.JAVASCRIPT_ID
+  left join MWM_MULTILINGUAL M1
+   on M1.TABLE_NAME = 'MWM_JAVASCRIPT_HISTORY'
+   and M1.ID = H.JAVASCRIPT_HISTORY_ID
+   and M1.COLUMN_NAME = 'REMARKS'
+   and M1.LOCALE_CODE = LO.LOCALE_CODE
+   and M1.DELETE_FLAG = '0'
+
+#Javascript定義の削除
+VD0050_03: |+
+ delete /* VD0050_03 */ from MWM_JAVASCRIPT where JAVASCRIPT_ID = ?
+
+#Javascript定義履歴の削除
+VD0050_04: |+
+ delete /* VD0050_04 */ from MWM_JAVASCRIPT_HISTORY where JAVASCRIPT_ID = ?
+
+#コンテナJavascript定義の削除
+VD0050_05: |+
+ delete /* VD0050_05 */ from MWM_CONTAINER_JAVASCRIPT where JAVASCRIPT_ID = ?
+
+#コンテナJavascript定義の削除
+VD0050_06: |+
+ delete /* VD0050_06 */ from MWM_SCREEN_JAVASCRIPT where JAVASCRIPT_ID = ?
+
+#コンテナJavascript
+VD0050_07: |+
+ select /* VD0050_07 */
+  CJ.CONTAINER_JAVASCRIPT_ID as ID, J.FILE_NAME, C.CONTAINER_CODE, C.CONTAINER_NAME
+ from
+  MWM_JAVASCRIPT J
+  inner join MWM_CONTAINER_JAVASCRIPT CJ
+   on CJ.JAVASCRIPT_ID = J.JAVASCRIPT_ID
+   and CJ.DELETE_FLAG = '0'
+  inner join MWV_CONTAINER C
+   on C.CONTAINER_ID = CJ.CONTAINER_ID
+   and C.LOCALE_CODE = ?
+ where J.CORPORATION_CODE = ? and J.DELETE_FLAG = '0'
+ order by
+  J.FILE_NAME, C.CONTAINER_CODE, CJ.CONTAINER_JAVASCRIPT_ID
+
+#画面Javascript
+VD0050_08: |+
+ select
+  SJ.SCREEN_JAVASCRIPT_ID as ID, J.FILE_NAME, S.SCREEN_CODE, S.SCREEN_NAME
+ from
+  MWM_JAVASCRIPT J
+  inner join MWM_SCREEN_JAVASCRIPT SJ
+   on SJ.JAVASCRIPT_ID = J.JAVASCRIPT_ID
+   and SJ.DELETE_FLAG = '0'
+  inner join MWV_SCREEN S
+   on S.SCREEN_ID = SJ.SCREEN_ID
+   and S.LOCALE_CODE = ?
+ where J.CORPORATION_CODE = ? and J.DELETE_FLAG = '0'
+ order by
+  J.FILE_NAME, S.SCREEN_CODE, SJ.SCREEN_JAVASCRIPT_ID
+
+#外部JavascriptをPKで抽出
+VD0051_01: |+
+ select /* VD0051_01 */ H.JAVASCRIPT_HISTORY_ID, H.JAVASCRIPT_ID, H.HISTORY_NO
+  , H.SCRIPT, nvl(M1.VAL, J.REMARKS) as REMARKS, J.FILE_NAME
+  , J.CORPORATION_CODE, H.VERSION, H.DELETE_FLAG, H.CORPORATION_CODE_CREATED
+  , H.USER_CODE_CREATED, H.TIMESTAMP_CREATED, H.CORPORATION_CODE_UPDATED
+  , H.USER_CODE_UPDATED, H.TIMESTAMP_UPDATED
+ from MWM_JAVASCRIPT J
+  inner join WFM_LOCALE LO
+   on LO.LOCALE_CODE = ?
+  inner join MWM_JAVASCRIPT_HISTORY H
+   on H.JAVASCRIPT_ID = J.JAVASCRIPT_ID
+  left join MWM_MULTILINGUAL M1
+   on M1.TABLE_NAME = 'MWM_JAVASCRIPT_HISTORY'
+   and M1.ID = H.JAVASCRIPT_HISTORY_ID
+   and M1.COLUMN_NAME = 'REMARKS'
+   and M1.LOCALE_CODE = LO.LOCALE_CODE
+   and M1.DELETE_FLAG = '0'
+ where
+  H.JAVASCRIPT_HISTORY_ID = ?
+
+#既存のJavascript履歴を論理削除
+VD0051_02: |+
+ update /* VD0051_02 */ MWM_JAVASCRIPT_HISTORY
+ set CORPORATION_CODE_UPDATED = ?
+  , USER_CODE_UPDATED = ?
+  , TIMESTAMP_UPDATED = ?
+  , VERSION = VERSION + 1
+  , DELETE_FLAG = '1'
+ where
+  JAVASCRIPT_ID = ? and DELETE_FLAG = '0'
+
+#履歴Noの最大値を抽出
+VD0051_03: |+
+ select /* VD0051_03 */ nvl(max(HISTORY_NO), 0) as MAX_HISTORY_NO from MWM_JAVASCRIPT_HISTORY where JAVASCRIPT_ID = ?
+
+#ファイル名をキーにJavascript定義を抽出
+VD0051_04: |+
+ select /* VD0051_04 */ * from MWM_JAVASCRIPT where CORPORATION_CODE = ? and FILE_NAME = ?
+
+#パーツ選択肢一覧
+VD0060_01: |+
+ select /* VD0060_01 */ count(*)
+ from MWM_OPTION O
+  inner join WFM_LOCALE LO
+   on LO.LOCALE_CODE = ?
+  left join MWM_MULTILINGUAL M1
+   on M1.TABLE_NAME = 'MWM_OPTION'
+   and M1.ID = O.OPTION_ID
+   and M1.COLUMN_NAME = 'OPTION_NAME'
+   and M1.LOCALE_CODE = LO.LOCALE_CODE
+   and M1.DELETE_FLAG = '0'
+
+#パーツ選択肢一覧
+VD0060_02: |+
+ select /* VD0060_02 */ O.OPTION_ID, O.OPTION_CODE, nvl(M1.VAL, O.OPTION_NAME) AS OPTION_NAME
+  , O.CORPORATION_CODE, O.DELETE_FLAG, O.VERSION
+ from MWM_OPTION O
+  inner join WFM_LOCALE LO
+   on LO.LOCALE_CODE = ?
+  left join MWM_MULTILINGUAL M1
+   on M1.TABLE_NAME = 'MWM_OPTION'
+   and M1.ID = O.OPTION_ID
+   and M1.COLUMN_NAME = 'OPTION_NAME'
+   and M1.LOCALE_CODE = LO.LOCALE_CODE
+   and M1.DELETE_FLAG = '0'
+
+#パーツ選択肢マスタの削除
+VD0060_03: |+
+ delete /* VD0060_03 */ from MWM_OPTION where OPTION_ID = ?
+
+#パーツ選択肢項目マスタの削除
+VD0060_04: |+
+ delete /* VD0060_04 */ from MWM_OPTION_ITEM where OPTION_ID = ?
+
+#パーツ選択肢定義の削除
+VD0060_05: |+
+ delete /* VD0060_05 */ from MWM_PARTS_OPTION where OPTION_ID = ?
+
+#画面多言語マスタを削除
+VD0060_06: |+
+ delete /* VD0060_06 */ from MWM_MULTILINGUAL where TABLE_NAME = ? and
+
+#選択肢IDに紐付く選択肢項目ID一覧の抽出
+VD0060_07: |+
+ select /* VD0060_07 */ OPTION_ITEM_ID from MWM_OPTION_ITEM where OPTION_ID = ?
+
+#選択肢一覧を参照しているコンテナ一覧を抽出
+VD0060_08: |+
+ select /* VD0060_08 */
+  ROWNUM as ID, PO.OPTION_ID, C.CONTAINER_ID, C.CONTAINER_CODE, C.CONTAINER_NAME
+ from MWM_PARTS_OPTION PO
+  inner join MWM_PARTS P
+   on P.PARTS_ID = PO.PARTS_ID
+   and P.DELETE_FLAG = '0'
+  inner join MWV_CONTAINER C
+   on C.CONTAINER_ID = P.CONTAINER_ID
+   and C.LOCALE_CODE = ?
+ where
+  PO.DELETE_FLAG = '0'
+  and ${OPTION_IDS}
+ order by
+  C.CONTAINER_CODE, PO.OPTION_ID
+
+#パーツ選択肢マスタの抽出
+VD0061_01: |+
+ select /* VD0061_01 */ * from MWM_OPTION where OPTION_CODE = ? and CORPORATION_CODE = ?
+
+#パーツ選択肢項目マスタの抽出
+VD0062_01: |+
+ select /* VD0062_01 */ I.OPTION_ITEM_ID, I.OPTION_ID, I.CODE, nvl(M1.VAL, I.LABEL) AS LABEL
+  , I.DELETE_FLAG, I.VERSION
+ from MWM_OPTION O
+  inner join MWM_OPTION_ITEM I
+   on I.OPTION_ID = O.OPTION_ID
+   and I.DELETE_FLAG = '0'
+  inner join WFM_LOCALE LO
+   on LO.LOCALE_CODE = ?
+  left join MWM_MULTILINGUAL M1
+   on M1.TABLE_NAME = 'MWM_OPTION_ITEM'
+   and M1.ID = I.OPTION_ITEM_ID
+   and M1.COLUMN_NAME = 'LABEL'
+   and M1.LOCALE_CODE = LO.LOCALE_CODE
+   and M1.DELETE_FLAG = '0'
+ where
+   O.OPTION_ID = ? and O.DELETE_FLAG = '0'
+ order by
+   I.SORT_ORDER, I.OPTION_ITEM_ID
+
+#パーツ選択肢項目マスタの削除
+VD0062_02: |+
+ delete /* VD0062_02 */ from MWM_OPTION_ITEM where
+
+#新規申請メニュー割当一覧
+VD0090_01: |+
+ select /* VD0090_01 */ ${REPLACE}
+ from MWV_SCREEN_PROCESS_MENU SPM
+ where SPM.CORPORATION_CODE = ? and SPM.LOCALE_CODE = ? and SPM.URL = '-'
+
+#新規申請メニュー割当設定（画面プロセス／メニュー連携IDなし）
+VD0091_01: |+
+ select /* VD0091_01 */ SPM.*, ROWNUM as ROWNUM_ID
+ from MWV_SCREEN_PROCESS_MENU SPM
+ where SPM.MENU_ID = ? and SPM.CORPORATION_CODE = ? and SPM.LOCALE_CODE = ?
+
+#新規申請メニュー割当設定（画面プロセス／メニュー連携IDあり）
+VD0091_02: |+
+ select /* VD0091_02 */ SPM.*, ROWNUM as ROWNUM_ID
+ from MWV_SCREEN_PROCESS_MENU SPM
+ where SPM.SCREEN_PROCESS_MENU_ID = ? and SPM.LOCALE_CODE = ?
+
+#画面プロセス定義一覧
+VD0091_03: |+
+ select /* VD0091_03 */ *
+ from MWV_SCREEN_PROCESS_DEF
+ where CORPORATION_CODE = ? and LOCALE_CODE = ?
+ order by CORPORATION_CODE, SCREEN_PROCESS_CODE
+
+#コンテナ定義を抽出
+VD0110_01: |+
+ select /* VD0110_01 */ C.CONTAINER_ID, C.CORPORATION_CODE, C.CONTAINER_CODE
+  , nvl(MT.VAL, C.CONTAINER_NAME) as CONTAINER_NAME, C.BG_HTML, C.TABLE_NAME, C.CUSTOM_CSS_STYLE
+  , C.TABLE_SYNC_TIMESTAMP, C.TABLE_MODIFIED_TIMESTAMP, C.PARTS_CODE_SEQ, C.FONT_SIZE
+  , C.SUBMIT_FUNC_NAME, C.SUBMIT_FUNC_PARAM, C.LOAD_FUNC_NAME, C.LOAD_FUNC_PARAM
+  , C.CHANGE_START_USER_FUNC_NAME, C.CHANGE_START_USER_FUNC_PARAM
+  , C.NOT_DROP_TABLE_FLAG, C.DELETE_FLAG, C.VERSION
+  , C.CORPORATION_CODE_CREATED, C.USER_CODE_CREATED, C.TIMESTAMP_CREATED, C.CORPORATION_CODE_UPDATED
+  , C.USER_CODE_UPDATED, C.TIMESTAMP_UPDATED
+ from MWM_CONTAINER C
+  left join MWM_MULTILINGUAL MT
+   on MT.TABLE_NAME = 'MWM_CONTAINER'
+   and MT.ID = C.CONTAINER_ID
+   and MT.COLUMN_NAME = 'CONTAINER_NAME'
+   and MT.LOCALE_CODE = ?
+   and MT.DELETE_FLAG = '0'
+ where
+  C.CONTAINER_ID = ? and C.DELETE_FLAG = '0'
+
+#パーツ定義を抽出
+VD0110_02: |+
+ select /* VD0110_02 */ P.PARTS_ID, P.CONTAINER_ID, P.PARTS_CODE, P.PARTS_TYPE, P.REQUIRED_FLAG
+  , nvl( MT1.VAL, P.LABEL_TEXT) as LABEL_TEXT, P.RENDERING_METHOD, P.BG_HTML_CELL_NO
+  , nvl(MT2.VAL, P.DESCRIPTION) as DESCRIPTION, P.SORT_ORDER, P.GRANT_TAB_INDEX_FLAG
+  , P.COPY_TARGET_FLAG, P.BUSINESS_INFO_CODE, P.DOC_BUSINESS_INFO_CODE, P.COL_XS, P.COL_SM
+  , P.COL_MD, P.COL_LG, P.MOBILE_INVISIBLE_FLAG, P.CSS_CLASS, P.CSS_STYLE, P.FONT_SIZE
+  , P.FONT_COLOR, P.FONT_BOLD, P.BG_COLOR_INPUT, P.BG_COLOR_REFER, P.EXT_INFO
+  , P.BG_TRANSPARENT_FLAG, P.DELETE_FLAG, P.VERSION, P.CORPORATION_CODE_CREATED
+  , P.USER_CODE_CREATED, P.TIMESTAMP_CREATED, P.CORPORATION_CODE_UPDATED, P.USER_CODE_UPDATED
+  , P.TIMESTAMP_UPDATED
+ from
+  MWM_CONTAINER C
+  inner join MWM_PARTS P
+   on P.CONTAINER_ID = C.CONTAINER_ID
+   and P.DELETE_FLAG = '0'
+  inner join WFM_LOCALE LC
+   on LC.LOCALE_CODE = ?
+  left join MWM_MULTILINGUAL MT1
+   on MT1.TABLE_NAME = 'MWM_PARTS'
+   and MT1.ID = P.PARTS_ID
+   and MT1.COLUMN_NAME = 'LABEL_TEXT'
+   and MT1.LOCALE_CODE = LC.LOCALE_CODE
+   and MT1.DELETE_FLAG = '0'
+  left join MWM_MULTILINGUAL MT2
+   on MT2.TABLE_NAME = 'MWM_PARTS'
+   and MT2.ID = P.PARTS_ID
+   and MT2.COLUMN_NAME = 'DESCRIPTION'
+   and MT2.LOCALE_CODE = LC.LOCALE_CODE
+   and MT2.DELETE_FLAG = '0'
+ where
+  C.CONTAINER_ID = ? and C.DELETE_FLAG = '0'
+ order by
+  P.CONTAINER_ID, P.SORT_ORDER, P.PARTS_ID
+
+#表示条件を抽出
+VD0110_03: |+
+ select /* VD0110_03 */ DC.DC_ID, nvl(M.VAL, DC.DC_NAME) as DC_NAME, DC.SORT_ORDER, DC.VERSION, DC.DELETE_FLAG
+ from MWM_DC DC
+  left join MWM_MULTILINGUAL M
+   on M.TABLE_NAME = 'MWM_DC'
+   and M.ID = DC.DC_ID
+   and M.COLUMN_NAME = 'DC_NAME'
+   and M.LOCALE_CODE = ?
+   and M.DELETE_FLAG = '0'
+ where
+  exists (
+   select *
+   from  MWM_PARTS P
+    inner join MWM_PARTS_DC PDC
+     on PDC.PARTS_ID = P.PARTS_ID
+     and PDC.DELETE_FLAG = '0'
+   where
+    DC.DC_ID = PDC.DC_ID
+    and P.DELETE_FLAG = '0'
+    and P.CONTAINER_ID = ?
+  )
+ order by
+  DC.SORT_ORDER, DC.DC_ID
+
+#パーツ子要素をUKで抽出
+VD0110_04: |+
+ select /* VD0110_04 */ *
+ from MWM_PARTS_CHILD_HOLDER
+ where DELETE_FLAG = '0' and PARTS_ID = ?
+
+#パーツ子要素をコンテナIDをキーに抽出
+VD0110_05: |+
+ select /* VD0110_05 */ PC.*
+ from MWM_CONTAINER C
+  inner join MWM_PARTS P
+   on P.CONTAINER_ID = C.CONTAINER_ID
+   and P.DELETE_FLAG = '0'
+  inner join MWM_PARTS_CHILD_HOLDER PC
+   on PC.PARTS_ID = P.PARTS_ID
+   and PC.DELETE_FLAG = '0'
+ where
+  C.DELETE_FLAG = '0' and C.CONTAINER_ID = ?
+ order by
+  PC.PARTS_CHILD_HOLDER_ID
+
+#パーツカラム定義をコンテナIDをキーに抽出
+VD0110_06: |+
+  select /* VD0110_06 */
+    PC.*
+  from MWM_CONTAINER C
+    inner join MWM_PARTS P
+      on P.CONTAINER_ID = C.CONTAINER_ID
+      and P.DELETE_FLAG = '0'
+    inner join MWM_PARTS_COLUMN PC
+      on PC.PARTS_ID = P.PARTS_ID
+      and PC.DELETE_FLAG = '0'
+  where
+    C.CONTAINER_ID = ? and C.DELETE_FLAG = '0'
+  order by
+    PC.SORT_ORDER, PC.COLUMN_NAME
+
+#MWM_PARTS_CHILD_HOLDERの一括削除
+VD0110_07: |+
+ delete /* VD0110_07 */ from MWM_PARTS_CHILD_HOLDER where
+
+#パーツカラム定義情報を削除
+VD0110_08: |+
+ delete /* VD0110_08 */ from MWM_PARTS_COLUMN where
+
+#パーツカラム定義を抽出
+VD0110_09: |+
+ select /* VD0110_09 */ *
+ from MWM_PARTS_COLUMN
+ where DELETE_FLAG = '0' and CONTAINER_ID = ? and COLUMN_NAME = ?
+
+#コンテナの循環参照チェック用SQL
+VD0110_10: |+
+ with X /* VD0110_10 */
+  (CONTAINER_ID, PARTS_ID, PARTS_CODE, CHILD_CONTAINER_ID)
+ as (
+  (
+   select
+    C.CONTAINER_ID, P.PARTS_ID, P.PARTS_CODE, CH.CHILD_CONTAINER_ID
+   from MWM_CONTAINER C
+    inner join MWM_PARTS P
+     on P.CONTAINER_ID = C.CONTAINER_ID
+     and P.DELETE_FLAG = '0'
+    inner join MWM_PARTS_CHILD_HOLDER CH
+     on CH.PARTS_ID = P.PARTS_ID
+     and CH.DELETE_FLAG = '0'
+   where
+    C.DELETE_FLAG = '0'
+    and C.CONTAINER_ID = ?
+  ) union all (
+   select
+    C.CONTAINER_ID, P.PARTS_ID, P.PARTS_CODE, CH.CHILD_CONTAINER_ID
+   from X
+    inner join MWM_CONTAINER C
+     on C.CONTAINER_ID = X.CHILD_CONTAINER_ID
+     and C.DELETE_FLAG = '0'
+    inner join MWM_PARTS P
+     on P.CONTAINER_ID = C.CONTAINER_ID
+     and P.DELETE_FLAG = '0'
+    inner join MWM_PARTS_CHILD_HOLDER CH
+     on CH.PARTS_ID = P.PARTS_ID
+     and CH.DELETE_FLAG = '0'
+  )
+ )
+ select * from X
+
+#パーツ関連定義をコンテナIDをキーに抽出
+VD0110_13: |+
+ select /* VD0110_13 */ PR.*
+ from MWM_PARTS P
+  inner join MWM_PARTS_RELATION PR
+   on PR.PARTS_ID = P.PARTS_ID
+   and PR.DELETE_FLAG = '0'
+ where
+  P.CONTAINER_ID = ?
+  and P.DELETE_FLAG = '0'
+ order by
+  PR.PARTS_ID, PR.SORT_ORDER, PR.PARTS_RELATION_ID
+
+#パーツ関連定義を削除
+VD0110_14: |+
+ delete /* VD0110_14 */ from MWM_PARTS_RELATION where TARGET_PARTS_ID in
+
+#パーツ計算式定義をコンテナIDをキーに抽出
+VD0110_15: |+
+ select /* VD0110_15 */ PC.*
+ from MWM_CONTAINER C
+   inner join MWM_PARTS P
+     on P.CONTAINER_ID = C.CONTAINER_ID
+     and P.DELETE_FLAG = '0'
+   inner join MWM_PARTS_CALC PC
+     on PC.PARTS_ID = P.PARTS_ID
+     and PC.DELETE_FLAG = '0'
+ where
+   C.CONTAINER_ID = ? and C.DELETE_FLAG = '0'
+ order by
+   PC.PARTS_ID, PC.SORT_ORDER, PC.PARTS_CALC_ID
+
+#パーツ計算式定義を削除
+VD0110_16: |+
+ delete /* VD0110_16 */ from MWM_PARTS_CALC where
+
+#パーツ計算式項目定義をコンテナIDをキーに抽出
+VD0110_17: |+
+ select /* VD0110_17 */ CI.*
+ from MWM_CONTAINER C
+   inner join MWM_PARTS P
+     on P.CONTAINER_ID = C.CONTAINER_ID
+     and P.DELETE_FLAG = '0'
+   inner join MWM_PARTS_CALC PC
+     on PC.PARTS_ID = P.PARTS_ID
+     and PC.DELETE_FLAG = '0'
+   inner join MWM_PARTS_CALC_ITEM CI
+     on CI.PARTS_CALC_ID = PC.PARTS_CALC_ID
+     and CI.DELETE_FLAG = '0'
+ where
+   C.CONTAINER_ID = ? and C.DELETE_FLAG = '0'
+ order by
+   CI.PARTS_CALC_ID, CI.SORT_ORDER, CI.PARTS_CALC_ITEM_ID
+
+#パーツ計算式項目定義を削除
+VD0110_18: |+
+ delete /* VD0110_18 */ from MWM_PARTS_CALC_ITEM where
+
+#パーツ計算式有効条件定義をコンテナIDをキーに抽出
+VD0110_19: |+
+ select /* VD0110_19 */ EC.*
+ from MWM_CONTAINER C
+   inner join MWM_PARTS P
+     on P.CONTAINER_ID = C.CONTAINER_ID
+     and P.DELETE_FLAG = '0'
+   inner join MWM_PARTS_CALC PC
+     on PC.PARTS_ID = P.PARTS_ID
+     and PC.DELETE_FLAG = '0'
+   inner join MWM_PARTS_CALC_EC EC
+     on EC.PARTS_CALC_ID = PC.PARTS_CALC_ID
+     and EC.DELETE_FLAG = '0'
+ where
+   C.CONTAINER_ID = ? and C.DELETE_FLAG = '0'
+ order by
+   EC.PARTS_CALC_ID, EC.SORT_ORDER, EC.PARTS_CALC_EC_ID
+
+#パーツ計算式有効条件定義を削除
+VD0110_20: |+
+ delete /* VD0110_20 */ from MWM_PARTS_CALC_EC where
+
+#パーツIDに紐付くパーツ計算式定義を抽出
+VD0110_21: |+
+ select /* VD0110_21 */ PC.* from MWM_PARTS_CALC PC where
+
+#コンテナに紐付くJavascript定義を抽出
+VD0110_22: |+
+ select /* VD0110_22 */
+  CJ.*
+ from
+  MWM_CONTAINER_JAVASCRIPT CJ
+ where
+  CJ.DELETE_FLAG = '0' and CJ.CONTAINER_ID = ?
+ order by
+  CJ.SORT_ORDER, CJ.CONTAINER_JAVASCRIPT_ID
+
+#コンテナに紐付くパーツ選択肢定義を抽出
+VD0110_23: |+
+ select /* VD0110_23 */
+   O.*
+ from MWM_CONTAINER C
+ inner join MWM_PARTS P
+   on (P.CONTAINER_ID = C.CONTAINER_ID and P.DELETE_FLAG = '0')
+ inner join MWM_PARTS_OPTION O
+   on (P.PARTS_ID = O.PARTS_ID and O.DELETE_FLAG = '0')
+ where C.CONTAINER_ID = ?
+
+#コンテナに紐付くドロップダウンリスト及びラジオボタンに紐づく選択肢項目を抽出
+VD0110_24: |+
+ select /* VD0110_24 */
+   I.OPTION_ITEM_ID
+   , I.OPTION_ID
+   , I.CODE
+   , nvl(M.VAL, I.LABEL) LABEL
+ from MWM_OPTION_ITEM I
+ left join (
+   select *  from MWM_MULTILINGUAL
+   where TABLE_NAME = 'MWM_OPTION_ITEM' and COLUMN_NAME = 'LABEL' and LOCALE_CODE = ? and DELETE_FLAG = '0'
+ ) M
+   on (M.ID = I.OPTION_ITEM_ID)
+ where I.DELETE_FLAG = '0'
+   and exists (
+     select 'x' from MWM_CONTAINER C
+     inner join MWM_PARTS P
+       on (P.CONTAINER_ID = C.CONTAINER_ID and P.DELETE_FLAG = '0')
+     inner join MWM_PARTS_OPTION O
+       on (P.PARTS_ID = O.PARTS_ID and O.DELETE_FLAG = '0')
+     where C.CONTAINER_ID = ?
+       and O.OPTION_ID = I.OPTION_ID
+ )
+ order by
+   I.OPTION_ID
+   , I.SORT_ORDER
+
+#パーツ汎用テーブル情報
+VD0110_25: |+
+ select /* VD0110_25 */ TI.*
+ from MWM_PARTS_TABLE_INFO TI
+ where TI.PARTS_ID in (
+  select P.PARTS_ID from MWM_PARTS P
+  where P.CONTAINER_ID = ? and P.DELETE_FLAG = '0'
+ )
+
+#パーツ添付ファイル
+VD0110_26: |+
+ select /* VD0110_26 */ * from MWM_PARTS_ATTACH_FILE where DELETE_FLAG = '0' and PARTS_ID in (
+  select PARTS_ID from MWM_PARTS where DELETE_FLAG = '0' and CONTAINER_ID = ?
+ )
+
+#パーツイベント定義
+VD0110_27: |+
+ select /* VD0110_27 */ * from MWM_PARTS_EVENT where DELETE_FLAG = '0' and PARTS_ID in (
+  select PARTS_ID from MWM_PARTS where DELETE_FLAG = '0' and CONTAINER_ID = ?
+ )
+ order by SORT_ORDER, EVENT_NAME, PARTS_EVENT_ID
+
+#パーツIDをキーにパーツイベント定義を削除
+VD0110_28: |+
+ delete /* VD0110_28 */ from MWM_PARTS_EVENT where
+
+#パーツ条件定義をコンテナIDをキーに抽出
+VD0110_29: |+
+ select /* VD0110_29 */ PC.*, L.LOOKUP_NAME AS PARTS_CONDITION_TYPE_NAME
+ from MWM_CONTAINER C
+   inner join MWM_PARTS P
+     on P.CONTAINER_ID = C.CONTAINER_ID
+     and P.DELETE_FLAG = '0'
+   inner join MWM_PARTS_COND PC
+     on PC.PARTS_ID = P.PARTS_ID
+     and PC.DELETE_FLAG = '0'
+   inner join MWM_LOOKUP L
+     on L.CORPORATION_CODE = C.CORPORATION_CODE
+     and L.LOOKUP_GROUP_ID = 'PARTS_CONDITION_TYPE'
+     and L.LOOKUP_ID = PC.PARTS_CONDITION_TYPE
+     and L.LOCALE_CODE = ?
+     and L.DELETE_FLAG = '0'
+ where
+   C.CONTAINER_ID = ? and C.DELETE_FLAG = '0'
+ order by
+   PC.PARTS_ID, PC.SORT_ORDER, PC.PARTS_COND_ID
+
+#パーツ条件定義を削除
+VD0110_30: |+
+ delete /* VD0110_30 */ from MWM_PARTS_COND where
+
+#パーツ条件項目定義をコンテナIDをキーに抽出
+VD0110_31: |+
+ select /* VD0110_31 */ CI.*
+ from MWM_CONTAINER C
+   inner join MWM_PARTS P
+     on P.CONTAINER_ID = C.CONTAINER_ID
+     and P.DELETE_FLAG = '0'
+   inner join MWM_PARTS_COND PC
+     on PC.PARTS_ID = P.PARTS_ID
+     and PC.DELETE_FLAG = '0'
+   inner join MWM_PARTS_COND_ITEM CI
+     on CI.PARTS_COND_ID = PC.PARTS_COND_ID
+     and CI.DELETE_FLAG = '0'
+ where
+   C.CONTAINER_ID = ? and C.DELETE_FLAG = '0'
+ order by
+   CI.PARTS_COND_ID, CI.SORT_ORDER, CI.PARTS_COND_ITEM_ID
+
+#パーツ条件項目定義を削除
+VD0110_32: |+
+ delete /* VD0110_32 */ from MWM_PARTS_COND_ITEM where
+
+#パーツIDに紐付くパーツ条件定義を抽出
+VD0110_33: |+
+ select /* VD0110_33 */ PC.* from MWM_PARTS_COND PC where
+
+#パーツ条件定義一覧を抽出
+VD0111_01: |+
+ select /* VD0111_01 */ *
+ from MWM_LOOKUP
+ where CORPORATION_CODE= ?
+   and LOOKUP_GROUP_ID = 'PARTS_CONDITION_TYPE'
+   and LOCALE_CODE = ?
+   and DELETE_FLAG = '0'
+ order by
+   SORT_ORDER, LOOKUP_ID
+
+#画面パーツ条件定義が設定されてある画面一覧を抽出
+VD0111_02: |+
+ select /* VD0111_02 */ S.*
+ from MWV_SCREEN S
+ where S.LOCALE_CODE = ?
+   and exists (
+     select 'X'
+     from MWM_SCREEN_PARTS_COND PC
+     where PC.SCREEN_ID = S.SCREEN_ID
+       and PC.PARTS_ID = ?
+       and PC.DELETE_FLAG = '0'
+   )
+
+#パーツ条件定義が設定されてあるコンテナ名を抽出
+VD0111_03: |+
+ select /* VD0111_03 */ C.*
+ from MWV_CONTAINER C
+ where C.LOCALE_CODE = ?
+   and exists (
+     select 'X'
+     from MWM_PARTS P inner join MWM_PARTS_COND PC
+       on P.PARTS_ID = PC.PARTS_ID
+       and PC.DELETE_FLAG = '0'
+     where P.CONTAINER_ID = C.CONTAINER_ID
+       and P.PARTS_ID = ?
+   )
+
+#有効条件で使用するコンテナ一覧
+VD0112_01: |+
+ select /* VD0112_01 */ C.CONTAINER_ID, C.CONTAINER_CODE, nvl(MT.VAL, C.CONTAINER_NAME) as CONTAINER_NAME
+ from MWM_CONTAINER C
+  left join MWM_MULTILINGUAL MT
+   on MT.TABLE_NAME = 'MWM_CONTAINER'
+   and MT.ID = C.CONTAINER_ID
+   and MT.COLUMN_NAME = 'CONTAINER_NAME'
+   and MT.LOCALE_CODE = ?
+   and MT.DELETE_FLAG = '0'
+ where
+  C.CORPORATION_CODE = ? and C.DELETE_FLAG = '0'
+ order by
+  C.CONTAINER_ID
+
+#パーツ一覧
+VD0112_02: |+
+ select /* VD0112_02 */ P.PARTS_ID, P.PARTS_CODE, nvl(M1.VAL, P.LABEL_TEXT) as LABEL_TEXT
+ from
+  MWM_PARTS P
+  cross join WFM_LOCALE L
+  left join MWM_MULTILINGUAL M1
+   on M1.TABLE_NAME = 'MWM_PARTS'
+   and M1.ID = P.PARTS_ID
+   and M1.COLUMN_NAME = 'LABEL_TEXT'
+   and M1.LOCALE_CODE = L.LOCALE_CODE
+   and M1.DELETE_FLAG = '0'
+ where
+  P.CONTAINER_ID = ?
+  and L.LOCALE_CODE = ?
+  and P.PARTS_TYPE in ('1', '')
+ order by
+  P.SORT_ORDER, P.PARTS_CODE
+
+#パーツ定義
+VD0112_03: |+
+ select /* VD0112_03 */ P.PARTS_ID, P.PARTS_CODE, PARTS_TYPE, nvl(M1.VAL, P.LABEL_TEXT) as LABEL_TEXT
+ from
+  MWM_PARTS P
+  cross join WFM_LOCALE L
+  left join MWM_MULTILINGUAL M1
+   on M1.TABLE_NAME = 'MWM_PARTS'
+   and M1.ID = P.PARTS_ID
+   and M1.COLUMN_NAME = 'LABEL_TEXT'
+   and M1.LOCALE_CODE = L.LOCALE_CODE
+   and M1.DELETE_FLAG = '0'
+ where
+  P.PARTS_ID = ?
+  and L.LOCALE_CODE = ?
+
+#子コンテナ一覧
+VD0114_01: |+
+ select /* VD0114_01 */
+  C.CONTAINER_ID,C.CORPORATION_CODE,C.CONTAINER_CODE,nvl(M.VAL, C.CONTAINER_NAME) as CONTAINER_NAME
+  ,C.BG_HTML,C.TABLE_NAME,C.PARTS_CODE_SEQ,C.VERSION,C.DELETE_FLAG
+  ,C.CORPORATION_CODE_CREATED,C.USER_CODE_CREATED,C.TIMESTAMP_CREATED,C.CORPORATION_CODE_UPDATED
+  ,C.USER_CODE_UPDATED,C.TIMESTAMP_UPDATED
+ from MWM_CONTAINER C
+  left join MWM_MULTILINGUAL M
+   on M.TABLE_NAME = 'MWM_CONTAINER'
+   and M.ID = C.CONTAINER_ID
+   and M.COLUMN_NAME = 'CONTAINER_NAME'
+   and M.LOCALE_CODE = ?
+   and M.DELETE_FLAG = '0'
+ where
+  C.DELETE_FLAG = '0'
+  and C.CONTAINER_ID != ?
+  and C.CORPORATION_CODE = ?
+ order by
+  nvl(M.VAL, C.CONTAINER_NAME), C.CONTAINER_ID
+
+#業務管理項目名称マスタ一覧
+VD0114_02: |+
+ select /* VD0114_02 */
+  B.BUSINESS_INFO_NAME_ID, B.CORPORATION_CODE, B.BUSINESS_INFO_CODE
+  , nvl(M.VAL, B.BUSINESS_INFO_NAME) as BUSINESS_INFO_NAME
+  , B.BUSINESS_INFO_TYPE, B.VALID_FLAG, B.VERSION, B.DELETE_FLAG
+ from MWM_BUSINESS_INFO_NAME B
+  inner join WFM_LOCALE L
+   on L.LOCALE_CODE = ?
+  left join MWM_MULTILINGUAL M
+   on M.TABLE_NAME = 'MWM_BUSINESS_INFO_NAME'
+   and M.ID = B.BUSINESS_INFO_NAME_ID
+   and M.COLUMN_NAME = 'BUSINESS_INFO_NAME'
+   and M.LOCALE_CODE = L.LOCALE_CODE
+ where
+  B.VALID_FLAG = '1'
+  and B.DELETE_FLAG = '0'
+  and B.SCREEN_PARTS_INPUT_FLAG = '1'
+  and B.CORPORATION_CODE = ?
+ order by
+  B.CORPORATION_CODE, B.SORT_ORDER, B.BUSINESS_INFO_CODE
+
+#採番形式一覧
+VD0114_03: |+
+ select
+  /* VD0114_03 */
+  F.PARTS_NUMBERING_FORMAT_ID, F.CORPORATION_CODE, F.PARTS_NUMBERING_FORMAT_CODE
+  , nvl(M.VAL, F.PARTS_NUMBERING_FORMAT_NAME) as PARTS_NUMBERING_FORMAT_NAME
+ from
+  MWM_PARTS_NUMBERING_FORMAT F
+  left join MWM_MULTILINGUAL M
+   on M.TABLE_NAME = 'MWM_PARTS_NUMBERING_FORMAT'
+   and M.ID = F.PARTS_NUMBERING_FORMAT_ID
+   and M.COLUMN_NAME = 'PARTS_NUMBERING_FORMAT_NAME'
+   and M.LOCALE_CODE = ?
+   and M.DELETE_FLAG = '0'
+ where
+  F.CORPORATION_CODE = ?
+  and F.DELETE_FLAG = '0'
+
+#選択肢一覧
+VD0114_04: |+
+ select /* VD0114_04 */
+    O.OPTION_ID
+    , O.OPTION_CODE
+    , nvl(M.VAL, O.OPTION_NAME) OPTION_NAME
+ from MWM_OPTION O
+ left join (
+   select * from MWM_MULTILINGUAL
+   where TABLE_NAME = 'MWM_OPTION' and COLUMN_NAME = 'OPTION_NAME' and LOCALE_CODE = ? and DELETE_FLAG = '0'
+ ) M
+   on (M.ID = O.OPTION_ID)
+ where O.CORPORATION_CODE = ?
+ order by
+   nvl(M.VAL, O.OPTION_NAME)
+   , O.OPTION_CODE
+   , O.OPTION_ID
+
+#選択肢一覧
+VD0114_05: |+
+ select /* VD0114_05 */
+   I.OPTION_ITEM_ID
+   , I.OPTION_ID
+   , I.CODE
+   , NVL(M.VAL, I.LABEL) LABEL
+ from MWM_OPTION O
+ inner join MWM_OPTION_ITEM I
+   on (O.OPTION_ID = I.OPTION_ID)
+ left join (
+   select *  from MWM_MULTILINGUAL
+   where TABLE_NAME = 'MWM_OPTION_ITEM' and COLUMN_NAME = 'LABEL' and LOCALE_CODE = ? and DELETE_FLAG = '0'
+ ) M
+   on (M.ID = I.OPTION_ITEM_ID)
+ where O.CORPORATION_CODE = ?
+   and O.OPTION_ID = ?
+   and I.DELETE_FLAG = '0'
+ order by
+   I.SORT_ORDER
+
+#汎用テーブル一覧
+VD0114_06: |+
+ select /* VD0114_06 */
+  T.TABLE_ID,T.TABLE_NAME,nvl(M.VAL, T.LOGICAL_TABLE_NAME) as LOGICAL_TABLE_NAME
+  ,T.ENTITY_TYPE, T.VERSION,T.DELETE_FLAG
+  ,T.CORPORATION_CODE_CREATED,T.USER_CODE_CREATED,T.TIMESTAMP_CREATED
+  ,T.CORPORATION_CODE_UPDATED,T.USER_CODE_UPDATED,T.TIMESTAMP_UPDATED
+ from MWM_TABLE T
+  inner join MWM_CATEGORY_CONFIG CC
+   on CC.TABLE_ID = T.TABLE_ID
+   and CC.DELETE_FLAG = '0'
+  left join MWM_MULTILINGUAL M
+   on M.TABLE_NAME = 'MWM_TABLE'
+   and M.ID = T.TABLE_ID
+   and M.COLUMN_NAME = 'LOGICAL_TABLE_NAME'
+   and M.LOCALE_CODE = ?
+   and M.DELETE_FLAG = '0'
+ where
+  CC.CORPORATION_CODE = ?
+ order by
+  T.TABLE_NAME
+
+#汎用テーブル検索条件一覧
+VD0114_07: |+
+ select /* VD0114_07 */
+  S.TABLE_SEARCH_ID, S.CORPORATION_CODE, S.TABLE_SEARCH_CODE
+  , nvl(M1.VAL, S.TABLE_SEARCH_NAME) as TABLE_SEARCH_NAME, S.TABLE_ID
+ from
+  MWM_TABLE_SEARCH S
+  inner join MWM_TABLE T
+   on T.TABLE_ID = S.TABLE_ID
+   and T.DELETE_FLAG = '0'
+  left join MWM_MULTILINGUAL M1
+   on M1.TABLE_NAME = 'MWM_TABLE_SEARCH'
+   and M1.ID = S.TABLE_SEARCH_ID
+   and M1.COLUMN_NAME = 'TABLE_SEARCH_NAME'
+   and M1.LOCALE_CODE = ?
+   and M1.DELETE_FLAG = '0'
+ where
+  S.CORPORATION_CODE = ?
+  and S.TABLE_ID = ?
+  and S.DELETE_FLAG = '0'
+
+#子コンテナ内のパーツ
+VD0114_08: |+
+ select /* VD0114_08 */
+  P.PARTS_ID, P.PARTS_TYPE, nvl(M.VAL, P.LABEL_TEXT) as LABEL_TEXT, P.PARTS_CODE
+ from MWM_PARTS P
+  left join MWM_MULTILINGUAL M
+   on M.TABLE_NAME = 'MWM_PARTS'
+   and M.ID = P.PARTS_ID
+   and M.COLUMN_NAME = 'LABEL_TEXT'
+   and M.LOCALE_CODE = ?
+   and M.DELETE_FLAG = '0'
+ where
+  P.CONTAINER_ID = ?
+  and {BY_PARTS_TYPE}
+  and P.DELETE_FLAG = '0'
+ order by P.SORT_ORDER, P.PARTS_ID
+
+#パーツ添付ファイル情報を抽出
+VD0114_09: |+
+ select /*VD0114_09*/ * from MWM_PARTS_ATTACH_FILE where PARTS_ID = ?
+
+#文書管理項目名称マスタ一覧
+VD0114_10: |+
+ select /* VD0114_10 */
+  B.DOC_BUSINESS_INFO_NAME_ID, B.CORPORATION_CODE, B.DOC_BUSINESS_INFO_CODE
+  , nvl(M.VAL, B.DOC_BUSINESS_INFO_NAME) as DOC_BUSINESS_INFO_NAME
+  , B.VALID_FLAG, B.VERSION, B.DELETE_FLAG
+ from MWM_DOC_BUSINESS_INFO_NAME B
+  inner join WFM_LOCALE L
+   on L.LOCALE_CODE = ?
+  left join MWM_MULTILINGUAL M
+   on M.TABLE_NAME = 'MWM_DOC_BUSINESS_INFO_NAME'
+   and M.ID = B.DOC_BUSINESS_INFO_NAME_ID
+   and M.COLUMN_NAME = 'DOC_BUSINESS_INFO_NAME'
+   and M.LOCALE_CODE = L.LOCALE_CODE
+ where
+  B.VALID_FLAG = '1'
+  and B.DELETE_FLAG = '0'
+  and B.SCREEN_PARTS_INPUT_FLAG = '1'
+  and B.CORPORATION_CODE = ?
+ order by
+  B.CORPORATION_CODE, B.SORT_ORDER, B.DOC_BUSINESS_INFO_CODE
+
+#コンテナID＋表示条件IDに紐付くパーツ表示条件
+VD0115_01: |+
+ select /* VD0115_01 */ DC.*
+ from MWM_PARTS P
+  inner join MWM_PARTS_DC DC
+   on DC.PARTS_ID = P.PARTS_ID
+   and DC.DELETE_FLAG = '0'
+   and DC.DC_ID = ?
+ where
+  P.DELETE_FLAG = '0'
+
+#Javascriptファイル一覧
+VD0123_01: |+
+ select /* VD0123_01 */
+  J.JAVASCRIPT_ID, J.FILE_NAME, nvl(M.VAL, J.REMARKS) as REMARKS
+ from
+  MWM_JAVASCRIPT J
+  left join MWM_MULTILINGUAL M
+   on M.TABLE_NAME = 'MWM_JAVASCRIPT'
+   and M.ID = J.JAVASCRIPT_ID
+   and M.COLUMN_NAME = 'REMARKS'
+   and M.LOCALE_CODE = ?
+   and M.DELETE_FLAG = '0'
+ where
+  J.DELETE_FLAG = '0' and J.CORPORATION_CODE = ?
+ order by
+  J.FILE_NAME, J.JAVASCRIPT_ID
+
+#画面計算式条件定義が設定されてある画面一覧を抽出
+VD0143_01: |+
+ select /* VD0143_01 */ S.*
+ from MWV_SCREEN S
+ where S.LOCALE_CODE = ?
+   and exists (
+     select 'X'
+     from MWM_SCREEN_CALC SC
+     where SC.SCREEN_ID = S.SCREEN_ID
+       and SC.PARTS_ID = ?
+       and SC.DELETE_FLAG = '0'
+   )
+
+#パーツ計算式定義が設定されてあるコンテナ名を抽出
+VD0143_02: |+
+ select /* VD0143_02 */ C.*
+ from MWV_CONTAINER C
+ where C.LOCALE_CODE = ?
+   and exists (
+     select 'X'
+     from MWM_PARTS P inner join MWM_PARTS_CALC PC
+       on P.PARTS_ID = PC.PARTS_ID
+       and PC.DELETE_FLAG = '0'
+     where P.CONTAINER_ID = C.CONTAINER_ID
+       and P.PARTS_ID = ?
+   )
+
+#トレイ情報を取得
+VD0310_01: |+
+ select /* VD0310_01 */
+   rownum ID
+   , P.CORPORATION_CODE
+   , P.PROCESS_ID
+   , P.PROCESS_ID_AGGREGATION
+   , P.BUSINESS_PROCESS_STATUS
+   , L1.LOOKUP_NAME BUSINESS_PROCESS_STATUS_NAME
+   , P.PROCESS_STATUS
+   , P.APPROVAL_STATUS
+   , P.APPROVAL_NO
+   , P.SUBJECT
+   , P.APPLICATION_NO
+   , P.APPLICATION_STATUS
+   , P.APPLICATION_DATE
+   , A.ACTIVITY_ID
+   , A.PROCESS_DEF_CODE
+   , A.PROCESS_DEF_DETAIL_CODE
+   , PD.PROCESS_DEF_NAME
+   , A.ACTIVITY_DEF_CODE
+   , AD.ACTIVITY_DEF_NAME
+   , P.SCREEN_PROCESS_ID
+   , SPD.SCREEN_PROCESS_CODE
+   , SPD.SCREEN_PROCESS_NAME
+   , SPD.SCREEN_ID
+   , SPD.SCREEN_NAME
+   , nvl(to_number(AD.DC_ID), 1) DC_ID
+   , P.CORPORATION_CODE_START
+   , P.ORGANIZATION_CODE_START
+   , P.ORGANIZATION_NAME_START
+   , case OS.ORGANIZATION_LEVEL
+      when 3 then OS.ORGANIZATION_CODE
+      when 4 then OS.ORGANIZATION_CODE_UP
+      when 5 then OSX.ORGANIZATION_CODE_UP
+      else null
+     end AS ORG_CODE_UP_3_START
+   , case OS.ORGANIZATION_LEVEL
+      when 5 THEN OS.ORGANIZATION_CODE
+      else null
+     end as ORG_CODE_5_START
+   , case OS.ORGANIZATION_LEVEL
+      when 5 THEN LOS.NAME_VALUE
+      else null
+     end as ORG_NAME_5_START
+   , P.POST_CODE_START
+   , P.POST_NAME_START
+   , P.USER_CODE_PROXY_START USER_CODE_START
+   , P.USER_NAME_PROXY_START USER_NAME_START
+   , US.EXTENDED_INFO_01 as SBMTR_ADDR_CD_START
+   , LS.LOOKUP_NAME SBMTR_ADDR_START
+   , OS.EXTENDED_INFO_01 as PAY_APPL_CD
+   , P.CORPORATION_CODE_OPE_START CORPORATION_CODE_PROCESS
+   , P.ORGANIZATION_CODE_OPE_START ORGANIZATION_CODE_PROCESS
+   , P.ORGANIZATION_NAME_OPE_START ORGANIZATION_NAME_PROCESS
+   , case OP.ORGANIZATION_LEVEL
+      when 3 then OP.ORGANIZATION_CODE
+      when 4 then OP.ORGANIZATION_CODE_UP
+      when 5 then OPX.ORGANIZATION_CODE_UP
+      else null
+     end AS ORG_CODE_UP_3_PROCESS
+   , case OP.ORGANIZATION_LEVEL
+      when 5 THEN OP.ORGANIZATION_CODE
+      else null
+     end as ORG_CODE_5_PROCESS
+   , case OP.ORGANIZATION_LEVEL
+      when 5 THEN LOP.NAME_VALUE
+      else null
+     end as ORG_NAME_5_PROCESS
+   , P.POST_CODE_OPE_START POST_CODE_PROCESS
+   , P.POST_NAME_OPE_START POST_NAME_PROCESS
+   , P.USER_CODE_OPERATION_START USER_CODE_PROCESS
+   , P.USER_NAME_OPERATION_START USER_NAME_PROCESS
+   , UP.EXTENDED_INFO_01 as SBMTR_ADDR_CD_PROCESS
+   , LP.LOOKUP_NAME SBMTR_ADDR_PROCESS
+   , P.TIMESTAMP_UPDATED
+   , CD.ACTIVITY_DEF_CODE_TRANSIT as START_ACTIVITY_DEF_CODE
+   , PD.COMMENT_DISPLAY_FLAG
+ from
+   WFT_PROCESS P
+   inner join WFM_LOCALE L
+    on L.LOCALE_CODE = ?
+   left outer join WFM_LOOKUP L1
+    on L1.CORPORATION_CODE = P.CORPORATION_CODE
+    and L1.LOOKUP_TYPE_CODE = 'BUSINESS_PROCESS_STATUS'
+    and L1.LOOKUP_CODE = P.BUSINESS_PROCESS_STATUS
+    and L1.LOCALE_CODE = L.LOCALE_CODE
+   inner join WFT_ACTIVITY A
+    on A.CORPORATION_CODE = P.CORPORATION_CODE
+    and A.PROCESS_ID = P.PROCESS_ID
+   inner join MWV_SCREEN_PROCESS_DEF SPD
+    on SPD.SCREEN_PROCESS_ID = P.SCREEN_PROCESS_ID
+    and SPD.LOCALE_CODE = L.LOCALE_CODE
+   inner join WFM_ACTIVITY_DEF_V AD
+    on A.CORPORATION_CODE = AD.CORPORATION_CODE
+    and AD.PROCESS_DEF_CODE = A.PROCESS_DEF_CODE
+    and AD.PROCESS_DEF_DETAIL_CODE = A.PROCESS_DEF_DETAIL_CODE
+    and AD.ACTIVITY_DEF_CODE = A.ACTIVITY_DEF_CODE
+    and AD.LOCALE_CODE = L.LOCALE_CODE
+   inner join WFM_CONDITION_DEF CD
+    on CD.CORPORATION_CODE = SPD.CORPORATION_CODE
+    and CD.PROCESS_DEF_CODE = SPD.PROCESS_DEF_CODE
+    and CD.PROCESS_DEF_DETAIL_CODE = SPD.PROCESS_DEF_DETAIL_CODE
+    and CD.ACTIVITY_DEF_CODE = '0000000000'
+    and CD.DELETE_FLAG = '0'
+   inner join WFM_PROCESS_DEF_V PD
+    on PD.CORPORATION_CODE = A.CORPORATION_CODE
+    and PD.PROCESS_DEF_CODE = A.PROCESS_DEF_CODE
+    and PD.PROCESS_DEF_DETAIL_CODE = A.PROCESS_DEF_DETAIL_CODE
+    and PD.LOCALE_CODE = L.LOCALE_CODE
+   inner join WFM_USER US
+    on US.CORPORATION_CODE = P.CORPORATION_CODE_START
+    and US.USER_CODE = P.USER_CODE_PROXY_START
+   left outer join MWM_LOOKUP LS
+    on LS.CORPORATION_CODE = P.CORPORATION_CODE
+    and LS.LOOKUP_GROUP_ID = 'USER_LOCATION'
+    and LS.LOOKUP_ID = US.EXTENDED_INFO_01
+    and LS.LOCALE_CODE = L.LOCALE_CODE
+   inner join WFM_USER UP
+    on UP.CORPORATION_CODE = P.CORPORATION_CODE_OPE_START
+    and UP.USER_CODE = P.USER_CODE_OPERATION_START
+   left outer join MWM_LOOKUP LP
+    on LP.CORPORATION_CODE = P.CORPORATION_CODE
+    and LP.LOOKUP_GROUP_ID = 'USER_LOCATION'
+    and LP.LOOKUP_ID = UP.EXTENDED_INFO_01
+    and LP.LOCALE_CODE = L.LOCALE_CODE
+   inner join WFM_ORGANIZATION OS
+    on OS.CORPORATION_CODE = P.CORPORATION_CODE_START
+    and OS.ORGANIZATION_CODE = P.ORGANIZATION_CODE_START
+   left join WFM_ORGANIZATION OSX
+    on OS.CORPORATION_CODE = OSX.CORPORATION_CODE
+    and OS.ORGANIZATION_CODE_UP = OSX.ORGANIZATION_CODE
+   inner join WFM_NAME_LOOKUP LOS
+    on LOS.TABLE_NAME = 'WFM_ORGANIZATION'
+    and LOS.COLUMN_NAME = 'ORGANIZATION_NAME'
+    and LOS.ID = OS.ID
+    and LOS.LOCALE_CODE = L.LOCALE_CODE
+   inner join WFM_ORGANIZATION OP
+    on OP.CORPORATION_CODE = P.CORPORATION_CODE_OPE_START
+    and OP.ORGANIZATION_CODE = P.ORGANIZATION_CODE_OPE_START
+   left join WFM_ORGANIZATION OPX
+    on OP.CORPORATION_CODE = OPX.CORPORATION_CODE
+    and OP.ORGANIZATION_CODE_UP = OPX.ORGANIZATION_CODE
+   inner join WFM_NAME_LOOKUP LOP
+    on LOP.TABLE_NAME = 'WFM_ORGANIZATION'
+    and LOP.COLUMN_NAME = 'ORGANIZATION_NAME'
+    and LOP.ID = OP.ID
+    and LOP.LOCALE_CODE = L.LOCALE_CODE
+ where A.CORPORATION_CODE = ?
+   and A.PROCESS_ID = ?
+   and A.ACTIVITY_ID = ?
+
+VD0310_02: |+
+ select /* VD0310_02 */
+   rownum ID
+   , SPD.CORPORATION_CODE
+   , NULL PROCESS_ID
+   , NULL PROCESS_ID_AGGREGATION
+   , CD.ACTIVITY_DEF_CODE_TRANSIT as START_ACTIVITY_DEF_CODE
+   , CD.BUSINESS_PROCESS_STATUS
+   , L1.LOOKUP_NAME BUSINESS_PROCESS_STATUS_NAME
+   , NULL ACTIVITY_ID
+   , SPD.PROCESS_DEF_CODE
+   , SPD.PROCESS_DEF_DETAIL_CODE
+   , PD.PROCESS_DEF_NAME
+   , SPD.SCREEN_PROCESS_ID
+   , SPD.SCREEN_PROCESS_CODE
+   , SPD.SCREEN_PROCESS_NAME
+   , SPD.SCREEN_ID
+   , SPD.SCREEN_NAME
+   , AD.ACTIVITY_DEF_CODE
+   , AD.ACTIVITY_DEF_NAME
+   , SPD.SCREEN_ID
+   , PD.COMMENT_DISPLAY_FLAG
+   , nvl(to_number(AD.DC_ID), 1) DC_ID
+ from
+   MWV_SCREEN_PROCESS_DEF SPD
+   inner join WFM_LOCALE L
+    on L.LOCALE_CODE = SPD.LOCALE_CODE
+    and L.LOCALE_CODE = ?
+   inner join WFM_CONDITION_DEF CD
+    on CD.CORPORATION_CODE = SPD.CORPORATION_CODE
+    and CD.PROCESS_DEF_CODE = SPD.PROCESS_DEF_CODE
+    and CD.PROCESS_DEF_DETAIL_CODE = SPD.PROCESS_DEF_DETAIL_CODE
+    and CD.ACTIVITY_DEF_CODE = '0000000000'
+    and CD.DELETE_FLAG = '0'
+   inner join WFM_ACTIVITY_DEF_V AD
+    on AD.CORPORATION_CODE = CD.CORPORATION_CODE_TRANSIT
+    and AD.PROCESS_DEF_CODE = CD.PROCESS_DEF_CODE_TRANSIT
+    and AD.PROCESS_DEF_DETAIL_CODE = CD.PROCESS_DEF_DETAIL_CODE_TRAN
+    and AD.ACTIVITY_DEF_CODE = CD.ACTIVITY_DEF_CODE_TRANSIT
+    and AD.LOCALE_CODE = L.LOCALE_CODE
+   inner join WFM_LOOKUP L1
+    on L1.CORPORATION_CODE = CD.CORPORATION_CODE
+    and L1.LOOKUP_CODE = CD.BUSINESS_PROCESS_STATUS
+    and L1.LOOKUP_TYPE_CODE = 'BUSINESS_PROCESS_STATUS'
+    and L1.LOCALE_CODE = L.LOCALE_CODE
+   inner join WFM_PROCESS_DEF_V PD
+    on PD.CORPORATION_CODE = SPD.CORPORATION_CODE
+    and PD.PROCESS_DEF_CODE = SPD.PROCESS_DEF_CODE
+    and PD.PROCESS_DEF_DETAIL_CODE = SPD.PROCESS_DEF_DETAIL_CODE
+    and PD.LOCALE_CODE = L.LOCALE_CODE
+ where exists (
+     select
+       *
+     from
+       MWM_ACCESSIBLE_SCREEN A
+     where
+       A.SCREEN_PROCESS_ID = SPD.SCREEN_PROCESS_ID
+       and A.CORPORATION_CODE = SPD.CORPORATION_CODE
+       and trunc(sysdate) between A.VALID_START_DATE and A.VALID_END_DATE
+       and A.MENU_ROLE_CODE in (###REPLACE###)
+       and A.DELETE_FLAG = '0'
+   )
+   and trunc(sysdate) between SPD.VALID_START_DATE and SPD.VALID_END_DATE
+   and SPD.DELETE_FLAG = '0'
+   and SPD.SCREEN_PROCESS_ID = ?
+
+#ブロック情報取得
+VD0310_03: |+
+ select /* VD0310_03 */
+   rownum as ID
+   , BD.BLOCK_DISPLAY_ID
+   , nvl(BD.BLOCK_ID, to_number(LOOKUP_ID)) BLOCK_ID
+   , L.LOOKUP_NAME BLOCK_NAME
+   , nvl(BD.DISPLAY_FLAG, nvl(D.DISPLAY_FLAG, '1')) DISPLAY_FLAG
+   , nvl(BD.EXPANSION_FLAG, nvl(D.EXPANSION_FLAG, '1')) EXPANSION_FLAG
+ from MWM_LOOKUP L
+   left join MWM_DEFAULT_BLOCK_DISPLAY D
+     on  D.BLOCK_ID = to_number(L.LOOKUP_ID)
+     and D.CORPORATION_CODE = L.CORPORATION_CODE
+     and D.DC_ID = ?
+     and D.DELETE_FLAG = '0'
+   left join MWM_BLOCK_DISPLAY BD
+     on  BD.BLOCK_ID = to_number(L.LOOKUP_ID)
+     and BD.DC_ID = ?
+     and BD.SCREEN_PROCESS_ID = ?
+     and BD.DELETE_FLAG = '0'
+ where L.CORPORATION_CODE = ?
+   and L.LOOKUP_GROUP_ID = 'BLOCK_ID'
+   and L.LOCALE_CODE = ?
+   and L.DELETE_FLAG = '0'
+ order by BD.SORT_ORDER, D.SORT_ORDER, L.SORT_ORDER
+
+#添付ファイル情報取得
+VD0310_04: |+
+ select /* VD0310_04 */
+   ATTACH_FILE_WF_ID
+   , CORPORATION_CODE
+   , PROCESS_ID
+   , FILE_NAME
+   , COMMENTS
+ from
+   MWT_ATTACH_FILE_WF
+ where CORPORATION_CODE = ?
+   and PROCESS_ID = ?
+   and DELETE_FLAG = '0'
+ order by ATTACH_FILE_WF_ID
+
+#添付ファイル情報削除
+VD0310_05: |+
+ delete /* VD0310_05 */ from MWT_ATTACH_FILE_WF
+ where ATTACH_FILE_WF_ID = ?
+
+#画面のコンテナを子孫まで含めてすべて抽出
+VD0310_06: |+
+ select /* VD0310_06 */
+  SJ.SCREEN_JAVASCRIPT_ID, SJ.SCREEN_ID, SJ.JAVASCRIPT_ID, SJ.SORT_ORDER, J.FILE_NAME, JH.SCRIPT, JH.TIMESTAMP_UPDATED
+ from
+  MWM_SCREEN_PROCESS_DEF SPD
+  inner join MWM_SCREEN_JAVASCRIPT SJ
+   on SJ.SCREEN_ID = SPD.SCREEN_ID
+   and SJ.DELETE_FLAG = '0'
+  inner join MWM_JAVASCRIPT J
+   on J.JAVASCRIPT_ID = SJ.JAVASCRIPT_ID
+   and J.DELETE_FLAG = '0'
+  inner join MWM_JAVASCRIPT_HISTORY JH
+   on JH.JAVASCRIPT_ID = J.JAVASCRIPT_ID
+   and JH.DELETE_FLAG = '0'
+ where
+  SPD.SCREEN_PROCESS_ID = 2
+  and SPD.DELETE_FLAG = '0'
+ order by
+  SJ.SORT_ORDER
+
+
+#画面プロセスID配下の全コンテナが参照しているJavascriptを抽出
+VD0310_07: |+
+ select
+  X.SCREEN_ID, X.NEST_LEVEL, X.CONTAINER_ID, X.SORT_ORDER as PARTS_SORT_ORDER
+  , CJ.CONTAINER_JAVASCRIPT_ID, CJ.SORT_ORDER as JS_SORT_ORDER, CJ.JAVASCRIPT_ID
+  , J.FILE_NAME, JH.SCRIPT, JH.TIMESTAMP_UPDATED
+ from
+  MWV_SCREEN_PROCESS_CONTAINER X
+  inner join MWM_CONTAINER_JAVASCRIPT CJ
+   on CJ.CONTAINER_ID = X.CONTAINER_ID
+  inner join MWM_JAVASCRIPT J
+   on J.JAVASCRIPT_ID = CJ.JAVASCRIPT_ID
+   and J.DELETE_FLAG = '0'
+  inner join MWM_JAVASCRIPT_HISTORY JH
+   on JH.JAVASCRIPT_ID = J.JAVASCRIPT_ID
+   and JH.DELETE_FLAG = '0'
+ where
+  X.SCREEN_PROCESS_ID = ?
+ order by
+  X.NEST_LEVEL, X.SORT_ORDER, X.CONTAINER_ID,
+  CJ.SORT_ORDER, JH.JAVASCRIPT_HISTORY_ID
+
+#ルートコンテナのユーザデータを抽出
+VD0310_08: |+
+ select /* VD0310_08 */ * from {TABLE_NAME}
+ where CORPORATION_CODE = ? and PROCESS_ID = ?
+ order by SORT_ORDER, RUNTIME_ID
+
+#子コンテナのユーザデータを抽出
+VD0310_09: |+
+ select /* VD0310_09 */ * from {TABLE_NAME}
+ where PARENT_RUNTIME_ID = ?
+ order by SORT_ORDER, RUNTIME_ID
+
+#画面情報を抽出
+VD0310_10: |+
+ select /* VD0310_10 */ * from MWV_SCREEN where SCREEN_ID = ? and LOCALE_CODE = ? and DELETE_FLAG = '0'
+
+#ワークフロー添付ファイル情報を抽出
+VD0310_11: |+
+ select /*VD0310_11*/ * from MWT_PARTS_ATTACH_FILE_WF
+ where RUNTIME_ID = ? and PARTS_ID = ? and DELETE_FLAG = '0'
+ order by RUNTIME_ID, PARTS_ID, SORT_ORDER
+
+#プロセスIDに紐付くプロセス掲示板情報を投稿者情報を含めて抽出（削除済みも含めて全部）
+VD0310_12: |+
+ select /*VD0310_12*/
+  PB.*
+  , U.USER_NAME as USER_NAME_SUBMIT
+  , O.ORGANIZATION_NAME as ORGANIZATION_NAME_SUBMIT
+  , P.POST_NAME as POST_NAME_SUBMIT
+ from MWT_PROCESS_BBS PB
+  inner join WFM_LOCALE L
+   on L.LOCALE_CODE = ?
+  left join WFM_USER_V U
+   on U.CORPORATION_CODE = PB.CORPORATION_CODE_SUBMIT
+   and U.USER_CODE = PB.USER_CODE_SUBMIT
+   and U.LOCALE_CODE = L.LOCALE_CODE
+  left join WFM_ORGANIZATION_V O
+   on O.CORPORATION_CODE = PB.CORPORATION_CODE_SUBMIT
+   and O.ORGANIZATION_CODE = PB.ORGANIZATION_CODE_SUBMIT
+   and O.LOCALE_CODE = L.LOCALE_CODE
+  left join WFM_POST_V P
+   on P.CORPORATION_CODE = PB.CORPORATION_CODE_SUBMIT
+   and P.POST_CODE = PB.POST_CODE_SUBMIT
+   and P.LOCALE_CODE = L.LOCALE_CODE
+ where
+  PB.CORPORATION_CODE = ?
+  and PB.PROCESS_ID = ?
+ order by
+  PB.TIMESTAMP_SUBMIT
+
+#プロセスインスタンスの参加者
+VD0310_13: |+
+ select /*VD0310_13*/
+  U.*
+ from
+  WFT_ASSIGNED A
+  inner join WFM_USER_V U
+   on U.CORPORATION_CODE = A.CORPORATION_CODE_ASSIGNED
+   and U.USER_CODE = A.USER_CODE_ASSIGNED
+   and U.DEFAULT_LOCALE_CODE = U.LOCALE_CODE
+   and U.DELETE_FLAG = '0'
+   and U.MAIL_ADDRESS is not null
+ where
+  A.CORPORATION_CODE = ?
+  and A.PROCESS_ID = ?
+  and A.DELETE_FLAG = '0'
+
+#プロセスインスタンスの参加者
+VD0310_14: |+
+ select /*VD0310_14*/
+  U.*
+ from
+  WFM_USER_V U
+ where
+  U.CORPORATION_CODE = ?
+  and U.USER_CODE = ?
+  and U.DELETE_FLAG = '0'
+  and U.MAIL_ADDRESS is not null
+  and U.DEFAULT_LOCALE_CODE = U.LOCALE_CODE
+
+#生きている外部Javascript抽出
+VD0310_15: |+
+ select /* VD0310_15 */ J.FILE_NAME, H.JAVASCRIPT_HISTORY_ID, H.JAVASCRIPT_ID, H.TIMESTAMP_UPDATED, H.SCRIPT
+ from MWM_JAVASCRIPT J
+  inner join MWM_JAVASCRIPT_HISTORY H
+   on H.JAVASCRIPT_ID = J.JAVASCRIPT_ID
+   and H.DELETE_FLAG = '0'
+ where
+  J.DELETE_FLAG = '0'
+  and J.JAVASCRIPT_ID in ( ${JAVASCRIPT_IDS} )
+
+#画面Javascriptを抽出
+VD0310_16: |+
+ select /* VD0310_16 */ * from MWM_SCREEN_JAVASCRIPT where SCREEN_ID = ? and DELETE_FLAG = '0' order by JAVASCRIPT_ID
+
+#文書ファイル情報取得
+VD0310_17: |+
+ select /* VD0310_17 */
+   DOC_FILE_WF_ID
+   , CORPORATION_CODE
+   , PROCESS_ID
+   , FILE_NAME
+   , FILE_SIZE
+   , COMMENTS
+ from
+   MWT_DOC_FILE_WF
+ where CORPORATION_CODE = ?
+   and PROCESS_ID = ?
+   and DELETE_FLAG = '0'
+ order by DOC_FILE_WF_ID
+
+#文書ファイル情報削除
+VD0310_18: |+
+ delete /* VD0310_18 */ from MWT_DOC_FILE_WF
+ where DOC_FILE_WF_ID = ?
+
+#文書管理側からワークフロー側へ添付ファイルデータのコピー
+VD0310_19: |+
+ insert /* VD0310_19 */ into MWT_ATTACH_FILE_WF (ATTACH_FILE_WF_ID, FILE_NAME, FILE_DATA, FILE_SIZE, COMMENTS)
+ select ?, B.FILE_NAME, B.FILE_DATA, B.FILE_SIZE, A.COMMENTS
+ from MWT_ATTACH_FILE_DOC A
+ inner join MWT_DOC_FILE_DATA B
+   on A.DOC_FILE_DATA_ID = B.DOC_FILE_DATA_ID
+ where A.ATTACH_FILE_DOC_ID = ?
+
+#文書管理側からワークフロー側へ文書ファイルデータのコピー
+VD0310_20: |+
+ insert /* VD0310_20 */ into MWT_DOC_FILE_WF (DOC_FILE_WF_ID, FILE_NAME, FILE_DATA, FILE_SIZE, COMMENTS)
+ select ?, B.FILE_NAME, B.FILE_DATA, B.FILE_SIZE, A.COMMENTS
+ from MWT_DOC_FILE_INFO A
+ inner join MWT_DOC_FILE_DATA B
+   on A.DOC_FILE_DATA_ID = B.DOC_FILE_DATA_ID
+ where A.DOC_FILE_ID = ?
+
+#WFパーツ添付ファイルのファイルサイズ合計
+VD0310_21: |+
+ select /* VD0310_21 */ nvl(sum(FILE_SIZE), 0) from MWT_PARTS_ATTACH_FILE_WF where 1 = 1
+
+#WF添付ファイルのファイルサイズ合計
+VD0310_22: |+
+ select /* VD0310_22 */ nvl(sum(FILE_SIZE), 0) from MWT_ATTACH_FILE_WF where DELETE_FLAG = '0'
+
+#WF文書ファイルのファイルサイズ合計
+VD0310_23: |+
+ select /* VD0310_23 */ nvl(sum(FILE_SIZE), 0) from MWT_DOC_FILE_WF where DELETE_FLAG = '0'
+
+#プロセスIDに紐付くプロセス掲示板情報添付ファイルを抽出
+VD0310_24: |+
+ select /* VD0310_24 */
+   BA.BBS_ATTACH_FILE_WF_ID
+   , BA.FILE_TYPE
+   , BA.FILE_NAME
+   , BA.PROCESS_BBS_ID
+ from MWT_BBS_ATTACH_FILE_WF BA
+ where BA.DELETE_FLAG = '0'
+   and exists (select '1' from MWT_PROCESS_BBS PB where PB.PROCESS_BBS_ID = BA.PROCESS_BBS_ID and PB.CORPORATION_CODE = ? and PB.PROCESS_ID = ?)
+ order by BA.PROCESS_BBS_ID, BA.BBS_ATTACH_FILE_WF_ID
+
+#プロセス掲示板IDに紐づくプロセス掲示板情報添付ファイルを削除
+VD0310_25: |+
+ update /* VD0310_25 */ MWT_BBS_ATTACH_FILE_WF
+ set CORPORATION_CODE_UPDATED = ?
+  , USER_CODE_UPDATED = ?
+  , TIMESTAMP_UPDATED = ?
+  , VERSION = VERSION + 1
+  , DELETE_FLAG = '1'
+ where
+  PROCESS_BBS_ID = ? and DELETE_FLAG = '0'
+
+#デフォルトブロック表示順マスタを抽出
+VD0310_26: |+
+ select /* VD0310_26 */
+   rownum as ID
+   , BD.DEFAULT_BLOCK_DISPLAY_ID
+   , nvl(BD.BLOCK_ID, to_number(L.LOOKUP_ID)) BLOCK_ID
+   , L.LOOKUP_NAME BLOCK_NAME
+   , nvl(BD.DISPLAY_FLAG, '1') as DISPLAY_FLAG
+   , nvl(BD.EXPANSION_FLAG, '1') as EXPANSION_FLAG
+ from MWM_LOOKUP L
+   left join MWM_DEFAULT_BLOCK_DISPLAY BD
+     on  BD.DC_ID = to_number(L.LOOKUP_ID)
+     and BD.CORPORATION_CODE = L.CORPORATION_CODE
+     and BD.BLOCK_ID = L.LOOKUP_ID
+     and BD.DELETE_FLAG = '0'
+ where L.CORPORATION_CODE = ?
+  and L.LOOKUP_GROUP_ID = 'BLOCK_ID'
+  and L.LOCALE_CODE = ?
+  and L.DELETE_FLAG = '0'
+ order by nvl(BD.SORT_ORDER, L.SORT_ORDER) asc
+
+
+#画面IDをキーに画面情報を抽出
+VD0330_01: |+
+ select /* VD0330_01 */ S.* from MWV_SCREEN S where S.CORPORATION_CODE = ? and S.SCREEN_CODE = ? and  S.LOCALE_CODE = ?

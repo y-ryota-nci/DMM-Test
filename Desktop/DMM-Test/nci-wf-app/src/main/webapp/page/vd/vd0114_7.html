@@ -1,0 +1,21 @@
+<!-- 採番パーツのプロパティ -->
+<script type="text/javascript" src="vd0114_7.js"></script>
+<div id="vd0114_7">
+	<label class="sub-title" data-i18n="numbering">numbering</label>
+
+	<div class='col-sm-6'>
+		<span class='required' data-i18n='numberingFormat'>#{採番形式}</span>
+		<select id='partsNumberingFormatId' class='form-control required'></select>
+	</div>
+	<div class='col-sm-6'>
+		<span class='required' data-i18n='numberingCode'>#{採番コード}</span>
+		<span class='input-sm' data-i18n='MSG0138'>#{※アクティビティ定義に設定された採番コードと一致したときに発番されます}</span>
+		<input id='numberingCode' class='form-control required' maxlength='15'
+				data-validate='{ "pattern" : "alphaSymbolNumber" }' />
+	</div>
+	<div class='col-sm-6'>
+		<input id='fireIfNormalAction' type='checkbox' value='true' />
+		<label for='fireIfNormalAction' data-i18n='fireIfNormalAction'>#{申請/承認時のみ発番する}</label>
+	</div>
+
+</div>

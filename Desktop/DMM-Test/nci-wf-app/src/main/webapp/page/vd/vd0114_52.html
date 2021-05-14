@@ -1,0 +1,95 @@
+<!-- Repeaterパーツのプロパティ -->
+<script type="text/javascript" src="vd0114_52.js"></script>
+<div id="vd0114_52">
+	<label class="sub-title" data-i18n="repeater">Repeater</label>
+
+	<div class='col-sm-3'>
+		<span data-i18n='pagingFlag'>ページ制御</span>(<span data-i18n='pageSize'>ページサイズ</span>)
+		<div class="inline-group">
+			<select id='pageSize' class='form-control pageSize'></select>
+		</div>
+	</div>
+
+	<div class='col-sm-2'>
+		<span data-i18n='initRowCount' class='required'>初期行数</span>
+		<input id='initRowCount' type='text' class='form-control required' maxlength='3'
+				data-validate='{"pattern" : "integer", "min": 0, "max" : 999 }' />
+	</div>
+
+	<div class='col-sm-2'>
+		<span data-i18n='minRowCount' class='required'>最少行数</span>
+		<input id='minRowCount' type='text' class='form-control required' maxlength='3'
+				data-validate='{"pattern" : "integer", "min": 0, "max" : 999 }' />
+	</div>
+
+	<div class='col-sm-5'>
+		<span data-i18n='childContainer' class='required'>子コンテナ</span>
+		<select id='childContainerId' class='form-control required'></select>
+	</div>
+
+	<fieldset class='form-group fieldset'>
+		<legend data-i18n='buttonDisplaySettins'>ボタン表示設定</legend>
+		<ul class="list-inline">
+			<li>
+				<input id='showButtonTopFlag' type='checkbox' value='true' />
+				<label for='showButtonTopFlag' data-i18n='showButtonOnTop'>ボタンを上部に配置</label>
+			</li>
+			<li>
+				<input id='showAddEmptyButtonFlag' type='checkbox' value='true' />
+				<label for='showAddEmptyButtonFlag' data-i18n='btnAddEmpty'>空行追加</label>
+			</li>
+			<li>
+				<input id='showDeleteButtonFlag' type='checkbox' value='true' />
+				<label for='showDeleteButtonFlag' data-i18n='btnDelete'>削除</label>
+			</li>
+			<li>
+				<input id='showCopyButtonFlag' type='checkbox' value='true' />
+				<label for='showCopyButtonFlag' data-i18n='btnCopy'>コピー</label>
+			</li>
+			<li>
+				<input id='showLineCountButtonFlag' type='checkbox' value='true' />
+				<label for='showLineCountButtonFlag' data-i18n='btnChangeLineCount'>行数変更</label>
+			</li>
+		</ul>
+
+	</fieldset>
+	<fieldset id='fsRelation' class='fieldset'>
+		<legend data-i18n="inputedJudgement">#{入力済み判定}</legend>
+
+		<div class="col-sm-12">
+			<button id="btnAdd" class="btn btn-primary" disabled>
+				<i class="glyphicon glyphicon-plus-sign"></i>
+				<span data-i18n="btnAdd">#{追加}</span>
+			</button>
+			<button id="btnDelete" class="btn btn-default" disabled>
+				<i class="glyphicon glyphicon-minus-sign"></i>
+				<span data-i18n="btnDelete">#{削除}</span>
+			</button>
+		</div>
+
+		<table id='tblRelation' class='table-striped table-condensed responsive col-sm-12 mB20'>
+			<colgroup>
+				<col style="width:50px" />
+				<col class='col-xs-12' />
+			</colgroup>
+
+			<thead>
+				<tr>
+					<th></th>
+					<th><span data-i18n="parts" class="text-center required">パーツ</span>
+				</tr>
+			</thead>
+
+			<tbody></tbody>
+
+			<tfoot class="template hide">
+				<tr>
+					<th>
+						<i class='glyphicon glyphicon-align-justify clickable'></i>
+						<input type="checkbox" class="selectable" />
+					<td><select data-field="targetPartsId" class="form-control required"></select>
+				</tr>
+			</tfoot>
+		</table>
+	</fieldset>
+</div>

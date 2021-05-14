@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/jsTree/themes/default/style.min.css" />
+	<link rel="stylesheet" href="../../assets/whhg-font/css/whhg.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	#tree { margin-top: 15px; }
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/jsTree/jstree.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="../../assets/nci/codeBook.js"></script>
+	<script src="../../assets/nci/parts.js"></script>
+	<script src="./vd0032.js"></script>
+	<title>#{VD0032 パーツツリー画面}</title>
+</head>
+<body>
+	<header></header>
+
+	<section class="container">
+		<div class="row">
+			<span class="screen-name">#{VD0032}</span>
+
+			<label class="sub-title" data-i18n="partsTree">パーツツリー</label>
+
+			<div id='tree' class='alert alert-info'></div>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="text-center">
+			<button id="btnUpdate" class="btn btn-primary">
+				<i class="glyphicon glyphicon-ok-sign"></i>
+				<span data-i18n="btnUpdate">#{更新}</span>
+			</button>
+			<button id='btnClose' class='btn btn-default'>
+				<i class='glyphicon glyphicon-share-alt'></i>
+				<span data-i18n='btnClose'>#{閉じる}</span>
+			</button>
+		</div>
+	</section>
+</body>
+</html>

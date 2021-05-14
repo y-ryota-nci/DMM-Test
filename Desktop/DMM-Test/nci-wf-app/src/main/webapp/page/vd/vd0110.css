@@ -1,0 +1,91 @@
+/* ----------------------------------------------------------------------------------------------------*/
+/* 編集領域とパーツの見た目 */
+	body {
+		height : 100%;
+	}
+	section, article, div {
+		max-height : 100%;
+	}
+	#editArea {
+		border: 1px solid silver;
+		min-height: 500px;
+		max-height: 650px;
+		overflow : scroll;
+		padding-right: 20px;
+	}
+	#editArea .parts-editable:hover {
+		border: 2px dotted mediumspringgreen;
+		cursor: inherit;
+	}
+	#editArea .parts {
+		box-sizing: border-box;		/* パディングとボーダーを幅と高さに含める */
+	}
+
+/* モード変更によるカーソル切り替え */
+	#editArea .parts-editable * {
+		user-select: none;
+		cursor : pointer;
+	}
+	#editArea.mode-edit .parts-editable * {
+		cursor : alias;
+	}
+	#editArea.mode-move .parts-editable * {
+		cursor : move;
+	}
+	#editArea.mode-add .parts-editable * {
+		cursor : default;
+	}
+	#editArea.mode-copy .parts-editable * {
+		cursor : copy;
+	}
+	#editArea.mode-remove .parts-editable * {
+		cursor : crosshair;
+	}
+
+/** パーツ配置用、カーソルに追随するアイコン */
+	#addPartsIcon {
+		position: absolute;
+		opacity: 1.0;
+		z-index: 1000;
+		font-size: 120%;
+	}
+
+/* ドラッグ＆ドロップでの見た目 */
+	td.ui-droppable-hover, th.ui-droppable-hover {	/* ドロップ可能なセル */
+		opacity: 0.5 !important;
+		background-color: pink !important;
+		border : 2px dotted red !important;
+	}
+	article.parts-editable.ui-droppable-hover {		/* 位置入れ替えドロップ可能なパーツ */
+		border-bottom : 2px dotted red !important;
+	}
+	td.droppable, th.droppable {
+		position: relative;
+	}
+
+/* モード変更ボタン */
+	div.btn-group-vertical {
+		width: 100%;
+	}
+	div.btn-group-vertical > label.btn.btn-default {
+		margin : 3px 0px;
+	}
+	div.btn-group-vertical > label.btn.btn-default.active {
+		background-color : deepskyblue;
+	}
+	fieldset.fieldset {
+		padding-bottom : 15px;
+	}
+	h5,h6 {
+		font-weight : bold;
+	}
+
+	#editArea select[disabled] {
+		background-color : white;
+	}
+
+/*パーツ選択ダイアログ*/
+	#partsBox {
+		width: 100%;
+		max-width: 500px;
+	}

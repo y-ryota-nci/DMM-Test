@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./mm0004.js"></script>
+	<title>#{MM0004 ユーザ所属の編集}</title>
+</head>
+
+<body>
+	<header class="container-fluid"></header>
+
+	<section id="belong" class="container">
+		<div class="row">
+			<span class="screen-name">#{MM0004}</span>
+
+			<label class="sub-title" data-i18n="userBelongInfo">#{ユーザー所属情報}</label>
+			<input type="hidden" id="corporationCode" />
+			<input type="hidden" id="userCode" />
+			<input type="hidden" id="seqNoUserBelong" />
+			<input type="hidden" id="userName" maxlength="100" />
+
+			<div class="form-group col-sm-6 col-md-6">
+				<label class="required" data-i18n="organization">#{組織}</label>
+				<div class="input-group">
+					<input id="organizationCode" type="hidden" class="required" readonly />
+					<input id="organizationName" type="text" class="form-control required" readonly>
+					<div class="input-group-btn">
+						<button id="btnSelectOrg" class="btn btn-default"><i class="glyphicon glyphicon-info-sign"></i></button>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group col-sm-6 col-md-6">
+				<label class="required" data-i18n="post">#{役職}</label>
+				<div class="input-group">
+					<input id="postCode" type="hidden" class="required" readonly />
+					<input id="postName" type="text" class="form-control required" readonly />
+
+					<div class="input-group-btn">
+						<button id="btnSelectPost" class="btn btn-default"><i class="glyphicon glyphicon-info-sign"></i></button>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label class="required" data-i18n="jobType">#{主務兼務}</label>
+				<select id="jobType" class="required form-control"></select>
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label data-i18n="immediateManagerFlag">#{所属長フラグ}</label>
+				<fieldset>
+					<input type="checkbox" id="immediateManagerFlag" value="1" />
+				</fieldset>
+			</div>
+
+			<div class="form-group col-sm-8 col-md-6">
+				<label class="required" data-i18n="validTerm">#{有効期間}</label>
+				<div class="input-group">
+					<div class="has-feedback">
+						<input type="text" class="form-control ymdPicker required" id="validStartDate" data-validate='{"to" : "#validEndDate", "pattern" : "date" }'/>
+						<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+					</div>
+					<div class="input-group-addon">
+					～
+					</div>
+					<div class="has-feedback">
+						<input type="text" class="form-control ymdPicker required" id="validEndDate" data-validate='{"from" : "#validStartDate" , "pattern" : "date"}'/>
+						<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group text-center">
+				<button id="btnInput" class="btn btn-primary default-enabled" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnInput">#{入力}</span>
+				</button>
+				<button id="btnClose" class="btn btn-default default-enabled">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+</html>

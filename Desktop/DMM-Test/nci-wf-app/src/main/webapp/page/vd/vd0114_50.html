@@ -1,0 +1,90 @@
+<!-- Masterパーツのプロパティ -->
+<script type="text/javascript" src="./vd0114_50.js"></script>
+<div id="vd0114_50">
+	<label class="sub-title" data-i18n="masterSelector">#{マスタ選択}</label>
+
+	<div id="divExtProperties">
+		<div class='form-group col-sm-4'>
+			<span data-i18n='tableName' class='form-control-static required'>#{テーブル名}</span>
+			<select id='tableId' class='form-control required'></select>
+		</div>
+		<div class='form-group col-sm-4'>
+			<span data-i18n='selectCondition' class='form-control-static required'>#{選択条件}</span>
+			<select id='tableSearchId' class='form-control required'></select>
+		</div>
+		<div class='form-group col-sm-4'>
+			<span data-i18n='displayEmptyLine' class='form-control-static'>#{未選択行の表示}</span>
+			<select id='emptyLineType' class="form-control"></select>
+		</div>
+		<div class='form-group col-sm-4'>
+			<span data-i18n='columnNameValue' class='form-control-static required'>#{値のカラム名}</span>
+			<select id='columnNameValue' class='form-control required'></select>
+		</div>
+		<div class='form-group col-sm-4'>
+			<span data-i18n='columnNameLabel' class='form-control-static required'>#{ラベルのカラム名}</span>
+			<select id='columnNameLabel' class='form-control required'></select>
+		</div>
+		<div class='form-group col-sm-4'>
+			<span data-i18n='defaultValue' class='form-control-static'>#{デフォルト値}</span>
+			<input id='defaultValue' type='text' class='form-control' maxlength="90" />
+		</div>
+		<div class='form-group col-sm-2'>
+			<input id='readonly' type='checkbox' class='' value='true' />
+			<label for='readonly' data-i18n='readonly'>読取専用</label>
+		</div>
+	</div>
+
+	<hr />
+
+	<fieldset id='fsRelation' class='fieldset'>
+		<legend data-i18n="searchConditionAndResult">#{絞込条件と検索条件}</legend>
+
+		<div class="col-sm-12">
+			<button id="btnAdd" class="btn btn-primary" disabled>
+				<i class="glyphicon glyphicon-plus-sign"></i>
+				<span data-i18n="btnAdd">#{追加}</span>
+			</button>
+			<button id="btnDelete" class="btn btn-default" disabled>
+				<i class="glyphicon glyphicon-minus-sign"></i>
+				<span data-i18n="btnDelete">#{削除}</span>
+			</button>
+		</div>
+
+		<table id='tblRelation' class='table-striped table-condensed responsive col-sm-12'>
+			<colgroup>
+				<col style="width:50px" />
+				<col class='col-xs-4' />
+				<col class='col-xs-3' />
+				<col class='col-xs-2' />
+				<col class='col-xs-1' />
+				<col class='col-xs-1' />
+			</colgroup>
+
+			<thead>
+				<tr>
+					<th style="vertical-align:bottom"></th>
+					<th style="vertical-align:bottom"><span data-i18n="parts" class="text-center required">パーツ</span>
+					<th style="vertical-align:bottom"><span data-i18n="dbColumnName" class="text-center required">カラム名</span>
+					<th style="vertical-align:bottom"><span data-i18n="usage" class="text-center required">使用方法</span>
+					<th style="vertical-align:bottom" class="text-center"><span data-i18n="sortOrder">並び順</span>
+					<th style="vertical-align:bottom"><span data-i18n="noChangeEvent">変更イベントなし</span>
+				</tr>
+			</thead>
+
+			<tbody></tbody>
+
+			<tfoot class="template hide">
+				<tr>
+					<th>
+						<i class='glyphicon glyphicon-align-justify clickable'></i>
+						<input type="checkbox" class="selectable" />
+					<td><select data-field="targetPartsId" class="form-control required"></select>
+					<td><select data-field="columnName" class="form-control required columnNamesInOrOut"></select>
+					<td><select data-field="partsIoType" class="form-control required"></select></td>
+					<td class="text-center"><span data-field="sortOrder" class="form-control-static"></span>
+					<td class="text-center"><input type="checkbox" data-field="noChangeEventFlag" value="true" />
+				</tr>
+			</tfoot>
+		</table>
+	</fieldset>
+</div>

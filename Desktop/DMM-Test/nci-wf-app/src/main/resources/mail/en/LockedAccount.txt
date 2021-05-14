@@ -1,0 +1,22 @@
+[${SITE_NAME}] Your account is locked. ${STAGING_ENV_STRING}
+
+${STAGING_ENV_STRING} Dear ${USER_NAME}. (Login ID : ${USER_ADDED_INFO})
+
+Thank you very much for using our ${SITE_NAME} service.
+
+Your account has been locked because login with your registered email address has continuously failed. This is to protect your account from unauthorized access. Please submit a request to the contact below to unlock the account.
+
+
+About this email.
+*This email was sent from a send-only address. Be advised that replies to this address cannot be answered.
+*If the URL link on the email does not work, access the link by copying and pasting it into the address bar of your web browser.
+*Please refer to the privacy policy page for the handling of personal information.
+  ${PERSONAL_INFORMATION_URL}
+  ${PRIVACY_POLICY_URL}
+
+[Contact]
+${CONTACT_NAME}
+${CONTACT_ZIPCODE}
+${CONTACT_ADDRESS}
+TEL ${CONTACT_TEL}
+FAX ${CONTACT_FAX}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<style type="text/css">
+	section.main-contents {
+		padding-bottom:25px;
+	}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src='../../assets/nci/tray.js'></script>
+	<script src="./bd0803.js"></script>
+	<title>BD0803 予算履歴メンテナンス</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="col-xs-12 main-contents">
+		<article class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">予算履歴メンテナンス</h1>
+			</div>
+		</article><!--/.row-->
+
+		<article id="search-result" class="row hide">
+			<div id="search-condition">
+				<span class="hide" id="yrCd"></span>
+				<span class="hide" id="organizationCodeLv2"></span>
+				<span class="hide" id="organizationCodeLv3"></span>
+				<span class="hide" id="rcvCostPayTp"></span>
+				<span class="hide" id="bsplTp"></span>
+			</div>
+
+			<div>
+				<button class="btnSelectAll btn btn-default btn-sm" data-i18n="btnSelectAll">全選択</button>
+				<button class="btnCancelAll btn btn-default btn-sm" data-i18n="btnCancelAll">全解除</button>
+			</div>
+
+			<div id="result-contents">
+				<div class="table-responsive col-lg-12">
+					<table class="table table-bordered table-hover table-striped responsive">
+						<colgroup>
+							<col style="width:35px" />
+							<col class="col-sm-4" />
+							<col class="col-sm-5" />
+							<col class="col-sm-1" />
+							<col class="col-sm-2" />
+
+						<thead>
+							<tr>
+								<th>&nbsp;</th>
+								<th style="text-align:center">履歴名称
+								<th style="text-align:center">コメント
+								<th style="text-align:center"><a href="#" data-sort="V.HST_DT, V.HST_VERSION">取得日</a>
+								<th style="text-align:center">取得者
+
+						<tbody></tbody>
+
+						<tfoot class="template hide">
+							<tr>
+								<td>
+									<input type="checkbox" class="selectable" />
+									<span class="hide" data-field="companyCd"></span>
+									<span class="hide" data-field="yrCd"></span>
+									<span class="hide" data-field="rcvCostPayTp"></span>
+									<span class="hide" data-field="organizationCode"></span>
+									<span class="hide" data-field="hstVersion"></span>
+								</td>
+								<td><a href="#" data-field="hstNm"></a>
+								<td data-field="hstRmk"></td>
+								<td data-field="hstDt"></td>
+								<td data-field="userNameCreated"></td>
+						</tfoot>
+					 </table>
+				</div>
+			</div>
+		</article><!--/.row-->
+
+		<article class="row">
+			<div class="col-xs-3 text-right">
+			</div>
+			<div class="col-xs-6 text-center">
+				<button id="btnDelete" type="button" class="btn btn-primary wide" disabled><i class="fa fa-trash"></i><span>削除</span></button>
+			</div>
+			<div class="col-xs-3 text-right">
+				<button id="btnCancel" type="button" class="btn btn-default wide"><i class="fa fa-reply"></i><span data-i18n="btnBack">戻る</span></button>
+			</div>
+		</article><!--/.row-->
+	</section>	<!--/.main-->
+
+</body>
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+<link rel="stylesheet" href="../../assets/nci/styles.css" />
+<link rel="stylesheet" href="../../assets/nci/original.css" />
+<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+<style>
+#editArea .parts {
+	float: left;
+	position: relative;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+#editArea .displayReadonly {
+	background: transparent;
+	border: 1px solid transparent;
+	cursor: default;
+	box-shadow : 0 0 0 0;
+	height: auto;
+	line-height: 1;
+}
+</style>
+<script src="../../assets/jquery/jquery.min.js"></script>
+<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="../../assets/nci/NCI.js"></script>
+<script src='../../assets/nci/validate.js'></script>
+<script src="./mg0011.js"></script>
+<script src="./mg.js"></script>
+<title>MG0011管理 品目マスタ</title>
+</head>
+<body>
+
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="col-xs-12">
+		<article>
+			<div>
+				<h1 class="page-header">MG0011</h1>
+			</div>
+		</article>
+
+		<div id="editArea" class="panel panel-default">
+			<div class="panel-body">
+				<article class="mB40 mB40_sp">
+					<!-- 基本情報 -->
+					<table class="table table-hover table-bordered table-condensed responsive">
+						<colgroup>
+							<col style="width: 10%; background-color: rgb(234, 241, 247);">
+							<col style="width: 15%; background-color: rgb(255, 255, 255);">
+							<col style="width: 10%; background-color: rgb(234, 241, 247);">
+							<col style="width: 15%; background-color: rgb(255, 255, 255);">
+							<col style="width: 10%; background-color: rgb(234, 241, 247);">
+							<col style="width: 15%; background-color: rgb(255, 255, 255);">
+							<col style="width: 10%; background-color: rgb(234, 241, 247);">
+							<col style="width: 15%; background-color: rgb(255, 255, 255);">
+						</colgroup>
+						<tbody>
+							<tr>
+								<td class="droppable" style="background-color: rgb(48, 117, 176);" colspan="8">
+									<label class="form-control-static" style="color: #ffffff">品目マスタ</label>
+								</td>
+							</tr>
+							<tr>
+								<!-- 会社コード -->
+								<td class="droppable">
+									<label class="form-control-static required">会社コード</label>
+								</td>
+								<td class="droppable" colspan="7">
+									<article id="companyCd" class="parts col-xs-12 inputable" ></article>
+								</td>
+							</tr>
+							<tr>
+								<!-- 組織 -->
+								<td class="droppable">
+									<label class="form-control-static required">組織</label>
+								</td>
+								<td class="droppable" colspan="3">
+									<article id="orgnzCd" class="parts col-xs-4 inputable"></article>
+									<article id="orgnzNm" class="parts col-xs-6 inputable"></article>
+
+									<!-- 組織検索ボタン -->
+									<article id="orgnzCdSettings" class="parts inputable" style="margin-left:3px;">
+										<button class="btn btn-primary btn-sm">
+											<i class="glyphicon glyphicon-search"></i>
+										</button>
+										<button class="btn btn-default btn-sm btnClear">
+											<i class="glyphicon glyphicon-remove-circle"></i>
+										</button>
+									</article>
+								</td>
+								<!-- 品目コード -->
+								<td class="droppable">
+									<label class="form-control-static required">品目コード</label>
+								</td>
+								<td class="droppable">
+									<article id="itmCd" class="parts col-xs-12 inputable" ></article>
+								</td>
+								<!-- 連番 -->
+								<td class="droppable">
+									<label class="form-control-static">連番</label>
+								</td>
+								<td class="droppable">
+									<article id="sqno" class="parts col-xs-12 inputable" ></article>
+								</td>
+							</tr>
+
+							<tr>
+								<!-- 品目名称 -->
+								<td class="droppable">
+									<label class="form-control-static required">品目名称</label>
+								</td>
+								<td class="droppable" colspan="3">
+									<article id="itmNm" class="parts col-xs-12 inputable"></article>
+
+								</td>
+								<!-- 在庫区分 -->
+								<td class="droppable">
+									<label class="form-control-static required">在庫区分</label>
+								</td>
+								<td class="droppable" colspan="3">
+									<article id="stckTp" class="parts col-xs-12 inputable"></article>
+								</td>
+							</tr>
+							<tr>
+								<!-- 取引先 -->
+								<td class="droppable">
+									<label class="form-control-static">取引先</label>
+								</td>
+								<td class="droppable" colspan="3">
+									<article id="splrCd" class="parts col-xs-4 inputable"></article>
+									<article id="splrNmKj" class="parts col-xs-6 inputable"></article>
+
+									<!-- 取引先検索ボタン -->
+									<article id="splrCdSettings" class="parts inputable" style="margin-left:3px;">
+										<button class="btn btn-primary btn-sm">
+											<i class="glyphicon glyphicon-search"></i>
+										</button>
+										<button class="btn btn-default btn-sm btnClear">
+											<i class="glyphicon glyphicon-remove-circle"></i>
+										</button>
+									</article>
+								</td>
+								<td class="droppable">
+									<label class="form-control-static">取引先名称（カタカナ）</label>
+								</td>
+								<td class="droppable" colspan="3">
+									<article id="splrNmKn" class="parts col-xs-12 inputable"></article>
+								</td>
+							</tr>
+							<tr>
+								<!-- 単位コード -->
+								<td class="droppable">
+									<label class="form-control-static required">単位コード</label>
+								</td>
+								<td class="droppable">
+									<article id="untCd" class="parts col-xs-12 inputable"></article>
+								</td>
+								<!-- 金額 -->
+								<td class="droppable">
+									<label class="form-control-static required">金額</label>
+								</td>
+								<td class="droppable">
+									<article id="amt" class="parts col-xs-12 inputable"></article>
+								</td>
+								<!-- 消費税コード -->
+								<td class="droppable">
+									<label class="form-control-static">消費税コード</label>
+								</td>
+								<td class="droppable" colspan="3">
+									<article id="taxCd" class="parts col-xs-4 inputable"></article>
+									<article id="taxNm" class="parts col-xs-6 inputable"></article>
+
+									<!-- 消費税検索ボタン -->
+									<article id="taxCdSettings" class="parts inputable" style="margin-left:3px;">
+										<button class="btn btn-primary btn-sm">
+											<i class="glyphicon glyphicon-search"></i>
+										</button>
+										<button class="btn btn-default btn-sm btnClear">
+											<i class="glyphicon glyphicon-remove-circle"></i>
+										</button>
+									</article>
+								</td>
+							</tr>
+							<tr>
+								<!-- メーカー名称 -->
+								<td class="droppable">
+									<label class="form-control-static">メーカー名称</label>
+								</td>
+								<td class="droppable" colspan="3">
+									<article id="makerNm" class="parts col-xs-12 inputable"></article>
+								</td>
+								<!-- メーカー形式 -->
+								<td class="droppable">
+									<label class="form-control-static">メーカー形式</label>
+								</td>
+								<td class="droppable" colspan="3">
+									<article id="makerMdlNo" class="parts col-xs-12 inputable"></article>
+								</td>
+							</tr>
+							<tr>
+								<!-- 品目備考 -->
+								<td class="droppable">
+									<label class="form-control-static">品目備考</label>
+								</td>
+								<td class="droppable" colspan="3">
+									<article id="itmRmk" class="parts col-xs-12 inputable"></article>
+								</td>
+								<!-- 調達部門 -->
+								<td class="droppable">
+									<label class="form-control-static required">調達部門</label>
+								</td>
+								<td class="droppable" colspan="3">
+									<article id="prcFldTp" class="parts col-xs-12 inputable"></article>
+								</td>
+							</tr>
+							<tr>
+								<!-- カテゴリコード -->
+								<td class="droppable">
+									<label class="form-control-static">カテゴリコード</label>
+								</td>
+								<td class="droppable" colspan="3">
+									<article id="ctgryCd" class="parts col-xs-12 inputable"></article>
+								</td>
+								<!-- 品目バージョン -->
+								<td class="droppable">
+									<label class="form-control-static">品目バージョン</label>
+								</td>
+								<td class="droppable" colspan="3">
+									<article id="itmVrsn" class="parts col-xs-12 inputable"></article>
+								</td>
+							</tr>
+							<tr>
+								<!-- 画像 -->
+								<td class="droppable">
+									<label class="form-control-static">画像</label>
+								</td>
+								<td class="droppable" colspan="7">
+									<div id="tenpu" class="panel-body panel-collapse collapse in">
+										<!-- <input id="itmImgId" type="hide"/> -->
+										<article id="itmImgId" class="parts inputable hidden"></article>
+										<div id="itmImgDragAndDrop" data-i18n="dragAndDrop" class="form-group col-xs-12 dragZone">ここにドラッグ＆ドロップすることでファイルアップロードが行われます。</div>
+										<div id="imageArea" class="col-xs-12 row"></div>
+										<div class="col-xs-12 row">
+											<button id="updFile" class="btn btn-default btn-sm"><i class="fa fa-upload"></i><span data-i18n="btnFileUpload">ファイルを選択...</span></button>
+											<input type="file" class="hide" />
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<!-- 有効期間（開始）-->
+								<td class="droppable">
+									<label class="form-control-static">有効期間（開始）</label>
+								</td>
+								<td class="droppable">
+									<article id="vdDtS" class="parts inputable has-feedback"></article>
+								</td>
+								<!-- 有効期間（終了） -->
+								<td class="droppable">
+									<label class="form-control-static">有効期間（終了）</label>
+								</td>
+								<td class="droppable">
+									<article id="vdDtE" class="parts inputable has-feedback"></article>
+								</td>
+								<!-- 削除フラグ -->
+								<td class="droppable">
+									<label class="form-control-static required">削除フラグ</label>
+								</td>
+								<td class="droppable" colspan="3">
+									<article id="dltFg" class="parts col-xs-12 inputable has-feedback"></article>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<br>
+				</article>
+			</div>
+		</div>
+
+		<div class="form-group" style="padding-bottom:50px;">
+			<div class="text-center">
+				<div class="row">
+					<div class="form-group text-center">
+						<button class="btn btn-primary default-enabled" id="btnUpdate">
+							<i class="glyphicon glyphicon-ok-sign"> </i>
+							<span data-i18n="btnUpdate">更新 </span>
+						</button>
+						<button class="btn btn-default default-enabled" id="btnChangeMode">
+							<i class="glyphicon glyphicon-edit"></i>
+							<span data-i18n="btnEdit">編集 </span>
+						</button>
+						<button class="btn btn-primary default-enabled" id="btnRegister" style="display: none;">
+							<i class="glyphicon glyphicon-plus-sign"></i>
+							<span data-i18n="btnRegister">登録 </span>
+						</button>
+						<button class="btn btn-default default-enabled" id="btnBack">
+							<i class="glyphicon glyphicon-share-alt"> </i>
+							<span data-i18n="btnBack">戻る </span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Information -->
+		<div class="modal fade" id="mg0011Information">
+			<div class="modal-dialog dialog-sm center-modal">
+				<div class="modal-content">
+					<div class="modal-body lead">
+						<i class="glyphicon glyphicon-question-sign orange"></i>
+						<span id="mg0011InformationContents" class="modal-body"></span>
+					</div>
+					<div class="modal-footer">
+						<div class="form-group text-center">
+							<button class="btn btn-primary" data-dismiss="modal">
+								<i class="glyphicon glyphicon-ok"></i>
+								<span>OK</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- エラー用 -->
+	<div id="checkErrorAlert" class="modal fade">
+	    <div class="modal-dialog dialog-sm center-modal">
+	        <div class="modal-content">
+	          <div class="modal-body lead">
+	            <i class="glyphicon glyphicon-remove red"></i>
+	            <span id="checkErrorAlertBody" class="modal-body">
+	            </span>
+	          </div>
+
+	            <div id="checkErrorAlertButtonArea" class="modal-footer">
+	                <button type="button" class="btn btn-primary button-yes">
+	                  <i class="glyphicon glyphicon-ok-sign"></i>
+	                  <span class="button-yes">ＯＫ</span>
+	                </button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</body>
+</html>

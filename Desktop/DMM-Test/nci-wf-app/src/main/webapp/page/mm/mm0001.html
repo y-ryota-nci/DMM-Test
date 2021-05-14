@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./mm0001.js"></script>
+	<title>#{MM0001 企業の編集}</title>
+</head>
+
+<body>
+
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section id="corporationInfo" class="container">
+		<div class="row">
+			<span class="screen-name">#{MM0001}</span>
+
+			<label class="sub-title" data-i18n="corporationInfo">#{企業情報}</label>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label data-i18n="corporationCode">#{企業コード}</label>
+				<input id="corporationCode" class="required form-control" type="text" maxlength="10" readonly />
+				<input id="timestampUpdated" type="hidden" />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label data-i18n="corporationAddedInfo" class="required">#{企業付加情報}</label>
+				<input id="corporationAddedInfo" type="text" class="form-control" maxlength="50" data-validate='{ "pattern" : "alphaSymbolNumber" }' />
+			</div>
+
+			<div class="form-group col-sm-8 col-md-6">
+				<label data-i18n="corporationName" class="required">#{企業名称}</label>
+				<input id="corporationName" type="text" class="required form-control" maxlength="100" />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label data-i18n="corporationGroup">#{企業グループ}</label>
+				<select id="corporationGroupCode" class="form-control"></select>
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label data-i18n="postNum">#{郵便番号}</label>
+				<input id="postNum" type="text" maxlength="10" class="form-control" data-validate='{"pattern" : "postCode" }' />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label data-i18n="telNum">#{電話番号}</label>
+				<input id="telNum" type="text" class="form-control" maxlength="20" data-validate='{"pattern": "tel" }' />
+			</div>
+
+			<div class="form-group col-sm-12 col-md-9">
+				<label data-i18n="address">#{住所}</label>
+				<input id="address" type="text" class="form-control" maxlength="300" />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label><span data-i18n="extendedInfo">#{拡張情報}</span>01</label>
+				<input id="extendedInfo01" type="text" class="form-control" maxlength="30" />
+			</div>
+
+			<div class="form-group col-sm-4 col-md-3">
+				<label data-i18n="deleteFlag" class="required">#{削除区分}</label>
+				<input id="deleteFlag" type="hidden" disabled />
+				<input id="deleteFlagName" type="text" class="form-control" disabled />
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group text-center">
+				<button id="btnUpdate" class="btn btn-primary default-enabled" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnUpdate">#{更新}</span>
+				</button>
+				<button id="btnDelete" class="btn btn-danger default-enabled" disabled>
+					<i class="glyphicon glyphicon-trash"></i>
+					<span data-i18n="btnDelete">#{削除}</span>
+				</button>
+				<button id="btnBack" class="btn btn-default default-enabled">
+					<i class="glyphicon glyphicon-share-alt"></i>
+					<span data-i18n="btnBack">#{戻る}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+</html>

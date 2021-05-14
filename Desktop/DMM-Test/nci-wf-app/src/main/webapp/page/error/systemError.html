@@ -1,0 +1,22 @@
+<script type="text/javascript" src="../error/error.js"></script>
+<header></header>
+<section id="sc" class="container">
+	<br />
+	<h1 id="errorReason">Unexpected error occurred in the system, so we could not continue processing your request.</h1>
+	<p id="sorryForTouble" data-i18n="sorryForTouble">We're sorry for causing you trouble.</p>
+	<div class="text-center">
+		<img id="errImage" src="../../assets/nci/images/systemError.png" style="height: 100%; max-height:calc(90vh - 250px);" /><br />
+	</div>
+	<div class="text-center button-group">
+		<button id="___btnTopPage___" class="btn btn-warning" onclick="javascript:_toTopPage();" data-i18n="btnTopPage">TopPage</button>
+	</div>
+	<article>
+		<h5 id="___httpStatus___">#{httpStatus}</h5>
+		<i><small>
+			<span id="___timestamp___"></span><br />
+			<span id="___url___">#{url}</span><br />
+			<span id="___errorText___">#{errorText}</span>
+			<span id="___topPageUrl___" style="display:none;">unsecure/login.html</span>
+		</small></i>
+	</article>
+</section>

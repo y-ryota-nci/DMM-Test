@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+		/* ファイルのドラッグ＆ドロップ */
+		.dragZone {
+			border: 2px dotted #0B85A1;
+			color: #92AAB0;
+			text-align: left;
+			vertical-align: middle;
+			padding: 10px 10px 10 10px;
+			margin-bottom: 10px;
+			font-size: 200%;
+		}
+		table.table>tbody>tr>td,
+		table.table>tbody>tr>th {
+			vertical-align : middle;
+		}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./up0200.js"></script>
+	<title>{UP0200 プロファイル情報アップロード}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="container">
+		<div class="row">
+			<span class="screen-name">#{UP0200}</span>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<label class="sub-title">
+				<span data-i18n="uploadFileInfo">アップロードファイル情報</span>
+			</label>
+		</div>
+		<div id="dragAndDropArea" class="row">
+			<div data-i18n="dragAndDrop" class="form-group col-sm-12 dragZone">ここにドラッグ＆ドロップすることでファイルアップロードが行われます</div>
+			<div class="form-group col-sm-12">
+				<input type="file" id="file" />
+			</div>
+		</div>
+		<div id="uploadFileArea" class="row hide">
+			<input type="hidden" id="encoded" />
+
+			<table class="table table-hover table-striped table-condensed">
+				<colgroup>
+					<col class="col-sm-4" />
+					<col class="col-sm-2" />
+					<col class="col-sm-2" />
+					<col class="col-sm-2" />
+					<col class="col-sm-2" />
+				</colgroup>
+				<thead>
+					<tr>
+						<th data-i18n="fileName">#{ファイル名}
+						<th data-i18n="organization" class="text-center">#{組織}
+						<th data-i18n="post" class="text-center">#{役職}
+						<th data-i18n="user" class="text-center">#{ユーザ}
+						<th data-i18n="affiliation" class="text-center">#{所属}
+				</thead>
+				<tbody>
+					<tr>
+						<td id="fileName">#{ファイル名}
+						<td data-field="orgCount" class="text-center">#{組織数}
+						<td data-field="postCount" class="text-center">#{役職数}
+						<td data-field="userCount" class="text-center">#{ユーザ数}
+						<td data-field="ubCount" class="text-center">#{所属数}
+				</tbody>
+			</table>
+		</div>
+	</section>
+	<section class="container">
+		<div class="row">
+			<div id="inputed" class="hide-initial hide">
+				<label class="sub-title">
+					<span data-i18n="importConfig">取込設定</span>
+				</label>
+				<div class="panel">
+					<input id="deleteIfNotUse" type="checkbox" value="true" />
+					<label for="deleteIfNotUse" data-i18n="MSG0262">#{未使用データを削除する}</label>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<div class="text-center col-sm-offset-4 col-sm-4">
+				<button id="btnRegister" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnRegister">#{更新}</span>
+				</button>
+				<button id="btnReset" class="btn btn-default">
+					<i class="glyphicon glyphicon-refresh"></i>
+					<span data-i18n="btnReset">#{btnReset}</span>
+				</button>
+			</div>
+			<div class="text-right col-sm-4">
+				<button id="btnDownload" class="btn btn-success" disabled>
+					<i class="glyphicon glyphicon-cloud-download"></i>
+					<span data-i18n="btnDownload">#{ダウンロード}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

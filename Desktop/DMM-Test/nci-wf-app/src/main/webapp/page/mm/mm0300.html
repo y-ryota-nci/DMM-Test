@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+<link rel="stylesheet" href="../../assets/nci/app.css" />
+<style type="text/css">
+</style>
+<script src="../../assets/jquery/jquery.min.js"></script>
+<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="../../assets/nci/NCI.js"></script>
+<script src="../../assets/nci/validate.js"></script>
+<script src="./mm0300.js"></script>
+<title>{MM0300 ルート検索}</title>
+</head>
+<body>
+<header class="container-fluid">
+	<div id="nav"></div>
+</header>
+<section class="container">
+	<div>
+		<span class="screen-name">#{MM0300}</span>
+		<!-- javascript不要なアコーディオン -->
+		<article class="ac-container">
+			<input id="ac-1" type="checkbox" class="ac-trigger"/>
+			<label for="ac-1" class="ac-label sub-title">
+				<i class="glyphicon glyphicon-plus-sign"></i>
+				<span data-i18n="filterCondition">#{絞り込み条件を設定する}</span>
+				<i class="glyphicon glyphicon-chevron-up arrow-up"></i>
+				<i class="glyphicon glyphicon-chevron-down arrow-down"></i>
+			</label>
+			<form id="formCondition" class="ac-contents">
+				<div class="form-group col-sm-4 col-md-3">
+					<label data-i18n="processDefCode">#{processDefCode}</label>
+					<input type="text" id="processDefCode" class="form-control" />
+				</div>
+				<div class="form-group col-sm-6 col-md-6">
+					<label data-i18n="processDefName">#{processDefName}</label>
+					<input type="text" id="processDefName" class="form-control" />
+				</div>
+				<div class="form-group col-sm-6 col-md-6">
+					<label data-i18n="validTerm">#{有効期限}</label>
+					<div class="input-group">
+						<div class="has-feedback">
+							<input type="text" value="" class="form-control ymdPicker" id="validStartDate" data-validate='{"to" : "#validEndDate", "pattern" : "date" }'/>
+							<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+						</div>
+						<span class="input-group-addon">～</span>
+						<div class="has-feedback">
+							<input type="text" value="" class="form-control ymdPicker" id="validEndDate" data-validate='{"from" : "#validStartDate" , "pattern" : "date"}'/>
+							<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+						</div>
+					</div>
+				</div>
+				<div class="form-group col-sm-4 col-md-3">
+					<label data-i18n="deleteFlag">#{deleteFlag}</label>
+					<select id="deleteFlag" class="form-control"></select>
+				</div>
+			</form>
+		</article>
+		<div class="form-group text-center">
+			<button id="btnSearch" class="btn btn-primary">
+				<i class="glyphicon glyphicon-search"></i>
+				<span data-i18n="btnFilter">#{btnFilter}</span>
+			</button>
+			<button id="btnReset" class="btn btn-default">
+				<i class="glyphicon glyphicon-refresh"></i>
+				<span data-i18n="btnReset">#{btnReset}</span>
+			</button>
+		</div>
+	</div>
+</section>
+
+<section id="seach-result" class="container hide">
+	<div>
+		<!-- 検索結果サブタイトル -->
+		<div class="inline-group sub-title">
+			<div class="col-xs-3 text-left">
+				<i class="glyphicon glyphicon-info-sign"></i>
+				<span class="hidden-xs" data-i18n="searchResult">#{検索結果}</span>
+			</div>
+
+			<div class="col-xs-7 text-center">
+				<span>
+					<span data-i18n="pageCount">PAGE</span>:
+					<span class="page-no">#{page-no}</span>
+					 /
+					 <span class="page-count">#{page-count}</span>
+				</span>
+				<span class="hidden-xs">
+					&nbsp;&nbsp;
+					<span data-i18n="totalCount">#{総件数}</span>:
+					<span class="all-count">#{all-count}</span>
+				</span>
+			</div>
+
+			<!-- 設定アイコン -->
+			<div class="col-xs-2 pull-right text-right dropdown">
+				<i class="glyphicon glyphicon-cog dropdown-toggle clickable" data-toggle="dropdown"></i>
+
+				<!-- 設定アイコン押下時のエリア -->
+				<div class="dropdown-menu pageSizeConfig">
+		 			<label data-i18n="rowCountPerPage">{１ページの行数}</label>
+					<select class="pageSize" class="form-control"></select>
+				</div>
+			</div>
+		</div>
+
+		<div class="text-center">
+			<ul class="pagination"></ul>
+		</div>
+
+		<div class="button-group">
+			<button id="btnSelectAll" class="btn btn-default btn-sm" data-i18n="btnSelectAll">全選択</button>
+			<button id="btnCancelAll" class="btn btn-default btn-sm" data-i18n="btnCancelAll">全解除</button>
+		</div>
+
+		<table class="table table-hover table-striped table-condensed responsive">
+			<colgroup>
+				<col style="width:15px" />
+				<col class="col-sm-3" />
+				<col class="col-sm-4" />
+				<col class="col-sm-3" />
+				<col class="col-sm-1" />
+				<col class="col-sm-1" />
+			</colgroup>
+			<thead>
+			<tr>
+				<th></th>
+				<th><a href="#" data-i18n="processDefCode" data-sort="PROCESS_DEF_CODE, PROCESS_DEF_DETAIL_CODE, ID">#{processDefCode}</a>
+				<th><a href="#" data-i18n="processDefName" data-sort="PROCESS_DEF_NAME, ID">#{processDefName}</a>
+				<th><a href="#" data-i18n="validTerm" data-sort="VALID_START_DATE, VALID_END_DATE, ID">#{validTerm}</a>
+				<th><a href="#" data-i18n="deleteFlag" data-sort="DELETE_FLAG, ID">#{deleteFlag}</a>
+				<th><a href="#" data-i18n="informationSharer" data-sort="INFO_SHARER_EXISTS_FLAG, ID">#{情報共有}</a>
+			</thead>
+
+			<tbody></tbody>
+
+			<tfoot class="template hide">
+			<tr>
+				<th class="text-center"><input type="checkbox" class="selectable" disabled="disabled" />
+				<td class="text-left"><a href="javascript:void(0)" class="lnkOpenEdit"><span data-field="processDefCode">#{processDefCode}</span>-<span data-field="processDefDetailCode"></span></a></td>
+				<td class="text-left"><a href="javascript:void(0)" class="lnkOpenEdit" data-field="processDefName">#{processDefName}</a></td>
+				<td class="text-left">
+					<span data-field="validStartDate"></span>
+					～
+					<span data-field="validEndDate"></span></td>
+				<td class="text-left" data-field="deleteFlagName">#{deleteFlagName}</td>
+				<td class="text-left">
+					<button class="btn btn-default btn-sm btnInformationSharer">
+						<i class="glyphicon glyphicon-info-sign"></i>
+						<span data-field="infoSharerExistsFlagName"></span>
+					</button>
+				</td>
+				<td class="hide">
+					<span  data-field="corporationCode"></span>
+					<span  data-field="timestampUpdated"></span>
+				</td>
+			</tfoot>
+		</table>
+
+		<div class="text-center">
+			<ul class="pagination"></ul>
+		</div>
+	</div>
+</section>
+<section class="container">
+	<div>
+		<button id="btnAddition" class="btn btn-primary" disabled>
+			<i class="glyphicon glyphicon-plus-sign"></i>
+			<span data-i18n="btnAdd">#{追加}</span>
+		</button>
+		<button id="btnBranchUpdate" class="btn btn-primary" disabled>
+			<i class="fa fa-clone"></i>
+			<span data-i18n="btnBranchUpdate">#{枝番更新}</span>
+		</button>
+		<button id="btnDownload" class="btn btn-success" disabled>
+			<i class="glyphicon glyphicon-cloud-download"></i>
+			<span data-i18n="btnDownloadDefinition">#{定義のダウンロード}</span>
+		</button>
+	</div>
+</section>
+<div id="branchUpdate" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content form-group">
+			<div class="modal-body">
+				<div class="form-group">
+					<label class="" data-i18n="processDefName">#{プロセス定義名}</label>
+					<span id="branchCorporationCode" class="hide"></span>
+					<span id="branchProcessDefCode" class="hide"></span>
+					<span id="branchProcessDefDetailCode" class="hide"></span>
+					<input id="branchProcessDefName" type="text" maxlength="30" class="form-control" readonly />
+				</div>
+				<div class="form-group">
+					<label class="" data-i18n="validStartDate">#{有効開始日}</label>
+					<input id="branchValidStartDate" type="text" class="form-control" readonly />
+				</div>
+				<div class="form-group">
+					<label class="required" data-i18n="updateValidStartDate">#{更新有効開始日}</label>
+					<div class="has-feedback">
+						<input id="updateValidStartDate" maxlength="100" class="required form-control ymdPicker" data-validate='{"pattern" : "date"}' />
+						<i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+					</div>
+				</div>
+			</div>
+			<div class="moda-footer form-group text-center">
+				<button id="btnUpdateOk" class="btn btn-primary">
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnOK">#{ＯＫ}</span>
+				</button>
+				<button id="btnUpdateCancel" class="btn btn-default">
+					<i class="glyphicon glyphicon-remove-sign"></i>
+					<span data-i18n="btnCancel">#{キャンセル}</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

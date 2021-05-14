@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/app.css" />
+	<style type="text/css">
+	@media (min-width: 768px) {
+		.dl-horizontal dt {
+			width : 280px;
+		}
+		.dl-horizontal dd {
+			margin-left : 300px;
+		}
+	}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src="../../assets/nci/validate.js"></script>
+	<script src="./ml0040.js"></script>
+	<title>#{ML0040 メール変数設定}</title>
+</head>
+<body>
+	<header class="container-fluid">
+		<div id="nav"></div>
+	</header>
+
+	<section class="container">
+		<div class="row">
+			<span class="screen-name">#{ML0040}</span>
+
+			<label class="sub-title">
+				<span  data-i18n="mailVariable"></span>
+			</label>
+
+			<div id="inputs">
+				<table class="table table-hover table-striped table-condensed responsive">
+					<colgroup>
+						<col class="col-xs-2" />
+						<col class="col-xs-3" />
+						<col class="col-xs-7" />
+					<thead>
+						<tr>
+							<th data-i18n="mailVariableCode">メール変数コード
+							<th data-i18n="mailVariableLabel">メール変数ラベル
+							<th data-i18n="mailVariableValue">メール変数値
+
+					<tbody></tbody>
+
+					<tfoot class="hide template">
+						<tr>
+							<th>
+								<span data-field="mailVariableCode" class="form-control-static"></span>
+								<span data-field="mailVariableId" class="hide"></span>
+								<span data-field="corporationCode" class="hide"></span>
+								<span data-field="version" class="hide"></span>
+							<td><input data-field="mailVariableLabel" type="text" class="form-control required" maxlength="30" />
+							<td><input data-field="mailVariableValue" type="text" class="form-control required" maxlength="100" />
+				</table>
+			</div>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="row">
+			<div class="text-center">
+				<button id="btnUpdate" class="btn btn-primary" disabled>
+					<i class="glyphicon glyphicon-ok-sign"></i>
+					<span data-i18n="btnUpdate">#{更新}</span>
+				</button>
+			</div>
+		</div>
+	</section>
+
+</body>
+</html>

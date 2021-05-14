@@ -1,0 +1,772 @@
+@charset "UTF-8";
+
+/* ムーンファクトリのデザインCSSを上書き */
+	footer {
+		overflow: hidden;
+		padding: 0px 25px;
+	}
+	.submit_btn_area {
+		border-bottom: none !important;
+	}
+	#head_object {
+		position: static;
+	}
+	.h1, .h2, .h3, h1, h2, h3 {
+		margin-top: 5px;
+		margin-bottom: 0px;
+	}
+	.btn {
+		padding: 5px 5px;
+	}
+	h1.page-header {
+		margin-top: 5px;
+	}
+	.page-header {
+		margin-bottom: 0px;
+	}
+	.form-group {
+		margin-bottom: 5px;
+	}
+	ol, ul {
+		margin-bottom: 5px;
+	}
+	.panel {
+		margin-bottom: 15px;
+	}
+	@media screen and (max-width: 767px) {
+		.submit_white, .submit_blue, .submit_black {
+			width: auto;
+			min-width: 32%;
+		}
+		.table>tbody>tr>th,
+		.table>tfoot>tr>th,
+		.table>thead>tr>th {
+			width:auto;
+		}
+		.table>tbody>tr>th,
+		.table>tfoot>tr>th,
+		.table>thead>tr>th,
+		.table>tbody>tr>td,
+		.table>tfoot>tr>td,
+		.table>thead>tr>td {
+			text-align: inherit;
+		}
+		table.table>*>tr>td {
+			padding : 8px 6px;
+		}
+		table.table>*>tr>th.line-number,
+		table.table>*>tr>td.line-number {
+			padding: 8px 0px;
+			text-align: center;
+			vertical-align: middle;
+		}
+		.panel-default .panel-heading {
+			height: inherit;
+			min-height: 38px;
+			padding: 0px 15px;
+		}
+		.panel-default .panel-heading i{
+			margin-top: 10px;
+		}
+	}
+	@media screen and (min-width: 768px) {
+		.btn.btn-wide {
+			width: auto;
+			min-width: 100px;
+			padding-left: 15px;
+			padding-right: 15px;
+		}
+		.panel-default .panel-heading {
+			height: inherit;
+			min-height: 38px;
+			padding: 0px 15px;
+		}
+		table.table>*>tr>th.line-number,
+		table.table>*>tr>td.line-number {
+			text-align: center;
+		}
+		/** PC用メニュー */
+		.navbar-right {
+			font-size: 14px;
+		}
+        .navi ul li:hover {
+            z-index: 100;
+        }
+		.navi ul li a {
+			padding: 3px 20px;
+		}
+		.navi ul li.parent ul.sub{
+			left: auto;
+			top: 24px;
+		}
+		.navi li.parent ul.sub li{
+			text-align: left;
+			width: 200px;
+		}
+		.navi ul li.sub_parent ul.subsub{
+			left: 200px;
+		}
+		.navi li.sub_parent ul.subsub li{
+			text-align: left;
+			width: 200px;
+		}
+		/** ボタンエリア */
+		.submit_btn_area .area1 {
+			margin-bottom: 0px;
+		}
+		.topend_btn {
+			margin-top: 8px;
+		}
+	}
+	@media screen and (min-width: 1200px) {
+		/* 描画領域＜テーブル幅のとき、モバイルやタブレットだと横スクロールバーが出るのにPC版だけ出ない不統一を是正 */
+		.table-responsive {
+			width: 100%;
+			margin-bottom: 15px;
+			overflow-y: hidden;
+			min-height: 0.01%;
+			overflow-x: auto;
+			border-top: none;
+		}
+	}
+	/** アラート */
+	div.alert.alert-success {
+		color : #3d8b40;
+		background-color: #d9eeda;
+		border-color: #cbe7c7;
+	}
+	div.alert.alert-danger {
+		color : #ea1c0d;
+		background-color: #fff8f7;
+		border-color: #fddfe2;
+	}
+	div.alert.alert-warning {
+		color: #cc7a00;
+		background-color: #ffeacc;
+		border-color: #ffd3b3;
+	}
+/* ムーンファクトリのtableのCSS指定を上書き */
+/*	@media screen and (max-width: 767px) {
+		table.attach-file-parts > thead > tr > th.line-number,
+		table.attach-file-parts > thead > tr > td.line-number,
+		table.attach-file-parts > tbody > tr > th.line-number,
+		table.attach-file-parts > tbody > tr > td.line-number,
+		table.attach-file-parts > tfoot > tr > th.line-number,
+		table.attach-file-parts > tfoot > tr > td.line-number {
+			width:50px;
+			max-width:50px;
+			text-align:center;
+		}
+		table.attach-file-parts > thead > tr > th,
+		table.attach-file-parts > thead > tr > td,
+		table.attach-file-parts > tbody > tr > th,
+		table.attach-file-parts > tbody > tr > td,
+		table.attach-file-parts > tfoot > tr > th,
+		table.attach-file-parts > tfoot > tr > td {
+			width:auto;
+			max-width:100%;
+		}
+	}
+*/
+/* BootstrapのボタンCSSをムーンファクトリのデザインに寄せる */
+	.alert, .badge, .breadcrumb, .btn, .form-control, .input-gruop, .label, .lead, .list-group, .nav-pills, .nav-tabs, .navbar, .no-thank-yu, .pager, .pagination, .panel-heading, .panel-title, .popover, .tooltip {
+		font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	}
+	.table-responsive>.table>tbody>tr>td,
+	.table-responsive>.table>tbody>tr>th,
+	.table-responsive>.table>tfoot>tr>td,
+	.table-responsive>.table>tfoot>tr>th,
+	.table-responsive>.table>thead>tr>td,
+	.table-responsive>.table>thead>tr>th {
+			white-space: inherit;
+	}
+	button.btn.btn-danger {
+		color : #fff;
+		background-color: #000;
+		border: #000;
+	}
+	button.btn.btn-primary {
+		color: #fff;
+		background-color: #3b81bc !important;
+		border: #3b81bc;
+	}
+	button.btn.btn-success {
+		color: #fff;
+		background-color: #2e8b57;
+		border: #2e8b57;
+	}
+	button.btn.btn-warning {
+		color: #fff;
+		background-color: #ff8c00;
+		border: #ff8c00;
+	}
+
+	/* Bootstrapのform-control関連のCSSをムーンファクトリのデザインに寄せる */
+	.input-group-addon {
+		padding: 5px 12px;
+	}
+	.form-control-feedback {
+		width: 30px;
+		height: 30px;
+		line-height: 30px;
+	}
+	@media screen and (max-width: 767px) {
+		.input-group[class*=col-] {
+			float: left;
+		}
+		/* モバイル時にwhite-space:nowrapされているとセル幅で改行されなくなってしまうので、補正 */
+		.table-responsive>.table>tbody>tr>td,
+		.table-responsive>.table>tbody>tr>th,
+		.table-responsive>.table>tfoot>tr>td,
+		.table-responsive>.table>tfoot>tr>th,
+		.table-responsive>.table>thead>tr>td,
+		.table-responsive>.table>thead>tr>th {
+			white-space: inherit;
+		}
+	}
+
+/* Bootstrapの .modal()をセンタリングさせる */
+	.center-modal { top: 25%; }
+	.center-modal .modal-dialog { margin-top: 25%; }	/* .center-modalのtopと同じ幅 */
+	div.modal-dialog {
+		width:calc(100% - 20px);
+		margin-left:auto;
+		margin-right:auto;
+	}
+
+/* Bootstrapのチェックボックス／ラジオが2行目以降の先頭がインデントされてしまう問題への対処 */
+	.checkbox-inline + .checkbox-inline,
+	.radio-inline + .radio-inline {
+		margin-left: 0px;
+		margin-right: 10px;
+	}
+	.checkbox-inline:first-child,
+	.radio-inline:first-child {
+		margin-right: 10px;
+	}
+
+/* メニュー表示用 */
+/*	header.container-fluid {
+		padding: 0px;
+	}
+	#nav .container-fluid {
+		padding: 0px;
+	}
+	#nav .navbar-header {
+		padding: 15px;
+	}
+	#nav .dropdown {
+		margin: 0px;
+		margin-right: 5px;
+	}
+	#nav .dropdown a.dropdown-toggle {
+		height: auto;
+		width: auto;
+	}
+	#nav .navbar-nav > li > a {
+		padding-top:0px;
+		padding-bottom: 0px;
+		padding-left: 21px;
+		padding-right: 21px;
+		border-radius: 4px;
+		margin-top: 0px;
+		margin-bottom: 0px;
+	}
+	#nav .dropdown-menu>li>a {
+		display: block;
+		padding: 3px 20px;
+		clear: both;
+		line-height: 1.5;
+		color: #333;
+		white-space: nowrap;
+	}
+	#nav .fa-sign-out{
+		margin-top: 2px;
+		color: #FFF;
+		font-size: 18px;
+    	vertical-align: middle;
+		margin-left: 10px;
+	}
+*/
+/* bootstrap標準から上書き */
+	.table-striped>tbody>tr:nth-of-type(odd) {
+		background-color: #f9ffff;
+	}
+
+/* 互換性用 */
+	table.responsive {
+		table-layout : fixed;
+	}
+/* style.css(.table > thead > tr > th)の一部上書き */
+	.parts-container .table > thead > tr > th {
+		height: 40px;
+	}
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/* +++ ここからapp.cssからの引き継ぎ */
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/** 全体的な調整 */
+	body {
+		word-wrap : break-word;
+		overflow-wrap : break-word;
+		margin-bottom: 50px; /* フッター用のエリアを確保 */
+	}
+	textarea { resize: none; }
+
+/** bootstrap.jsのmodal()を開いた時に、modalを開いたときにスクロールバー分だけズレる不具合への対処(for 3.3.7) */
+	.modal-open {
+		overflow: auto;
+	}
+/*	label {
+		font-weight: 400;
+	}*/
+
+/** オリジナルのfieldsetの復元 */
+	fieldset.fieldset {
+		padding: .35em .625em 0;
+		margin: 0 0 6px;
+		border: 1px solid #c0c0c0;
+		width: 100%;
+	}
+	fieldset.fieldset legend {
+		border: none;
+		display: block;
+		font-size: 14px;
+		padding: 2px;
+		margin-bottom: 0;
+		width: auto;
+	}
+
+/** 無効化されたボタン */
+	.btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+		opacity: .30;
+	}
+
+/** アイコン等の上にマウスを合わせたときのカーソル */
+	.hyperlink {
+		color : #2196f3;
+		cursor : pointer;
+		text-decoration : underline;
+	}
+	.clickable:hover {
+		cursor : pointer;
+	}
+	.minicolors-swatch-color {
+		cursor : pointer;
+	}
+
+
+/** 垂直方向にセンタリング */
+	.vertical-middle,
+	.table>thead>tr>th.vertical-middle,
+	.table>thead>tr>td.vertical-middle,
+	.table>tbody>tr>th.vertical-middle,
+	.table>tbody>tr>td.vertical-middle,
+	.table>tfoot>tr>th.vertical-middle,
+	.table>tfoot>tr>td.vertical-middle {
+		vertical-align: middle;
+	}
+
+/** ページあたりの行数エリア */
+	.pageSizeConfig {
+		border-radius: 5px;
+		color: #333;
+		float: right;
+		left : auto;
+		padding: 5px 15px;
+		right: 0;
+		text-align: right;
+		width: 300px;
+	}
+	.pagination {
+		margin: 3px 3px;
+	}
+	.pagination > li > a {	/* 連続してページリンクを押下したとき、 字形で文字幅が変わると位置ずれが起こってユーザビリティが悪くなるため、ページリンクは固定フォントとする、*/
+		font-family: Consolas, 'Courier New', Courier, Monaco, monospace;
+	}
+
+
+/** 検索結果０件用 */
+	table caption.noRecord {
+		caption-side : top;
+	}
+	div.noRecord, label.noRecord {
+		width : 100%;
+		display : inline-block;
+		float : left;
+	}
+
+/* デザイナ：パーツのラベル */
+	#editArea label.parts {
+		display: inline;
+		width: auto;
+		margin-right: .3rem;
+	}
+	#editArea .parts {
+		float: left;
+		position : relative;
+		padding-left: 0;
+		padding-right: 0;
+	}
+	#editArea article.parts > .form-control {
+		display : inline-block;
+	}
+	#editArea .lineCount {
+		text-align: right;
+		width: 60px;
+	}
+	#editArea .parts-container {
+		width : 100%;
+	}
+	#editArea .parts-container[data-parts-type="51"] {	/* コンテナでも、独立画面パーツだけはインライン表示すべく幅を調整 */
+		width : auto;
+	}
+	#editArea article.parts>.radio>label>input[type=radio],
+	#editArea article.parts>label.radio-inline>input[type=radio] {
+		position : static;
+		margin-left : 0px;
+	}
+	#editArea .form-group-lg .btn {
+		font-size : large;
+	}
+	#editArea .form-group-sm .btn {
+		font-size : small;
+	}
+	#editArea .form-group-sm article.parts>.form-control-feedback {
+		font-size : large;
+	}
+	#editArea .input-group .input-group-addon {
+		top : 0px;
+	}
+	@media screen and (max-width: 767px) {
+		/* 1文字分インデント 、ただしラベルとコンテナを除く */
+		#editArea .parts {
+			padding-left: 1em;
+		}
+		#editArea .parts.parts-label,
+		#editArea .parts.parts-container {
+			padding-left: 0px;
+		}
+	}
+
+	.form-group-sm .form-control-static,
+	.form-group-sm .form-control {
+		min-height: 20px;
+		height: inherit;
+	}
+	.form-group-sm .btn {
+		padding: 2px 6px;
+	}
+	.parts table.table {
+		margin-bottom: 0px;
+	}
+	.parts .pagination>li>a, .pagination>li>span {
+		float : none;
+	}
+	.pagination>li>a, .pagination>li>span {
+		padding: 2px 6px;
+		margin: 3px 0px;
+	}
+
+/** 空のalertを隠す */
+	div.alert:empty {
+		display:none;
+	}
+	header div.alert {
+		margin-left: 15px;
+		margin-right: 15px;
+	}
+
+/** iframe */
+	iframe.popup {
+		width: 100%;
+		height: 750px;
+	}
+
+/** ダイアログの大きさ */
+	div.dialog-sm {
+		max-width : 550px;
+		margin-left : auto;
+		margin-right : auto;
+	}
+	@media (min-width: 1200px) {
+		.modal-lg {
+			width: 1100px;
+		}
+	}
+
+/** バルーン */
+	div.balloon {
+		background-color: #fcd6d6;
+		border: 1px solid hsla(0,0%,4%,.25);
+		border-radius: 3px;
+		box-shadow: 3px 3px 5px #555;
+		color: #0a0a0a;
+		padding: .5rem .5rem;
+		position: absolute;
+		max-width: 22rem;
+		min-width: 8rem;
+		visibility: visible;
+		text-align: left;
+		z-index : 1001;	/* bootstrapの.modalが z-index:1050 なので、それよりは小さく。*/
+	}
+	div.balloon ul {
+		list-style-type: none;
+		margin-left: .3rem;
+		margin-bottom: 0;
+	}
+	div.balloon:before {
+		border-bottom: 15px solid hsla(0,0%,4%,.25);
+		border-left: 5px solid transparent;
+		border-right: 5px solid transparent;
+		top: -15px;
+		content: "";
+		height: 0;
+		left: 10%;
+		margin-left: -10px;
+		position: absolute;
+		width: 0;
+	}
+	div.balloon:after {
+		border-bottom: 15px solid #fcd6d6;
+		border-left: 5px solid transparent;
+		border-right: 5px solid transparent;
+		top: -14px;
+		content: "";
+		height: 0;
+		left: 10%;
+		margin-left: -10px;
+		position: absolute;
+		width: 0;
+	}
+
+/** 必須 */
+	label.required::after,
+	span.required::after,
+	strong.required::after {
+		content : "∗";
+		color : red;
+		font-weight: bold;
+	}
+
+/** ブロックUI */
+	#blockUI > .blockUI-backdrop {	/* 全コンテンツを覆い隠す半透明のスクリーン */
+		filter: alpha(opacity=50);
+		opacity: 0.5;
+		position: fixed;
+		top: 0px;
+		right: 0px;
+		bottom: 0px;
+		left: 0px;
+		z-index: 1040;
+		background-color: #000;
+		cursor : wait;
+	}
+	#blockUI > .blockUI-content {	/* (wait for a while...)の文言部分 */
+		filter: alpha(opacity=100);
+		opacity: 1.0;
+		padding: 28px;
+		height: 80px;
+		width : 100%;
+		max-width : 550px;
+		margin: auto;
+		position: fixed;
+		top: 0px;
+		right: 0px;
+		bottom: 0px;
+		left: 0px;
+		z-index: 1050;
+		overflow: hidden;
+		-webkit-overflow-scrolling: touch;
+		outline: 0;
+		background-color : white;
+		text-align : center;
+		font-size : larger;
+		font-weight : bold;
+		cursor : wait;
+		border-radius : 5px;
+	}
+
+/* 画面デザイナー：HTML背景でのセル番号マーカー(普通は非表示) */
+	aside.forBgHtml {
+		display:none;
+	}
+
+/* テキストの選択不可 */
+	.disable-select {
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+
+/* ドロップダウンの読取専用 */
+	select.readonly, select.ecReadonly {
+		background-color: #eee;
+	}
+
+/* フォント色 */
+	.red { color : red !important; }
+	.blue { color : blue !important; }
+	.orange {color: orange !important; }
+
+/* 承認者情報アクティビティのカラー */
+	/* カレントアクティビティカラー */
+	tr.current{
+		background-color:#FFFF99!important;
+	}
+
+	/* クローズアクティビティ奇数カラー(淡グレー) */
+	tr.closed-odd{
+		background-color:#E3E3E3;
+	}
+
+	/* クローズアクティビティ偶数カラー(グレー) */
+	tr.closed-even{
+		background-color:#D3D3D3;
+	}
+
+	/* ファイルアップロードのドラッグ＆ドロップ領域 */
+	.dragZone {
+		border: 2px dotted #0B85A1;
+		color: #92AAB0;
+		text-align: left;
+		vertical-align: middle;
+		padding: 10px 10px 10 10px;
+		margin-bottom: 10px;
+		font-size: 200%;
+	}
+
+	/** 要説明(掲示板)ブロックの人物アイコン */
+	#bl0010-contents .person-icon {
+		font-size : 32pt;
+		color : #2196f3;
+	}
+
+/* Suggestion用CSS */
+	div.suggestion-dialog-content {
+		margin:0px;
+		padding:0px;
+		overflow:hidden;
+		max-width : 1140px;
+	}
+
+	/* Suggestionのメインテーブル */
+	table.suggestion-table {
+		width:auto;
+		table-layout:fixed;
+	}
+	table.suggestion-table>tbody>tr.highlight td {
+		background-color:deepskyblue;
+	}
+	table.suggestion-table>thead>tr>td input[disabled=disabled] {
+		background-color:#EEEEEE;
+		border:1px solid;
+	}
+	table.suggestion-table>thead>tr>td,
+	table.suggestion-table>tbody>tr>td {
+		padding : 0px 3px;
+	}
+
+	/*幅／高さ定義 */
+	div.suggestion-dialog-content table>tbody>tr {
+		min-height:20px;
+	}
+
+	/* 以下はJQUERYスタイルをオーバーライド */
+	.ui-widget-header {}
+	.ui-dialog-content {}
+	table.suggestion-table input[type=button][disabled] {
+		background:transparent none !important;
+		color:silver;
+	}
+
+	/* paddingやmarginはform-controlだけど、インラインで幅自動調整 */
+	.form-control.inline-auto-width {
+		display : inline-block;
+		width : auto;
+	}
+
+/** カレンダー（datePicker / ymdPicker） */
+	.datepicker td,
+	.datepicker th{
+		width: 40px;
+		height : 30px;
+		font-size : larger;
+	}
+
+	.inline-block {
+		display : inline-block !important;
+	}
+
+/** IMEモード */
+	input.ime-disable, textarea.ime-disable {
+		ime-mode: disabled;
+	}
+	input.ime-active, textarea.ime-active {
+		ime-mode: active;
+	}
+	input.ime-inactive, textarea.ime-inactive {
+		ime-mode: inactive;
+	}
+
+/** テーブルの余白 */
+	table.table {
+		margin-bottom : 3px;
+	}
+
+	.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+		border-top : 3px solid deepskyblue;
+	}
+
+/** TEST環境用 */
+	body.test-env {
+		background-image : url('./images/test-env.png');
+		background-repeat : repeat;
+	}
+
+	a[data-sort] {
+		white-space: nowrap;
+	}
+
+	#menu-localeCode {
+		height : 24px;
+		padding: 2px 5px;
+		color : #000;
+	}
+/** ボタン(smサイズが適用されないため) */
+	.input-group-btn > .btn-sm {
+		height: 30px;
+		padding: 5px 10px;
+		font-size: 12px;
+		line-height: 1.5;
+		border-radius: 1px;
+	}
+	a.btn i {
+		margin-right: inherit;
+	}
+/** ドロップダウン */
+	.dropdown {
+		width: 100%;
+		background: rgba(255, 255, 255, 0.1);
+		float: left;
+		margin: 5px 4px;
+		padding: 0px;
+		border-radius: 2px;
+	}
+
+	.dropdown-menu > li {
+		padding: 5px 10px;
+	}
+	.dropdown:hover {
+		width: 100%;
+		color: inherit;
+		background: rgba(255, 255, 255, 0.2);
+	}
+
+/** 配下の高さを合わせる設定 */
+/* 	.tableBox div.tr { */
+/* 		display: -webkit-flex; Safari */
+/* 		display: flex; */
+/* 		flex-wrap: wrap; */
+/* 	} */

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../assets/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css" />
+	<link rel="stylesheet" href="../../assets/nci/styles.css" />
+	<link rel="stylesheet" href="../../assets/nci/original.css" />
+	<link rel="stylesheet" href="../../assets/nci/nci_override.css" />
+	<style type="text/css">
+	#seach-result {
+		min-height: 480px;
+	}
+	</style>
+	<script src="../../assets/jquery/jquery.min.js"></script>
+	<script src="../../assets/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="../../assets/nci/NCI.js"></script>
+	<script src='../../assets/nci/validate.js'></script>
+	<script src="./wl0100.js"></script>
+	<title>WL0100 起案担当者選択</title>
+</head>
+<body>
+	<header class="container-fluid"></header>
+
+	<section class="col-xs-12">
+		<article class="row">
+			<h1 class="page-header">#{起案担当者選択}</h1>
+		</article><!--/.row-->
+
+		<article class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#condition-contents"><i class="fa fa-chevron-up"></i><span data-i18n="searchCondition">検索条件</span></div>
+				<div id="condition-contents" class="panel-collapse collapse in">
+					<form id="formCondition" class="panel-body">
+						<input type="hidden" id="userCodeTransfer" />
+						<input type="hidden" id="corporationCodeP" />
+						<input type="hidden" id="processDefCode" />
+						<input type="hidden" id="processDefDetailCode" />
+						<div class="tableBox">
+							<div class="tr">
+								<div class="th col-sm-4 col-md-2"><span data-i18n="corporation">#{corporation}</span></div>
+								<div class="td col-sm-8 col-md-4"><select id="corporationCode" class="form-control"></select></div>
+								<div class="th col-sm-4 col-md-2"><span data-i18n="jobType">#{主務兼務}</span></div>
+								<div class="td col-sm-8 col-md-4"><select id="jobType" class="form-control"></select></div>
+							</div>
+							<div class="tr">
+								<div class="th col-sm-4 col-md-2"><span data-i18n="userAddedInfo">#{userAddedInfo}</span></div>
+								<div class="td col-sm-8 col-md-4"><input type="text" id="userAddedInfo" class="form-control" maxlength="255" /></div>
+								<div class="th col-sm-4 col-md-2"><span data-i18n="userName">#{ユーザ氏名}</span></div>
+								<div class="td col-sm-8 col-md-4"><input type="text" id="userName" class="form-control" maxlength="100" /></div>
+							</div>
+							<div class="tr">
+								<div class="th col-sm-4 col-md-2"><span data-i18n="organizationAddedInfo">#{組織ID}</span></div>
+								<div class="td col-sm-8 col-md-4"><input type="text" id="organizationAddedInfo" class="form-control" maxlength="50" /></div>
+								<div class="th col-sm-4 col-md-2"><span data-i18n="organizationName">#{組織名称}</span></div>
+								<div class="td col-sm-8 col-md-4"><input type="text" id="organizationName" class="form-control" maxlength="100" /></div>
+								<!-- 組織階層名で検索したければこっちを活かすべし
+								<div class="td col-sm-8 col-md-4"><input type="text" id="organizationTreeName" class="form-control" maxlength="300" /></div>
+								-->
+							</div>
+							<div class="tr">
+								<div class="th col-sm-4 col-md-2"><span data-i18n="postAddedInfo">#{役職ID}</span></div>
+								<div class="td col-sm-8 col-md-4"><input type="text" id="postAddedInfo" class="form-control" maxlength="50" /></div>
+								<div class="th col-sm-4 col-md-2"><span data-i18n="postName">#{役職名称}</span></div>
+								<div class="td col-sm-8 col-md-4"><input type="text" id="postName" class="form-control" maxlength="100" /></div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="form-group text-center">
+				<button id="btnSearch" class="btn btn-primary">
+					<i class="fa fa-search"></i>
+					<span data-i18n="btnFilter">#{btnFilter}</span>
+				</button>
+				<button class="btn btn-default btnClose" data-close>
+					<i class="fa fa-times"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+		</article>
+
+		<article id="seach-result" class="row invisible">
+			<!-- 検索結果サブタイトル -->
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix collapse_btn" role="button" data-toggle="collapse" data-target="#result-contents"><i class="fa fa-chevron-up"></i><span data-i18n="searchResult">検索結果</span></div>
+				<div id="result-contents" class="panel-body panel-collapse collapse in">
+
+					<!-- ページ制御 -->
+					<div class="fixed-table-pagination row">
+						<div class="pull-left col-sm-4 col-md-3">
+							<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+						</div>
+						<div class="pull-left col-sm-8 col-md-6 text-center">
+							<ul class="pagination"></ul>
+						</div>
+						<div class="pull-right pagination-detail col-sm-12 col-md-3">
+							<span data-i18n="rowCountPerPage">1ページの行数</span>
+							<select class="pageSize"></select>
+						</div>
+					</div>
+
+					<!-- 検索結果本体 -->
+					<div class="table-responsive">
+						<table class="table table-bordered table-hover table-striped responsive" style="min-width:600px;">
+							<colgroup>
+								<col style="width:35px" />
+								<col class="col-sm-3 col-xs-6" />
+								<col class="col-sm-5 col-xs-6" />
+								<col class="col-sm-2 hidden-xs" />
+								<col class="col-sm-2 hidden-xs" />
+							</colgroup>
+							<thead>
+							<tr>
+								<th></th>
+								<th><a href="#" data-i18n="user" data-sort="USER_ADDED_INFO, USER_NAME, ORGANIZATION_NAME, POST_NAME">#{ユーザ}</a>
+								<th><a href="#" data-i18n="organization" data-sort="ORGANIZATION_ADDED_INFO, ORGANIZATION_NAME, USER_NAME, POST_NAME">#{組織}</a>
+								<th class="hidden-xs"><a href="#" data-i18n="post" data-sort="POST_NAME, USER_NAME, ORGANIZATION_NAME, POST_NAME">#{validTerm}</a>
+								<th class="hidden-xs"><a href="#" data-i18n="jobType" data-sort="JOB_TYPE, USER_NAME, ORGANIZATION_NAME, POST_NAME">#{validTerm}</a>
+							</thead>
+
+							<tbody></tbody>
+
+							<tfoot class="template hide">
+							<tr>
+								<td class="text-center">
+									<input type="radio" name="rdoSelect" />
+								<td class="text-left">
+									<span data-field="userAddedInfo">#{userAddedInfo}</span>&nbsp;
+									<span data-field="userName">#{userName}</span>
+								</td>
+								<td class="text-left">
+									<span data-field="organizationAddedInfo">#{organizationAddedInfo}</span>&nbsp;
+									<span data-field="organizationName">#{organizationName}</span>
+								</td>
+								<td class="text-left hidden-xs">
+									<span data-field="postName">#{postName}</span>
+								</td>
+								<td class="text-left hidden-xs">
+									<span data-field="jobTypeName">#{jobTypeName}</span>
+								</td>
+								<td class="hide">
+									<span data-field="corporationCode"></span>
+									<span data-field="corporationName"></span>
+									<span data-field="userCode"></span>
+									<span data-field="userNameAbbr"></span>
+									<span data-field="telNum"></span>
+									<span data-field="telNumCel"></span>
+									<span data-field="mailAddress"></span>
+									<span data-field="organizationCode"></span>
+									<span data-field="organizationAddedInfo"></span>
+									<span data-field="organizationName"></span>
+									<span data-field="postCode"></span>
+									<span data-field="postAddedInfo"></span>
+
+									<span data-field="extendedInfo01">0000000000</span>
+									<span data-field="sbmtrAddr">0000000000</span>
+									<span data-field="organizationCodeUp3">0000000000</span>
+									<span data-field="organizationCode5">0000000000</span>
+									<span data-field="organizationName5">0000000000</span>
+									<span data-field="payApplCd">0000000000</span>
+								</td>
+							</tfoot>
+						</table>
+					</div>
+
+					<!-- ページ制御 -->
+					<div class="fixed-table-pagination row">
+						<div class="pull-left col-sm-4 col-lg-3">
+							<span class="pagination-info">9999件中　9990 - 9999件目表示</span>
+						</div>
+						<div class="pull-left col-sm-8 col-lg-6 text-center">
+							<ul class="pagination"></ul>
+						</div>
+						<div class="pull-right pagination-detail col-sm-12 col-lg-3">
+							<span data-i18n="rowCountPerPage">1ページの行数</span>
+							<select class="pageSize"></select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group text-center">
+				<button id="btnSelect" class="btn btn-primary" disabled>
+					<i class="fa fa-check"></i>
+					<span data-i18n="btnSelect">#{選択}</span>
+				</button>
+				<button class="btn btn-default btnClose" data-close>
+					<i class="fa fa-times"></i>
+					<span data-i18n="btnClose">#{閉じる}</span>
+				</button>
+			</div>
+		</article>
+	</section>
+</body>
+</html>

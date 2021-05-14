@@ -1,0 +1,31 @@
+<!-- Hyperlinkパーツのプロパティ -->
+<script type="text/javascript" src="vd0114_17.js"></script>
+<div id="vd0114_17" class="row">
+	<label class="sub-title" data-i18n="hyperlink">ハイパーリンク</label>
+
+	<div class='col-sm-4 form-group'>
+		<label for="requiredUploadTrue">
+			<input type="radio" name="requiredUpload" id="requiredUploadTrue" value="true" />
+			<span data-i18n="createLinkWithUpload">#{添付ファイルをアップロードしてリンクとする}</span>
+		</label>
+		<label for="requiredUploadFalse">
+			<input type="radio" name="requiredUpload" id="requiredUploadFalse" value="false" />
+			<span data-i18n="createLinkWithURL">#{URLを指定してリンクとする}</span>
+		</label>
+	</div>
+	<div class="col-sm-8 form-group">
+		<input id="url" type="text" class="form-control required" maxlength="300"
+				data-validate='{ "pattern" : "all" }' />
+
+		<div>
+			<a id="link" target="_blank" class="form-control-static">#{ファイル名}</a>
+			<button id="btnClearFile" data-i18n="btnClear"></button>
+			<input id="file" type="file" />
+		</div>
+	</div>
+	<div class='col-sm-12 form-group'>
+		<span>target</span>
+		<input type="text" data-field="target" class="form-control" maxlength="300"
+				data-validate='{ "pattern" : "all" }' />
+	</div>
+</div>
